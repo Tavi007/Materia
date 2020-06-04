@@ -3,14 +3,14 @@ loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft versio
 
 #issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
-modId = "materiamod" #mandatory
+modId = "materia" #mandatory
 version = "0.1" #mandatory
 
 displayName = "Materia" #mandatory
 #updateJSONURL = "http://myurl.me/" #optional
 #displayURL = "http://example.com/" #optional
 #logoFile = "materiaLogo.png" #optional. A file name (in the root of the mod JAR) containing a logo for display
-credits = "Thanks goes to Harry Talks' modding tutorial on YouTube." #optional
+credits = "Thanks goes to Harry Talks and TurtyWurty modding tutorial on YouTube." #optional
 authors = "Tavi007" #optional
 
 description='''
@@ -18,14 +18,14 @@ I have to do this later. lol
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.materiamod]] #optional
+[[dependencies.materia]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
     versionRange="[31,)" #mandatory
     ordering="NONE"
     side="BOTH"
 # Here's another dependency
-[[dependencies.materiamod]]
+[[dependencies.materia]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.15.2]"
