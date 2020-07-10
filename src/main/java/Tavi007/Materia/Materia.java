@@ -16,7 +16,7 @@ public class Materia
 {
 	public static Materia instance;
 	public static final String MOD_ID = "materia";
-	private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 	
 	public Materia()
 	{
