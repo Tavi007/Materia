@@ -5,7 +5,9 @@ import Tavi007.Materia.objects.items.MateriaItem;
 import Tavi007.Materia.objects.items.MateriaItemArea;
 import Tavi007.Materia.objects.items.MateriaItemFire;
 import Tavi007.Materia.objects.items.MateriaItemIce;
+import Tavi007.Materia.objects.items.MateriaPickaxe;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemTier;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -24,6 +26,7 @@ public class ItemList
 	public static final RegistryObject<Item> AREA_MATERIA = ITEMS.register("area_materia", () -> new MateriaItemArea(new Item.Properties().group(Materia.MATERIA_GROUP)));
 	
 	// tools
+	public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe", () -> new MateriaPickaxe(ItemTier.DIAMOND, 1, -2.8F, new Item.Properties().group(Materia.MATERIA_GROUP)));
 	
 	
 }

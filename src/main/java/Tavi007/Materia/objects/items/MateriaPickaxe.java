@@ -13,6 +13,9 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	public MateriaPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
+		
+		//this need to be changed, once the crafting/equipping is working
+		this.effectList = new ArrayList<IMateriaEffect>();
 	}
 
 	@Override

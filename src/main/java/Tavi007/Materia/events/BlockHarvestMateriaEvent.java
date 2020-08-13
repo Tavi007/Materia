@@ -19,7 +19,7 @@ public class BlockHarvestMateriaEvent {
 	@SubscribeEvent
 	public static void blockHarvestMateriaEvent(BlockEvent.HarvestDropsEvent event){
 
-		Item activeItem = event.getHarvester().getActiveItemStack().getItem();
+		Item activeItem = event.getHarvester().getHeldItemMainhand().getItem();
 		//check if activeItem is a MateriaTool
 		if(activeItem instanceof IMateriaTool) {
 			
