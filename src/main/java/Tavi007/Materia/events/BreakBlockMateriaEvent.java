@@ -1,10 +1,9 @@
 package Tavi007.Materia.events;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.MateriaEffect;
+import Tavi007.Materia.effects.IMateriaEffect;
 import Tavi007.Materia.effects.MateriaEffectFire;
 import Tavi007.Materia.effects.MateriaEffectIce;
 import net.minecraft.item.ItemStack;
@@ -23,9 +22,9 @@ public class BreakBlockMateriaEvent {
 		//check if activeItem is a MateriaTool
 			
 		//get effectList
-		List<MateriaEffect> test = new ArrayList<MateriaEffect>();
-		test.add(new MateriaEffectFire());
-		test.add(new MateriaEffectIce());
+		ArrayList<IMateriaEffect> test = new ArrayList<IMateriaEffect>();
+		test.add(new MateriaEffectFire(null));
+		test.add(new MateriaEffectIce(null));
 
 		//apply effects
 		test.forEach(effect -> {

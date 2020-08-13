@@ -1,24 +1,27 @@
 package Tavi007.Materia.effects;
 
+import Tavi007.Materia.objects.items.MateriaItemArea;
 import Tavi007.Materia.objects.items.MateriaItemFire;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
-public class MateriaEffectFire implements IMateriaEffect {
-	
+public class MateriaEffectFireArea implements IMateriaEffect  {
+
 	public MateriaItemFire fireMateria;
+	public MateriaItemArea areaMateria;
 	
-	public MateriaEffectFire(MateriaItemFire fireMateria){
+	public MateriaEffectFireArea(MateriaItemFire fireMateria, MateriaItemArea areaMateria){
 		this.fireMateria = fireMateria;
+		this.areaMateria = areaMateria;
 	}
-	
 	@Override
-	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		System.out.println("Fire Event");
+	public void onBlockHarvest(HarvestDropsEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void onBlockHarvest(HarvestDropsEvent event) {
+	public void onBreakBlock(BreakEvent event) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -40,4 +43,5 @@ public class MateriaEffectFire implements IMateriaEffect {
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

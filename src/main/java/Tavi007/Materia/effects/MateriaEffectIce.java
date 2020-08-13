@@ -1,20 +1,44 @@
 package Tavi007.Materia.effects;
 
-import net.minecraftforge.event.world.BlockEvent;
+import Tavi007.Materia.objects.items.MateriaItemIce;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
-public class MateriaEffectIce extends MateriaEffect{
+public class MateriaEffectIce implements IMateriaEffect{
 
-	public MateriaEffectIce(){
-		super();
-	}
+	public MateriaItemIce iceMateria;
 	
-	public MateriaEffectIce(int materiaLevel, int areaLevel, boolean bonusEffect, boolean negateEffect){
-		super(materiaLevel, areaLevel, bonusEffect, negateEffect);
+	public MateriaEffectIce(MateriaItemIce iceMateria){
+		this.iceMateria = iceMateria;
 	}
-	
 	@Override
-	public void onBreakBlock(BlockEvent.BreakEvent event) {
-		System.out.println("Ice Event");
+	public void onBlockHarvest(HarvestDropsEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
+	@Override
+	public void onBreakBlock(BreakEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRightClick() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAttackEntity() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProjectileImpact() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
