@@ -32,7 +32,6 @@ public class BlockHarvestMateriaEvent {
 
 			//apply effects
 			effectList.forEach(effect -> {
-				effect.onBlockHarvest(event);
 			});
 		}
 

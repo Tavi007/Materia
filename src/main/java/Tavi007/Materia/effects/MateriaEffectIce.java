@@ -1,44 +1,23 @@
 package Tavi007.Materia.effects;
 
-import Tavi007.Materia.objects.items.MateriaItemIce;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import java.util.ArrayList;
 
-public class MateriaEffectIce implements IMateriaEffect{
+import Tavi007.Materia.objects.items.MateriaItemIce;
+import net.minecraft.item.ItemStack;
+
+public class MateriaEffectIce implements IMateriaEffect, IMateriaEffectRecipe {
 
 	public MateriaItemIce iceMateria;
 	
 	public MateriaEffectIce(MateriaItemIce iceMateria){
 		this.iceMateria = iceMateria;
 	}
-	@Override
-	public void onBlockHarvest(HarvestDropsEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
-	public void onBreakBlock(BreakEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void addAP(int amount) {this.iceMateria.addAP(amount);}
 
 	@Override
-	public void onRightClick() {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {
+		return itemIn;
 	}
-
-	@Override
-	public void onAttackEntity() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProjectileImpact() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

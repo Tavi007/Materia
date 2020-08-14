@@ -1,11 +1,12 @@
 package Tavi007.Materia.effects;
 
+import java.util.ArrayList;
+
 import Tavi007.Materia.objects.items.MateriaItemArea;
 import Tavi007.Materia.objects.items.MateriaItemFire;
-import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraft.item.ItemStack;
 
-public class MateriaEffectFireArea implements IMateriaEffect  {
+public class MateriaEffectFireArea implements IMateriaEffect, IMateriaEffectRecipe, IMateriaEffectArea  {
 
 	public MateriaItemFire fireMateria;
 	public MateriaItemArea areaMateria;
@@ -14,34 +15,15 @@ public class MateriaEffectFireArea implements IMateriaEffect  {
 		this.fireMateria = fireMateria;
 		this.areaMateria = areaMateria;
 	}
+
 	@Override
-	public void onBlockHarvest(HarvestDropsEvent event) {
-		// TODO Auto-generated method stub
-		
+	public void addAP(int amount) {
+		this.fireMateria.addAP(amount);
+		this.areaMateria.addAP(amount);
 	}
 
 	@Override
-	public void onBreakBlock(BreakEvent event) {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {
+		return itemIn;
 	}
-
-	@Override
-	public void onRightClick() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onAttackEntity() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProjectileImpact() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
