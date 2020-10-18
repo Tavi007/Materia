@@ -1,16 +1,17 @@
 modLoader="javafml" #mandatory
-loaderVersion="[32,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license="All rights reserved"
 
 #issueTrackerURL="http://my.issue.tracker/" #optional
 [[mods]] #mandatory
 modId = "materia" #mandatory
-version = "0.1" #mandatory
+version = "1.0" #mandatory
 
 displayName = "Materia" #mandatory
 #updateJSONURL = "http://myurl.me/" #optional
 #displayURL = "http://example.com/" #optional
 #logoFile = "materiaLogo.png" #optional. A file name (in the root of the mod JAR) containing a logo for display
-credits = "Thanks goes to Harry Talks and TurtyWurty modding tutorial on YouTube." #optional
+credits = "Thanks goes to the Forge Forum community." #optional
 authors = "Tavi007" #optional
 
 description='''
@@ -21,13 +22,13 @@ I have to do this later. lol
 [[dependencies.materia]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[32,)" #mandatory
+    versionRange="[34,)" #mandatory
     ordering="NONE"
     side="BOTH"
 # Here's another dependency
 [[dependencies.materia]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.1]"
+    versionRange="[1.16.3]"
     ordering="NONE"
     side="BOTH"
