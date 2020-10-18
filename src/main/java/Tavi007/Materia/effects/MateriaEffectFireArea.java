@@ -26,4 +26,9 @@ public class MateriaEffectFireArea implements IMateriaEffect, IMateriaEffectReci
 	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {
 		return itemIn;
 	}
+
+	@Override
+	public int getAreaLevel() {
+		return this.areaMateria.getLevel();
+	}
 }

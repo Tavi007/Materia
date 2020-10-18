@@ -16,24 +16,24 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
 public class BlockHarvestMateriaEvent {
 
-	@SubscribeEvent
-	public static void blockHarvestMateriaEvent(BlockEvent.HarvestDropsEvent event){
-
-		Item activeItem = event.getHarvester().getHeldItemMainhand().getItem();
-		//check if activeItem is a MateriaTool
-		if(activeItem instanceof IMateriaTool) {
-			
-			//get effectList
-			ArrayList<IMateriaEffect> effectList = ((IMateriaTool) activeItem).getMateriaEffectList();
-			
-			//testing 
-			effectList.add(new MateriaEffectFire(null));
-			effectList.add(new MateriaEffectIce(null));
-
-			//apply effects
-			effectList.forEach(effect -> {
-			});
-		}
-
-	}
+//	@SubscribeEvent
+//	public static void blockHarvestMateriaEvent(BlockEvent.HarvestDropsEvent event){
+//
+//		Item activeItem = event.getHarvester().getHeldItemMainhand().getItem();
+//		//check if activeItem is a MateriaTool
+//		if(activeItem instanceof IMateriaTool) {
+//			
+//			//get effectList
+//			ArrayList<IMateriaEffect> effectList = ((IMateriaTool) activeItem).getMateriaEffectList();
+//			
+//			//testing 
+//			effectList.add(new MateriaEffectFire(null));
+//			effectList.add(new MateriaEffectIce(null));
+//
+//			//apply effects
+//			effectList.forEach(effect -> {
+//			});
+//		}
+//
+//	}
 }
