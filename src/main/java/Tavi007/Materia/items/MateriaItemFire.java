@@ -1,4 +1,4 @@
-package Tavi007.Materia.objects.items;
+package Tavi007.Materia.items;
 
 public class MateriaItemFire extends MateriaItem {
 

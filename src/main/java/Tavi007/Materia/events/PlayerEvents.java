@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.IMateriaEffect;
-import Tavi007.Materia.effects.IMateriaEffectArea;
-import Tavi007.Materia.effects.MateriaEffectFire;
-import Tavi007.Materia.effects.MateriaEffectIce;
-import Tavi007.Materia.objects.items.IMateriaTool;
+import Tavi007.Materia.capabilities.effects.IMateriaEffect;
+import Tavi007.Materia.capabilities.effects.IMateriaEffectArea;
+import Tavi007.Materia.capabilities.effects.MateriaEffectFire;
+import Tavi007.Materia.capabilities.effects.MateriaEffectIce;
+import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
-public class BreakBlockMateriaEvent {
+public class PlayerEvents {
 
 	@SubscribeEvent
 	public static void breakBlockMateriaEvent(BlockEvent.BreakEvent event){
@@ -54,6 +55,10 @@ public class BreakBlockMateriaEvent {
 				//
 				ServerWorld world = (ServerWorld) event.getWorld();
 				BlockPos sourcePos = event.getPos();
+				
+				//decides which additional block should be mined
+				Vector3d lookVec = event.getPlayer().getLookVec();
+				
 				Block sourceBlock = world.getBlockState(sourcePos).getBlock();
 				for (int dx=-maxAreaLevel[0]; dx<maxAreaLevel[0]+1; dx++) {
 					for (int dy=-maxAreaLevel[0]; dy<maxAreaLevel[0]+1; dy++) {

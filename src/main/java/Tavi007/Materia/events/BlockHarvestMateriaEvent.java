@@ -3,10 +3,10 @@ package Tavi007.Materia.events;
 import java.util.ArrayList;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.IMateriaEffect;
-import Tavi007.Materia.effects.MateriaEffectFire;
-import Tavi007.Materia.effects.MateriaEffectIce;
-import Tavi007.Materia.objects.items.IMateriaTool;
+import Tavi007.Materia.capabilities.effects.IMateriaEffect;
+import Tavi007.Materia.capabilities.effects.MateriaEffectFire;
+import Tavi007.Materia.capabilities.effects.MateriaEffectIce;
+import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -1,4 +1,4 @@
-package Tavi007.Materia.effects;
+package Tavi007.Materia.capabilities.effects;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,11 @@
-package Tavi007.Materia.effects;
+package Tavi007.Materia.capabilities.effects;
 
 import java.util.ArrayList;
 
-import Tavi007.Materia.objects.items.MateriaItemArea;
-import Tavi007.Materia.objects.items.MateriaItemFire;
+import Tavi007.Materia.items.MateriaItemArea;
+import Tavi007.Materia.items.MateriaItemFire;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.INBT;
 
 public class MateriaEffectFireArea implements IMateriaEffect, IMateriaEffectRecipe, IMateriaEffectArea  {
 
@@ -30,5 +31,17 @@ public class MateriaEffectFireArea implements IMateriaEffect, IMateriaEffectReci
 	@Override
 	public int getAreaLevel() {
 		return this.areaMateria.getLevel();
+	}
+
+	@Override
+	public INBT writeNBT() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void readNBT(INBT nbt) {
+		// TODO Auto-generated method stub
+		
 	}
 }

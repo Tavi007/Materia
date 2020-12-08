@@ -1,8 +1,8 @@
-package Tavi007.Materia.objects.items;
+package Tavi007.Materia.items;
 
 import java.util.ArrayList;
 
-import Tavi007.Materia.effects.IMateriaEffect;
+import Tavi007.Materia.capabilities.effects.IMateriaEffect;
 
 public interface IMateriaTool {
 	ArrayList<IMateriaEffect> getMateriaEffectList();

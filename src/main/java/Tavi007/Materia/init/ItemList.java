@@ -1,11 +1,11 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.objects.items.MateriaItem;
-import Tavi007.Materia.objects.items.MateriaItemArea;
-import Tavi007.Materia.objects.items.MateriaItemFire;
-import Tavi007.Materia.objects.items.MateriaItemIce;
-import Tavi007.Materia.objects.items.MateriaPickaxe;
+import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.items.MateriaItemArea;
+import Tavi007.Materia.items.MateriaItemFire;
+import Tavi007.Materia.items.MateriaItemIce;
+import Tavi007.Materia.items.MateriaPickaxe;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
 import net.minecraftforge.fml.RegistryObject;
