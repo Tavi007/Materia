@@ -3,6 +3,8 @@ package Tavi007.Materia.items;
 import java.util.ArrayList;
 
 import net.minecraft.item.Item;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class MateriaItem extends Item implements IMateriaItem {
 
@@ -17,6 +19,11 @@ public class MateriaItem extends Item implements IMateriaItem {
 		this.levelUpList = new ArrayList<Integer>();
 	}
 
+	@Override
+	public ITextComponent getName() {
+		return new StringTextComponent("Materia");
+	}
+	
 	@Override
 	public void setLevel(int level) {this.level = level;}
 

@@ -3,13 +3,9 @@ package Tavi007.Materia.capabilities.effects;
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.SerializableCapabilityProvider;
 import Tavi007.Materia.items.IMateriaTool;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -65,6 +61,10 @@ public class EffectCapability {
 			ItemStack stack = event.getObject();
 			if(stack.getItem() instanceof IMateriaTool) {
 				final EffectList list = new EffectList();
+				
+				MateriaEffectFire fire = new MateriaEffectFire();
+				list.add(fire);
+				
 				event.addCapability(ID, createProvider(list));
 			}
 		}

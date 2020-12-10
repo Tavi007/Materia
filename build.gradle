@@ -32,7 +32,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                elementalcombat {
+                materia {
                     source sourceSets.main
                 }
             }
@@ -44,7 +44,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                elementalcombat {
+                materia {
                     source sourceSets.main
                 }
             }
@@ -55,10 +55,10 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'elementalcombat', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'materia', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                elementalcombat {
+                materia {
                     source sourceSets.main
                 }
             }

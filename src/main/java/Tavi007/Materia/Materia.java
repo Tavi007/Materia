@@ -2,7 +2,6 @@ package Tavi007.Materia;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import Tavi007.Materia.init.ItemList;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -23,6 +22,7 @@ public class Materia
 	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 	
 	public static final ItemGroup MATERIA_GROUP = new Materia.MateriaItemGroup("materia_group");
+	
 	
 	public Materia()
 	{
