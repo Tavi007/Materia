@@ -3,9 +3,9 @@ package Tavi007.Materia.items;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class MateriaItemArea extends MateriaItem {
+public class AreaMateria extends BaseMateria {
 
-	public MateriaItemArea(Properties properties) {
+	public AreaMateria(Properties properties) {
 		super(properties);
 	}
 

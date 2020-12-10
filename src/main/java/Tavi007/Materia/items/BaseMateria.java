@@ -6,13 +6,13 @@ import net.minecraft.item.Item;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class MateriaItem extends Item implements IMateriaItem {
+public class BaseMateria extends Item implements IMateriaItem {
 
 	private int level;
 	private int ap;
 	private final ArrayList<Integer> levelUpList;
 	
-	public MateriaItem(Properties properties) {
+	public BaseMateria(Properties properties) {
 		super(properties);
 		
 		//to do: get list from loaded json file.

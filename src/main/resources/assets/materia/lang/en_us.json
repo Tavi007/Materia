@@ -1,3 +1,10 @@
 {
-	"item.materiamod.firemateria_item" : "Fire Materia"
+	"item.materia.area_materia" : "Area Materia",
+	"item.materia.base_materia" : "Base Materia",
+	"item.materia.ice_materia" : "Ice Materia",
+	"item.materia.fire_materia" : "Fire Materia",
+	
+	"item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
+	
+	"itemGroup.materia_group" : "Materia"
 }
