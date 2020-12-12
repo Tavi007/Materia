@@ -7,6 +7,8 @@ public class FireMateria extends BaseMateria {
 
 	public FireMateria(Properties properties) {
 		super(properties);
+		maxLevel = 5;
+		levelUpAP = new int[maxLevel];
 	}
 
 	@Override

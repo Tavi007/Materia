@@ -10,7 +10,7 @@ public class BaseMateria extends Item {
 	public int level = 0;
 	public int maxLevel = 0;
 	public int ap = 0;
-	public final int[] levelUpAP = new int[maxLevel];
+	public int[] levelUpAP = new int[maxLevel];
 	
 	public BaseMateria(Properties properties) {
 		super(properties);

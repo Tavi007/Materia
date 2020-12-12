@@ -28,7 +28,7 @@ public class ItemList
 	public static final RegistryObject<Item> AREA_MATERIA = ITEMS.register("area_materia", () -> new AreaMateria(materiaProperties));
 	
 	// tools
-	public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe", () -> new MateriaPickaxe(ItemTier.DIAMOND, 1, -2.8F, new Item.Properties().group(Materia.MATERIA_GROUP)));
+	public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe", () -> new MateriaPickaxe(ItemTier.DIAMOND, 1, -2.8F, materiaProperties));
 	
 	
 }

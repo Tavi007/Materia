@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.effects.MateriaEffect;
+import Tavi007.Materia.effects.MateriaEffectFire;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +32,8 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
 		
 		//this need to be changed, once the crafting/equipping is working
-		this.effectList = new ArrayList<MateriaEffect>();
+		effectList = new ArrayList<MateriaEffect>();
+		effectList.add(new MateriaEffectFire(new FireMateria(new Item.Properties().group(Materia.MATERIA_GROUP).maxStackSize(1))));
 	}
 
 	@Override
