@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.IMateriaEffectArea;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.effects.MateriaEffectFire;
 import net.minecraft.block.Block;
@@ -53,9 +54,8 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(new StringTextComponent("hi"));
 		effectList.forEach( effect ->{
-			tooltip.add(effect.getToolTip());
+			effect.addPickaxeToolTip(tooltip);
 		});
 	}
 	
@@ -70,7 +70,8 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 		//decides which additional block should be mined
 		Vector3d lookVec = entityLiving.getLookVec();
 		List<BlockPos> posList = new ArrayList<BlockPos>();
-		
+
+		//move to util class later
 		Block sourceBlock = worldIn.getBlockState(pos).getBlock();
 		for (int dx=-maxAreaLevel; dx<maxAreaLevel+1; dx++) {
 			for (int dy=-maxAreaLevel; dy<maxAreaLevel+1; dy++) {
@@ -92,7 +93,14 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 		return true;
    }
 	
+	//move to util class later
 	private int getMaxAreaLevel() {
-		return 1;
+		int[] maxAreaLevel = new int[0];
+		effectList.forEach(effect ->{
+			if(effect instanceof IMateriaEffectArea) {
+				maxAreaLevel[0] = Math.max(maxAreaLevel[0] , ((IMateriaEffectArea) effect).getAreaLevel());
+			}
+		});
+		return maxAreaLevel[0];
 	}
 }

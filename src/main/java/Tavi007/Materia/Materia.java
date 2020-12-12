@@ -3,6 +3,8 @@ package Tavi007.Materia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import Tavi007.Materia.init.ItemList;
+import Tavi007.Materia.items.BaseMateria;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -65,7 +67,7 @@ public class Materia
 
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(ItemList.BASE_MATERIA.get());
+			return new ItemStack(new BaseMateria(new Item.Properties().group(Materia.MATERIA_GROUP).maxStackSize(1)));
 		}
 		
 	}

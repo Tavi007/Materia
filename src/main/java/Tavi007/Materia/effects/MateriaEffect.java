@@ -1,10 +1,10 @@
 package Tavi007.Materia.effects;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Tavi007.Materia.items.BaseMateria;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 public class MateriaEffect {
 	private String name = "Base";
@@ -27,7 +27,7 @@ public class MateriaEffect {
 		});
 	}
 
-	public ITextComponent getToolTip() {
-		return new StringTextComponent("Base");
+	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
+		return;
 	};
 }

@@ -34,6 +34,7 @@ public class BaseMateria extends Item {
 		return new StringTextComponent("Base Materia");
 	}
 	
+	//add enchanted glint, if maxLevel is reached
 	@Override
 	public boolean hasEffect(ItemStack stack) {
       return level >= maxLevel;
