@@ -1,13 +1,15 @@
-package Tavi007.Materia.capabilities.effects;
+package Tavi007.Materia.effects;
 
 import java.util.ArrayList;
 
+import Tavi007.Materia.items.IceMateria;
 import net.minecraft.item.ItemStack;
 
 public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRecipe {
 	
-	public MateriaEffectIce(int[] maxLevel, int[] abilityPower, int[] level, int[] nextLevelAP){
+	public MateriaEffectIce(IceMateria ice){
 		super("Ice");
+		this.materiaList.add(ice);
 	}
 
 	public MateriaEffectIce(){

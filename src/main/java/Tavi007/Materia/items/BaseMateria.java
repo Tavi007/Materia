@@ -1,45 +1,41 @@
 package Tavi007.Materia.items;
 
-import java.util.ArrayList;
-
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class BaseMateria extends Item implements IMateriaItem {
+public class BaseMateria extends Item {
 
-	private int level;
-	private int ap;
-	private final ArrayList<Integer> levelUpList;
+	public int level = 0;
+	public int maxLevel = 0;
+	public int ap = 0;
+	public final int[] levelUpAP = new int[maxLevel];
 	
 	public BaseMateria(Properties properties) {
 		super(properties);
-		
-		//to do: get list from loaded json file.
-		this.levelUpList = new ArrayList<Integer>();
 	}
 
-	@Override
-	public ITextComponent getName() {
-		return new StringTextComponent("Materia");
+	public void addAP(int amount) {
+		if (level >= maxLevel) {
+			return;
+		}
+		ap += amount;
+		int nextLevelAP = levelUpAP[level];
+		if (ap > nextLevelAP) {
+			//level up
+			ap -= nextLevelAP;
+			level += 1; 
+		}
 	}
 	
 	@Override
-	public void setLevel(int level) {this.level = level;}
-
+	public ITextComponent getName() {
+		return new StringTextComponent("Base Materia");
+	}
+	
 	@Override
-	public int getLevel() {return this.level;}
-
-	@Override
-	public void setAP(int ap) {this.ap = ap;}
-
-	@Override
-	public int getAP() {return this.ap;}
-
-	@Override
-	public void addAP(int amount) {this.ap += amount;}
-
-	@Override
-	public ArrayList<Integer> getLevelUpAP() {return this.levelUpList;}
-
+	public boolean hasEffect(ItemStack stack) {
+      return level >= maxLevel;
+   }
 }

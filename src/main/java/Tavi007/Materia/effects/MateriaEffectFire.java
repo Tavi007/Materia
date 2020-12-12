@@ -1,13 +1,15 @@
-package Tavi007.Materia.capabilities.effects;
+package Tavi007.Materia.effects;
 
 import java.util.ArrayList;
 
+import Tavi007.Materia.items.FireMateria;
 import net.minecraft.item.ItemStack;
 
 public class MateriaEffectFire extends MateriaEffect implements IMateriaEffectRecipe {
 	
-	public MateriaEffectFire(int[] maxLevel, int[] abilityPower, int[] level, int[] nextLevelAP){
-		super("Fire", maxLevel, abilityPower, level, nextLevelAP);
+	public MateriaEffectFire(FireMateria fire){
+		super("Fire");
+		this.materiaList.add(fire);
 	}
 	
 	public MateriaEffectFire(){
