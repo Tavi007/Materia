@@ -95,8 +95,8 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	//move to util class later
 	private int getMaxAreaLevel() {
-		int[] maxAreaLevel = new int[0];
-		effectList.forEach(effect ->{
+		int[] maxAreaLevel = {0};
+		effectList.forEach(effect -> {
 			if(effect instanceof IMateriaEffectArea) {
 				maxAreaLevel[0] = Math.max(maxAreaLevel[0] , ((IMateriaEffectArea) effect).getAreaLevel());
 			}

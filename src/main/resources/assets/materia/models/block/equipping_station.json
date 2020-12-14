@@ -1,7 +1,7 @@
 {
     "parent": "block/cube",
 	"textures": {
-        "particle": "materia:block/equipping_station_bottom",
+        "particle": "materia:block/equipping_station",
         "all": "materia:block/equipping_station"
     },
     "elements": [
