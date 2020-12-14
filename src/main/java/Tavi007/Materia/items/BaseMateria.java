@@ -16,6 +16,15 @@ public class BaseMateria extends Item {
 		super(properties);
 	}
 
+
+	public BaseMateria(Properties properties, int level, int maxLevel, int ap, int[] levelUpAP) {
+		super(properties);
+		this.level = level;
+		this.maxLevel = maxLevel;
+		this.ap = ap;
+		this.levelUpAP = levelUpAP;
+	}
+	
 	public void addAP(int amount) {
 		if (level >= maxLevel) {
 			return;

@@ -2,9 +2,9 @@ package Tavi007.Materia;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ItemList;
-import Tavi007.Materia.items.BaseMateria;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,6 +34,8 @@ public class Materia
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		
 		ItemList.ITEMS.register(modEventBus);
+		BlockList.BLOCKS.register(modEventBus);
+		BlockList.ITEMS.register(modEventBus);
 		
 		instance = this;
 		MinecraftForge.EVENT_BUS.register(this);
@@ -67,7 +69,7 @@ public class Materia
 
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(new BaseMateria(new Item.Properties().group(Materia.MATERIA_GROUP).maxStackSize(1)));
+			return new ItemStack(ItemList.BASE_MATERIA.get());
 		}
 		
 	}

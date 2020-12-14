@@ -1,0 +1,23 @@
+{
+    "parent": "block/cube",
+	"textures": {
+        "particle": "materia:block/equipping_station_bottom",
+        "all": "materia:block/equipping_station_side",
+        "bottom": "materia:block/equipping_station_bottom",
+        "top": "materia:block/equipping_station_top"
+    },
+    "elements": [
+        {
+           "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "down" },
+                "up":    { "texture": "#top", "cullface": "up" },
+                "north": { "texture": "#all", "cullface": "north" },
+                "south": { "texture": "#all", "cullface": "south" },
+                "west":  { "texture": "#all", "cullface": "west" },
+                "east":  { "texture": "#all", "cullface": "east" }
+            }
+        }
+    ]
+}

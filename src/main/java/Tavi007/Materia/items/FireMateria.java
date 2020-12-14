@@ -11,6 +11,14 @@ public class FireMateria extends BaseMateria {
 		levelUpAP = new int[maxLevel];
 	}
 
+	public FireMateria(Properties properties, int level, int ap) {
+		super(properties);
+		maxLevel = 5;
+		levelUpAP = new int[maxLevel];
+		this.level = level;
+		this.ap = ap;
+	}
+	
 	@Override
 	public ITextComponent getName() {
 		return new StringTextComponent("Fire Materia");
