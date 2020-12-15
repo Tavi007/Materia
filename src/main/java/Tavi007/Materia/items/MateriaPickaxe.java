@@ -9,6 +9,7 @@ import Tavi007.Materia.Materia;
 import Tavi007.Materia.effects.IMateriaEffectArea;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.effects.MateriaEffectFire;
+import Tavi007.Materia.util.MateriaToolUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -61,7 +62,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	@Override
    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		int maxAreaLevel = getMaxAreaLevel();
+		int maxAreaLevel = MateriaToolUtil.getMaxAreaLevel(this);
 		
 		//the plan:
 		//generate drops (but keep in mind, which level they correspond to)
@@ -72,35 +73,8 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 		List<BlockPos> posList = new ArrayList<BlockPos>();
 
 		//move to util class later
-		Block sourceBlock = worldIn.getBlockState(pos).getBlock();
-		for (int dx=-maxAreaLevel; dx<maxAreaLevel+1; dx++) {
-			for (int dy=-maxAreaLevel; dy<maxAreaLevel+1; dy++) {
-				for (int dz=-maxAreaLevel; dz<maxAreaLevel+1; dz++) {
-					BlockPos pos_ = new BlockPos(pos.getX()+dx, pos.getY()+dy, pos.getZ()+dz);
-					Block block = worldIn.getBlockState(pos_).getBlock();
-					posList.add(pos_);
-					
-					if(worldIn instanceof ServerWorld) {
-						if(!worldIn.isAirBlock(pos_) && block == sourceBlock) {
-							List<ItemStack> itemstackList = Block.getDrops(worldIn.getBlockState(pos_), (ServerWorld) worldIn, pos_, null);
-							worldIn.destroyBlock(pos_, false);
-						}
-					}
-				}	
-			}
-		}
+		MateriaToolUtil.mineBlocks(worldIn, pos, maxAreaLevel);
 		
 		return true;
    }
-	
-	//move to util class later
-	private int getMaxAreaLevel() {
-		int[] maxAreaLevel = {0};
-		effectList.forEach(effect -> {
-			if(effect instanceof IMateriaEffectArea) {
-				maxAreaLevel[0] = Math.max(maxAreaLevel[0] , ((IMateriaEffectArea) effect).getAreaLevel());
-			}
-		});
-		return maxAreaLevel[0];
-	}
 }
