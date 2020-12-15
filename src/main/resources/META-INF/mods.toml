@@ -10,7 +10,8 @@ version = "1.0" #mandatory
 displayName = "Materia" #mandatory
 #updateJSONURL = "http://myurl.me/" #optional
 #displayURL = "http://example.com/" #optional
-#logoFile = "materiaLogo.png" #optional. A file name (in the root of the mod JAR) containing a logo for display
+issueTrackerURL="https://github.com/Tavi007/Materia/issues" #optional
+logoFile = "materiaLogo.png"
 credits = "Thanks goes to the Forge Forum community." #optional
 authors = "Tavi007" #optional
 
