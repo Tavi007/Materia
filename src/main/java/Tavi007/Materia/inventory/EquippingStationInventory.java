@@ -1,5 +1,6 @@
 package Tavi007.Materia.inventory;
 
+import Tavi007.Materia.items.BaseMateria;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -8,17 +9,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
 public class EquippingStationInventory implements IInventory {
-	   private final NonNullList<ItemStack> stackList;
-	   private final Container eventHandler;
+	private final NonNullList<ItemStack> stackList;
+	private final Container eventHandler;
 
 	public EquippingStationInventory(Container eventHandler) { 
 		this.stackList = NonNullList.withSize(9, ItemStack.EMPTY);
 		this.eventHandler = eventHandler;
 	}
-	
+
 	@Override
 	public void clear() {
-	      this.stackList.clear();
+		this.stackList.clear();
 	}
 
 	@Override
@@ -33,22 +34,22 @@ public class EquippingStationInventory implements IInventory {
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-	      return index >= this.getSizeInventory() ? ItemStack.EMPTY : this.stackList.get(index);
+		return index >= this.getSizeInventory() ? ItemStack.EMPTY : this.stackList.get(index);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-	      ItemStack itemstack = ItemStackHelper.getAndSplit(this.stackList, index, count);
-	      if (!itemstack.isEmpty()) {
-	         this.eventHandler.onCraftMatrixChanged(this);
-	      }
+		ItemStack itemstack = ItemStackHelper.getAndSplit(this.stackList, index, count);
+		if (!itemstack.isEmpty()) {
+			this.eventHandler.onCraftMatrixChanged(this);
+		}
 
-	      return itemstack;
+		return itemstack;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-	      return ItemStackHelper.getAndRemove(this.stackList, index);
+		return ItemStackHelper.getAndRemove(this.stackList, index);
 	}
 
 	@Override
@@ -65,7 +66,31 @@ public class EquippingStationInventory implements IInventory {
 
 	@Override
 	public boolean isUsableByPlayer(PlayerEntity player) {
-	      return true;
+		return true;
+	}
+
+	public boolean hasEmptyMateriaSlot() {
+		//check possible MateriaSlots, if at least one is empty
+		//might need some little tweak, once the number of slots depends on the tool
+		for(int id=1; id<this.getSizeInventory(); id++) {
+			if (this.stackList.get(id).isEmpty()) return true;
+		}
+		return false;
+	}
+
+	public void addMateria(ItemStack stack) {
+		if (stack.getItem() instanceof BaseMateria)	{
+			for(int id=1; id<this.getSizeInventory(); id++) {
+				if (this.stackList.get(id).isEmpty()) {
+					this.stackList.set(id, stack);
+					return;
+				}
+			}
+		}
+	}
+
+	public void setTool(ItemStack stack) {
+		this.stackList.set(0, stack);
 	}
 
 }
