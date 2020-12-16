@@ -1,6 +1,7 @@
-package Tavi007.Materia.init;
+package Tavi007.Materia.client.init;
 
 import Tavi007.Materia.client.gui.EquippingStationScreen;
+import Tavi007.Materia.init.ContainerTypeList;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
