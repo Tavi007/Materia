@@ -8,5 +8,8 @@
 	
 	"item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
 	
-	"block.materia.equipping_station" : "Equipping Station"
+	"block.materia.equipping_station" : "Equipping Station",
+	
+	"container.materia.equipping_station_container": "Materia Equipping Station",
+	"gui.materia.equipping_station_container": "Materia Equipping Station GUI"
 }
