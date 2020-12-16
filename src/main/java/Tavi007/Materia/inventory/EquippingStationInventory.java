@@ -53,7 +53,7 @@ public class EquippingStationInventory implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		if (index>=0 && index<9) {
+		if (index>=0 && index<this.getSizeInventory()) {
 			this.stackList.set(index, stack);
 			this.eventHandler.onCraftMatrixChanged(this);
 		}
