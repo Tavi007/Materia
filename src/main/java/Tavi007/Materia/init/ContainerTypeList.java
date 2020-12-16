@@ -1,8 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.container.EquippingStationContainer;
-
+import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;

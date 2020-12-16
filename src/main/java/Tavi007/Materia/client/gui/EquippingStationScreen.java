@@ -3,7 +3,7 @@ package Tavi007.Materia.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import Tavi007.Materia.container.EquippingStationContainer;
+import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -40,8 +40,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	 */
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(matrixStack, mouseX, mouseY);
-		this.font.drawString(matrixStack, this.title.getString(), 8.0f, 8.0f, 4210752);
+		
 	}
 
 
@@ -60,9 +59,13 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 	    this.minecraft.getTextureManager().bindTexture(TEXTURE);
+
+		int x = (this.width - this.xSize) / 2;
+		int y = (this.height - this.ySize) / 2;
+		this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
 	}
 
 }

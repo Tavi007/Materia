@@ -1,6 +1,6 @@
 package Tavi007.Materia.blocks;
 
-import Tavi007.Materia.container.EquippingStationContainer;
+import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

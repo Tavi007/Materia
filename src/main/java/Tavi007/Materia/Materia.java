@@ -47,10 +47,6 @@ public class Materia
 		LOGGER.info("clientRegistries method registered.");	
 	}
 	
-	/*
-	 * This is an inner class, you don't need to do this but I have in this case
-	 * We are creating an ItemGroup (previously known as creative tabs)
-	 */	
 	public static class MateriaItemGroup extends ItemGroup {
 
 		public MateriaItemGroup(String name) {
