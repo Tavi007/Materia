@@ -43,12 +43,12 @@ public class EquippingStationContainer extends Container {
 
 		// GUI Slots (Id 36-45)
 		//		this.addSlot(new MateriaToolSlot(new MateriaToolHandler(), 36, 8, 33));
-		this.addSlot(new Slot(stationInventory, 0, 8, 33));
+		this.addSlot(new MateriaToolSlot(stationInventory, 0, 8, 33));
 		for(int column=0; column<4; column++) {
-			this.addSlot(new Slot(stationInventory, column + 1, 34 + column*19, 23));
+			this.addSlot(new MateriaSlot(stationInventory, column + 1, 34 + column*19, 23));
 		}
 		for(int column=0; column<4; column++) {
-			this.addSlot(new Slot(stationInventory, column + 5, 34 + column*19, 45));
+			this.addSlot(new MateriaSlot(stationInventory, column + 5, 34 + column*19, 45));
 		}
 	}
 
@@ -100,6 +100,14 @@ public class EquippingStationContainer extends Container {
 				playerIn.dropItem(stack, false);
 			}
 		}
+	}
+	
+	public boolean hasEmptyMateriaToolSlot() {
+		return this.stationInventory.hasEmptyMateriaToolSlot();
+	}
+	
+	public ItemStack getMateriaTool() {
+		return this.stationInventory.getStackInSlot(0);
 	}
 
 }

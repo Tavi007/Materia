@@ -78,6 +78,10 @@ public class EquippingStationInventory implements IInventory {
 		return false;
 	}
 
+	public boolean hasEmptyMateriaToolSlot() {
+		return this.stackList.get(0).isEmpty();
+	}
+
 	public void addMateria(ItemStack stack) {
 		if (stack.getItem() instanceof BaseMateria)	{
 			for(int id=1; id<this.getSizeInventory(); id++) {
