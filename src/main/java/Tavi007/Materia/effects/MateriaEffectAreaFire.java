@@ -13,10 +13,14 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 	
 	public MateriaEffectAreaFire(FireMateria fire, AreaMateria area){
 		super("Area Fire");
-		this.materiaList.add(fire);
-		this.materiaList.add(area);
+		this.levelList.add(fire.level);
+		this.levelList.add(area.level);
 	}
-
+	
+	public MateriaEffectAreaFire(AreaMateria area, FireMateria fire){
+		this(fire, area);
+	}
+	
 	public MateriaEffectAreaFire(){
 		super("Area Fire");
 	}
@@ -28,7 +32,7 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 
 	@Override
 	public int getAreaLevel() {
-		return materiaList.get(1).level;
+		return levelList.get(1);
 	}
 
 	@Override

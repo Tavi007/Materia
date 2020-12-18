@@ -12,7 +12,7 @@ public class MateriaEffectFire extends MateriaEffect implements IMateriaEffectRe
 	
 	public MateriaEffectFire(FireMateria fire){
 		super("Fire");
-		this.materiaList.add(fire);
+		this.levelList.add(fire.level);
 	}
 	
 	public MateriaEffectFire(){

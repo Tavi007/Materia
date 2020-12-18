@@ -1,9 +1,14 @@
 package Tavi007.Materia.client.gui;
 
+import java.awt.Color;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
+import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.items.MateriaToolSlot;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -11,8 +16,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class EquippingStationScreen extends ContainerScreen<EquippingStationContainer> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("materia", "textures/gui/equipping_station_container.png");
-	
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/equipping_station_container.png");
+
 	public EquippingStationScreen(EquippingStationContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.guiLeft = 0;
@@ -40,9 +45,38 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	 */
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		
+		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY, 4210752);
+		if (!this.container.hasEmptyMateriaToolSlot()) {
+			IMateriaTool materiaTool = (IMateriaTool) this.container.getMateriaToolStack().getItem();
+			drawMateriaSlots(matrixStack, 35, 26, materiaTool.getTopSlots());
+			drawMateriaSlots(matrixStack, 35, 49, materiaTool.getBotSlots());
+		}
 	}
 
+	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlot[] slots) {
+		int[] x = {startX};
+		int[] y = {startY};
+		for (int i=0; i<slots.length; i++){
+			switch(slots[i].getNoSlots()) {
+			case 1:
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
+				x[0] += 17;
+				break;
+			case 2:
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
+				x[0] += 34;
+				break;
+			case 3:
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0= =0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
+				x[0] += 51;
+				break;
+			default:
+				break;
+			}
+		}
+
+	}
 
 	/*
 	 * This method is called every tick and is for drawing everything in the
@@ -61,7 +95,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-	    this.minecraft.getTextureManager().bindTexture(TEXTURE);
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;

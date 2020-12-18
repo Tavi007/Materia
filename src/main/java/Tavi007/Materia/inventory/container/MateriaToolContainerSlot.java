@@ -7,9 +7,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
-public class MateriaToolSlot extends Slot {
+public class MateriaToolContainerSlot extends Slot {
 
-	public MateriaToolSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
+	public MateriaToolContainerSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 		super(inventoryIn, index, xPosition, yPosition);
 	}
 

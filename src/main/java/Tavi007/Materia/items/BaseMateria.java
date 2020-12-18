@@ -1,7 +1,10 @@
 package Tavi007.Materia.items;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -48,4 +51,16 @@ public class BaseMateria extends Item {
 	public boolean hasEffect(ItemStack stack) {
       return level >= maxLevel;
    }
+	
+	@Override
+    @Nullable
+    public CompoundNBT getShareTag(ItemStack stack) {
+        return stack.getTag();
+    }
+	
+	@Override
+    @Nullable
+    public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+        stack.setTag(nbt);
+    }
 }

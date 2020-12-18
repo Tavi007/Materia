@@ -12,7 +12,7 @@ public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRec
 	
 	public MateriaEffectIce(IceMateria ice){
 		super("Ice");
-		this.materiaList.add(ice);
+		this.levelList.add(ice.level);
 	}
 
 	public MateriaEffectIce(){
