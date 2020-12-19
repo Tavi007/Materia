@@ -1,21 +1,22 @@
 package Tavi007.Materia.items;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Tavi007.Materia.effects.MateriaEffect;
 import net.minecraft.item.ItemStack;
 
-public class MateriaToolSlot {
+public class MateriaToolSlotCollection {
 
 	public ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();;
 	private int noSlots = 1;
-	private ItemStack[] materiaStacks = new ItemStack[1];;
+	private ItemStack[] materiaStacks = new ItemStack[1]; //also contains empty stacks
 
-	public MateriaToolSlot(int noSlots) {
+	public MateriaToolSlotCollection(int noSlots) {
 		if (noSlots>0 && noSlots<4) {
 			this.noSlots = noSlots;
 			materiaStacks = new ItemStack[noSlots];
-			materiaStacks[0] = ItemStack.EMPTY;
+			Arrays.fill(materiaStacks, 0, noSlots, ItemStack.EMPTY);
 		}
 		else {
 			//incorrect constructor call.
@@ -23,25 +24,10 @@ public class MateriaToolSlot {
 		}
 	}
 	
-	public MateriaToolSlot(int noSlots, ItemStack[] materiaStacks) {
-		this(noSlots);
-		if(materiaStacks.length < noSlots) {
-			//check if materiaStacks only contains BaseMateria stacks
-			boolean onlyMateriaStacks = true;
-			for(int i=0; i<materiaStacks.length; i++) {
-				if ( !(materiaStacks[i].isEmpty() || materiaStacks[i].getItem() instanceof BaseMateria) ) {
-					onlyMateriaStacks = false;
-					break;
-				}
-			}
-			if(onlyMateriaStacks) this.materiaStacks = materiaStacks;
-			
-			//compute effectList (empty for now)
-			computeEffectList();
-		}
-		else {
-			//incorrect constructor call. 
-		}
+	public MateriaToolSlotCollection(ItemStack[] materiaStacks) {
+		noSlots = materiaStacks.length;
+		this.materiaStacks = materiaStacks;
+		computeEffectList();
 	}
 	
 	public int getNoSlots() {

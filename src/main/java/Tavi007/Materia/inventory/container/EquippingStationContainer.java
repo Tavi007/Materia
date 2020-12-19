@@ -7,7 +7,7 @@ import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationInventory;
 import Tavi007.Materia.items.BaseMateria;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaToolSlot;
+import Tavi007.Materia.items.MateriaToolSlotCollection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -22,9 +22,8 @@ public class EquippingStationContainer extends Container {
 
 	private final IWorldPosCallable canInteractWithCallable;
 	private final EquippingStationInventory stationInventory = new EquippingStationInventory(this);
-	
-	int noMateriaSlots = 0;
-	
+
+	private final int noPlayerInventorySlots = 36;
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
@@ -35,64 +34,71 @@ public class EquippingStationContainer extends Container {
 		int slotSizePlus2 = 18;
 		// Hotbar (Id 0-8)
 		for (int column = 0; column < 9; column++) {
-			this.addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), 142));
+			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), 142));
 		}
 
 		// Player Inventory (Id 9-35)
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
-				this.addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
+				addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
 			}
 		}
 
 		// MateriaToolSlot (Id 36)
-		this.addSlot(new MateriaToolContainerSlot(stationInventory, 0, 8, 33));
-		//MateriSlots will be added on the fly, depending on the tool.
+		addSlot(new MateriaToolContainerSlot(stationInventory, 0, 8, 33));
+		//MateriaSlots will be added on the fly, depending on the tool.
 	}
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
 		this(windowId, playerInventory, playerInventory.player.world, new BlockPos(playerInventory.player.getPositionVec()) );
 	}
 
+
+
+
+
+
+
 	@Override
 	public void putStackInSlot(int slotId, ItemStack stack) {
-		this.getSlot(slotId).putStack(stack);
-		if(slotId == 36) {
-			if(stack.getItem() instanceof IMateriaTool) {
-				IMateriaTool materiaTool = (IMateriaTool) stack.getItem();
-				//start index must be 1 (cause 0 ist for the MateriaTool)
-				int materiaSlotCounter = addMateriaSlots(materiaTool.getTopSlots(), 1, 34, 23);
-				addMateriaSlots(materiaTool.getBotSlots(), materiaSlotCounter, 34 , 45);
-			}
-			else if(stack.isEmpty()) {
-				//remove slots
-			}
-			else {
-				//this should not have happend
-			}
-			
+		int noStationInvenotrySlots = stationInventory.getInventoryStackLimit();
+		if(slotId>=0 && slotId<noPlayerInventorySlots) {
+			getSlot(slotId).putStack(stack);
 		}
+		else if (slotId == noPlayerInventorySlots && stack.getItem() instanceof IMateriaTool) {
+			
+			
+			
+			
+			
+			
+			IMateriaTool materiaTool = (IMateriaTool) stack.getItem();
+			//start index must be 1 (cause 0 ist for the MateriaTool)
+			int materiaSlotCounter = addMateriaSlots(materiaTool.getTopSlots(), 1, 34, 23);
+			addMateriaSlots(materiaTool.getBotSlots(), materiaSlotCounter, 34 , 45);
+		}
+		else if(slotId>noPlayerInventorySlots && slotId<noPlayerInventorySlots+noStationInvenotrySlots && stack.getItem() instanceof BaseMateria) {
 
-		//use this functions to compute effects of the tool
-		//this functions triggers everytime an item is put into the GUI
+		}
 	}
-	
+
 	/*
 	 * toolSlots are only one row
 	 */
-	private int addMateriaSlots(MateriaToolSlot[] toolSlots, int startCounter, int startX, int startY) {
+	private int addMateriaSlots(MateriaToolSlotCollection[] toolSlots, int startCounter, int startX, int startY) {
 		for(int i=0; i<toolSlots.length; i++){
 			for (int j=0; j<toolSlots[i].getNoSlots(); j++) {
-				this.addSlot(new MateriaContainerSlot(stationInventory, startCounter, startX, startY));
+				addSlot(new MateriaContainerSlot(stationInventory, startCounter, startX, startY));
 				startX += 19;
 				startCounter += 1;
-				noMateriaSlots +=1;
 			}
 		}
 		return startCounter;
 	}
-	
-	
+
+
+
+
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
@@ -103,27 +109,29 @@ public class EquippingStationContainer extends Container {
 	@Nonnull
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int sourceSlotIndex) {
+		int playerInventorySize = player.inventory.getSizeInventory();
 
-		// selected slot is hotbar or playerInventory
-		if (sourceSlotIndex>=0 && sourceSlotIndex<35) {
+		if (sourceSlotIndex>=0 && sourceSlotIndex<playerInventorySize) {
+			// selected slot is from hotbar or playerInventory
 			ItemStack stack = player.inventory.getStackInSlot(sourceSlotIndex);
 			ItemStack copyStack = stack.copy();
-			if (stack.getItem() instanceof IMateriaTool && stationInventory.getStackInSlot(0).isEmpty()) {
-				stationInventory.setTool(copyStack);
+			if (stack.getItem() instanceof IMateriaTool && stationInventory.isMateriaToolSlotEmpty()) {
+				stationInventory.setMateriaToolStack(copyStack);
 				player.inventory.removeStackFromSlot(sourceSlotIndex);
 				return copyStack;
 			}
 			else if (stack.getItem() instanceof BaseMateria && stationInventory.hasEmptyMateriaSlot()) {
-				stationInventory.addMateria(copyStack);
+				stationInventory.shiftClickAddMateria(copyStack);
 				player.inventory.removeStackFromSlot(sourceSlotIndex);
 				return copyStack;
 			}
 		}
-		else if (sourceSlotIndex >= 36 && sourceSlotIndex<45) {
-			ItemStack stack = stationInventory.getStackInSlot(sourceSlotIndex-36);
+		else if (sourceSlotIndex>playerInventorySize && sourceSlotIndex<stationInventory.getSizeInventory()+playerInventorySize) {
+			// selected slot is from stationInventory
+			ItemStack stack = stationInventory.getStackInSlot(sourceSlotIndex-playerInventorySize);
 			ItemStack copyStack = stack.copy();
 			if (player.inventory.addItemStackToInventory(copyStack)) {
-				stationInventory.removeStackFromSlot(sourceSlotIndex-36);
+				stationInventory.removeStackFromSlot(sourceSlotIndex-playerInventorySize);
 				return copyStack;
 			}
 		}
@@ -140,11 +148,11 @@ public class EquippingStationContainer extends Container {
 		}
 	}
 
-	public boolean hasEmptyMateriaToolSlot() {
-		return this.stationInventory.hasEmptyMateriaToolSlot();
+	public boolean isMateriaToolSlotEmpty() {
+		return stationInventory.isMateriaToolSlotEmpty();
 	}
 
 	public ItemStack getMateriaToolStack() {
-		return this.stationInventory.getStackInSlot(0);
+		return stationInventory.getMateriaToolStack();
 	}
 }

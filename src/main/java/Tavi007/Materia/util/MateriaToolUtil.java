@@ -7,7 +7,7 @@ import Tavi007.Materia.effects.IMateriaEffectArea;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.BaseMateria;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaToolSlot;
+import Tavi007.Materia.items.MateriaToolSlotCollection;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -41,21 +41,21 @@ public class MateriaToolUtil {
 	/////////////////
 	// getFomSlots //
 	/////////////////
-	public static ArrayList<BaseMateria> getMateriaFromSlots(MateriaToolSlot[] slots) {
+	public static ArrayList<BaseMateria> getMateriaFromSlots(MateriaToolSlotCollection[] slots) {
 		ArrayList<BaseMateria> materiaList = new ArrayList<BaseMateria>();
 		for(int i=0; i<slots.length; i++) {
 			materiaList.addAll(slots[i].getMateriaList());
 		}
 		return materiaList;
 	}
-	public static ArrayList<ItemStack> getMateriaStacksFromSlots(MateriaToolSlot[] slots) {
+	public static ArrayList<ItemStack> getMateriaStacksFromSlots(MateriaToolSlotCollection[] slots) {
 		ArrayList<ItemStack> materiaStackList = new ArrayList<ItemStack>();
 		for(int i=0; i<slots.length; i++) {
 			materiaStackList.addAll(slots[i].getMateriaStackList());
 		}
 		return materiaStackList;
 	}
-	public static ArrayList<MateriaEffect> getEffectsFromSlots(MateriaToolSlot[] slots) {
+	public static ArrayList<MateriaEffect> getEffectsFromSlots(MateriaToolSlotCollection[] slots) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 		for(int i=0; i<slots.length; i++) {
 			effectList.addAll(slots[i].effectList);
@@ -72,7 +72,7 @@ public class MateriaToolUtil {
 		addAP(tool.getTopSlots(), amount);
 		addAP(tool.getBotSlots(), amount);
 	}
-	public static void addAP(MateriaToolSlot[] slots, int amount) {
+	public static void addAP(MateriaToolSlotCollection[] slots, int amount) {
 		for(int i=0; i<slots.length; i++) {
 			slots[i].addAP(amount);
 		}

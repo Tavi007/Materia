@@ -8,7 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaToolSlot;
+import Tavi007.Materia.items.MateriaToolSlotCollection;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -47,14 +47,14 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY, 4210752);
-		if (!this.container.hasEmptyMateriaToolSlot()) {
+		if (!this.container.isMateriaToolSlotEmpty()) {
 			IMateriaTool materiaTool = (IMateriaTool) this.container.getMateriaToolStack().getItem();
 			drawMateriaSlots(matrixStack, 35, 26, materiaTool.getTopSlots());
 			drawMateriaSlots(matrixStack, 35, 49, materiaTool.getBotSlots());
 		}
 	}
 
-	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlot[] slots) {
+	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlotCollection[] slots) {
 		int[] x = {startX};
 		int[] y = {startY};
 		for (int i=0; i<slots.length; i++){
