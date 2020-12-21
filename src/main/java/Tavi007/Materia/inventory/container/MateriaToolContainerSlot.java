@@ -3,14 +3,14 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.items.IMateriaTool;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class MateriaToolContainerSlot extends Slot {
+public class MateriaToolContainerSlot extends SlotItemHandler {
 
-	public MateriaToolContainerSlot(IInventory inventoryIn, int index, int xPosition, int yPosition) {
-		super(inventoryIn, index, xPosition, yPosition);
+	public MateriaToolContainerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+		super(itemHandler, index, xPosition, yPosition);
 	}
 
     @Override
