@@ -1,6 +1,8 @@
 package Tavi007.Materia.client.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,8 +11,15 @@ import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaToolSlotCollection;
+import Tavi007.Materia.util.MateriaToolUtil;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
@@ -26,31 +35,53 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		this.ySize = 166;
 	}
 
-	/*
-	 * This method is called every tick and does the basic rendering of the GUI,
-	 * rendering the background, and rendering any hovering tool tips, if the user
-	 * does happen to have their mouse over it.
-	 */
 	@Override
 	public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
 		this.renderBackground(matrixStack);
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
-	/*
-	 * This method is called every tick and is for drawing everything in front of
-	 * the background, that being slots, tooltips, and anything that is infront. In
-	 * here we draw the 2 strings for the name of this screen and the name of the
-	 * player inventory.
-	 */
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY, 4210752);
-		if (!this.container.isMateriaToolSlotEmpty()) {
-			IMateriaTool materiaTool = (IMateriaTool) this.container.getMateriaToolStack().getItem();
-			drawMateriaSlots(matrixStack, 35, 26, materiaTool.getTopSlots());
-			drawMateriaSlots(matrixStack, 35, 49, materiaTool.getBotSlots());
+		ItemStack toolStack = this.container.getMateriaToolStack();
+		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
+			Item item = toolStack.getItem();
+			drawMateriaSlots(matrixStack, 35, 26, ((IMateriaTool) item).getTopSlots());
+			drawMateriaSlots(matrixStack, 35, 49, ((IMateriaTool) item).getBotSlots());
+			
+			//draw effect text
+			List<ITextComponent> text = new ArrayList<ITextComponent>();
+			if(item instanceof PickaxeItem) {
+				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+					effect.addPickaxeToolTip(text);
+				});
+			}
+			else if(item instanceof AxeItem) {
+				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+					effect.addAxeToolTip(text);
+				});
+			}
+			else if(item instanceof ShovelItem) {
+				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+					effect.addShovelToolTip(text);
+				});
+			}
+			else if(item instanceof SwordItem) {
+				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+					effect.addSwordToolTip(text);
+				});
+			}
+//			else if(item instanceof WandItem) {
+//				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+//					effect.addWandToolTip(text);
+//				});
+//			}
+			
+			int startX = 116;
+			int startY = 8;
+			// draw the text starting from (x,y)
 		}
 	}
 
@@ -78,19 +109,6 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 
 	}
 
-	/*
-	 * This method is called every tick and is for drawing everything in the
-	 * background(behind the slots and any popups). In here we first use
-	 * RenderSystem.color4f, which makes it do any following rendering operations
-	 * with full red, green, blue and alpha. Then we bind the background texture to
-	 * this screen. Then we get the X and Y by taking the xSize and ySize from the
-	 * width and height, and dividing those values by 2. This allows us to get the
-	 * position of where we should start drawing the texture. Then we call the blit
-	 * method which takes in the X and Y positions that we want to start drawing at.
-	 * Then the location in the texture that we want to start drawing from, in our
-	 * case the top left(0, 0). Then the width and height that we are drawing(which
-	 * is our X and Y size).
-	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {

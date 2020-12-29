@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Tavi007.Materia.effects.MateriaEffect;
+import Tavi007.Materia.effects.MateriaEffectFire;
 import net.minecraft.item.ItemStack;
 
 public class MateriaToolSlotCollection {
@@ -17,6 +18,9 @@ public class MateriaToolSlotCollection {
 			this.noSlots = noSlots;
 			materiaStacks = new ItemStack[noSlots];
 			Arrays.fill(materiaStacks, 0, noSlots, ItemStack.EMPTY);
+			
+			
+			effectList.add(new MateriaEffectFire()); //testing
 		}
 		else {
 			//incorrect constructor call.

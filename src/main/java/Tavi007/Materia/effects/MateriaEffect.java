@@ -18,7 +18,7 @@ public class MateriaEffect {
 
 	public String getName() {
 		return name;
-	};
+	}
 
 	public ArrayList<Integer> getMateriaList(){
 		return levelList;
@@ -26,5 +26,21 @@ public class MateriaEffect {
 	
 	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
 		return;
-	};
+	}
+	
+	public void addAxeToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
+	
+	public void addShovelToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
+	
+	public void addSwordToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
+	
+	public void addWandToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
 }

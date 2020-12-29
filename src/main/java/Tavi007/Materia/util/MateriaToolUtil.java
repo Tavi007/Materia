@@ -62,7 +62,13 @@ public class MateriaToolUtil {
 		}
 		return effectList;
 	}
-	
+	public static int getNumberOfSlots(MateriaToolSlotCollection[] slots) {
+		int ret = 0;
+		for(int i=0; i<slots.length; i++) {
+			ret += slots[i].getNoSlots();
+		}
+		return ret;
+	}
 
 	
 	///////////////////////////////
@@ -77,7 +83,6 @@ public class MateriaToolUtil {
 			slots[i].addAP(amount);
 		}
 	}
-	
 	
 	
 	
