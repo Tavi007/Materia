@@ -1,6 +1,6 @@
 {
-	"item.materia.base_materia" : "Base Materia",
 	"itemGroup.materia_group" : "Materia",
+	"item.materia.base_materia" : "Base Materia",
 	
 	"item.materia.area_materia" : "Area Materia",
 	"item.materia.ice_materia" : "Ice Materia",
@@ -10,6 +10,5 @@
 	
 	"block.materia.equipping_station" : "Equipping Station",
 	
-	"container.materia.equipping_station_container": "Materia Equipping Station",
-	"gui.materia.equipping_station_container": "Materia Equipping Station GUI"
+	"container.equipping_station": "Equipping Station"
 }

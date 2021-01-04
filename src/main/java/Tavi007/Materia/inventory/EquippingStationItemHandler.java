@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.MateriaToolUtil;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
@@ -37,11 +38,8 @@ public class EquippingStationItemHandler implements IItemHandler {
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		ItemStack stackInSlot = getStackInSlot(slot);
-		if (ItemStack.areItemsEqual(stackInSlot, ItemStack.EMPTY)) {
+		if (stackInSlot.isEmpty()) {
 			stackList.set(slot, stack);
-		}
-		else if (ItemStack.areItemsEqual(stackInSlot, stack) && !simulate) {
-
 		}
 		return stackInSlot;
 	}
@@ -49,7 +47,9 @@ public class EquippingStationItemHandler implements IItemHandler {
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		return getStackInSlot(slot).getStack().split(amount);
+		ItemStack stack = getStackInSlot(slot).getStack();
+		//stackList.set(slot, ItemStack.EMPTY);
+		return stack;
 	}
 
 

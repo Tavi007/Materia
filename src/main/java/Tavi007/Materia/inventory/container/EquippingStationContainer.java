@@ -27,7 +27,6 @@ public class EquippingStationContainer extends Container {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 
-
 		//MateriaSlots (Id 0-7)
 		int startX = 34;
 		int startY = 23;
@@ -88,9 +87,20 @@ public class EquippingStationContainer extends Container {
 				if (!mergeItemStack(sourceStack, 0, 8, false)){
 					return ItemStack.EMPTY;
 				}
+				else if (!mergeItemStack(sourceStack, 18, 45, false)){
+					return ItemStack.EMPTY;
+				}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
 				if (!mergeItemStack(sourceStack, 8, 9, false)){
+					return ItemStack.EMPTY; 
+				}
+				else if (!mergeItemStack(sourceStack, 18, 45, false)){
+					return ItemStack.EMPTY;
+				}
+			}
+			else {
+				if (!mergeItemStack(sourceStack, 18, 45, false)){
 					return ItemStack.EMPTY; 
 				}
 			}
@@ -101,9 +111,20 @@ public class EquippingStationContainer extends Container {
 				if (!mergeItemStack(sourceStack, 0, 8, false)){
 					return ItemStack.EMPTY;
 				}
+				else if (!mergeItemStack(sourceStack, 9, 18, false)){
+					return ItemStack.EMPTY;
+				}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
 				if (!mergeItemStack(sourceStack, 8, 9, false)){
+					return ItemStack.EMPTY; 
+				}
+				else if (!mergeItemStack(sourceStack, 9, 18, false)){
+					return ItemStack.EMPTY;
+				}
+			}
+			else {
+				if (!mergeItemStack(sourceStack, 9, 18, false)){
 					return ItemStack.EMPTY; 
 				}
 			}
