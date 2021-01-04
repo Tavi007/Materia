@@ -49,10 +49,7 @@ public class EquippingStationItemHandler implements IItemHandler {
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		if(!simulate) {
-			return getStackInSlot(slot).getStack().split(amount);
-		}
-		return ItemStack.EMPTY;
+		return getStackInSlot(slot).getStack().split(amount);
 	}
 
 
