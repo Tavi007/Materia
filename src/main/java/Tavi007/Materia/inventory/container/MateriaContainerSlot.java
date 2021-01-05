@@ -30,9 +30,9 @@ public class MateriaContainerSlot extends SlotItemHandler {
 
     @Override
     public void putStack(@Nonnull ItemStack stack) {
-    	if(getItemHandler() instanceof EquippingStationItemHandler) {
-    		((EquippingStationItemHandler) getItemHandler()).setMateria(slotIndex, stack);
-    	}
+		if (getItemHandler().isItemValid(slotIndex, stack)) {
+			getItemHandler().insertItem(slotIndex, stack, false);
+		}
     }
     
     @Override

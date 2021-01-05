@@ -2,10 +2,11 @@ package Tavi007.Materia.inventory;
 
 import java.util.ArrayList;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
+import Tavi007.Materia.items.BaseMateria;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.MateriaToolUtil;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
@@ -41,6 +42,20 @@ public class EquippingStationItemHandler implements IItemHandler {
 		if (stackInSlot.isEmpty()) {
 			stackList.set(slot, stack);
 		}
+		if(!stack.isEmpty()) {
+			if(stack.getItem() instanceof IMateriaTool) {
+				//get Materia from Tool and set stackList accordingly
+
+			}
+			else if (stack.getItem() instanceof BaseMateria) {
+				//add to tool and recalculate effects
+			}
+			else {
+				//should not have happened
+				Materia.LOGGER.warn("ItemStack was not supposed to be inserted. The ItemStack was " + stack.getItem().getName().getString());
+			}
+		}
+
 		return stackInSlot;
 	}
 
@@ -48,7 +63,23 @@ public class EquippingStationItemHandler implements IItemHandler {
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
 		ItemStack stack = getStackInSlot(slot).getStack();
-		//stackList.set(slot, ItemStack.EMPTY);
+		if(!stack.isEmpty()) {
+			if(stack.getItem() instanceof IMateriaTool) {
+				//clear Materia inventory
+				for(int i=0; i<8; i++) {
+					stackList.set(i, ItemStack.EMPTY);
+				}
+
+			}
+			else if (stack.getItem() instanceof BaseMateria) {
+				//remove from tool and recalculate effects
+
+			}
+			else {
+				//should not have happened
+				Materia.LOGGER.warn("ItemStack was not supposed to be in this Slot. The ItemStack was " + stack.getItem().getName().getString());
+			}
+		}
 		return stack;
 	}
 
@@ -84,20 +115,5 @@ public class EquippingStationItemHandler implements IItemHandler {
 			}
 		}
 		return false;
-	}
-
-	public void setMateria(int slotIndex, ItemStack stack) {
-		ItemStack itemstack = container.getMateriaToolStack();
-		if(itemstack.isEmpty()) {
-			return; //should not have happened
-		}
-		IMateriaTool tool = (IMateriaTool) itemstack.getItem();
-		if(slotIndex<4) {
-
-		}
-		else {
-
-		}
-		
 	}
 }

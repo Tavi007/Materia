@@ -2,7 +2,6 @@ package Tavi007.Materia.inventory.container;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -19,12 +18,9 @@ public class MateriaToolContainerSlot extends SlotItemHandler {
 
     @Override
     public void putStack(@Nonnull ItemStack stack) {
-    	if(getItemHandler() instanceof EquippingStationItemHandler) {
-    		EquippingStationItemHandler itemHandler = (EquippingStationItemHandler) getItemHandler();
-    		if (itemHandler.isItemValid(slotIndex, stack)) {
-    			itemHandler.insertItem(slotIndex, stack, false);
-    		}
-    	}
+		if (getItemHandler().isItemValid(slotIndex, stack)) {
+			getItemHandler().insertItem(slotIndex, stack, false);
+		}
     }
     
     @Override
