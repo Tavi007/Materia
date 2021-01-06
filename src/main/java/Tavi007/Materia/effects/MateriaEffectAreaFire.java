@@ -20,10 +20,6 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 	public MateriaEffectAreaFire(AreaMateria area, FireMateria fire){
 		this(fire, area);
 	}
-	
-	public MateriaEffectAreaFire(){
-		super("Area Fire");
-	}
 
 	@Override
 	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {

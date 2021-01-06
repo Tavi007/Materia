@@ -14,10 +14,6 @@ public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRec
 		super("Ice");
 		this.levelList.add(ice.level);
 	}
-
-	public MateriaEffectIce(){
-		super("Ice");
-	}
 	
 	@Override
 	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {

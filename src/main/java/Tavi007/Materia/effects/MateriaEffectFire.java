@@ -14,10 +14,6 @@ public class MateriaEffectFire extends MateriaEffect implements IMateriaEffectRe
 		super("Fire");
 		this.levelList.add(fire.level);
 	}
-	
-	public MateriaEffectFire(){
-		super("Fire");
-	}
 
 	@Override
 	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {
@@ -26,6 +22,6 @@ public class MateriaEffectFire extends MateriaEffect implements IMateriaEffectRe
 
 	@Override
 	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		tooltip.add(new StringTextComponent("Fire Pick Effect"));
+		tooltip.add(new StringTextComponent("Fire Pick"));
 	};
 }

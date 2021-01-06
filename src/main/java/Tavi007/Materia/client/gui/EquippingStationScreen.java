@@ -22,6 +22,7 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class EquippingStationScreen extends ContainerScreen<EquippingStationContainer> {
 
@@ -52,55 +53,59 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 			drawMateriaSlots(matrixStack, 35, 49, ((IMateriaTool) item).getBotSlots());
 			
 			//draw effect text
-			List<ITextComponent> text = new ArrayList<ITextComponent>();
+			List<ITextComponent> textList = new ArrayList<ITextComponent>();
 			if(item instanceof PickaxeItem) {
-				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
-					effect.addPickaxeToolTip(text);
+				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+					effect.addPickaxeToolTip(textList);
 				});
 			}
 			else if(item instanceof AxeItem) {
-				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
-					effect.addAxeToolTip(text);
+				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+					effect.addAxeToolTip(textList);
 				});
 			}
 			else if(item instanceof ShovelItem) {
-				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
-					effect.addShovelToolTip(text);
+				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+					effect.addShovelToolTip(textList);
 				});
 			}
 			else if(item instanceof SwordItem) {
-				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
-					effect.addSwordToolTip(text);
+				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+					effect.addSwordToolTip(textList);
 				});
 			}
 //			else if(item instanceof WandItem) {
-//				MateriaToolUtil.getEffectsFromTool((IMateriaTool) item).forEach( effect -> {
+//				MateriaToolUtil.getEffectsTool((IMateriaTool) item).forEach( effect -> {
 //					effect.addWandToolTip(text);
 //				});
 //			}
 			
-			int startX = 116;
-			int startY = 8;
-			// draw the text starting from (x,y)
+			// draw the text starting  (x,y)
+			//not quite happy here. I want colorful text.
+			int startX = 117;
+			int[] startY = {9};
+			textList.forEach( text -> {
+				this.minecraft.fontRenderer.func_243248_b(matrixStack, text, (float) startX, (float) startY[0], Color.darkGray.getRGB());
+				startY[0] += this.minecraft.fontRenderer.FONT_HEIGHT;
+			});
+			
 		}
 	}
 
 	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlotCollection[] slots) {
-		int[] x = {startX};
-		int[] y = {startY};
 		for (int i=0; i<slots.length; i++){
 			switch(slots[i].getNoSlots()) {
 			case 1:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
-				x[0] += 17;
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
+				startX += 17;
 				break;
 			case 2:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
-				x[0] += 34;
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
+				startX += 34;
 				break;
 			case 3:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0= =0 ", (float) x[0], (float) y[0], Color.darkGray.getRGB());
-				x[0] += 51;
+				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0= =0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
+				startX += 51;
 				break;
 			default:
 				break;

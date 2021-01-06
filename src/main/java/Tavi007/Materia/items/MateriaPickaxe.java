@@ -45,7 +45,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		MateriaToolUtil.getEffectsFromTool(this).forEach( effect ->{
+		MateriaToolUtil.getEffects(this).forEach( effect ->{
 			effect.addPickaxeToolTip(tooltip);
 		});
 	}

@@ -16,46 +16,74 @@ import net.minecraft.world.server.ServerWorld;
 
 public class MateriaToolUtil {
 
+	///////////////
+	// setOnTool //
+	///////////////
+	public static void setMateriaStack(IMateriaTool tool, ItemStack stack, int id) {
+		if (id>=0 && id<4) {
+			setMateriaStack(tool.getTopSlots(), stack, id);
+		}
+		else if (id>=4 && id<8) {
+			setMateriaStack(tool.getBotSlots(), stack, id-4);
+		}
+	}
+
 	////////////////
-	// getFomTool //
+	// setOnSlots //
 	////////////////
-	public static ArrayList<BaseMateria> getMateriaFromTool(IMateriaTool tool) {
+	public static void setMateriaStack(MateriaToolSlotCollection[] slots, ItemStack stack, int id) {
+		int counter = 0;
+		for (int i=0; i<slots.length; i++) {
+			if(id < counter+slots[i].getNoSlots()) {
+				slots[i].setMateriaStack(stack, id-counter);
+				return;
+			}
+			counter += slots[i].getNoSlots();
+		}
+	}
+
+
+
+	/////////////////
+	// getFromTool //
+	/////////////////
+	public static ArrayList<BaseMateria> getMateria(IMateriaTool tool) {
 		ArrayList<BaseMateria> materiaList = new ArrayList<BaseMateria>();
-		materiaList.addAll(getMateriaFromSlots(tool.getTopSlots()));
-		materiaList.addAll(getMateriaFromSlots(tool.getBotSlots()));
+		materiaList.addAll(getMateria(tool.getTopSlots()));
+		materiaList.addAll(getMateria(tool.getBotSlots()));
 		return materiaList;
 	}
-	public static ArrayList<ItemStack> getMateriaStacksFromTool(IMateriaTool tool) {
+	public static ArrayList<ItemStack> getMateriaStacks(IMateriaTool tool) {
 		ArrayList<ItemStack> materiaStackList = new ArrayList<ItemStack>();
-		materiaStackList.addAll(getMateriaStacksFromSlots(tool.getTopSlots()));
-		materiaStackList.addAll(getMateriaStacksFromSlots(tool.getBotSlots()));
+		materiaStackList.addAll(getMateriaStacks(tool.getTopSlots()));
+		materiaStackList.addAll(getMateriaStacks(tool.getBotSlots()));
 		return materiaStackList;
 	}
-	public static ArrayList<MateriaEffect> getEffectsFromTool(IMateriaTool tool) {
+	public static ArrayList<MateriaEffect> getEffects(IMateriaTool tool) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-		effectList.addAll(getEffectsFromSlots(tool.getTopSlots()));
-		effectList.addAll(getEffectsFromSlots(tool.getBotSlots()));
+		effectList.addAll(getEffects(tool.getTopSlots()));
+		effectList.addAll(getEffects(tool.getBotSlots()));
 		return effectList;
 	}
 
-	/////////////////
-	// getFomSlots //
-	/////////////////
-	public static ArrayList<BaseMateria> getMateriaFromSlots(MateriaToolSlotCollection[] slots) {
+	//////////////////
+	// getFromSlots //
+	//////////////////
+	public static ArrayList<BaseMateria> getMateria(MateriaToolSlotCollection[] slots) {
 		ArrayList<BaseMateria> materiaList = new ArrayList<BaseMateria>();
 		for(int i=0; i<slots.length; i++) {
 			materiaList.addAll(slots[i].getMateriaList());
 		}
 		return materiaList;
 	}
-	public static ArrayList<ItemStack> getMateriaStacksFromSlots(MateriaToolSlotCollection[] slots) {
+	public static ArrayList<ItemStack> getMateriaStacks(MateriaToolSlotCollection[] slots) {
 		ArrayList<ItemStack> materiaStackList = new ArrayList<ItemStack>();
 		for(int i=0; i<slots.length; i++) {
 			materiaStackList.addAll(slots[i].getMateriaStackList());
 		}
 		return materiaStackList;
 	}
-	public static ArrayList<MateriaEffect> getEffectsFromSlots(MateriaToolSlotCollection[] slots) {
+	public static ArrayList<MateriaEffect> getEffects(MateriaToolSlotCollection[] slots) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 		for(int i=0; i<slots.length; i++) {
 			effectList.addAll(slots[i].effectList);
@@ -70,7 +98,11 @@ public class MateriaToolUtil {
 		return ret;
 	}
 
-	
+
+
+
+
+
 	///////////////////////////////
 	// Util functions for Events //
 	///////////////////////////////
@@ -83,12 +115,12 @@ public class MateriaToolUtil {
 			slots[i].addAP(amount);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public static int getMaxAreaLevel(IMateriaTool tool) {
-		ArrayList<MateriaEffect> effectList = getEffectsFromTool(tool);
+		ArrayList<MateriaEffect> effectList = getEffects(tool);
 		int[] maxAreaLevel = {0};
 		effectList.forEach(effect -> {
 			if(effect instanceof IMateriaEffectArea) {

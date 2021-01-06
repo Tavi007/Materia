@@ -44,11 +44,23 @@ public class EquippingStationItemHandler implements IItemHandler {
 		}
 		if(!stack.isEmpty()) {
 			if(stack.getItem() instanceof IMateriaTool) {
-				//get Materia from Tool and set stackList accordingly
-
+				//get Materia  Tool and set stackList accordingly
+				IMateriaTool tool = (IMateriaTool) stack.getItem();
+				ArrayList<ItemStack> topStacks = MateriaToolUtil.getMateriaStacks(tool.getTopSlots());
+				for(int i=0; i<topStacks.size(); i++) {
+					stackList.set(i, topStacks.get(i));
+				}
+				ArrayList<ItemStack> botStacks = MateriaToolUtil.getMateriaStacks(tool.getBotSlots());
+				for(int i=0; i<botStacks.size(); i++) {
+					stackList.set(i+4, botStacks.get(i));
+				}
+				
 			}
 			else if (stack.getItem() instanceof BaseMateria) {
 				//add to tool and recalculate effects
+				IMateriaTool tool = (IMateriaTool) getMateriaToolStack().getItem(); //the tool
+				MateriaToolUtil.setMateriaStack(tool, stack, slot);
+				
 			}
 			else {
 				//should not have happened
@@ -69,11 +81,11 @@ public class EquippingStationItemHandler implements IItemHandler {
 				for(int i=0; i<8; i++) {
 					stackList.set(i, ItemStack.EMPTY);
 				}
-
 			}
 			else if (stack.getItem() instanceof BaseMateria) {
 				//remove from tool and recalculate effects
-
+				IMateriaTool tool = (IMateriaTool) getMateriaToolStack().getItem(); //the tool
+				MateriaToolUtil.setMateriaStack(tool, ItemStack.EMPTY, slot);
 			}
 			else {
 				//should not have happened
@@ -115,5 +127,9 @@ public class EquippingStationItemHandler implements IItemHandler {
 			}
 		}
 		return false;
+	}
+	
+	public ItemStack getMateriaToolStack() {
+		return stackList.get(8);
 	}
 }
