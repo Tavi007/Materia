@@ -32,8 +32,8 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		super(screenContainer, inv, titleIn);
 		this.guiLeft = 0;
 		this.guiTop = 0;
-		this.xSize = 176;
-		this.ySize = 166;
+		this.xSize = 175;
+		this.ySize = 191;
 	}
 
 	@Override
@@ -45,12 +45,12 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
-		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY, 4210752);
+		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+28, 4210752);
 		ItemStack toolStack = this.container.getMateriaToolStack();
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			Item item = toolStack.getItem();
-			drawMateriaSlots(matrixStack, 35, 26, ((IMateriaTool) item).getTopSlots());
-			drawMateriaSlots(matrixStack, 35, 49, ((IMateriaTool) item).getBotSlots());
+			drawMateriaSlots(matrixStack, 8, 19, ((IMateriaTool) item).getTopSlots());
+			drawMateriaSlots(matrixStack, 8, 74, ((IMateriaTool) item).getBotSlots());
 			
 			//draw effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();
@@ -82,7 +82,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 			
 			// draw the text starting  (x,y)
 			//not quite happy here. I want colorful text.
-			int startX = 117;
+			int startX = 103;
 			int[] startY = {9};
 			textList.forEach( text -> {
 				this.minecraft.fontRenderer.func_243248_b(matrixStack, text, (float) startX, (float) startY[0], Color.darkGray.getRGB());

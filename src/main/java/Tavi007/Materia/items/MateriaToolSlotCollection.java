@@ -1,6 +1,5 @@
 package Tavi007.Materia.items;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,7 +101,9 @@ public class MateriaToolSlotCollection {
 		if (!combinedEffectfound) {
 			for (int i=0; i<materiaClasses.length; i++) {
 				Class[] materiaClass = {materiaClasses[i]};
-				useEffectConstructor(materiaClass, equippedMateria);
+				ArrayList<BaseMateria> singleMateria = new ArrayList<BaseMateria>();
+				singleMateria.add(equippedMateria.get(i));
+				useEffectConstructor(materiaClass, singleMateria);
 			}
 		}
 		return;

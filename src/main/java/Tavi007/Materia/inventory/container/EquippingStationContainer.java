@@ -28,31 +28,30 @@ public class EquippingStationContainer extends Container {
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 
 		//MateriaSlots (Id 0-7)
-		int startX = 34;
-		int startY = 23;
+		int startX = 8;
+		int startY = 19;
 		for (int i=0; i<4; i++) {
 			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+19*i, startY));
 		}
-		startY = 45;
+		startY = 74;
 		for (int i=0; i<4; i++) {
 			addSlot(new MateriaContainerSlot(stationItemHandler, 4+i, startX+19*i, startY));
 		}
 
 		// MateriaToolSlot (Id 8)
-		startX = 8;
-		startY = 33;
+		startX = 44;
+		startY = 48;
 		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
 
-
-		startY = 142;
-		int slotSizePlus2 = 18;
 		// Hotbar (Id 9-18)
+		startX = 8;
+		startY = 168;
+		int slotSizePlus2 = 18;
 		for (int column = 0; column < 9; column++) {
 			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), startY));
 		}
-
-		startY = 84;
 		// Player Inventory (Id 19-44)
+		startY = 110;
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
 				addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
