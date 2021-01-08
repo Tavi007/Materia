@@ -7,6 +7,7 @@ import Tavi007.Materia.client.init.ScreenList;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.init.ItemList;
+import Tavi007.Materia.init.MateriaEffectList;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,6 +36,9 @@ public class Materia
 		BlockList.BLOCKS.register(modEventBus);
 		BlockList.ITEMS.register(modEventBus);
 		ContainerTypeList.CONTAINER_TYPES.register(modEventBus);
+		
+		MateriaEffectList.init();
+		
 		//register client only
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> Materia::registerClientOnlyEvents);
 		

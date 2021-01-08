@@ -20,8 +20,8 @@ import net.minecraft.world.World;
 
 public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
-	private MateriaToolSlot[] topSlots = {new MateriaToolSlot(1), new MateriaToolSlot(3)};
-	private MateriaToolSlot[] botSlots = {new MateriaToolSlot(2)};
+	private MateriaToolSlotCollection[] topSlots = {new MateriaToolSlotCollection(1), new MateriaToolSlotCollection(3)};
+	private MateriaToolSlotCollection[] botSlots = {new MateriaToolSlotCollection(2)};
 	
 	
 	public MateriaPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder) {
@@ -34,18 +34,18 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	}
 	
 	@Override
-	public MateriaToolSlot[] getTopSlots() {
+	public MateriaToolSlotCollection[] getTopSlots() {
 		return topSlots;
 	}
 
 	@Override
-	public MateriaToolSlot[] getBotSlots() {
+	public MateriaToolSlotCollection[] getBotSlots() {
 		return botSlots;
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		MateriaToolUtil.getEffectsFromTool(this).forEach( effect ->{
+		MateriaToolUtil.getEffects(this).forEach( effect ->{
 			effect.addPickaxeToolTip(tooltip);
 		});
 	}

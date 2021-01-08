@@ -2,12 +2,12 @@ package Tavi007.Materia.inventory.container;
 
 import javax.annotation.Nonnull;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
-import Tavi007.Materia.inventory.EquippingStationInventory;
+import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.BaseMateria;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaToolSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -21,33 +21,43 @@ import net.minecraft.world.World;
 public class EquippingStationContainer extends Container {
 
 	private final IWorldPosCallable canInteractWithCallable;
-	private final EquippingStationInventory stationInventory = new EquippingStationInventory(this);
-	
-	int noMateriaSlots = 0;
-	
+	private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 
-		int startX = 8;
-		int startY = 84;
-		int slotSizePlus2 = 18;
-		// Hotbar (Id 0-8)
-		for (int column = 0; column < 9; column++) {
-			this.addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), 142));
+		//MateriaSlots (Id 0-7)
+		int startX = 34;
+		int startY = 23;
+		for (int i=0; i<4; i++) {
+			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+19*i, startY));
+		}
+		startY = 45;
+		for (int i=0; i<4; i++) {
+			addSlot(new MateriaContainerSlot(stationItemHandler, 4+i, startX+19*i, startY));
 		}
 
-		// Player Inventory (Id 9-35)
+		// MateriaToolSlot (Id 8)
+		startX = 8;
+		startY = 33;
+		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
+
+
+		startY = 142;
+		int slotSizePlus2 = 18;
+		// Hotbar (Id 9-18)
+		for (int column = 0; column < 9; column++) {
+			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), startY));
+		}
+
+		startY = 84;
+		// Player Inventory (Id 19-44)
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
-				this.addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
+				addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
 			}
 		}
-
-		// MateriaToolSlot (Id 36)
-		this.addSlot(new MateriaToolContainerSlot(stationInventory, 0, 8, 33));
-		//MateriSlots will be added on the fly, depending on the tool.
 	}
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
@@ -55,96 +65,119 @@ public class EquippingStationContainer extends Container {
 	}
 
 	@Override
-	public void putStackInSlot(int slotId, ItemStack stack) {
-		this.getSlot(slotId).putStack(stack);
-		if(slotId == 36) {
-			if(stack.getItem() instanceof IMateriaTool) {
-				IMateriaTool materiaTool = (IMateriaTool) stack.getItem();
-				//start index must be 1 (cause 0 ist for the MateriaTool)
-				int materiaSlotCounter = addMateriaSlots(materiaTool.getTopSlots(), 1, 34, 23);
-				addMateriaSlots(materiaTool.getBotSlots(), materiaSlotCounter, 34 , 45);
-			}
-			else if(stack.isEmpty()) {
-				//remove slots
-			}
-			else {
-				//this should not have happend
-			}
-			
-		}
-
-		//use this functions to compute effects of the tool
-		//this functions triggers everytime an item is put into the GUI
-	}
-	
-	/*
-	 * toolSlots are only one row
-	 */
-	private int addMateriaSlots(MateriaToolSlot[] toolSlots, int startCounter, int startX, int startY) {
-		for(int i=0; i<toolSlots.length; i++){
-			for (int j=0; j<toolSlots[i].getNoSlots(); j++) {
-				this.addSlot(new MateriaContainerSlot(stationInventory, startCounter, startX, startY));
-				startX += 19;
-				startCounter += 1;
-				noMateriaSlots +=1;
-			}
-		}
-		return startCounter;
-	}
-	
-	
-
-	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
 	}
+
+
+
 
 	//shift-left click handling
 	@Nonnull
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int sourceSlotIndex) {
+		Slot sourceSlot = inventorySlots.get(sourceSlotIndex);
+		if (sourceSlot == null || !sourceSlot.getHasStack()) return ItemStack.EMPTY;  //EMPTY_ITEM
+		ItemStack sourceStack = sourceSlot.getStack();
+		ItemStack copyOfSourceStack = sourceStack.copy();
 
-		// selected slot is hotbar or playerInventory
-		if (sourceSlotIndex>=0 && sourceSlotIndex<35) {
-			ItemStack stack = player.inventory.getStackInSlot(sourceSlotIndex);
-			ItemStack copyStack = stack.copy();
-			if (stack.getItem() instanceof IMateriaTool && stationInventory.getStackInSlot(0).isEmpty()) {
-				stationInventory.setTool(copyStack);
-				player.inventory.removeStackFromSlot(sourceSlotIndex);
-				return copyStack;
+		if (sourceSlotIndex >= 9 && sourceSlotIndex < 18) {
+			// HotBarSlot clicked
+			if (sourceStack.getItem() instanceof BaseMateria) {
+				if (!mergeItemStack(sourceStack, 0, 8, false)){
+					return ItemStack.EMPTY;
+				}
+				else if (!mergeItemStack(sourceStack, 18, 45, false)){
+					return ItemStack.EMPTY;
+				}
 			}
-			else if (stack.getItem() instanceof BaseMateria && stationInventory.hasEmptyMateriaSlot()) {
-				stationInventory.addMateria(copyStack);
-				player.inventory.removeStackFromSlot(sourceSlotIndex);
-				return copyStack;
+			else if (sourceStack.getItem() instanceof IMateriaTool) {
+				if (!mergeItemStack(sourceStack, 8, 9, false)){
+					return ItemStack.EMPTY; 
+				}
+				else if (!mergeItemStack(sourceStack, 18, 45, false)){
+					return ItemStack.EMPTY;
+				}
 			}
+			else {
+				if (!mergeItemStack(sourceStack, 18, 45, false)){
+					return ItemStack.EMPTY; 
+				}
+			}
+		} 
+		else if (sourceSlotIndex >= 18 && sourceSlotIndex < 45) {
+			// playerInventorySlot clicked
+			if (sourceStack.getItem() instanceof BaseMateria) {
+				if (!mergeItemStack(sourceStack, 0, 8, false)){
+					return ItemStack.EMPTY;
+				}
+				else if (!mergeItemStack(sourceStack, 9, 18, false)){
+					return ItemStack.EMPTY;
+				}
+			}
+			else if (sourceStack.getItem() instanceof IMateriaTool) {
+				if (!mergeItemStack(sourceStack, 8, 9, false)){
+					return ItemStack.EMPTY; 
+				}
+				else if (!mergeItemStack(sourceStack, 9, 18, false)){
+					return ItemStack.EMPTY;
+				}
+			}
+			else {
+				if (!mergeItemStack(sourceStack, 9, 18, false)){
+					return ItemStack.EMPTY; 
+				}
+			}
+		} 
+		else if (sourceSlotIndex == 8) {
+			// ToolSlot clicked
+			if (!mergeItemStack(sourceStack, 9, 45, false)){
+				//also remove BaseMateria
+				return ItemStack.EMPTY;
+			}
+
+		} 
+		else if (sourceSlotIndex >= 0 && sourceSlotIndex < 8) {
+			//MateriaSlot clicked
+			if (!mergeItemStack(sourceStack, 9, 45, false)){
+				//also remove Materia from Tool
+				return ItemStack.EMPTY;
+			}
+		} 
+		else {
+			Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
+			return ItemStack.EMPTY;
 		}
-		else if (sourceSlotIndex >= 36 && sourceSlotIndex<45) {
-			ItemStack stack = stationInventory.getStackInSlot(sourceSlotIndex-36);
-			ItemStack copyStack = stack.copy();
-			if (player.inventory.addItemStackToInventory(copyStack)) {
-				stationInventory.removeStackFromSlot(sourceSlotIndex-36);
-				return copyStack;
-			}
+
+
+		// If stack size == 0 (the entire stack was moved) set slot contents to null
+		if (sourceStack.getCount() == 0) {
+			sourceSlot.putStack(ItemStack.EMPTY);
+		} else {
+			sourceSlot.onSlotChanged();
 		}
-		return ItemStack.EMPTY;
+
+		sourceSlot.onTake(player, sourceStack);
+
+
+		return copyOfSourceStack;
 	}
 
+
+	//only drop MateriaTool ItemStack. It should have all the added effects
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
-		for (int i=0; i<stationInventory.getInventoryStackLimit(); i++) {
-			ItemStack stack = stationInventory.getStackInSlot(i);
-			if (!stack.isEmpty()) {
-				playerIn.dropItem(stack, false);
-			}
+		ItemStack stack = getMateriaToolStack();
+		if (!stack.isEmpty()) {
+			playerIn.dropItem(stack, false);
 		}
-	}
-
-	public boolean hasEmptyMateriaToolSlot() {
-		return this.stationInventory.hasEmptyMateriaToolSlot();
 	}
 
 	public ItemStack getMateriaToolStack() {
-		return this.stationInventory.getStackInSlot(0);
+		return this.getInventory().get(8);
+	}
+
+	public boolean isMateriaToolSlotEmpty() {
+		return getMateriaToolStack().isEmpty();
 	}
 }
