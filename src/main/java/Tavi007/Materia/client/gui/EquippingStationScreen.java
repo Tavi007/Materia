@@ -22,7 +22,6 @@ import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 public class EquippingStationScreen extends ContainerScreen<EquippingStationContainer> {
 
@@ -46,11 +45,13 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+28, 4210752);
+	
 		ItemStack toolStack = this.container.getMateriaToolStack();
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			Item item = toolStack.getItem();
-			drawMateriaSlots(matrixStack, 8, 19, ((IMateriaTool) item).getTopSlots());
-			drawMateriaSlots(matrixStack, 8, 74, ((IMateriaTool) item).getBotSlots());
+
+			drawMateriaSlots(matrixStack, 9, 20, ((IMateriaTool) item).getTopSlots());
+			drawMateriaSlots(matrixStack, 9, 75, ((IMateriaTool) item).getBotSlots());
 			
 			//draw effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();
@@ -92,20 +93,26 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		}
 	}
 
-	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlotCollection[] slots) {
+	@SuppressWarnings("deprecation")
+	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlotCollection[] slots) {	
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		for (int i=0; i<slots.length; i++){
 			switch(slots[i].getNoSlots()) {
 			case 1:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
-				startX += 17;
+				this.blit(matrixStack, startX, startY, 0, 193, 15, 15);
+				startX += 19;
 				break;
 			case 2:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
-				startX += 34;
+				this.blit(matrixStack, startX, startY, 0, 209, 36, 15);
+				startX += 40;
 				break;
 			case 3:
-				this.minecraft.fontRenderer.drawString(matrixStack, " 0= =0= =0 ", (float) startX, (float) startY, Color.darkGray.getRGB());
-				startX += 51;
+				this.blit(matrixStack, startX, startY, 0, 225, 57, 15);
+				startX += 61;
+				break;
+			case 4:
+				this.blit(matrixStack, startX, startY, 0, 241, 78, 15);
 				break;
 			default:
 				break;

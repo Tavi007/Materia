@@ -28,18 +28,18 @@ public class EquippingStationContainer extends Container {
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 
 		//MateriaSlots (Id 0-7)
-		int startX = 8;
-		int startY = 19;
+		int startX = 9;
+		int startY = 20;
 		for (int i=0; i<4; i++) {
-			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+19*i, startY));
+			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+20*i, startY));
 		}
-		startY = 74;
+		startY = 75;
 		for (int i=0; i<4; i++) {
-			addSlot(new MateriaContainerSlot(stationItemHandler, 4+i, startX+19*i, startY));
+			addSlot(new MateriaContainerSlot(stationItemHandler, 4+i, startX+20*i, startY));
 		}
 
 		// MateriaToolSlot (Id 8)
-		startX = 44;
+		startX = 40;
 		startY = 48;
 		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
 
@@ -67,9 +67,6 @@ public class EquippingStationContainer extends Container {
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
 	}
-
-
-
 
 	//shift-left click handling
 	@Nonnull
