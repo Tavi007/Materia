@@ -8,13 +8,14 @@ import Tavi007.Materia.items.FireMateria;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffectRecipe, IMateriaEffectArea {
 	
 	public MateriaEffectAreaFire(FireMateria fire, AreaMateria area){
 		super("Area Fire");
-		this.levelList.add(fire.level);
-		this.levelList.add(area.level);
+//		this.levelList.add(fire.level);
+//		this.levelList.add(area.level);
 	}
 	
 	public MateriaEffectAreaFire(AreaMateria area, FireMateria fire){
@@ -33,6 +34,6 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 
 	@Override
 	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		tooltip.add(new StringTextComponent("Fire Area Pick Effect"));
+		tooltip.add(new StringTextComponent("" + TextFormatting.RED + "Area Fire" + TextFormatting.RESET));
 	};
 }

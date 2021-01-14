@@ -3,6 +3,7 @@ package Tavi007.Materia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import Tavi007.Materia.init.StartupCommon;
 import Tavi007.Materia.client.init.ScreenList;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
@@ -36,6 +37,10 @@ public class Materia
 		BlockList.BLOCKS.register(modEventBus);
 		BlockList.ITEMS.register(modEventBus);
 		ContainerTypeList.CONTAINER_TYPES.register(modEventBus);
+		
+
+		modEventBus.register(StartupCommon.class);
+		
 		
 		MateriaEffectList.init();
 		

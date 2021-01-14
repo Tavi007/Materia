@@ -12,20 +12,24 @@ public class MateriaEffectList {
 
 	public static final ArrayList<Constructor<? extends MateriaEffect>> CONSTRUCTORS = new ArrayList<Constructor<? extends MateriaEffect>>();
 	
-	@SuppressWarnings("unchecked")
 	public static void init() {
-		ArrayList<Class<? extends MateriaEffect>> EFFECTS = new ArrayList<Class<? extends MateriaEffect>>();
+		ArrayList<Class<? extends MateriaEffect>> effects = new ArrayList<Class<? extends MateriaEffect>>();
 		//single materia effect
-		EFFECTS.add(MateriaEffectFire.class);
-		EFFECTS.add(MateriaEffectIce.class);
+		effects.add(MateriaEffectFire.class);
+		effects.add(MateriaEffectIce.class);
 		//duo materia effect
-		EFFECTS.add(MateriaEffectAreaFire.class);
+		effects.add(MateriaEffectAreaFire.class);
 		//triple materia effect
 
 		//quadruple materia effect
 		
 
-		EFFECTS.forEach(effectClass -> {
+		addEffectConstructors(effects);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static void addEffectConstructors(ArrayList<Class<? extends MateriaEffect>> effects) {
+		effects.forEach(effectClass -> {
 			Constructor<? extends MateriaEffect>[] constructors = (Constructor<? extends MateriaEffect>[]) effectClass.getConstructors();
 			for(int i=0; i<constructors.length; i++) {
 				CONSTRUCTORS.add(constructors[i]);

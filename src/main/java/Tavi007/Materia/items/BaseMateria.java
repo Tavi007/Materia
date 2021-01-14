@@ -1,44 +1,30 @@
 package Tavi007.Materia.items;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.capabilities.level.LevelData;
+import Tavi007.Materia.util.CapabilityHelper;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 
 public class BaseMateria extends Item {
 
-	public int level = 0;
-	public int maxLevel = 0;
-	public int ap = 0;
-	public int[] levelUpAP = new int[maxLevel];
+	protected final int[] apToNextLevel;
 	
-	public BaseMateria(Properties properties) {
+	public BaseMateria(Properties properties, int[] apToNextLevel) {
 		super(properties);
-	}
-
-
-	public BaseMateria(Properties properties, int level, int maxLevel, int ap, int[] levelUpAP) {
-		super(properties);
-		this.level = level;
-		this.maxLevel = maxLevel;
-		this.ap = ap;
-		this.levelUpAP = levelUpAP;
-	}
-	
-	public void addAP(int amount) {
-		if (level >= maxLevel) {
-			return;
-		}
-		ap += amount;
-		int nextLevelAP = levelUpAP[level];
-		if (ap > nextLevelAP) {
-			//level up
-			ap -= nextLevelAP;
-			level += 1; 
-		}
+		this.apToNextLevel = apToNextLevel;
 	}
 	
 	@Override
@@ -49,7 +35,7 @@ public class BaseMateria extends Item {
 	//add enchanted glint, if maxLevel is reached
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-      return level >= maxLevel;
+		return CapabilityHelper.getLevelData(stack).isMaxLevel(apToNextLevel);
    }
 	
 	@Override
@@ -62,5 +48,40 @@ public class BaseMateria extends Item {
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         stack.setTag(nbt);
+    }
+	
+	@Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return !CapabilityHelper.getLevelData(stack).isMaxLevel(apToNextLevel);
+    }
+	
+	@Override
+	public int getDamage(ItemStack stack) {
+		LevelData data = CapabilityHelper.getLevelData(stack);
+		if (data.isMaxLevel(apToNextLevel)) {
+			return 0;
+		}
+        return apToNextLevel[data.level] - data.ap;
+    }
+	
+	@Override
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		LevelData data = CapabilityHelper.getLevelData(stack);
+		if(data.isMaxLevel(apToNextLevel)) {
+			tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Max Level" + TextFormatting.RESET));
+		}
+		else {
+			tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Level: " + String.valueOf(data.level) + TextFormatting.RESET));
+			tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Ap: " + String.valueOf(data.ap) + "/" + String.valueOf(apToNextLevel[data.level]) + TextFormatting.RESET));
+		}
+	}
+	
+	// testing
+	@Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		LevelData data = CapabilityHelper.getLevelData(stack);
+		data.addAP(1, apToNextLevel);
+		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }
 }

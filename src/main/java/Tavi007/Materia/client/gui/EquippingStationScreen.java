@@ -8,10 +8,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaToolSlotCollection;
-import Tavi007.Materia.util.MateriaToolUtil;
+import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.AxeItem;
@@ -50,28 +50,29 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			Item item = toolStack.getItem();
 
-			drawMateriaSlots(matrixStack, 9, 20, ((IMateriaTool) item).getTopSlots());
-			drawMateriaSlots(matrixStack, 9, 75, ((IMateriaTool) item).getBotSlots());
+			drawMateriaSlots(matrixStack, 9, 20, CapabilityHelper.getMateriaCollection(toolStack).getTopCollectionSizes());
+			drawMateriaSlots(matrixStack, 9, 75, CapabilityHelper.getMateriaCollection(toolStack).getBotCollectionSizes());
 			
 			//draw effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();
+			ArrayList<MateriaEffect> effectList = CapabilityHelper.getEffects(toolStack);
 			if(item instanceof PickaxeItem) {
-				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+				effectList.forEach( effect -> {
 					effect.addPickaxeToolTip(textList);
 				});
 			}
 			else if(item instanceof AxeItem) {
-				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+				effectList.forEach( effect -> {
 					effect.addAxeToolTip(textList);
 				});
 			}
 			else if(item instanceof ShovelItem) {
-				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+				effectList.forEach( effect -> {
 					effect.addShovelToolTip(textList);
 				});
 			}
 			else if(item instanceof SwordItem) {
-				MateriaToolUtil.getEffects((IMateriaTool) item).forEach( effect -> {
+				effectList.forEach( effect -> {
 					effect.addSwordToolTip(textList);
 				});
 			}
@@ -86,7 +87,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 			int startX = 103;
 			int[] startY = {9};
 			textList.forEach( text -> {
-				this.minecraft.fontRenderer.func_243248_b(matrixStack, text, (float) startX, (float) startY[0], Color.darkGray.getRGB());
+				this.minecraft.fontRenderer.func_243246_a(matrixStack, text, (float) startX, (float) startY[0], Color.darkGray.getRGB());
 				startY[0] += this.minecraft.fontRenderer.FONT_HEIGHT;
 			});
 			
@@ -94,11 +95,11 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	}
 
 	@SuppressWarnings("deprecation")
-	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, MateriaToolSlotCollection[] slots) {	
+	private void drawMateriaSlots(MatrixStack matrixStack, int startX, int startY, int[] slots) {	
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		for (int i=0; i<slots.length; i++){
-			switch(slots[i].getNoSlots()) {
+			switch(slots[i]) {
 			case 1:
 				this.blit(matrixStack, startX, startY, 0, 193, 15, 15);
 				startX += 19;

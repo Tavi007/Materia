@@ -1,10 +1,7 @@
 package Tavi007.Materia.inventory;
 
-import java.util.ArrayList;
-
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
-import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.util.MateriaToolUtil;
+import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -23,13 +20,11 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 			ItemStack stack = getStackInSlot(slot);
 			if (stack.isEmpty()) {
 				// Materia got removed
-				IMateriaTool tool = (IMateriaTool) getMateriaToolStack().getItem(); //the tool
-				MateriaToolUtil.setMateriaStack(tool, ItemStack.EMPTY, slot);
+				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setMateriaStack(ItemStack.EMPTY, slot);
 			}
 			else {
 				// Materia got inserted
-				IMateriaTool tool = (IMateriaTool) getMateriaToolStack().getItem(); //the tool
-				MateriaToolUtil.setMateriaStack(tool, stack, slot);
+				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setMateriaStack(stack, slot);
 			}
 			
 		}
@@ -44,14 +39,9 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 			}
 			else {
 				// IMateriaTool got inserted
-				IMateriaTool tool = (IMateriaTool) stack.getItem();
-				ArrayList<ItemStack> topStacks = MateriaToolUtil.getMateriaStacks(tool.getTopSlots());
-				for(int i=0; i<topStacks.size(); i++) {
-					stacks.set(i, topStacks.get(i));
-				}
-				ArrayList<ItemStack> botStacks = MateriaToolUtil.getMateriaStacks(tool.getBotSlots());
-				for(int i=0; i<botStacks.size(); i++) {
-					stacks.set(i+4, botStacks.get(i));
+				ItemStack[] stackArray = CapabilityHelper.getMateriaCollection(stack).getStacks();
+				for(int i=0; i<stackArray.length; i++) {
+					stacks.set(i, stackArray[i]);
 				}
 			}
 		}
@@ -77,16 +67,15 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 		if(itemstack.isEmpty()) {
 			return false;
 		}
-		IMateriaTool tool = (IMateriaTool) itemstack.getItem();
 		int noSlots;
 		if(slotIndex<4) {
-			noSlots = MateriaToolUtil.getNumberOfSlots(tool.getTopSlots());
+			noSlots = CapabilityHelper.getMateriaCollection(itemstack).getNoTopSlots();
 			if(slotIndex<noSlots) {
 				return true;
 			}
 		}
 		else {
-			noSlots = MateriaToolUtil.getNumberOfSlots(tool.getBotSlots());
+			noSlots = CapabilityHelper.getMateriaCollection(itemstack).getNoBotSlots();
 			if(slotIndex-4<noSlots) {
 				return true;
 			}
