@@ -56,12 +56,12 @@ public class BaseMateria extends Item {
     }
 	
 	@Override
-	public int getDamage(ItemStack stack) {
+	public double getDurabilityForDisplay(ItemStack stack) {
 		LevelData data = CapabilityHelper.getLevelData(stack);
 		if (data.isMaxLevel(apToNextLevel)) {
 			return 0;
 		}
-        return apToNextLevel[data.level] - data.ap;
+        return ( (double) (apToNextLevel[data.level] -  data.ap) ) / apToNextLevel[data.level];
     }
 	
 	@Override
