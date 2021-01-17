@@ -33,3 +33,14 @@ I have to do this later. lol
     versionRange="[1.16.4]"
     ordering="NONE"
     side="BOTH"
+	
+
+#[[dependencies.materia]]
+#    modId="patchouli"
+#    mandatory=true
+#    versionRange="[1.16.4-48,)"
+
+[[dependencies.materia]]
+    modId="curios"
+    mandatory=true
+    versionRange="[1.16.4-4.0.3.0,)"
