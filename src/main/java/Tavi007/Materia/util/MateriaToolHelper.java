@@ -11,8 +11,30 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class MateriaToolUtil {
+public class MateriaToolHelper {
 
+	public static int getNoCollectionSlot(int[] in) {
+		int counter = 0;
+		for (int i=0; i<in.length; i++) {
+			counter += in[i];
+		}
+		return counter;
+	}
+
+	public static boolean isCollectionSizesValid(int[] in) {
+		int counter = 0;
+		for (int i=0; i<in.length; i++) {
+			if(in[i]<0) {
+				return false;
+			}
+			counter += in[i];
+		}
+		if (counter>4) {
+			return false;
+		}
+		return true;
+	}
+	
 	public static int getMaxAreaLevel(ItemStack stack) {
 		ArrayList<MateriaEffect> effectList = CapabilityHelper.getMateriaCollection(stack).getEffects();
 		int[] maxAreaLevel = {0};

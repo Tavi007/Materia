@@ -50,8 +50,8 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			Item item = toolStack.getItem();
 
-			drawMateriaSlots(matrixStack, 9, 20, CapabilityHelper.getMateriaCollection(toolStack).getTopCollectionSizes());
-			drawMateriaSlots(matrixStack, 9, 75, CapabilityHelper.getMateriaCollection(toolStack).getBotCollectionSizes());
+			drawMateriaSlots(matrixStack, 9, 20, ((IMateriaTool) toolStack.getItem()).getTopCollectionSizes());
+			drawMateriaSlots(matrixStack, 9, 75, ((IMateriaTool) toolStack.getItem()).getBotCollectionSizes());
 			
 			//draw effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();

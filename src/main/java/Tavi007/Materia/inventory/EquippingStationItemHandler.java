@@ -1,7 +1,10 @@
 package Tavi007.Materia.inventory;
 
+import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
+import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
+import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -20,11 +23,11 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 			ItemStack stack = getStackInSlot(slot);
 			if (stack.isEmpty()) {
 				// Materia got removed
-				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setMateriaStack(ItemStack.EMPTY, slot);
+				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setStackInSlot(slot, ItemStack.EMPTY);
 			}
 			else {
 				// Materia got inserted
-				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setMateriaStack(stack, slot);
+				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setStackInSlot(slot, stack);
 			}
 			
 		}
@@ -39,9 +42,9 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 			}
 			else {
 				// IMateriaTool got inserted
-				ItemStack[] stackArray = CapabilityHelper.getMateriaCollection(stack).getStacks();
-				for(int i=0; i<stackArray.length; i++) {
-					stacks.set(i, stackArray[i]);
+				MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+				for(int i=0; i<collection.getSlots(); i++) {
+					stacks.set(i, collection.getStackInSlot(i));
 				}
 			}
 		}
@@ -69,13 +72,13 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 		}
 		int noSlots;
 		if(slotIndex<4) {
-			noSlots = CapabilityHelper.getMateriaCollection(itemstack).getNoTopSlots();
+			noSlots = MateriaToolHelper.getNoCollectionSlot(((IMateriaTool) itemstack.getItem()).getTopCollectionSizes());
 			if(slotIndex<noSlots) {
 				return true;
 			}
 		}
 		else {
-			noSlots = CapabilityHelper.getMateriaCollection(itemstack).getNoBotSlots();
+			noSlots = MateriaToolHelper.getNoCollectionSlot(((IMateriaTool) itemstack.getItem()).getBotCollectionSizes());
 			if(slotIndex-4<noSlots) {
 				return true;
 			}

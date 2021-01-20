@@ -16,6 +16,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 public class MateriaCollectionCapability {
 
@@ -41,14 +42,7 @@ public class MateriaCollectionCapability {
 				//fill nbt with data
 				CompoundNBT nbt = new CompoundNBT();
 				
-				//stacks
-//				ItemStack[] stacks = instance.getStacks();
-//				CompoundNBT stacksNBT = new CompoundNBT();
-//				stacksNBT.putInt("length", stacks.length);
-//				for(int i=0; i<stacks.length; i++) {
-//					stacksNBT.put("stack_" + String.valueOf(i), stacks[i].getTag());
-//				}
-//				nbt.put("stacks", stacksNBT);
+				nbt.put("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(instance, null));
 				
 				return nbt;
 			}
@@ -56,23 +50,7 @@ public class MateriaCollectionCapability {
 			@Override
 			public void readNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side, final INBT nbt) {
 				
-				if(nbt instanceof CompoundNBT) {
-					CompoundNBT compoundNBT = (CompoundNBT) nbt;
-					if(compoundNBT.contains("stacks")) {
-						
-						//stacks
-						CompoundNBT stacksNBT = (CompoundNBT) compoundNBT.get("stacks");
-						int length = stacksNBT.getInt("length");
-						for(int i=0; i<length; i++) {
-							//stacksNBT.get("stack_" + String.valueOf(i))
-							//stack = new ItemStack(itemProvider);
-							//instance.setMateriaStack(stack, i);
-						}
-						
-					}
-				}
-				
-				
+				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(instance, null, ((CompoundNBT) nbt).get("inventory"));
 				
 			}
 		}, () -> new MateriaCollection());
@@ -93,9 +71,8 @@ public class MateriaCollectionCapability {
 		public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
 			Item item = event.getObject().getItem();
 			if(item instanceof IMateriaTool) {
-				IMateriaTool tool = (IMateriaTool) item;
-				final MateriaCollection atck = new MateriaCollection(tool.getTopCollectionSizes(), tool.getBotCollectionSizes());
-				event.addCapability(ID, createProvider(atck));
+				final MateriaCollection collection = new MateriaCollection();
+				event.addCapability(ID, createProvider(collection));
 			}
 		}
 	}

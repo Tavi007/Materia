@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.util.CapabilityHelper;
-import Tavi007.Materia.util.MateriaToolUtil;
+import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -23,14 +23,24 @@ import net.minecraft.world.World;
 public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
 	//change these later
-	private int[] topCollectionSizes;
-	private int[] botCollectionSizes;
+	private final int[] topCollectionSizes;
+	private final int[] botCollectionSizes;
 	
 	
 	public MateriaPickaxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, int[] topCollectionSizes, int[] botCollectionSizes) {
 		super(tier, attackDamageIn, attackSpeedIn, builder);
-		this.topCollectionSizes = topCollectionSizes;
-		this.botCollectionSizes = botCollectionSizes;
+		if (MateriaToolHelper.isCollectionSizesValid(topCollectionSizes)) {
+			this.topCollectionSizes = topCollectionSizes;
+		}
+		else {
+			this.topCollectionSizes = new int[]{0}; // might need to change this to 1
+		}
+		if (MateriaToolHelper.isCollectionSizesValid(botCollectionSizes)) {
+			this.botCollectionSizes = botCollectionSizes;
+		}
+		else {
+			this.botCollectionSizes = new int[]{0};
+		}
 	}
 
 	@Override
@@ -57,7 +67,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	
 	@Override
    public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		int maxAreaLevel = MateriaToolUtil.getMaxAreaLevel(stack);
+		int maxAreaLevel = MateriaToolHelper.getMaxAreaLevel(stack);
 		
 		//the plan:
 		//generate drops (but keep in mind, which level they correspond to)
@@ -68,7 +78,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 		List<BlockPos> posList = new ArrayList<BlockPos>();
 
 		//move to util class later
-		MateriaToolUtil.mineBlocks(worldIn, pos, maxAreaLevel);
+		MateriaToolHelper.mineBlocks(worldIn, pos, maxAreaLevel);
 		
 		return true;
    }
