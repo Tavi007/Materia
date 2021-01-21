@@ -5,36 +5,75 @@ import java.util.List;
 
 import Tavi007.Materia.effects.IMateriaEffectArea;
 import Tavi007.Materia.effects.MateriaEffect;
+import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class MateriaToolHelper {
 
-	public static int getNoCollectionSlot(int[] in) {
+	public static int getNoCollectionSlot(int[] array) {
 		int counter = 0;
-		for (int i=0; i<in.length; i++) {
-			counter += in[i];
+		for (int i=0; i<array.length; i++) {
+			counter += array[i];
 		}
 		return counter;
 	}
 
-	public static boolean isCollectionSizesValid(int[] in) {
+	public static boolean isCollectionSizesValid(int[] array) {
 		int counter = 0;
-		for (int i=0; i<in.length; i++) {
-			if(in[i]<0) {
+		for (int i=0; i<array.length; i++) {
+			if(array[i]<0) {
 				return false;
 			}
-			counter += in[i];
+			counter += array[i];
 		}
 		if (counter>4) {
 			return false;
 		}
 		return true;
 	}
-	
+
+	public static void addToolTip(ItemStack stack, List<ITextComponent> tooltip) {
+		tooltip.add(new StringTextComponent(""  + TextFormatting.GRAY + "Materia Slots:" + TextFormatting.RESET));
+		tooltip.add(new StringTextComponent(" " + TextFormatting.GRAY + asString( ((IMateriaTool) stack.getItem()).getTopCollectionSizes() ) + TextFormatting.RESET));
+		tooltip.add(new StringTextComponent(" " + TextFormatting.GRAY + asString( ((IMateriaTool) stack.getItem()).getBotCollectionSizes() )  + TextFormatting.RESET));
+
+		tooltip.add(new StringTextComponent(""  + TextFormatting.GRAY + "Materia Effects:" + TextFormatting.RESET));
+		CapabilityHelper.getEffects(stack).forEach( effect ->{
+			effect.addPickaxeToolTip(tooltip);
+		});
+	}
+
+	private static String asString(int[] array) {
+		String ret = "";
+		for(int i=0; i<array.length; i++) {
+			switch(array[i]) {
+			case(1):
+				ret = ret + "O";
+				break;
+			case(2):
+				ret = ret + "O-O";
+				break;
+			case(3):
+				ret = ret + "O-O-O";
+				break;
+			case(4):
+				ret = ret + "O-O-O-O";
+				break;
+			}
+			ret = ret + " ";
+		}
+
+		return ret;
+	}
+
+
 	public static int getMaxAreaLevel(ItemStack stack) {
 		ArrayList<MateriaEffect> effectList = CapabilityHelper.getMateriaCollection(stack).getEffects();
 		int[] maxAreaLevel = {0};

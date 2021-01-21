@@ -24,6 +24,13 @@ public class MateriaCollection extends ItemStackHandler {
 	public ArrayList<MateriaEffect> getEffects() {
 		return effectList;
 	}
+	
+
+	@Override
+    protected void onContentsChanged(int slot) {
+		//recompute effects here?
+		String test = "hi!"; 
+    }
 
 	@Override
 	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {

@@ -3,6 +3,7 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
@@ -21,8 +22,23 @@ import net.minecraft.world.World;
 public class EquippingStationContainer extends Container {
 
 	private final IWorldPosCallable canInteractWithCallable;
+	
+	//ItemStackHandler
 	private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
+	private final MateriaCollection materiaItemHandler = new MateriaCollection();
+	
+	//Helper for Index counts
+	private final int materiaInvStart = 0;
+	private final int materiaInvEnd = 7;
+	
+	private final int toolInvId = 8;
 
+	private final int hotbarInvStart = 9;
+	private final int hotbarInvEnd = 18; 
+	private final int playerInvStart = 19;
+	private final int playerInvEnd = 44; 
+
+	
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
@@ -41,7 +57,7 @@ public class EquippingStationContainer extends Container {
 		// MateriaToolSlot (Id 8)
 		startX = 40;
 		startY = 48;
-		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
+		addSlot(new MateriaToolContainerSlot(stationItemHandler, toolInvId, startX, startY));
 
 		// Hotbar (Id 9-18)
 		startX = 8;
@@ -77,68 +93,37 @@ public class EquippingStationContainer extends Container {
 		ItemStack sourceStack = sourceSlot.getStack();
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
-		if (sourceSlotIndex >= 9 && sourceSlotIndex < 18) {
-			// HotBarSlot clicked
+		if (sourceSlotIndex>=hotbarInvStart && sourceSlotIndex<=hotbarInvEnd) { //HotBarSlot clicked
 			if (sourceStack.getItem() instanceof BaseMateria) {
-				if (!mergeItemStack(sourceStack, 0, 8, false)){
-					return ItemStack.EMPTY;
-				}
-				else if (!mergeItemStack(sourceStack, 18, 45, false)){
-					return ItemStack.EMPTY;
-				}
+				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
+				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
-				if (!mergeItemStack(sourceStack, 8, 9, false)){
-					return ItemStack.EMPTY; 
-				}
-				else if (!mergeItemStack(sourceStack, 18, 45, false)){
-					return ItemStack.EMPTY;
-				}
+				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {return ItemStack.EMPTY;}
+				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 			else {
-				if (!mergeItemStack(sourceStack, 18, 45, false)){
-					return ItemStack.EMPTY; 
-				}
+				if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 		} 
-		else if (sourceSlotIndex >= 18 && sourceSlotIndex < 45) {
-			// playerInventorySlot clicked
+		else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
 			if (sourceStack.getItem() instanceof BaseMateria) {
-				if (!mergeItemStack(sourceStack, 0, 8, false)){
-					return ItemStack.EMPTY;
-				}
-				else if (!mergeItemStack(sourceStack, 9, 18, false)){
-					return ItemStack.EMPTY;
-				}
+				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
+				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
-				if (!mergeItemStack(sourceStack, 8, 9, false)){
-					return ItemStack.EMPTY; 
-				}
-				else if (!mergeItemStack(sourceStack, 9, 18, false)){
-					return ItemStack.EMPTY;
-				}
+				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {return ItemStack.EMPTY;}
+				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 			else {
-				if (!mergeItemStack(sourceStack, 9, 18, false)){
-					return ItemStack.EMPTY; 
-				}
+				if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
 		} 
-		else if (sourceSlotIndex == 8) {
-			// ToolSlot clicked
-			if (!mergeItemStack(sourceStack, 9, 45, false)){
-				//also remove BaseMateria
-				return ItemStack.EMPTY;
-			}
-
+		else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
+			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;} 
 		} 
-		else if (sourceSlotIndex >= 0 && sourceSlotIndex < 8) {
-			//MateriaSlot clicked
-			if (!mergeItemStack(sourceStack, 9, 45, false)){
-				//also remove Materia from Tool
-				return ItemStack.EMPTY;
-			}
+		else if (sourceSlotIndex>=materiaInvStart && sourceSlotIndex<=materiaInvEnd) { //MateriaSlot clicked
+			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;} 
 		} 
 		else {
 			Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
