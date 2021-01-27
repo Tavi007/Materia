@@ -10,5 +10,6 @@
 	
 	"block.materia.equipping_station" : "Equipping Station",
 	
-	"container.equipping_station": "Equipping Station"
+	"container.equipping_station": "Equipping Station",
+	"container.materia_tool": "Materia Tool"
 }
