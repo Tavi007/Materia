@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.effects.MateriaEffect;
-import Tavi007.Materia.items.BaseMateria;
+import Tavi007.Materia.items.MateriaItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -39,7 +39,6 @@ public class MateriaCollection extends ItemStackHandler {
 		}
 		if (stack.isEmpty()) return false;
 		Item item = stack.getItem();
-		if (item instanceof BaseMateria) return true;
-		return false;
+		return item instanceof MateriaItem;
 	}
 }

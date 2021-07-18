@@ -7,7 +7,7 @@ import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
-import Tavi007.Materia.items.BaseMateria;
+import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -94,7 +94,7 @@ public class EquippingStationContainer extends Container {
 		ItemStack copyOfSourceStack = sourceStack.copy();
 
 		if (sourceSlotIndex>=hotbarInvStart && sourceSlotIndex<=hotbarInvEnd) { //HotBarSlot clicked
-			if (sourceStack.getItem() instanceof BaseMateria) {
+			if (sourceStack.getItem() instanceof MateriaItem) {
 				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
 				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}
@@ -107,7 +107,7 @@ public class EquippingStationContainer extends Container {
 			}
 		} 
 		else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
-			if (sourceStack.getItem() instanceof BaseMateria) {
+			if (sourceStack.getItem() instanceof MateriaItem) {
 				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
 				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
 			}

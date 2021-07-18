@@ -2,7 +2,7 @@ package Tavi007.Materia.capabilities.level;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.SerializableCapabilityProvider;
-import Tavi007.Materia.items.BaseMateria;
+import Tavi007.Materia.items.MateriaItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -69,7 +69,7 @@ public class LevelDataCapability {
 		@SubscribeEvent
 		public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
 			Item item = event.getObject().getItem();
-			if(item instanceof BaseMateria) {
+			if(item instanceof MateriaItem) {
 				final LevelData atck = new LevelData();
 				event.addCapability(ID, createProvider(atck));
 			}

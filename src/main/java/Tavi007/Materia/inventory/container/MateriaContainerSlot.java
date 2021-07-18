@@ -3,7 +3,7 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
-import Tavi007.Materia.items.BaseMateria;
+import Tavi007.Materia.items.MateriaItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -23,9 +23,9 @@ public class MateriaContainerSlot extends SlotItemHandler {
     @Override
     public boolean isItemValid(@Nonnull ItemStack stack) {
     	if (getItemHandler() instanceof EquippingStationItemHandler) {
-    		return stack.getItem() instanceof BaseMateria && ((EquippingStationItemHandler) getItemHandler()).isMateriaSlotEnabled(slotIndex);
+    		return stack.getItem() instanceof MateriaItem && ((EquippingStationItemHandler) getItemHandler()).isMateriaSlotEnabled(slotIndex);
     	}
-        return stack.getItem() instanceof BaseMateria;
+        return stack.getItem() instanceof MateriaItem;
     }
 
     @Override

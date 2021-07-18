@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 
 public class MateriaEffectHelper {
 
-	public void computeEffectList(ItemStack stack) {
+	public static void computeEffectList(ItemStack stack) {
 		if (stack.getItem() instanceof IMateriaTool) {
 			IMateriaTool tool = (IMateriaTool) stack.getItem();
 			MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
@@ -35,7 +35,7 @@ public class MateriaEffectHelper {
 		}
 	}
 
-	private ArrayList<MateriaEffect> computeEffects(int startStackCounter, MateriaCollection collection, int[] collectionSize) {
+	private static ArrayList<MateriaEffect> computeEffects(int startStackCounter, MateriaCollection collection, int[] collectionSize) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 		
 		for(int i=0; i<collectionSize.length; i++) {
@@ -49,7 +49,7 @@ public class MateriaEffectHelper {
 				}
 			}
 			if(hasMateria) {
-				computeEffects(stackList);
+				effectList.addAll(computeEffects(stackList));
 			}
 			startStackCounter += collectionSize[i];
 		}
@@ -57,7 +57,7 @@ public class MateriaEffectHelper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private ArrayList<MateriaEffect> computeEffects(ArrayList<ItemStack> stacks) {
+	private static ArrayList<MateriaEffect> computeEffects(ArrayList<ItemStack> stacks) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 		
 		ArrayList<Item> equippedItem = new ArrayList<Item>();
@@ -83,7 +83,7 @@ public class MateriaEffectHelper {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private boolean useEffectConstructor(ArrayList<MateriaEffect> effectList, Class[] materiaClasses, ArrayList<Item> equippedItem) {
+	private static boolean useEffectConstructor(ArrayList<MateriaEffect> effectList, Class[] materiaClasses, ArrayList<Item> equippedItem) {
 		//compare classes with every effect constructor and then use it
 		for(int i=0; i<MateriaEffectList.CONSTRUCTORS.size(); i++) {
 			Class[] parameterTypes = MateriaEffectList.CONSTRUCTORS.get(i).getParameterTypes();

@@ -18,18 +18,13 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class BaseMateria extends Item {
+public class MateriaItem extends Item {
 
 	protected final int[] apToNextLevel;
 	
-	public BaseMateria(Properties properties, int[] apToNextLevel) {
+	public MateriaItem(Properties properties, int[] apToNextLevel) {
 		super(properties);
 		this.apToNextLevel = apToNextLevel;
-	}
-	
-	@Override
-	public ITextComponent getName() {
-		return new StringTextComponent("Base Materia");
 	}
 	
 	//add enchanted glint, if maxLevel is reached
