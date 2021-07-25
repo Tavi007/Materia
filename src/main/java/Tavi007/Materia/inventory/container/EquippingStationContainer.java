@@ -3,11 +3,11 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.util.MateriaEffectHelper;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,23 +22,22 @@ import net.minecraft.world.World;
 public class EquippingStationContainer extends Container {
 
 	private final IWorldPosCallable canInteractWithCallable;
-	
+
 	//ItemStackHandler
 	private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
-	private final MateriaCollection materiaItemHandler = new MateriaCollection();
-	
+
 	//Helper for Index counts
 	private final int materiaInvStart = 0;
 	private final int materiaInvEnd = 7;
-	
+
 	private final int toolInvId = 8;
 
 	private final int hotbarInvStart = 9;
-	private final int hotbarInvEnd = 18; 
-	private final int playerInvStart = 19;
+	private final int hotbarInvEnd = 17; 
+	private final int playerInvStart = 18;
 	private final int playerInvEnd = 44; 
 
-	
+
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
@@ -59,14 +58,14 @@ public class EquippingStationContainer extends Container {
 		startY = 48;
 		addSlot(new MateriaToolContainerSlot(stationItemHandler, toolInvId, startX, startY));
 
-		// Hotbar (Id 9-18)
+		// Hotbar (Id 9-17)
 		startX = 8;
 		startY = 168;
 		int slotSizePlus2 = 18;
 		for (int column = 0; column < 9; column++) {
 			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), startY));
 		}
-		// Player Inventory (Id 19-44)
+		// Player Inventory (Id 18-44)
 		startY = 110;
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
@@ -95,35 +94,58 @@ public class EquippingStationContainer extends Container {
 
 		if (sourceSlotIndex>=hotbarInvStart && sourceSlotIndex<=hotbarInvEnd) { //HotBarSlot clicked
 			if (sourceStack.getItem() instanceof MateriaItem) {
-				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
-				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
-				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {return ItemStack.EMPTY;}
-				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {
+					onSuccessfulTransfer();
+				}
+				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 			else {
-				if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 		} 
 		else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
 			if (sourceStack.getItem() instanceof MateriaItem) {
-				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {return ItemStack.EMPTY;}
-				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
+				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 			else if (sourceStack.getItem() instanceof IMateriaTool) {
-				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {return ItemStack.EMPTY;}
-				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {
+					onSuccessfulTransfer();
+				}
+				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 			else {
-				if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {return ItemStack.EMPTY;}
+				if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
 			}
 		} 
 		else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
-			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;} 
+			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {
+				onSuccessfulTransfer();
+			}
 		} 
 		else if (sourceSlotIndex>=materiaInvStart && sourceSlotIndex<=materiaInvEnd) { //MateriaSlot clicked
-			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {return ItemStack.EMPTY;} 
+			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {
+				onSuccessfulTransfer();
+			} 
 		} 
 		else {
 			Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
@@ -140,8 +162,12 @@ public class EquippingStationContainer extends Container {
 
 		sourceSlot.onTake(player, sourceStack);
 
-
 		return copyOfSourceStack;
+	}
+
+	private ItemStack onSuccessfulTransfer() {
+		MateriaEffectHelper.computeEffectList(getMateriaToolStack());
+		return ItemStack.EMPTY;
 	}
 
 

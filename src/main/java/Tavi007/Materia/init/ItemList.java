@@ -19,7 +19,7 @@ public class ItemList {
 	
 	// materia
 	public static final RegistryObject<Item> FIRE_MATERIA 	= ITEMS.register("fire_materia", () -> new MateriaItem(singleStack, new int[]{10, 25}));
-	public static final RegistryObject<Item> ICE_MATERIA 	= ITEMS.register("ice_materia",  () -> new MateriaItem(singleStack, 	new int[]{10, 25}));
+	public static final RegistryObject<Item> ICE_MATERIA 	= ITEMS.register("ice_materia",  () -> new MateriaItem(singleStack, new int[]{10, 25}));
 	public static final RegistryObject<Item> AREA_MATERIA 	= ITEMS.register("area_materia", () -> new MateriaItem(singleStack, new int[]{50}));
 	
 	// tools

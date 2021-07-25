@@ -1,6 +1,5 @@
 package Tavi007.Materia.effects;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.Materia;
@@ -13,52 +12,44 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffectRecipe, IMateriaEffectArea {
-
+public class MateriaEffectArea extends MateriaEffect implements IMateriaEffectArea {
+	
 	LevelData area = null;
-	LevelData fire = null;
 	
-	public MateriaEffectAreaFire() {
-		super(new ResourceLocation(Materia.MOD_ID, "area_fire"));
-	}
-	
-	@Override
-	public ArrayList<ItemStack> applyRecipe(ArrayList<ItemStack> itemIn) {
-		return itemIn;
+	public MateriaEffectArea() {
+		super(new ResourceLocation(Materia.MOD_ID, "area"));
 	}
 
 	@Override
 	public int getAreaLevel() {
 		return area.level;
 	}
-
+	
 	@Override
 	public MateriaEffect initializeCopy(List<ItemStack> itemstacks) {
-		if(itemstacks.size() != 2) {
+		if(itemstacks.size() != 1) {
 			return null;
 		}
 		
-		MateriaEffectAreaFire effect = new MateriaEffectAreaFire();
+		MateriaEffectArea effect = new MateriaEffectArea();
 		boolean hasArea = false;
-		boolean hasFire = false;
 		for(ItemStack itemstack : itemstacks) {
 			if(itemstack.getItem() == ItemList.AREA_MATERIA.get()) {
 				effect.area = CapabilityHelper.getLevelData(itemstack);
 				hasArea = true;
-			} else if(itemstack.getItem() == ItemList.FIRE_MATERIA.get()) {
-				effect.fire = CapabilityHelper.getLevelData(itemstack);
-				hasFire = true;
 			}
 		}
 		
-		if(!(hasFire && hasArea)) {
+		if(!hasArea) {
 			return null;
 		}
+		
 		return effect;
 	}
 
 	@Override
 	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		tooltip.add(new StringTextComponent("" + TextFormatting.RED + "Area Fire " + area.level + "-" + fire.level + TextFormatting.RESET));
-	};
+		tooltip.add(new StringTextComponent("" + TextFormatting.DARK_PURPLE + "Area Pick " + area.level + TextFormatting.RESET));
+	}
+
 }

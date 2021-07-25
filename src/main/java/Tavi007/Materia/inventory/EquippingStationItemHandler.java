@@ -30,10 +30,6 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 				// Materia got inserted
 				CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setStackInSlot(slot, stack);
 			}
-			
-			// compute effect list
-			ItemStack tool = getStackInSlot(8);
-			MateriaEffectHelper.computeEffectList(tool);
 		}
 		else if(slot == 8) {
 			// IMateriaTool
@@ -55,6 +51,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 		else {
 			// Should not have happened
 		}
+		MateriaEffectHelper.computeEffectList(getMateriaToolStack());
 	}
 
 

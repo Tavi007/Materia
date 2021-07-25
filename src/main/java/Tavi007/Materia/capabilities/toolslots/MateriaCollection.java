@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -23,6 +24,15 @@ public class MateriaCollection extends ItemStackHandler {
 
 	public ArrayList<MateriaEffect> getEffects() {
 		return effectList;
+	}
+	
+	public void addAp(int ap) {
+		for(ItemStack stack : stacks) {
+			if(!stack.isEmpty()) {
+				int[] apToNextLevel = ((MateriaItem) stack.getItem()).getApToNextLevel();
+				CapabilityHelper.getLevelData(stack).addAP(ap,apToNextLevel);
+			}
+		}
 	}
 	
 

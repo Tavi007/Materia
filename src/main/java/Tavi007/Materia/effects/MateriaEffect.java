@@ -1,27 +1,29 @@
 package Tavi007.Materia.effects;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import Tavi007.Materia.Materia;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class MateriaEffect {
-	private String name = "Base";
-	protected ArrayList<Integer> levelList = new ArrayList<Integer>();
+	private ResourceLocation rl = new ResourceLocation(Materia.MOD_ID, "base");
 	
-	public MateriaEffect(String name) {
-		this.name = name;	
+	protected MateriaEffect(ResourceLocation rl) {
+		this.rl = rl;	
 	}
 
 	public MateriaEffect() {
 	}
 
 	public String getName() {
-		return name;
+		//change to get text from lang file
+		return rl.toString();
 	}
-
-	public ArrayList<Integer> getMateriaList(){
-		return levelList;
+	
+	public MateriaEffect initializeCopy(List<ItemStack> itemstacks) {
+		return null;
 	}
 	
 	public void addPickaxeToolTip(List<ITextComponent> tooltip) {

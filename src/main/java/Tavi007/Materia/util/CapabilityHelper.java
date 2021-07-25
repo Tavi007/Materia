@@ -13,7 +13,7 @@ public class CapabilityHelper {
 	
 	/**
 	 * Returns the level data {@link LevelData} of the {@link ItemStack}.
-	 * @param stack An ItemStack.
+	 * @param stack An ItemStack (A MateriaItem).
 	 * @return the LevelData, containing the current level, current ap and the array for leveling up.
 	 */
 	public static LevelData getLevelData(ItemStack stack) {

@@ -27,6 +27,10 @@ public class MateriaItem extends Item {
 		this.apToNextLevel = apToNextLevel;
 	}
 	
+	public int[] getApToNextLevel() {
+		return apToNextLevel;
+	}
+	
 	//add enchanted glint, if maxLevel is reached
 	@Override
 	public boolean hasEffect(ItemStack stack) {
