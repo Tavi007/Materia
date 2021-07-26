@@ -35,12 +35,26 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		this.ySize = 191;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public void render(MatrixStack matrixStack, final int mouseX, final int mouseY, final float partialTicks) {
-		this.renderBackground(matrixStack);
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
-	}
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 
+		int x = (this.width - this.xSize) / 2;
+		int y = (this.height - this.ySize) / 2;
+		this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
+		
+		
+		ItemStack toolStack = this.container.getMateriaToolStack();
+		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
+			IMateriaTool item = (IMateriaTool) toolStack.getItem();
+
+			drawMateriaSlots(matrixStack, x+10, y+21, item.getTopCollectionSizes());
+			drawMateriaSlots(matrixStack, x+10, y+76, item.getBotCollectionSizes());
+		}
+	}
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
@@ -49,9 +63,6 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		ItemStack toolStack = this.container.getMateriaToolStack();
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			Item item = toolStack.getItem();
-
-			drawMateriaSlots(matrixStack, 9, 20, ((IMateriaTool) toolStack.getItem()).getTopCollectionSizes());
-			drawMateriaSlots(matrixStack, 9, 75, ((IMateriaTool) toolStack.getItem()).getBotCollectionSizes());
 			
 			//draw effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();
@@ -91,6 +102,8 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 				startY[0] += this.minecraft.fontRenderer.FONT_HEIGHT;
 			});
 			
+			
+			renderHoveredTooltip(matrixStack,mouseX,mouseY);
 		}
 	}
 
@@ -102,7 +115,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 			switch(slots[i]) {
 			case 1:
 				this.blit(matrixStack, startX, startY, 0, 193, 15, 15);
-				startX += 19;
+				startX += 20;
 				break;
 			case 2:
 				this.blit(matrixStack, startX, startY, 0, 209, 36, 15);
@@ -110,7 +123,7 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 				break;
 			case 3:
 				this.blit(matrixStack, startX, startY, 0, 225, 57, 15);
-				startX += 61;
+				startX += 60;
 				break;
 			case 4:
 				this.blit(matrixStack, startX, startY, 0, 241, 78, 15);
@@ -121,16 +134,4 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		}
 
 	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
-
-		int x = (this.width - this.xSize) / 2;
-		int y = (this.height - this.ySize) / 2;
-		this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
-	}
-
 }
