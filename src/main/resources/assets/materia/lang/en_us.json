@@ -6,10 +6,15 @@
 	"item.materia.ice_materia" : "Ice Materia",
 	"item.materia.fire_materia" : "Fire Materia",
 	
+	"item.materia.materia_diamond_axe" : "Materia Axe",
 	"item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
+	"item.materia.materia_diamond_shovel" : "Materia Shovel",
+	"item.materia.materia_diamond_hoe" : "Materia Hoe",
+	"item.materia.materia_diamond_sword" : "Materia Sword",
+	"item.materia.materia_diamond_wand" : "Materia Wand",
+	"item.materia.materia_diamond_accessory" : "Materia Accessory",
 	
 	"block.materia.equipping_station" : "Equipping Station",
 	
-	"container.equipping_station": "Equipping Station",
-	"container.materia_tool": "Materia Tool"
+	"container.equipping_station": "Equipping Station"
 }

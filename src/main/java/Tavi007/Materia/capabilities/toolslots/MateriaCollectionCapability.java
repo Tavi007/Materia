@@ -38,20 +38,15 @@ public class MateriaCollectionCapability {
 
 			@Override
 			public INBT writeNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side) {
-
 				//fill nbt with data
 				CompoundNBT nbt = new CompoundNBT();
-				
 				nbt.put("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(instance, null));
-				
 				return nbt;
 			}
 
 			@Override
 			public void readNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side, final INBT nbt) {
-				
 				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(instance, null, ((CompoundNBT) nbt).get("inventory"));
-				
 			}
 		}, () -> new MateriaCollection());
 	}

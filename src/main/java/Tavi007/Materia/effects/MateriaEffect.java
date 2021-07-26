@@ -38,11 +38,19 @@ public class MateriaEffect {
 		return;
 	}
 	
+	public void addHoeToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
+	
 	public void addSwordToolTip(List<ITextComponent> tooltip) {
 		return;
 	}
 	
 	public void addWandToolTip(List<ITextComponent> tooltip) {
+		return;
+	}
+	
+	public void addAccessoryToolTip(List<ITextComponent> tooltip) {
 		return;
 	}
 }
