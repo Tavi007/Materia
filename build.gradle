@@ -68,6 +68,9 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${version_forge}"
+	
+    compileOnly fg.deobf("io.tavi007.elementalCombat:elementalcombat-forge-1.16.5-1.2-api:1.16.5-1.2")
+    runtimeOnly fg.deobf("io.tavi007.elementalCombat:elementalcombat-forge-1.16.5-1.2:1.16.5-1.2")
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
@@ -93,6 +96,10 @@ jar {
 repositories {
     maven { url "https://maven.theillusivec4.top/" }
 //    maven { url "https://maven.blamejared.com" }
+	
+	flatDir {
+        dirs 'libs' 
+	}
 }
 
 jar.finalizedBy('reobfJar') 

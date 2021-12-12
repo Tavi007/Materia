@@ -16,6 +16,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -27,24 +28,36 @@ public class EquippingStationContainer extends Container {
 	private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
 
 	//Helper for Index counts
-	private final int materiaInvStart = 0;
-	private final int materiaInvEnd = 7;
-
-	private final int toolInvId = 8;
-
-	private final int hotbarInvStart = 9;
-	private final int hotbarInvEnd = 17; 
-	private final int playerInvStart = 18;
-	private final int playerInvEnd = 44; 
-
+	private final int hotbarInvStart = 0;
+	private final int hotbarInvEnd = 8; 
+	private final int playerInvStart = 9;
+	private final int playerInvEnd = 35; 
+	private final int materiaInvStart = 36;
+	private final int materiaInvEnd = 43;
+	private final int toolInvId = 44;
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 
-		//MateriaSlots (Id 0-7)
-		int startX = 9;
-		int startY = 20;
+		// Hotbar (Id 0-8)
+		int startX = 8;
+		int startY = 168;
+		int slotSizePlus2 = 18;
+		for (int column = 0; column < 9; column++) {
+			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), startY));
+		}
+		// Player Inventory (Id 9-35)
+		startY = 110;
+		for (int row = 0; row < 3; row++) {
+			for (int column = 0; column < 9; column++) {
+				addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
+			}
+		}
+		
+		//MateriaSlots (Id 36-43)
+		startX = 9;
+		startY = 20;
 		for (int i=0; i<4; i++) {
 			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+20*i, startY));
 		}
@@ -53,25 +66,10 @@ public class EquippingStationContainer extends Container {
 			addSlot(new MateriaContainerSlot(stationItemHandler, 4+i, startX+20*i, startY));
 		}
 
-		// MateriaToolSlot (Id 8)
+		// MateriaToolSlot (Id 44)
 		startX = 40;
 		startY = 48;
-		addSlot(new MateriaToolContainerSlot(stationItemHandler, toolInvId, startX, startY));
-
-		// Hotbar (Id 9-17)
-		startX = 8;
-		startY = 168;
-		int slotSizePlus2 = 18;
-		for (int column = 0; column < 9; column++) {
-			addSlot(new Slot(playerInventory, column, startX + (column * slotSizePlus2), startY));
-		}
-		// Player Inventory (Id 18-44)
-		startY = 110;
-		for (int row = 0; row < 3; row++) {
-			for (int column = 0; column < 9; column++) {
-				addSlot(new Slot(playerInventory, 9 + (row * 9) + column, startX + (column * slotSizePlus2), startY + (row * slotSizePlus2)));
-			}
-		}
+		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
 	}
 
 	public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
@@ -181,7 +179,8 @@ public class EquippingStationContainer extends Container {
 	}
 
 	public ItemStack getMateriaToolStack() {
-		return this.getInventory().get(8);
+		NonNullList<ItemStack> stacks = this.getInventory();
+		return this.getInventory().get(toolInvId);
 	}
 
 	public boolean isMateriaToolSlotEmpty() {
