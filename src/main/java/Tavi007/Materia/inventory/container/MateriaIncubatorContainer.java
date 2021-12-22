@@ -4,8 +4,8 @@ import javax.annotation.Nonnull;
 
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
-import Tavi007.Materia.inventory.MateriaHibernatorItemHandler;
-import Tavi007.Materia.tileentity.MateriaHibernatorTileentity;
+import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
+import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -17,12 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class MateriaHibernatorContainer extends Container {
+public class MateriaIncubatorContainer extends Container {
 
 	private final IWorldPosCallable canInteractWithCallable;
 
 	//ItemStackHandler
-	private final MateriaHibernatorItemHandler hibernatorItemHandler;
+	private final MateriaIncubatorItemHandler incubatorItemHandler;
 
 	//Helper for Index counts
 	private final int hotbarInvStart = 0;
@@ -32,10 +32,10 @@ public class MateriaHibernatorContainer extends Container {
 	private final int materiaSlotId = 36;
 	private final int fuelSlotId = 43;
 	
-	public MateriaHibernatorContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
+	public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
-		this.hibernatorItemHandler = new MateriaHibernatorItemHandler(this, new MateriaHibernatorTileentity());
+		this.incubatorItemHandler = new MateriaIncubatorItemHandler(this, new MateriaIncubatorTileentity());
 
 		// Hotbar (Id 0-8)
 		int startX = 8;
@@ -55,14 +55,14 @@ public class MateriaHibernatorContainer extends Container {
 		//MateriaSlots (Id 36)
 		startX = 50;
 		startY = 108;
-		addSlot(new MateriaContainerSlot(hibernatorItemHandler, 0, startX, startY));
+		addSlot(new MateriaContainerSlot(incubatorItemHandler, 0, startX, startY));
 		//MateriaSlots (Id 37)
 		startX = 150;
 		startY = 108;
-		addSlot(new SlotItemHandler(hibernatorItemHandler, 0, startX, startY));
+		addSlot(new SlotItemHandler(incubatorItemHandler, 0, startX, startY));
 	}
 
-	public MateriaHibernatorContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
 		this(windowId, playerInventory, playerInventory.player.world, new BlockPos(playerInventory.player.getPositionVec()) );
 	}
 

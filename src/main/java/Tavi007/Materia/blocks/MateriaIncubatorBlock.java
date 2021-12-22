@@ -1,10 +1,8 @@
 package Tavi007.Materia.blocks;
 
-import Tavi007.Materia.inventory.container.EquippingStationContainer;
-import Tavi007.Materia.inventory.container.MateriaHibernatorContainer;
+import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.AbstractBlock.Properties;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
@@ -16,11 +14,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class MateriaHibernatorBlock extends Block {
+public class MateriaIncubatorBlock extends Block {
 
 	private static final ITextComponent textComponen = new TranslationTextComponent("container.materia_hibernator");
 	   
-	public MateriaHibernatorBlock(Properties properties) {
+	public MateriaIncubatorBlock(Properties properties) {
 		super(properties);
 	}
 
@@ -35,7 +33,7 @@ public class MateriaHibernatorBlock extends Block {
 
 	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> {
-			return new MateriaHibernatorContainer(windowId, playerInventory, worldIn, pos);
+			return new MateriaIncubatorContainer(windowId, playerInventory, worldIn, pos);
 		}, textComponen);
 	}
 

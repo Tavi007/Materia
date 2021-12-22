@@ -15,6 +15,8 @@
 	"item.materia.materia_diamond_accessory" : "Materia Accessory",
 	
 	"block.materia.equipping_station" : "Equipping Station",
+	"container.equipping_station": "Equipping Station",
 	
-	"container.equipping_station": "Equipping Station"
+	"block.materia.materia_incubator" : "Materia Incubator",
+	"container.materia_incubattor": "Materia Incubator"
 }

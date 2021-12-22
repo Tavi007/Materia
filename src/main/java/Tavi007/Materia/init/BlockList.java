@@ -2,6 +2,7 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.blocks.EquippingStationBlock;
+import Tavi007.Materia.blocks.MateriaIncubatorBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -19,4 +20,8 @@ public class BlockList {
 	
 	public static final RegistryObject<Block> EQUIPPING_STATION_BLOCK = BLOCKS.register("equipping_station", () -> new EquippingStationBlock(Block.Properties.create(Material.IRON)));
 	public static final RegistryObject<Item>  EQUIPPING_STATION_ITEM  = ITEMS.register("equipping_station", () -> new BlockItem(EQUIPPING_STATION_BLOCK.get(), standardItemProperties));
+
+	public static final RegistryObject<Block> MATERIA_INCUBATOR_BLOCK = BLOCKS.register("materia_incubator", () -> new MateriaIncubatorBlock(Block.Properties.create(Material.IRON)));
+	public static final RegistryObject<Item>  MATERIA_INCUBATOR_ITEM  = ITEMS.register("materia_incubator", () -> new BlockItem(MATERIA_INCUBATOR_BLOCK.get(), standardItemProperties));
+
 }

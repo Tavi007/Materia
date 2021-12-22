@@ -1,17 +1,16 @@
 package Tavi007.Materia.inventory;
 
-import Tavi007.Materia.inventory.container.EquippingStationContainer;
-import Tavi007.Materia.inventory.container.MateriaHibernatorContainer;
-import Tavi007.Materia.tileentity.MateriaHibernatorTileentity;
+import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
+import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class MateriaHibernatorItemHandler extends ItemStackHandler {
+public class MateriaIncubatorItemHandler extends ItemStackHandler {
 	
-	private final MateriaHibernatorTileentity tile;
-	private final MateriaHibernatorContainer container;
+	private final MateriaIncubatorTileentity tile;
+	private final MateriaIncubatorContainer container;
 
-	public MateriaHibernatorItemHandler(MateriaHibernatorContainer container, MateriaHibernatorTileentity tile) {
+	public MateriaIncubatorItemHandler(MateriaIncubatorContainer container, MateriaIncubatorTileentity tile) {
 		super(2);
 		this.tile = tile;
 		this.container = container;
