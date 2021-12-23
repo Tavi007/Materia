@@ -10,31 +10,52 @@ import net.minecraft.item.ItemStack;
 
 public class MateriaEffectHelper {
 
-	public static void computeEffectList(ItemStack stack) {
+	public static void computeEffectsAndApplyCurrent(ItemStack stack) {
 		if (stack.getItem() instanceof IMateriaTool) {
 			IMateriaTool tool = (IMateriaTool) stack.getItem();
-			MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
-
-			//check if stacks are empty
-			boolean isEmpty = true;
-			for (int i=0; i<collection.getSlots(); i++) {
-				if (!collection.getStackInSlot(i).isEmpty()) {
-					isEmpty = false;
-				}
-			}
-			if (isEmpty) return;
-
-			// compute effects
-			ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-			effectList.addAll(computeEffects(0, collection, tool.getTopCollectionSizes()));
-			effectList.addAll(computeEffects(4, collection, tool.getBotCollectionSizes()));
-			collection.setEffects(effectList);
+			computeEffectList(stack);
+			MateriaEffect effect = CapabilityHelper.getCurrentEffect(stack);
+			tool.applyMateriaEffect(stack, effect);
 		}
+	}
+
+	public static void applyCurrentEffect(ItemStack stack) {
+		if (stack.getItem() instanceof IMateriaTool) {
+			IMateriaTool tool = (IMateriaTool) stack.getItem();
+			MateriaEffect effect = CapabilityHelper.getCurrentEffect(stack);
+			tool.applyMateriaEffect(stack, effect);
+		}
+	}
+
+	public static void removeCurrentEffect(ItemStack stack) {
+		if (stack.getItem() instanceof IMateriaTool) {
+		}
+	}
+
+	private static void computeEffectList(ItemStack stack) {
+		MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+
+		//check if stacks are empty
+		boolean isEmpty = true;
+		for (int i=0; i<collection.getSlots(); i++) {
+			if (!collection.getStackInSlot(i).isEmpty()) {
+				isEmpty = false;
+			}
+		}
+		if (isEmpty) return;
+
+		// compute effects
+		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
+		IMateriaTool tool = (IMateriaTool) stack.getItem();
+		effectList.addAll(computeEffects(0, collection, tool.getTopCollectionSizes()));
+		effectList.addAll(computeEffects(4, collection, tool.getBotCollectionSizes()));
+		collection.setEffects(effectList);
+		collection.markCleaned();
 	}
 
 	private static ArrayList<MateriaEffect> computeEffects(int startStackCounter, MateriaCollection collection, int[] collectionSize) {
 		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-		
+
 		for(int i=0; i<collectionSize.length; i++) {
 			ArrayList<ItemStack> stackList = new ArrayList<ItemStack>();
 			boolean hasMateria = false;

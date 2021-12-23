@@ -55,4 +55,10 @@ public class MateriaEffectFire extends MateriaEffect implements IMateriaEffectRe
 	public String getPickaxeTooltip() {
 		return "" + TextFormatting.RED + "Fire Pick " + fire.level + TextFormatting.RESET;
 	}
+
+	@Override
+	public void applyDefaultEffect(ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
 }

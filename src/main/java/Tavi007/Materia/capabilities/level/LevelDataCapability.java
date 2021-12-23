@@ -59,10 +59,6 @@ public class LevelDataCapability {
 		return new SerializableCapabilityProvider<>(LevelData_Capability, defaultFacing, levelData);
 	}
 
-
-	/**
-	 * Event handler for the {@link IElementalAttack} capability.
-	 */
 	@Mod.EventBusSubscriber(modid = Materia.MOD_ID)
 	private static class EventHandler {
 

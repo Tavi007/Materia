@@ -65,4 +65,9 @@ public class MateriaAxe  extends AxeItem implements IMateriaTool {
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getAxeTooltip();
 	}
+
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applyAxeEffect(stack);
+	}
 }

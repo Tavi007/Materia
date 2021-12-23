@@ -59,4 +59,10 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 	public String getDefaultTooltip() {
 		return "" + TextFormatting.RED + "Area Fire " + area.level + "-" + fire.level + TextFormatting.RESET;
 	}
+
+	@Override
+	public void applyDefaultEffect(ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
 }

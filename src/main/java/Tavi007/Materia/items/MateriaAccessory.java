@@ -69,4 +69,9 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 		return effect.getAccessoryTooltip();
 	}
 
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applyAccessoryEffect(stack);
+	}
+
 }

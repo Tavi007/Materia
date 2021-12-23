@@ -67,7 +67,7 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         stack.setTag(nbt);
-        MateriaEffectHelper.computeEffectList(stack);
+        MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
     }
 
 	@Override
@@ -80,5 +80,10 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
 	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getSwordTooltip();
+	}
+
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applySwordEffect(stack);
 	}
 }

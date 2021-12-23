@@ -41,14 +41,14 @@ public class MateriaCollectionCapability {
 				//fill nbt with data
 				CompoundNBT nbt = new CompoundNBT();
 				nbt.put("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(instance, null));
-				nbt.putInt("counter", instance.counter);
+				nbt.putInt("index", instance.getEffectIndex());
 				return nbt;
 			}
 
 			@Override
 			public void readNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side, final INBT nbt) {
 				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(instance, null, ((CompoundNBT) nbt).get("inventory"));
-				instance.counter = ((CompoundNBT) nbt).getInt("counter");
+				instance.setEffectIndex(((CompoundNBT) nbt).getInt("index"));
 			}
 		}, () -> new MateriaCollection());
 	}
@@ -57,10 +57,6 @@ public class MateriaCollectionCapability {
 		return new SerializableCapabilityProvider<>(MateriaCollection_Capability, defaultFacing, materiaCollection);
 	}
 
-
-	/**
-	 * Event handler for the {@link IElementalAttack} capability.
-	 */
 	@Mod.EventBusSubscriber(modid = Materia.MOD_ID)
 	private static class EventHandler {
 

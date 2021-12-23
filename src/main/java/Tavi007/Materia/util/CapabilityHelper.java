@@ -38,21 +38,24 @@ public class CapabilityHelper {
 	 */
 	public static ArrayList<MateriaEffect> getEffects(ItemStack stack) {
 		MateriaCollection collection = getMateriaCollection(stack);
+		if(collection.isDirty()) {
+			MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
+		}
 		return collection.getEffects();
 	}
 	
 	public static MateriaEffect getCurrentEffect(ItemStack stack) {
 		ArrayList<MateriaEffect> effects = getEffects(stack);
-		return effects.get(getSelectedEffectCounter(stack));
+		return effects.get(getEffectIndex(stack));
 	}
 	
-	public static int getSelectedEffectCounter(ItemStack stack) {
+	public static int getEffectIndex(ItemStack stack) {
 		MateriaCollection collection = getMateriaCollection(stack);
-		return collection.getCounter();
+		return collection.getEffectIndex();
 	}
 	
 	public static void selectNextEffect(ItemStack stack) {
 		MateriaCollection collection = getMateriaCollection(stack);
-		collection.incrementCounter();
+		collection.incrementEffectIndex();
 	}
 }

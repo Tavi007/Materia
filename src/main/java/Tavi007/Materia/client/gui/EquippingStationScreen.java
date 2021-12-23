@@ -1,16 +1,11 @@
 package Tavi007.Materia.client.gui;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -29,6 +24,18 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		this.ySize = 191;
 	}
 
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(matrixStack);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+	}
+
+	@Override
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+28, 4210752);
+	}
+		
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
@@ -38,37 +45,13 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 		this.blit(matrixStack, x, y, 0, 0, this.xSize, this.ySize);
-		
-		
+
+
 		ItemStack toolStack = this.container.getMateriaToolStack();
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
 			IMateriaTool item = (IMateriaTool) toolStack.getItem();
-
-			drawMateriaSlots(matrixStack, x+10, y+21, item.getTopCollectionSizes());
-			drawMateriaSlots(matrixStack, x+10, y+76, item.getBotCollectionSizes());
-		}
-	}
-	
-	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
-		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
-		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+28, 4210752);
-	
-		ItemStack toolStack = this.container.getMateriaToolStack();
-		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
-			
-			//collect effect text
-			List<ITextComponent> textList = new ArrayList<ITextComponent>();
-			MateriaToolHelper.addMateriaEffectToTooltip(toolStack, textList);
-			
-			// draw the text starting  (x,y)
-			int startX = 103;
-			int startY = 9;
-			for(ITextComponent component : textList) {
-				this.minecraft.fontRenderer.func_243246_a(matrixStack, component, (float) startX, (float) startY, Color.darkGray.getRGB());
-				startY += this.minecraft.fontRenderer.FONT_HEIGHT;
-			}
-			renderHoveredTooltip(matrixStack, mouseX/2, mouseY/2);
+			drawMateriaSlots(matrixStack, x+50, y+21, item.getTopCollectionSizes());
+			drawMateriaSlots(matrixStack, x+50, y+76, item.getBotCollectionSizes());
 		}
 	}
 
@@ -97,6 +80,5 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 				break;
 			}
 		}
-
 	}
 }

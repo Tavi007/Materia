@@ -1,6 +1,6 @@
 package Tavi007.Materia.crafting.recipe;
 
-public class MateriaHibernationRecipe  {
+public class MateriaIncubatorRecipe  {
 
 	
 }

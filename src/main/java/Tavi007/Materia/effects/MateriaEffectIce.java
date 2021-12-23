@@ -56,4 +56,10 @@ public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRec
 	public String getPickaxeTooltip() {
 		return "" + TextFormatting.BLUE + "Ice Pick " + ice.level + TextFormatting.RESET;
 	}
+
+	@Override
+	public void applyDefaultEffect(ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
 }

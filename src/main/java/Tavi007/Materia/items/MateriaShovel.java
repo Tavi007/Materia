@@ -64,4 +64,9 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getShovelTooltip();
 	}
+
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applyShovelEffect(stack);
+	}
 }

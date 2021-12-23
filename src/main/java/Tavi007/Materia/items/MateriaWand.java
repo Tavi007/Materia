@@ -67,4 +67,9 @@ public class MateriaWand extends ToolItem implements IMateriaTool {
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getWandTooltip();
 	}
+
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applyWandEffect(stack);
+	}
 }

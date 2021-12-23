@@ -22,6 +22,12 @@ public class MateriaIncubatorScreen extends ContainerScreen<MateriaIncubatorCont
 		this.ySize = 191;
 	}
 
+	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(matrixStack);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+	}
+
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {

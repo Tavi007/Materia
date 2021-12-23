@@ -54,4 +54,10 @@ public class MateriaEffectArea extends MateriaEffect implements IMateriaEffectAr
 	public String getPickaxeTooltip() {
 		return "" + TextFormatting.DARK_PURPLE + "Area Pick " + area.level + TextFormatting.RESET;
 	}
+
+	@Override
+	public void applyDefaultEffect(ItemStack stack) {
+		// TODO Auto-generated method stub
+		
+	}
 }

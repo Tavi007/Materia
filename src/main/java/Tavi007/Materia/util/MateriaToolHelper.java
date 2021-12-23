@@ -53,7 +53,7 @@ public class MateriaToolHelper {
 		if(item instanceof IMateriaTool) {
 			IMateriaTool materiaTool = (IMateriaTool) item;
 			ArrayList<MateriaEffect> effects = CapabilityHelper.getEffects(stack);
-			int selectedEffectId = CapabilityHelper.getSelectedEffectCounter(stack);
+			int selectedEffectId = CapabilityHelper.getEffectIndex(stack);
 			for(int i = 0; i<effects.size(); i++) {
 				if(i==selectedEffectId) {
 					tooltip.add(new StringTextComponent("> " + materiaTool.getEffectTooltip(effects.get(i))));

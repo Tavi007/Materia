@@ -4,12 +4,9 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
-import org.jline.utils.Log;
-
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -17,10 +14,11 @@ public class MateriaCollection extends ItemStackHandler {
 
 	//should be saved in nbt too or rather be recalculated everytime?
 	private ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-	protected int counter = 0;
+	private Integer effectIndex = 0;
+	private Boolean dirty = false;
 
 	private final static int maxItemStackSlots = 8;
-	
+
 	public MateriaCollection() {
 		super(maxItemStackSlots);
 	}
@@ -32,25 +30,41 @@ public class MateriaCollection extends ItemStackHandler {
 	public void setEffects(ArrayList<MateriaEffect> effectList) {
 		this.effectList = effectList;
 	}
-	
-	public int getCounter() {
-		return counter;
+
+	public int getEffectIndex() {
+		return effectIndex;
+	}
+
+	public void setEffectIndex(int index) {
+		this.effectIndex = index;
+	}
+
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	public void markCleaned() {
+		dirty = false;
+	}
+
+	public void markDirty() {
+		dirty = true;
 	}
 	
 	public MateriaEffect getCurrentEffect() {
-		if(counter >= effectList.size()) {
-			counter = 0;
+		if(effectIndex >= effectList.size()) {
+			effectIndex = 0;
 		}
-		return effectList.get(counter);
+		return effectList.get(effectIndex);
 	}
-	
-	public void incrementCounter() {
-		counter++;
-		if(counter >= effectList.size()) {
-			counter = 0;
+
+	public void incrementEffectIndex() {
+		effectIndex++;
+		if(effectIndex >= effectList.size()) {
+			effectIndex = 0;
 		}
 	}
-	
+
 	public void addAp(int ap) {
 		for(ItemStack stack : stacks) {
 			if(!stack.isEmpty()) {
@@ -62,11 +76,16 @@ public class MateriaCollection extends ItemStackHandler {
 
 	@Override
 	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-		if (slot < 0 || slot >= maxItemStackSlots) {
-			throw new IllegalArgumentException("Invalid slot number:"+slot);
-		}
-		if (stack.isEmpty()) return false;
-		Item item = stack.getItem();
-		return item instanceof MateriaItem;
+		return stack.getItem() instanceof MateriaItem;
+	}
+
+	@Override
+	protected void onLoad() {
+		dirty = true;
+	}
+
+	@Override
+	protected void onContentsChanged(int slot) {
+		onLoad(); //highly inefficient. TODO: make this better
 	}
 }

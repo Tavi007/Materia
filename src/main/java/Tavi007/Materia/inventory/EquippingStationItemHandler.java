@@ -1,5 +1,7 @@
 package Tavi007.Materia.inventory;
 
+import org.jline.utils.Log;
+
 import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
@@ -49,9 +51,11 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 			}
 		}
 		else {
-			// Should not have happened
+			Log.warn("Slot index is greater than 8. This should not have happened");
 		}
-		MateriaEffectHelper.computeEffectList(getMateriaToolStack());
+		ItemStack stack = getMateriaToolStack();
+		CapabilityHelper.getMateriaCollection(stack).markDirty();
+		MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
 	}
 
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaEffectHelper;
@@ -84,14 +85,19 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	@Override
     @Nullable
     public CompoundNBT getShareTag(ItemStack stack) {
-        return stack.getTag();
+		CompoundNBT nbt = stack.getTag();
+//		MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+//		nbt.put("collection", collection.serializeNBT());
+        return nbt;
     }
 	
 	@Override
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         stack.setTag(nbt);
-        MateriaEffectHelper.computeEffectList(stack);
+//        MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+//        collection.deserializeNBT((CompoundNBT) nbt.get("collection")); 
+        MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
     }
 	
 	@Override
@@ -104,5 +110,10 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getPickaxeTooltip();
+	}
+
+	@Override
+	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
+		effect.applyPickaxeEffect(stack);
 	}
 }

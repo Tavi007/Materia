@@ -25,6 +25,30 @@ public abstract class MateriaEffect {
 		return null;
 	}
 	
+	public abstract void applyDefaultEffect(ItemStack stack);
+	
+	public void applyPickaxeEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applyAxeEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applyShovelEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applyHoeEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applySwordEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applyWandEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	public void applyAccessoryEffect(ItemStack stack) {
+		applyDefaultEffect(stack);
+	}
+	
 	public abstract String getDefaultTooltip();
 	
 	public String getPickaxeTooltip() {

@@ -7,6 +7,7 @@ import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaEffectHelper;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +17,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -56,7 +56,7 @@ public class EquippingStationContainer extends Container {
 		}
 		
 		//MateriaSlots (Id 36-43)
-		startX = 9;
+		startX = 49;
 		startY = 20;
 		for (int i=0; i<4; i++) {
 			addSlot(new MateriaContainerSlot(stationItemHandler, i, startX+20*i, startY));
@@ -67,7 +67,7 @@ public class EquippingStationContainer extends Container {
 		}
 
 		// MateriaToolSlot (Id 44)
-		startX = 40;
+		startX = 80;
 		startY = 48;
 		addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
 	}
@@ -164,7 +164,9 @@ public class EquippingStationContainer extends Container {
 	}
 
 	private ItemStack onSuccessfulTransfer() {
-		MateriaEffectHelper.computeEffectList(getMateriaToolStack());
+		ItemStack stack = getMateriaToolStack();
+		CapabilityHelper.getMateriaCollection(stack).markDirty();
+		MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
 		return ItemStack.EMPTY;
 	}
 
@@ -179,7 +181,6 @@ public class EquippingStationContainer extends Container {
 	}
 
 	public ItemStack getMateriaToolStack() {
-		NonNullList<ItemStack> stacks = this.getInventory();
 		return this.getInventory().get(toolInvId);
 	}
 
