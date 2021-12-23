@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaEffectHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
@@ -93,12 +94,15 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
         MateriaEffectHelper.computeEffectList(stack);
     }
 	
-
-	// testing
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		CapabilityHelper.getMateriaCollection(stack).addAp(1);
+		CapabilityHelper.selectNextEffect(stack);
 		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }
+
+	@Override
+	public String getEffectTooltip(MateriaEffect effect) {
+		return effect.getPickaxeTooltip();
+	}
 }

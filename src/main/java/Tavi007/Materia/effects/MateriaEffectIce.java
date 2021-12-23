@@ -9,8 +9,6 @@ import Tavi007.Materia.init.ItemList;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRecipe {
@@ -50,7 +48,12 @@ public class MateriaEffectIce extends MateriaEffect implements IMateriaEffectRec
 	}
 
 	@Override
-	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		tooltip.add(new StringTextComponent("" + TextFormatting.BLUE + "Ice Pick " + ice.level + TextFormatting.RESET));
-	};
+	public String getDefaultTooltip() {
+		return "" + TextFormatting.BLUE + "Ice" + ice.level + TextFormatting.RESET;
+	}
+
+	@Override
+	public String getPickaxeTooltip() {
+		return "" + TextFormatting.BLUE + "Ice Pick " + ice.level + TextFormatting.RESET;
+	}
 }

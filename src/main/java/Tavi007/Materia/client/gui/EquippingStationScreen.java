@@ -8,18 +8,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.util.CapabilityHelper;
+import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
@@ -62,48 +56,19 @@ public class EquippingStationScreen extends ContainerScreen<EquippingStationCont
 	
 		ItemStack toolStack = this.container.getMateriaToolStack();
 		if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
-			Item item = toolStack.getItem();
 			
-			//draw effect text
+			//collect effect text
 			List<ITextComponent> textList = new ArrayList<ITextComponent>();
-			ArrayList<MateriaEffect> effectList = CapabilityHelper.getEffects(toolStack);
-			if(item instanceof PickaxeItem) {
-				effectList.forEach( effect -> {
-					effect.addPickaxeToolTip(textList);
-				});
-			}
-			else if(item instanceof AxeItem) {
-				effectList.forEach( effect -> {
-					effect.addAxeToolTip(textList);
-				});
-			}
-			else if(item instanceof ShovelItem) {
-				effectList.forEach( effect -> {
-					effect.addShovelToolTip(textList);
-				});
-			}
-			else if(item instanceof SwordItem) {
-				effectList.forEach( effect -> {
-					effect.addSwordToolTip(textList);
-				});
-			}
-//			else if(item instanceof WandItem) {
-//				MateriaToolUtil.getEffectsTool((IMateriaTool) item).forEach( effect -> {
-//					effect.addWandToolTip(text);
-//				});
-//			}
+			MateriaToolHelper.addMateriaEffectToTooltip(toolStack, textList);
 			
 			// draw the text starting  (x,y)
-			//not quite happy here. I want colorful text.
 			int startX = 103;
-			int[] startY = {9};
-			textList.forEach( text -> {
-				this.minecraft.fontRenderer.func_243246_a(matrixStack, text, (float) startX, (float) startY[0], Color.darkGray.getRGB());
-				startY[0] += this.minecraft.fontRenderer.FONT_HEIGHT;
-			});
-			
-			
-			renderHoveredTooltip(matrixStack,mouseX,mouseY);
+			int startY = 9;
+			for(ITextComponent component : textList) {
+				this.minecraft.fontRenderer.func_243246_a(matrixStack, component, (float) startX, (float) startY, Color.darkGray.getRGB());
+				startY += this.minecraft.fontRenderer.FONT_HEIGHT;
+			}
+			renderHoveredTooltip(matrixStack, mouseX/2, mouseY/2);
 		}
 	}
 

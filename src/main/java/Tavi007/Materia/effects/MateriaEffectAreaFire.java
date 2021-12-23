@@ -9,8 +9,6 @@ import Tavi007.Materia.init.ItemList;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffectRecipe, IMateriaEffectArea {
@@ -58,7 +56,7 @@ public class MateriaEffectAreaFire extends MateriaEffect implements IMateriaEffe
 	}
 
 	@Override
-	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		tooltip.add(new StringTextComponent("" + TextFormatting.RED + "Area Fire " + area.level + "-" + fire.level + TextFormatting.RESET));
-	};
+	public String getDefaultTooltip() {
+		return "" + TextFormatting.RED + "Area Fire " + area.level + "-" + fire.level + TextFormatting.RESET;
+	}
 }

@@ -40,4 +40,19 @@ public class CapabilityHelper {
 		MateriaCollection collection = getMateriaCollection(stack);
 		return collection.getEffects();
 	}
+	
+	public static MateriaEffect getCurrentEffect(ItemStack stack) {
+		ArrayList<MateriaEffect> effects = getEffects(stack);
+		return effects.get(getSelectedEffectCounter(stack));
+	}
+	
+	public static int getSelectedEffectCounter(ItemStack stack) {
+		MateriaCollection collection = getMateriaCollection(stack);
+		return collection.getCounter();
+	}
+	
+	public static void selectNextEffect(ItemStack stack) {
+		MateriaCollection collection = getMateriaCollection(stack);
+		collection.incrementCounter();
+	}
 }

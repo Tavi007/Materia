@@ -2,7 +2,7 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.container.EquippingStationContainer;
-import Tavi007.Materia.inventory.container.MateriaHibernatorContainer;
+import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
@@ -15,6 +15,6 @@ public class ContainerTypeList {
 	public static final RegistryObject<ContainerType<EquippingStationContainer>> EQUIPPING_STATION = CONTAINER_TYPES
 			.register("equipping_station_container", () -> IForgeContainerType.create(EquippingStationContainer::new));
 	
-	public static final RegistryObject<ContainerType<MateriaHibernatorContainer>> MATERIA_HIBERNATOR = CONTAINER_TYPES
-			.register("materia_hibernator_container", () -> IForgeContainerType.create(MateriaHibernatorContainer::new));
+	public static final RegistryObject<ContainerType<MateriaIncubatorContainer>> MATERIA_INCUBATOR = CONTAINER_TYPES
+			.register("materia_incubator_container", () -> IForgeContainerType.create(MateriaIncubatorContainer::new));
 }

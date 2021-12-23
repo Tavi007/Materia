@@ -41,12 +41,14 @@ public class MateriaCollectionCapability {
 				//fill nbt with data
 				CompoundNBT nbt = new CompoundNBT();
 				nbt.put("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(instance, null));
+				nbt.putInt("counter", instance.counter);
 				return nbt;
 			}
 
 			@Override
 			public void readNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side, final INBT nbt) {
 				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(instance, null, ((CompoundNBT) nbt).get("inventory"));
+				instance.counter = ((CompoundNBT) nbt).getInt("counter");
 			}
 		}, () -> new MateriaCollection());
 	}

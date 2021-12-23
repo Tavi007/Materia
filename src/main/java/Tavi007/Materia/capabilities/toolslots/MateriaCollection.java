@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.annotation.Nonnull;
 
+import org.jline.utils.Log;
+
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
@@ -14,7 +16,8 @@ import net.minecraftforge.items.ItemStackHandler;
 public class MateriaCollection extends ItemStackHandler {
 
 	//should be saved in nbt too or rather be recalculated everytime?
-	public ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
+	private ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
+	protected int counter = 0;
 
 	private final static int maxItemStackSlots = 8;
 	
@@ -25,6 +28,28 @@ public class MateriaCollection extends ItemStackHandler {
 	public ArrayList<MateriaEffect> getEffects() {
 		return effectList;
 	}
+
+	public void setEffects(ArrayList<MateriaEffect> effectList) {
+		this.effectList = effectList;
+	}
+	
+	public int getCounter() {
+		return counter;
+	}
+	
+	public MateriaEffect getCurrentEffect() {
+		if(counter >= effectList.size()) {
+			counter = 0;
+		}
+		return effectList.get(counter);
+	}
+	
+	public void incrementCounter() {
+		counter++;
+		if(counter >= effectList.size()) {
+			counter = 0;
+		}
+	}
 	
 	public void addAp(int ap) {
 		for(ItemStack stack : stacks) {
@@ -34,13 +59,6 @@ public class MateriaCollection extends ItemStackHandler {
 			}
 		}
 	}
-	
-
-	@Override
-    protected void onContentsChanged(int slot) {
-		//recompute effects here?
-		String test = "hi!"; 
-    }
 
 	@Override
 	public boolean isItemValid(int slot, @Nonnull ItemStack stack) {

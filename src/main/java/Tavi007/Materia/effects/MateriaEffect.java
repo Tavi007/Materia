@@ -5,9 +5,8 @@ import java.util.List;
 import Tavi007.Materia.Materia;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 
-public class MateriaEffect {
+public abstract class MateriaEffect {
 	private ResourceLocation rl = new ResourceLocation(Materia.MOD_ID, "base");
 	
 	protected MateriaEffect(ResourceLocation rl) {
@@ -26,31 +25,27 @@ public class MateriaEffect {
 		return null;
 	}
 	
-	public void addPickaxeToolTip(List<ITextComponent> tooltip) {
-		return;
-	}
+	public abstract String getDefaultTooltip();
 	
-	public void addAxeToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getPickaxeTooltip() {
+		return getDefaultTooltip();
 	}
-	
-	public void addShovelToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getAxeTooltip() {
+		return getDefaultTooltip();
 	}
-	
-	public void addHoeToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getShovelTooltip() {
+		return getDefaultTooltip();
 	}
-	
-	public void addSwordToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getHoeTooltip() {
+		return getDefaultTooltip();
 	}
-	
-	public void addWandToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getSwordTooltip() {
+		return getDefaultTooltip();
 	}
-	
-	public void addAccessoryToolTip(List<ITextComponent> tooltip) {
-		return;
+	public String getWandTooltip() {
+		return getDefaultTooltip();
+	}
+	public String getAccessoryTooltip() {
+		return getDefaultTooltip();
 	}
 }

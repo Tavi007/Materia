@@ -6,13 +6,6 @@ import java.util.List;
 import Tavi007.Materia.effects.IMateriaEffectArea;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaAccessory;
-import Tavi007.Materia.items.MateriaAxe;
-import Tavi007.Materia.items.MateriaHoe;
-import Tavi007.Materia.items.MateriaPickaxe;
-import Tavi007.Materia.items.MateriaShovel;
-import Tavi007.Materia.items.MateriaSword;
-import Tavi007.Materia.items.MateriaWand;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
@@ -51,41 +44,24 @@ public class MateriaToolHelper {
 		tooltip.add(new StringTextComponent(""  + TextFormatting.GRAY + "Materia Slots:" + TextFormatting.RESET));
 		tooltip.add(new StringTextComponent(" " + TextFormatting.GRAY + asString( ((IMateriaTool) stack.getItem()).getTopCollectionSizes() ) + TextFormatting.RESET));
 		tooltip.add(new StringTextComponent(" " + TextFormatting.GRAY + asString( ((IMateriaTool) stack.getItem()).getBotCollectionSizes() )  + TextFormatting.RESET));
-
 		tooltip.add(new StringTextComponent(""  + TextFormatting.GRAY + "Materia Effects:" + TextFormatting.RESET));
-
-
+		addMateriaEffectToTooltip(stack, tooltip);
+	}
+	
+	public static void addMateriaEffectToTooltip(ItemStack stack, List<ITextComponent> tooltip) {
 		Item item = stack.getItem();
-
-		if(item instanceof MateriaPickaxe) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addPickaxeToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaAxe) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addAxeToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaShovel) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addShovelToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaHoe) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addHoeToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaSword) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addSwordToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaWand) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addWandToolTip(tooltip);
-			});
-		} else if(item instanceof MateriaAccessory) {
-			CapabilityHelper.getEffects(stack).forEach( effect ->{
-				effect.addAccessoryToolTip(tooltip);
-			});
-		}
+		if(item instanceof IMateriaTool) {
+			IMateriaTool materiaTool = (IMateriaTool) item;
+			ArrayList<MateriaEffect> effects = CapabilityHelper.getEffects(stack);
+			int selectedEffectId = CapabilityHelper.getSelectedEffectCounter(stack);
+			for(int i = 0; i<effects.size(); i++) {
+				if(i==selectedEffectId) {
+					tooltip.add(new StringTextComponent("> " + materiaTool.getEffectTooltip(effects.get(i))));
+				} else {
+					tooltip.add(new StringTextComponent(materiaTool.getEffectTooltip(effects.get(i))));
+				}
+			}
+		} 
 	}
 
 	private static String asString(int[] array) {
@@ -110,8 +86,7 @@ public class MateriaToolHelper {
 
 		return ret;
 	}
-
-
+	
 	public static int getMaxAreaLevel(ItemStack stack) {
 		ArrayList<MateriaEffect> effectList = CapabilityHelper.getMateriaCollection(stack).getEffects();
 		int[] maxAreaLevel = {0};

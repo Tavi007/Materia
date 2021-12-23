@@ -33,7 +33,7 @@ public class MateriaIncubatorContainer extends Container {
 	private final int fuelSlotId = 43;
 	
 	public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
-		super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
+		super(ContainerTypeList.MATERIA_INCUBATOR.get(), windowId);
 		this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
 		this.incubatorItemHandler = new MateriaIncubatorItemHandler(this, new MateriaIncubatorTileentity());
 
@@ -68,7 +68,7 @@ public class MateriaIncubatorContainer extends Container {
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
+		return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
 	}
 
 	//shift-left click handling

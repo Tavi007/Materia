@@ -28,7 +28,7 @@ public class MateriaEffectHelper {
 			ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 			effectList.addAll(computeEffects(0, collection, tool.getTopCollectionSizes()));
 			effectList.addAll(computeEffects(4, collection, tool.getBotCollectionSizes()));
-			collection.effectList = effectList;
+			collection.setEffects(effectList);
 		}
 	}
 

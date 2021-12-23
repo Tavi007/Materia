@@ -5,12 +5,17 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.effects.MateriaEffect;
+import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -51,4 +56,15 @@ public class MateriaWand extends ToolItem implements IMateriaTool {
 		MateriaToolHelper.addToolTip(stack, tooltip);
 	}
 
+	@Override
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		CapabilityHelper.selectNextEffect(stack);
+		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    }
+
+	@Override
+	public String getEffectTooltip(MateriaEffect effect) {
+		return effect.getWandTooltip();
+	}
 }
