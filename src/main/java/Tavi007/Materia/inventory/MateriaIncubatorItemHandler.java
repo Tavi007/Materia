@@ -1,10 +1,7 @@
 package Tavi007.Materia.inventory;
 
-import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
-import Tavi007.Materia.util.CapabilityHelper;
-import Tavi007.Materia.util.MateriaEffectHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -30,7 +27,7 @@ public class MateriaIncubatorItemHandler extends ItemStackHandler {
 
 	@Override
 	public int getSlotLimit(int slot) {
-		if(slot == 1) {
+		if(slot == 0) {
 			return 1;
 		}
 		return 64;

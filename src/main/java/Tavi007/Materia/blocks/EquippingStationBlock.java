@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class EquippingStationBlock extends Block {
 
-	private static final ITextComponent textComponen = new TranslationTextComponent("container.equipping_station");
+	private static final ITextComponent textComponent = new TranslationTextComponent("container.equipping_station");
 	   
 	public EquippingStationBlock(Properties properties) {
 		super(properties);
@@ -34,7 +34,7 @@ public class EquippingStationBlock extends Block {
 	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> {
 			return new EquippingStationContainer(windowId, playerInventory, worldIn, pos);
-		}, textComponen);
+		}, textComponent);
 	}
 
 }

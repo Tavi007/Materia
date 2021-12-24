@@ -42,6 +42,5 @@ public class MateriaIncubatorScreen extends ContainerScreen<MateriaIncubatorCont
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
 		this.font.func_243248_b(matrixStack, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), (float)this.playerInventoryTitleX, (float)this.playerInventoryTitleY+28, 4210752);
-		renderHoveredTooltip(matrixStack,mouseX,mouseY);
 	}
 }

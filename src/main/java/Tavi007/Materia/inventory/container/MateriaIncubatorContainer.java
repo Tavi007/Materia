@@ -2,9 +2,11 @@ package Tavi007.Materia.inventory.container;
 
 import javax.annotation.Nonnull;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
+import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,7 +32,7 @@ public class MateriaIncubatorContainer extends Container {
 	private final int playerInvStart = 9;
 	private final int playerInvEnd = 35; 
 	private final int materiaSlotId = 36;
-	private final int fuelSlotId = 43;
+	private final int fuelSlotId = 37;
 	
 	public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
 		super(ContainerTypeList.MATERIA_INCUBATOR.get(), windowId);
@@ -53,13 +55,13 @@ public class MateriaIncubatorContainer extends Container {
 		}
 
 		//MateriaSlots (Id 36)
-		startX = 50;
-		startY = 108;
+		startX = 80;
+		startY = 71;
 		addSlot(new MateriaContainerSlot(incubatorItemHandler, 0, startX, startY));
 		//MateriaSlots (Id 37)
-		startX = 150;
-		startY = 108;
-		addSlot(new SlotItemHandler(incubatorItemHandler, 0, startX, startY));
+		startX = 80;
+		startY = 21;
+		addSlot(new SlotItemHandler(incubatorItemHandler, 1, startX, startY));
 	}
 
 	public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
@@ -76,7 +78,64 @@ public class MateriaIncubatorContainer extends Container {
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity player, int sourceSlotIndex) {
 		Slot sourceSlot = inventorySlots.get(sourceSlotIndex);
-		return sourceSlot.getStack();
+		if (sourceSlot == null || !sourceSlot.getHasStack()) return ItemStack.EMPTY;  //EMPTY_ITEM
+		ItemStack sourceStack = sourceSlot.getStack();
+		ItemStack copyOfSourceStack = sourceStack.copy();
+
+		if (sourceSlotIndex>=hotbarInvStart && sourceSlotIndex<=hotbarInvEnd) { //HotBarSlot clicked
+			if (sourceStack.getItem() instanceof MateriaItem) {
+				if (!mergeItemStack(sourceStack, materiaSlotId, materiaSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
+			} else {
+				if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
+			}
+		} 
+		else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
+			if (sourceStack.getItem() instanceof MateriaItem) {
+				if (!mergeItemStack(sourceStack, materiaSlotId, materiaSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
+			} else {
+				if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId+1, false)) {
+					onSuccessfulTransfer();
+				} else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+					onSuccessfulTransfer();
+				}
+			}
+		} else if (sourceSlotIndex>=materiaSlotId && sourceSlotIndex<=fuelSlotId) { 
+			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {
+				onSuccessfulTransfer();
+			} 
+		} else {
+			Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
+			return ItemStack.EMPTY;
+		}
+
+		// If stack size == 0 (the entire stack was moved) set slot contents to null
+		if (sourceStack.getCount() == 0) {
+			sourceSlot.putStack(ItemStack.EMPTY);
+		} else {
+			sourceSlot.onSlotChanged();
+		}
+		sourceSlot.onTake(player, sourceStack);
+
+		return copyOfSourceStack;
+	}
+
+	private void onSuccessfulTransfer() {
 	}
 
 	public ItemStack getMateriaStack() {

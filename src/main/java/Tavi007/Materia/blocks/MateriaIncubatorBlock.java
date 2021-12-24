@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class MateriaIncubatorBlock extends Block {
 
-	private static final ITextComponent textComponen = new TranslationTextComponent("container.materia_hibernator");
+	private static final ITextComponent textComponent = new TranslationTextComponent("container.materia_incubator");
 	   
 	public MateriaIncubatorBlock(Properties properties) {
 		super(properties);
@@ -34,7 +34,7 @@ public class MateriaIncubatorBlock extends Block {
 	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
 		return new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> {
 			return new MateriaIncubatorContainer(windowId, playerInventory, worldIn, pos);
-		}, textComponen);
+		}, textComponent);
 	}
 
 }

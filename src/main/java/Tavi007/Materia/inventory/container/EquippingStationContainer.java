@@ -97,59 +97,47 @@ public class EquippingStationContainer extends Container {
 				} else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
-			}
-			else if (sourceStack.getItem() instanceof IMateriaTool) {
+			} else if (sourceStack.getItem() instanceof IMateriaTool) {
 				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {
 					onSuccessfulTransfer();
-				}
-				else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
+				} else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
-			}
-			else {
+			} else {
 				if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
 			}
-		} 
-		else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
+		} else if (sourceSlotIndex>=playerInvStart && sourceSlotIndex<=playerInvEnd) { //playerInventorySlot clicked
 			if (sourceStack.getItem() instanceof MateriaItem) {
 				if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd+1, false)) {
 					onSuccessfulTransfer();
-				}
-				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+				} else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
-			}
-			else if (sourceStack.getItem() instanceof IMateriaTool) {
+			} else if (sourceStack.getItem() instanceof IMateriaTool) {
 				if (!mergeItemStack(sourceStack, toolInvId, toolInvId+1, false)) {
 					onSuccessfulTransfer();
-				}
-				else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
+				} else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
-			}
-			else {
+			} else {
 				if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd+1, false)) {
 					onSuccessfulTransfer();
 				}
 			}
-		} 
-		else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
+		} else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
 			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {
 				onSuccessfulTransfer();
 			}
-		} 
-		else if (sourceSlotIndex>=materiaInvStart && sourceSlotIndex<=materiaInvEnd) { //MateriaSlot clicked
+		} else if (sourceSlotIndex>=materiaInvStart && sourceSlotIndex<=materiaInvEnd) { //MateriaSlot clicked
 			if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd+1, false)) {
 				onSuccessfulTransfer();
 			} 
-		} 
-		else {
+		} else {
 			Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
 			return ItemStack.EMPTY;
 		}
-
 
 		// If stack size == 0 (the entire stack was moved) set slot contents to null
 		if (sourceStack.getCount() == 0) {
@@ -157,7 +145,6 @@ public class EquippingStationContainer extends Container {
 		} else {
 			sourceSlot.onSlotChanged();
 		}
-
 		sourceSlot.onTake(player, sourceStack);
 
 		return copyOfSourceStack;
