@@ -21,7 +21,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class MateriaCollectionCapability {
 
 	@CapabilityInject(MateriaCollection.class)
-	public static final Capability<MateriaCollection> MateriaCollection_Capability = null;
+	public static final Capability<MateriaCollection> CAPABILITY = null;
 
 	/**
 	 * The default {@link Direction} to use for this capability.
@@ -41,20 +41,18 @@ public class MateriaCollectionCapability {
 				//fill nbt with data
 				CompoundNBT nbt = new CompoundNBT();
 				nbt.put("inventory", CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.writeNBT(instance, null));
-				nbt.putInt("index", instance.getEffectIndex());
 				return nbt;
 			}
 
 			@Override
 			public void readNBT(final Capability<MateriaCollection> capability, final MateriaCollection instance, final Direction side, final INBT nbt) {
 				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.readNBT(instance, null, ((CompoundNBT) nbt).get("inventory"));
-				instance.setEffectIndex(((CompoundNBT) nbt).getInt("index"));
 			}
 		}, () -> new MateriaCollection());
 	}
 
 	public static ICapabilityProvider createProvider(final MateriaCollection materiaCollection) {
-		return new SerializableCapabilityProvider<>(MateriaCollection_Capability, defaultFacing, materiaCollection);
+		return new SerializableCapabilityProvider<>(CAPABILITY, defaultFacing, materiaCollection);
 	}
 
 	@Mod.EventBusSubscriber(modid = Materia.MOD_ID)

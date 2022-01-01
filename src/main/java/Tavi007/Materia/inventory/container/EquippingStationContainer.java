@@ -153,7 +153,7 @@ public class EquippingStationContainer extends Container {
 	private ItemStack onSuccessfulTransfer() {
 		ItemStack stack = getMateriaToolStack();
 		CapabilityHelper.getMateriaCollection(stack).markDirty();
-		MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
+		MateriaEffectHelper.computeEffectList(stack);
 		return ItemStack.EMPTY;
 	}
 

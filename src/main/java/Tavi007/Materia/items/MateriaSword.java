@@ -67,14 +67,7 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         stack.setTag(nbt);
-        MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
-    }
-
-	@Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		CapabilityHelper.selectNextEffect(stack);
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        MateriaEffectHelper.computeEffectList(stack);
     }
 
 	@Override

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
+import Tavi007.Materia.capabilities.magic.MagicData;
+import Tavi007.Materia.capabilities.magic.MagicDataCapability;
 import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.capabilities.toolslots.MateriaCollectionCapability;
 import Tavi007.Materia.effects.MateriaEffect;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public class CapabilityHelper {
@@ -17,8 +20,7 @@ public class CapabilityHelper {
 	 * @return the LevelData, containing the current level, current ap and the array for leveling up.
 	 */
 	public static LevelData getLevelData(ItemStack stack) {
-		LevelData levelData = (LevelData) stack.getCapability(LevelDataCapability.LevelData_Capability, null).orElse(new LevelData());
-		return levelData;
+		return (LevelData) stack.getCapability(LevelDataCapability.CAPABILITY, null).orElse(new LevelData());
 	}
 
 	/**
@@ -27,8 +29,16 @@ public class CapabilityHelper {
 	 * @return the MateriaCollection, containing the materiaStacks, current ap and the array for leveling up.
 	 */
 	public static MateriaCollection getMateriaCollection(ItemStack stack) {
-		MateriaCollection collection = (MateriaCollection) stack.getCapability(MateriaCollectionCapability.MateriaCollection_Capability, null).orElse(new MateriaCollection());
-		return collection;
+		return (MateriaCollection) stack.getCapability(MateriaCollectionCapability.CAPABILITY, null).orElse(new MateriaCollection());
+	}
+
+	/**
+	 * Returns the magic data {@link MagicData} of the {@link PlayerEntity}.
+	 * @param entity An PlayerEntity.
+	 * @return the MagicData, containing the mana and spell index.
+	 */
+	public static MagicData getManaData(PlayerEntity entity) {
+		return (MagicData) entity.getCapability(MagicDataCapability.CAPABILITY, null).orElse(new MagicData());
 	}
 
 	/**
@@ -37,25 +47,6 @@ public class CapabilityHelper {
 	 * @return the MateriaCollection, containing the materiaStacks, current ap and the array for leveling up.
 	 */
 	public static ArrayList<MateriaEffect> getEffects(ItemStack stack) {
-		MateriaCollection collection = getMateriaCollection(stack);
-		if(collection.isDirty()) {
-			MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
-		}
-		return collection.getEffects();
-	}
-	
-	public static MateriaEffect getCurrentEffect(ItemStack stack) {
-		ArrayList<MateriaEffect> effects = getEffects(stack);
-		return effects.get(getEffectIndex(stack));
-	}
-	
-	public static int getEffectIndex(ItemStack stack) {
-		MateriaCollection collection = getMateriaCollection(stack);
-		return collection.getEffectIndex();
-	}
-	
-	public static void selectNextEffect(ItemStack stack) {
-		MateriaCollection collection = getMateriaCollection(stack);
-		collection.incrementEffectIndex();
+		return getMateriaCollection(stack).getEffects();
 	}
 }

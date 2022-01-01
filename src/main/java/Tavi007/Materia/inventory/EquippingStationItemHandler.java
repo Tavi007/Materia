@@ -55,7 +55,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 		}
 		ItemStack stack = getMateriaToolStack();
 		CapabilityHelper.getMateriaCollection(stack).markDirty();
-		MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
+		MateriaEffectHelper.computeEffectList(stack);
 	}
 
 

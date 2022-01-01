@@ -13,13 +13,10 @@ import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
@@ -95,16 +92,9 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         stack.setTag(nbt);
-//        MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
-//        collection.deserializeNBT((CompoundNBT) nbt.get("collection")); 
-        MateriaEffectHelper.computeEffectsAndApplyCurrent(stack);
-    }
-	
-	@Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		CapabilityHelper.selectNextEffect(stack);
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+        collection.deserializeNBT((CompoundNBT) nbt.get("collection")); 
+        MateriaEffectHelper.computeEffectList(stack);
     }
 
 	@Override

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 public class LevelDataCapability {
 
 	@CapabilityInject(LevelData.class)
-	public static final Capability<LevelData> LevelData_Capability = null;
+	public static final Capability<LevelData> CAPABILITY = null;
 
 	/**
 	 * The default {@link Direction} to use for this capability.
@@ -56,7 +56,7 @@ public class LevelDataCapability {
 	}
 
 	public static ICapabilityProvider createProvider(final LevelData levelData) {
-		return new SerializableCapabilityProvider<>(LevelData_Capability, defaultFacing, levelData);
+		return new SerializableCapabilityProvider<>(CAPABILITY, defaultFacing, levelData);
 	}
 
 	@Mod.EventBusSubscriber(modid = Materia.MOD_ID)

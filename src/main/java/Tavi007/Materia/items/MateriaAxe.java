@@ -55,13 +55,6 @@ public class MateriaAxe  extends AxeItem implements IMateriaTool {
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		CapabilityHelper.selectNextEffect(stack);
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
-    }
-
-	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getAxeTooltip();
 	}

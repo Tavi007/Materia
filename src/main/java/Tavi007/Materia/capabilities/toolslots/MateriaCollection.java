@@ -14,7 +14,6 @@ public class MateriaCollection extends ItemStackHandler {
 
 	//should be saved in nbt too or rather be recalculated everytime?
 	private ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-	private Integer effectIndex = 0;
 	private Boolean dirty = false;
 
 	private final static int maxItemStackSlots = 8;
@@ -31,14 +30,6 @@ public class MateriaCollection extends ItemStackHandler {
 		this.effectList = effectList;
 	}
 
-	public int getEffectIndex() {
-		return effectIndex;
-	}
-
-	public void setEffectIndex(int index) {
-		this.effectIndex = index;
-	}
-
 	public boolean isDirty() {
 		return dirty;
 	}
@@ -49,20 +40,6 @@ public class MateriaCollection extends ItemStackHandler {
 
 	public void markDirty() {
 		dirty = true;
-	}
-	
-	public MateriaEffect getCurrentEffect() {
-		if(effectIndex >= effectList.size()) {
-			effectIndex = 0;
-		}
-		return effectList.get(effectIndex);
-	}
-
-	public void incrementEffectIndex() {
-		effectIndex++;
-		if(effectIndex >= effectList.size()) {
-			effectIndex = 0;
-		}
 	}
 
 	public void addAp(int ap) {

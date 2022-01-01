@@ -58,13 +58,6 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		CapabilityHelper.selectNextEffect(stack);
-		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
-    }
-
-	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getAccessoryTooltip();
 	}

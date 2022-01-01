@@ -10,29 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class MateriaEffectHelper {
 
-	public static void computeEffectsAndApplyCurrent(ItemStack stack) {
-		if (stack.getItem() instanceof IMateriaTool) {
-			IMateriaTool tool = (IMateriaTool) stack.getItem();
-			computeEffectList(stack);
-			MateriaEffect effect = CapabilityHelper.getCurrentEffect(stack);
-			tool.applyMateriaEffect(stack, effect);
-		}
-	}
-
-	public static void applyCurrentEffect(ItemStack stack) {
-		if (stack.getItem() instanceof IMateriaTool) {
-			IMateriaTool tool = (IMateriaTool) stack.getItem();
-			MateriaEffect effect = CapabilityHelper.getCurrentEffect(stack);
-			tool.applyMateriaEffect(stack, effect);
-		}
-	}
-
-	public static void removeCurrentEffect(ItemStack stack) {
-		if (stack.getItem() instanceof IMateriaTool) {
-		}
-	}
-
-	private static void computeEffectList(ItemStack stack) {
+	public static void computeEffectList(ItemStack stack) {
 		MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
 
 		//check if stacks are empty
