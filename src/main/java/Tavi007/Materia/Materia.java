@@ -38,9 +38,7 @@ public class Materia
 		BlockList.ITEMS.register(modEventBus);
 		ContainerTypeList.CONTAINER_TYPES.register(modEventBus);
 		
-
 		modEventBus.register(StartupCommon.class);
-		
 		
 		MateriaEffectList.init();
 		

@@ -63,4 +63,9 @@ public class MateriaAxe  extends AxeItem implements IMateriaTool {
 	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
 		effect.applyAxeEffect(stack);
 	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
 }

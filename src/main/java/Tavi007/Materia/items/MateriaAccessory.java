@@ -24,8 +24,8 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 	//change these later
 	private final int[] topCollectionSizes;
 	private final int[] botCollectionSizes;
-	
-	
+
+
 	public MateriaAccessory(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, int[] topCollectionSizes, int[] botCollectionSizes) {
 		super(attackDamageIn, attackSpeedIn, tier, new HashSet<Block>(), builder);
 		if (MateriaToolHelper.isCollectionSizesValid(topCollectionSizes)) {
@@ -41,7 +41,7 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 			this.botCollectionSizes = new int[]{0};
 		}
 	}
-	
+
 	@Override
 	public int[] getTopCollectionSizes() {
 		return topCollectionSizes;
@@ -51,7 +51,7 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 	public int[] getBotCollectionSizes() {
 		return botCollectionSizes;
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		MateriaToolHelper.addToolTip(stack, tooltip);
@@ -65,6 +65,11 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 	@Override
 	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
 		effect.applyAccessoryEffect(stack);
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
 	}
 
 }

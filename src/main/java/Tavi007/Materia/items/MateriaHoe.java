@@ -63,4 +63,9 @@ public class MateriaHoe  extends HoeItem implements IMateriaTool {
 	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
 		effect.applyHoeEffect(stack);
 	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
 }

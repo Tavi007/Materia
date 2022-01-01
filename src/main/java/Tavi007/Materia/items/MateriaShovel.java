@@ -62,4 +62,9 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
 	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
 		effect.applyShovelEffect(stack);
 	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
 }

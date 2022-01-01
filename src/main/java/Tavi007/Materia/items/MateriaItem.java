@@ -83,4 +83,9 @@ public class MateriaItem extends Item {
 		data.addAP(1, apToNextLevel);
 		return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
 }
