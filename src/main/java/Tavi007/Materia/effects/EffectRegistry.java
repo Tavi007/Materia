@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
-public class MateriaEffectRegistry {
+public class EffectRegistry {
 
 	private static HashSet<MateriaEffect> effectRegistry = new HashSet<MateriaEffect>();
 
