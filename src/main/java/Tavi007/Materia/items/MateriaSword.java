@@ -76,11 +76,6 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
 	}
 
 	@Override
-	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
-		effect.applySwordEffect(stack);
-	}
-
-	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
 	}

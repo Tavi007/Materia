@@ -1,19 +1,18 @@
 package Tavi007.Materia.init;
 
-
-import Tavi007.Materia.effects.MateriaEffectArea;
-import Tavi007.Materia.effects.MateriaEffectAreaFire;
-import Tavi007.Materia.effects.MateriaEffectFire;
-import Tavi007.Materia.effects.MateriaEffectIce;
+import Tavi007.Materia.effects.Element;
 import Tavi007.Materia.effects.MateriaEffectRegistry;
+import Tavi007.Materia.effects.SpellEffect;
+import Tavi007.Materia.effects.Stat;
+import Tavi007.Materia.effects.StatUpEffect;
 
 public class MateriaEffectList {
 
 	public static void init() {
-		MateriaEffectRegistry.register(new MateriaEffectFire());
-		MateriaEffectRegistry.register(new MateriaEffectIce());
-		MateriaEffectRegistry.register(new MateriaEffectArea());
-		MateriaEffectRegistry.register(new MateriaEffectAreaFire());
+		MateriaEffectRegistry.register(new SpellEffect(Element.FIRE));
+		MateriaEffectRegistry.register(new SpellEffect(Element.ICE));
+		
+		MateriaEffectRegistry.register(new StatUpEffect(Stat.MINING_SPEED));
 	}
 	
 }

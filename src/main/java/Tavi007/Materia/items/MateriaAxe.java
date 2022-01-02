@@ -5,15 +5,11 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.effects.MateriaEffect;
-import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -57,11 +53,6 @@ public class MateriaAxe  extends AxeItem implements IMateriaTool {
 	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getAxeTooltip();
-	}
-
-	@Override
-	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
-		effect.applyAxeEffect(stack);
 	}
 
 	@Override

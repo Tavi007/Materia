@@ -58,11 +58,6 @@ public class MateriaWand extends ToolItem implements IMateriaTool {
 	}
 
 	@Override
-	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
-		effect.applyWandEffect(stack);
-	}
-
-	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
 	}

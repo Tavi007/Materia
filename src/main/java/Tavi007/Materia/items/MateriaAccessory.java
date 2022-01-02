@@ -6,16 +6,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.effects.MateriaEffect;
-import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -60,11 +56,6 @@ public class MateriaAccessory extends ToolItem implements IMateriaTool, ICurioIt
 	@Override
 	public String getEffectTooltip(MateriaEffect effect) {
 		return effect.getAccessoryTooltip();
-	}
-
-	@Override
-	public void applyMateriaEffect(ItemStack stack, MateriaEffect effect) {
-		effect.applyAccessoryEffect(stack);
 	}
 
 	@Override

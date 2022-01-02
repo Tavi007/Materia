@@ -1,6 +1,6 @@
 package Tavi007.Materia.effects;
 
-public interface IMateriaEffectArea {
+public interface IAreaEffect {
 
 	int getAreaLevel();
 }
