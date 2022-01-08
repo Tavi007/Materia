@@ -10,45 +10,46 @@ import net.minecraft.item.ItemStack;
 
 public class MateriaEffectHelper {
 
-	public static void computeEffectList(ItemStack stack) {
-		MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+    public static void computeEffectList(ItemStack stack) {
+        MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
 
-		//check if stacks are empty
-		boolean isEmpty = true;
-		for (int i=0; i<collection.getSlots(); i++) {
-			if (!collection.getStackInSlot(i).isEmpty()) {
-				isEmpty = false;
-			}
-		}
-		if (isEmpty) return;
+        // check if stacks are empty
+        boolean isEmpty = true;
+        for (int i = 0; i < collection.getSlots(); i++) {
+            if (!collection.getStackInSlot(i).isEmpty()) {
+                isEmpty = false;
+            }
+        }
+        if (isEmpty)
+            return;
 
-		// compute effects
-		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
-		IMateriaTool tool = (IMateriaTool) stack.getItem();
-		effectList.addAll(computeEffects(0, collection, tool.getTopCollectionSizes()));
-		effectList.addAll(computeEffects(4, collection, tool.getBotCollectionSizes()));
-		collection.setEffects(effectList);
-		collection.markCleaned();
-	}
+        // compute effects
+        ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
+        IMateriaTool tool = (IMateriaTool) stack.getItem();
+        effectList.addAll(computeEffects(0, collection, tool.getTopCollectionSizes()));
+        effectList.addAll(computeEffects(4, collection, tool.getBotCollectionSizes()));
+        collection.setEffects(effectList);
+        collection.markCleaned();
+    }
 
-	private static ArrayList<MateriaEffect> computeEffects(int startStackCounter, MateriaCollection collection, int[] collectionSize) {
-		ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
+    private static ArrayList<MateriaEffect> computeEffects(int startStackCounter, MateriaCollection collection, int[] collectionSize) {
+        ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
 
-		for(int i=0; i<collectionSize.length; i++) {
-			ArrayList<ItemStack> stackList = new ArrayList<ItemStack>();
-			boolean hasMateria = false;
-			for (int j=0; j<collectionSize[i]; j++) {
-				ItemStack stack = collection.getStackInSlot(startStackCounter+j);
-				stackList.add(stack);
-				if (!stack.isEmpty()) {
-					hasMateria = true;
-				}
-			}
-			if(hasMateria) {
-				effectList.addAll(MateriaEffectRegistry.getEffect(stackList));
-			}
-			startStackCounter += collectionSize[i];
-		}
-		return effectList;
-	}
+        for (int i = 0; i < collectionSize.length; i++) {
+            ArrayList<ItemStack> stackList = new ArrayList<ItemStack>();
+            boolean hasMateria = false;
+            for (int j = 0; j < collectionSize[i]; j++) {
+                ItemStack stack = collection.getStackInSlot(startStackCounter + j);
+                stackList.add(stack);
+                if (!stack.isEmpty()) {
+                    hasMateria = true;
+                }
+            }
+            if (hasMateria) {
+                effectList.addAll(MateriaEffectRegistry.computeEffects(stackList));
+            }
+            startStackCounter += collectionSize[i];
+        }
+        return effectList;
+    }
 }

@@ -1,5 +1,6 @@
 package Tavi007.Materia.init;
 
+import Tavi007.Materia.effects.AreaSpellEffect;
 import Tavi007.Materia.effects.Element;
 import Tavi007.Materia.effects.MateriaEffectRegistry;
 import Tavi007.Materia.effects.SpellEffect;
@@ -11,6 +12,8 @@ public class MateriaEffectList {
     public static void init() {
         MateriaEffectRegistry.register(new SpellEffect(Element.FIRE));
         MateriaEffectRegistry.register(new SpellEffect(Element.ICE));
+
+        MateriaEffectRegistry.register(new AreaSpellEffect(Element.FIRE));
 
         MateriaEffectRegistry.register(new StatUpEffect(Stat.MINING_SPEED));
     }

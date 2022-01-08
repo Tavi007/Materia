@@ -15,19 +15,19 @@ public class MateriaEffectRegistry {
         return effect;
     }
 
-    public static List<MateriaEffect> getEffect(List<ItemStack> itemStacks) {
-        List<ItemStack> stackWithouEmpty = new ArrayList<ItemStack>();
+    public static List<MateriaEffect> computeEffects(List<ItemStack> itemStacks) {
+        List<ItemStack> stacksWithouEmpty = new ArrayList<ItemStack>();
         for (ItemStack stack : itemStacks) {
             if (!stack.isEmpty()) {
-                stackWithouEmpty.add(stack);
+                stacksWithouEmpty.add(stack);
             }
         }
 
         List<MateriaEffect> ret = new ArrayList<MateriaEffect>();
-        if (!stackWithouEmpty.isEmpty()) {
+        if (!stacksWithouEmpty.isEmpty()) {
             boolean foundEffect = false;
             for (MateriaEffect effect : effectRegistry) {
-                MateriaEffect copy = effect.initializeCopy(stackWithouEmpty);
+                MateriaEffect copy = effect.initializeCopy(stacksWithouEmpty);
                 if (copy != null) {
                     ret.add(copy);
                     foundEffect = true;
@@ -36,8 +36,8 @@ public class MateriaEffectRegistry {
             }
 
             if (!foundEffect) {
-                for (int i = 0; i < stackWithouEmpty.size(); i++) {
-                    ret.addAll(getEffect(stackWithouEmpty.subList(i, i + 1)));
+                for (int i = 0; i < stacksWithouEmpty.size(); i++) {
+                    ret.addAll(computeEffects(stacksWithouEmpty.subList(i, i + 1)));
                 }
             }
         }

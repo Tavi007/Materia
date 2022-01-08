@@ -5,6 +5,8 @@
 	"item.materia.area_materia" : "Area Materia",
 	"item.materia.ice_materia" : "Ice Materia",
 	"item.materia.fire_materia" : "Fire Materia",
+    
+    "item.materia.speed_up_materia" : "Speed Up Materia",
 	
 	"item.materia.materia_diamond_axe" : "Materia Axe",
 	"item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
