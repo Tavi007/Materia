@@ -5,16 +5,11 @@ import java.util.List;
 
 import Tavi007.Materia.effects.IAreaEffect;
 import Tavi007.Materia.effects.MateriaEffect;
-import Tavi007.Materia.items.IMateriaTool;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class MateriaToolHelper {
 
@@ -40,26 +35,26 @@ public class MateriaToolHelper {
         return true;
     }
 
-    public static void addToolTip(ItemStack stack, List<ITextComponent> tooltip) {
-        tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Slots:" + TextFormatting.RESET));
-        tooltip.add(
-            new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getTopCollectionSizes()) + TextFormatting.RESET));
-        tooltip.add(
-            new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getBotCollectionSizes()) + TextFormatting.RESET));
-        tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Effects:" + TextFormatting.RESET));
-        addMateriaEffectToTooltip(stack, tooltip);
-    }
-
-    public static void addMateriaEffectToTooltip(ItemStack stack, List<ITextComponent> tooltip) {
-        Item item = stack.getItem();
-        if (item instanceof IMateriaTool) {
-            IMateriaTool materiaTool = (IMateriaTool) item;
-            ArrayList<MateriaEffect> effects = CapabilityHelper.getEffects(stack);
-            effects.forEach(effect -> {
-                tooltip.add(new StringTextComponent(materiaTool.getEffectTooltip(effect)));
-            });
-        }
-    }
+    // public static void addToolTip(ItemStack stack, List<ITextComponent> tooltip) {
+    // tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Slots:" + TextFormatting.RESET));
+    // tooltip.add(
+    // new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getTopCollectionSizes()) + TextFormatting.RESET));
+    // tooltip.add(
+    // new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getBotCollectionSizes()) + TextFormatting.RESET));
+    // tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Effects:" + TextFormatting.RESET));
+    // addMateriaEffectToTooltip(stack, tooltip);
+    // }
+    //
+    // public static void addMateriaEffectToTooltip(ItemStack stack, List<ITextComponent> tooltip) {
+    // Item item = stack.getItem();
+    // if (item instanceof IMateriaTool) {
+    // IMateriaTool materiaTool = (IMateriaTool) item;
+    // ArrayList<MateriaEffect> effects = CapabilityHelper.getEffects(stack);
+    // effects.forEach(effect -> {
+    // tooltip.add(new StringTextComponent(materiaTool.getEffectTooltip(effect)));
+    // });
+    // }
+    // }
 
     private static String asString(int[] array) {
         String ret = "";
@@ -95,7 +90,7 @@ public class MateriaToolHelper {
         return maxAreaLevel[0];
     }
 
-    public static List<ItemStack> mineBlocks(World worldIn, BlockPos startPos, int maxAreaLevel) {
+    public static List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, int maxAreaLevel) {
         List<BlockPos> posList = new ArrayList<BlockPos>();
         List<ItemStack> itemstackList = new ArrayList<ItemStack>();
         Block sourceBlock = worldIn.getBlockState(startPos).getBlock();
@@ -107,9 +102,9 @@ public class MateriaToolHelper {
                     Block block = worldIn.getBlockState(pos_).getBlock();
                     posList.add(pos_);
 
-                    if (worldIn instanceof ServerWorld) {
-                        if (!worldIn.isAirBlock(pos_) && block == sourceBlock) {
-                            itemstackList.addAll(Block.getDrops(worldIn.getBlockState(pos_), (ServerWorld) worldIn, pos_, null));
+                    if (worldIn instanceof ServerLevel) {
+                        if (!worldIn.isEmptyBlock(pos_) && block == sourceBlock) {
+                            itemstackList.addAll(Block.getDrops(worldIn.getBlockState(pos_), (ServerLevel) worldIn, pos_, null));
                             worldIn.destroyBlock(pos_, false);
                         }
                     }

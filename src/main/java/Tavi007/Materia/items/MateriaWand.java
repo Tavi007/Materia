@@ -1,64 +1,53 @@
 package Tavi007.Materia.items;
 
-import java.util.HashSet;
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.util.MateriaToolHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TieredItem;
 
-public class MateriaWand extends ToolItem implements IMateriaTool {
-	//change these later
-	private final int[] topCollectionSizes;
-	private final int[] botCollectionSizes;
-	
-	
-	public MateriaWand(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builder, int[] topCollectionSizes, int[] botCollectionSizes) {
-		super(attackDamageIn, attackSpeedIn, tier, new HashSet<Block>(), builder);
-		if (MateriaToolHelper.isCollectionSizesValid(topCollectionSizes)) {
-			this.topCollectionSizes = topCollectionSizes;
-		}
-		else {
-			this.topCollectionSizes = new int[]{0}; // might need to change this to 1
-		}
-		if (MateriaToolHelper.isCollectionSizesValid(botCollectionSizes)) {
-			this.botCollectionSizes = botCollectionSizes;
-		}
-		else {
-			this.botCollectionSizes = new int[]{0};
-		}
-	}
-	
-	@Override
-	public int[] getTopCollectionSizes() {
-		return topCollectionSizes;
-	}
+public class MateriaWand extends TieredItem implements IMateriaTool {
 
-	@Override
-	public int[] getBotCollectionSizes() {
-		return botCollectionSizes;
-	}
-	
-	@Override
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		MateriaToolHelper.addToolTip(stack, tooltip);
-	}
+    // change these later
+    private final int[] topCollectionSizes;
+    private final int[] botCollectionSizes;
 
-	@Override
-	public String getEffectTooltip(MateriaEffect effect) {
-		return effect.getWandTooltip();
-	}
+    public MateriaWand(Tier tier, Properties properties, int[] topCollectionSizes, int[] botCollectionSizes) {
+        super(tier, properties);
+        if (MateriaToolHelper.isCollectionSizesValid(topCollectionSizes)) {
+            this.topCollectionSizes = topCollectionSizes;
+        } else {
+            this.topCollectionSizes = new int[] { 0 }; // might need to change this to 1
+        }
+        if (MateriaToolHelper.isCollectionSizesValid(botCollectionSizes)) {
+            this.botCollectionSizes = botCollectionSizes;
+        } else {
+            this.botCollectionSizes = new int[] { 0 };
+        }
+    }
 
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
+    @Override
+    public int[] getTopCollectionSizes() {
+        return topCollectionSizes;
+    }
+
+    @Override
+    public int[] getBotCollectionSizes() {
+        return botCollectionSizes;
+    }
+
+    // @Override
+    // public void addInformation(ItemStack stack, @Nullable Level worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    // MateriaToolHelper.addToolTip(stack, tooltip);
+    // }
+
+    @Override
+    public String getEffectTooltip(MateriaEffect effect) {
+        return effect.getWandTooltip();
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return false;
+    }
 }

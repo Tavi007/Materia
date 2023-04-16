@@ -1,44 +1,32 @@
 package Tavi007.Materia.capabilities;
 
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import javax.annotation.Nullable;
+
+import com.google.common.base.Preconditions;
+
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import javax.annotation.Nullable;
-
 //copied from Choonster TestMod3 (https://github.com/Choonster-Minecraft-Mods/TestMod3)
-public class SerializableCapabilityProvider<HANDLER> extends SimpleCapabilityProvider<HANDLER> implements INBTSerializable<INBT> {
+public class SerializableCapabilityProvider<HANDLER> extends SimpleCapabilityProvider<HANDLER> implements INBTSerializable<Tag> {
 
-	public SerializableCapabilityProvider(final Capability<HANDLER> capability, @Nullable final Direction facing) {
-		this(capability, facing, capability.getDefaultInstance());
-	}
+    private final INBTSerializable<Tag> serializableInstance;
 
-	public SerializableCapabilityProvider(final Capability<HANDLER> capability, @Nullable final Direction facing, @Nullable final HANDLER instance) {
-		super(capability, facing, instance);
-	}
+    public SerializableCapabilityProvider(final Capability<HANDLER> capability, @Nullable final Direction facing, @Nullable final HANDLER instance) {
+        super(capability, facing, instance);
+        Preconditions.checkArgument(instance instanceof INBTSerializable, "instance must implement INBTSerializable");
+        serializableInstance = (INBTSerializable<Tag>) instance;
+    }
 
-	@Nullable
-	@Override
-	public INBT serializeNBT() {
-		final HANDLER instance = getInstance();
+    @Override
+    public Tag serializeNBT() {
+        return serializableInstance.serializeNBT();
+    }
 
-		if (instance == null) {
-			return null;
-		}
-
-		return getCapability().writeNBT(instance, getFacing());
-	}
-
-	@Override
-	public void deserializeNBT(final INBT nbt) {
-		final HANDLER instance = getInstance();
-
-		if (instance == null) {
-			return;
-		}
-
-		getCapability().readNBT(instance, getFacing(), nbt);
-	}
-
+    @Override
+    public void deserializeNBT(final Tag tag) {
+        serializableInstance.deserializeNBT(tag);
+    }
 }

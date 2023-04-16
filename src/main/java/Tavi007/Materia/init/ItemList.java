@@ -9,19 +9,24 @@ import Tavi007.Materia.items.MateriaPickaxe;
 import Tavi007.Materia.items.MateriaShovel;
 import Tavi007.Materia.items.MateriaSword;
 import Tavi007.Materia.items.MateriaWand;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.Properties;
-import net.minecraft.item.ItemTier;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tiers;
+import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ItemList {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Materia.MOD_ID);
 
     // only used as Icon for Item group
-    private static Properties singleStack = new Item.Properties().group(Materia.MATERIA_GROUP).maxStackSize(1);
+    private static Properties singleStack = new Item.Properties().stacksTo(1);
     public static final RegistryObject<Item> BASE_MATERIA = ITEMS.register("base_materia", () -> new MateriaItem(singleStack, new int[] {}));
 
     // materia
@@ -33,30 +38,55 @@ public class ItemList {
 
     // pickaxes
     public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe",
-        () -> new MateriaPickaxe(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1 }, new int[] { 3 }));
+        () -> new MateriaPickaxe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1 }, new int[] { 3 }));
 
     // axes
     public static final RegistryObject<Item> MATERIA_DIAMOND_AXE = ITEMS.register("materia_diamond_axe",
-        () -> new MateriaAxe(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 1 }, new int[] { 2 }));
+        () -> new MateriaAxe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 1 }, new int[] { 2 }));
 
     // shovel
     public static final RegistryObject<Item> MATERIA_DIAMOND_SHOVEL = ITEMS.register("materia_diamond_shovel",
-        () -> new MateriaShovel(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 2 }, new int[] { 2, 1 }));
+        () -> new MateriaShovel(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 2 }, new int[] { 2, 1 }));
 
     // hoe
     public static final RegistryObject<Item> MATERIA_DIAMOND_HOE = ITEMS.register("materia_diamond_hoe",
-        () -> new MateriaHoe(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 3 }, new int[] { 3, 1 }));
+        () -> new MateriaHoe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 3 }, new int[] { 3, 1 }));
 
     // sword
     public static final RegistryObject<Item> MATERIA_DIAMOND_SWORD = ITEMS.register("materia_diamond_sword",
-        () -> new MateriaSword(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 2, 2 }, new int[] { 4 }));
+        () -> new MateriaSword(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 2, 2 }, new int[] { 4 }));
 
     // wand
     public static final RegistryObject<Item> MATERIA_DIAMOND_WAND = ITEMS.register("materia_diamond_wand",
-        () -> new MateriaWand(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 1, 1 }, new int[] { 1, 1, 2 }));
+        () -> new MateriaWand(Tiers.DIAMOND, singleStack, new int[] { 1, 1, 1 }, new int[] { 1, 1, 2 }));
 
     // accessory
     public static final RegistryObject<Item> MATERIA_DIAMOND_ACCESSORY = ITEMS.register("materia_diamond_accessory",
-        () -> new MateriaAccessory(ItemTier.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 2, 1 }, new int[] { 2, 1, 1 }));
+        () -> new MateriaAccessory(Tiers.DIAMOND, singleStack, new int[] { 1, 2, 1 }, new int[] { 2, 1, 1 }));
 
+    @SubscribeEvent
+    public static void onRegisterCreativeTabEvent(CreativeModeTabEvent.Register event) {
+        event.registerCreativeModeTab(new ResourceLocation(Materia.MOD_ID, "items"),
+            builder -> builder
+
+                .title(Component.translatable("itemGroup.materia"))
+                .icon(() -> new ItemStack(ItemList.BASE_MATERIA.get()))
+                .displayItems((featureFlag, output, flag) -> {
+                    output.accept(ItemList.FIRE_MATERIA.get());
+                    output.accept(ItemList.ICE_MATERIA.get());
+                    output.accept(ItemList.AREA_MATERIA.get());
+                    output.accept(ItemList.SPEED_UP_MATERIA.get());
+
+                    output.accept(ItemList.MATERIA_DIAMOND_PICKAXE.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_AXE.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_SHOVEL.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_HOE.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_SWORD.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_WAND.get());
+                    output.accept(ItemList.MATERIA_DIAMOND_ACCESSORY.get());
+
+                    output.accept(BlockList.EQUIPPING_STATION_ITEM.get());
+                    output.accept(BlockList.MATERIA_INCUBATOR_ITEM.get());
+                }));
+    }
 }

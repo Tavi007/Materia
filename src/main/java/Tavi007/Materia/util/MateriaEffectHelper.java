@@ -6,7 +6,7 @@ import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.effects.MateriaEffectRegistry;
 import Tavi007.Materia.items.IMateriaTool;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class MateriaEffectHelper {
 

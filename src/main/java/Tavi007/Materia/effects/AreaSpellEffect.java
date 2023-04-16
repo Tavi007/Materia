@@ -3,7 +3,7 @@ package Tavi007.Materia.effects;
 import java.util.List;
 
 import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class AreaSpellEffect extends SpellEffect implements IAreaEffect {
 

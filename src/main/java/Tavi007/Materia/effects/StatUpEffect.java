@@ -4,8 +4,8 @@ import java.util.List;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public class StatUpEffect extends MateriaEffect {
 
