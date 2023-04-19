@@ -3,7 +3,6 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.IMateriaTool;
@@ -11,17 +10,18 @@ import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaEffectHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.world.World;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
-public class EquippingStationContainer extends Container {
+public class EquippingStationContainer extends AbstractContainerMenu {
 
-    private final IWorldPosCallable canInteractWithCallable;
+    private final ContainerLevelAccess canInteractWithCallable;
 
     // ItemStackHandler
     private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
@@ -35,9 +35,9 @@ public class EquippingStationContainer extends Container {
     private final int materiaInvEnd = 43;
     private final int toolInvId = 44;
 
-    public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
+    public EquippingStationContainer(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
         super(ContainerTypeList.EQUIPPING_STATION.get(), windowId);
-        this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
+        this.canInteractWithCallable = ContainerLevelAccess.create(world, pos);
 
         // Hotbar (Id 0-8)
         int startX = 8;
@@ -71,67 +71,68 @@ public class EquippingStationContainer extends Container {
         addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
     }
 
-    public EquippingStationContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, playerInventory.player.world, new BlockPos(playerInventory.player.getPositionVec()));
+    public EquippingStationContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, playerInventory, playerInventory.player.level, new BlockPos(playerInventory.player.getOnPos()));
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
+    public boolean stillValid(Player playerIn) {
+        return true;
+        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
     }
 
     // shift-left click handling
     @Nonnull
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int sourceSlotIndex) {
-        Slot sourceSlot = inventorySlots.get(sourceSlotIndex);
-        if (sourceSlot == null || !sourceSlot.getHasStack())
+    public ItemStack quickMoveStack(Player player, int sourceSlotIndex) {
+        Slot sourceSlot = slots.get(sourceSlotIndex);
+        if (sourceSlot == null || !sourceSlot.hasItem())
             return ItemStack.EMPTY; // EMPTY_ITEM
-        ItemStack sourceStack = sourceSlot.getStack();
+        ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (sourceSlotIndex >= hotbarInvStart && sourceSlotIndex <= hotbarInvEnd) { // HotBarSlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else if (sourceStack.getItem() instanceof IMateriaTool) {
-                if (!mergeItemStack(sourceStack, toolInvId, toolInvId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
         } else if (sourceSlotIndex >= playerInvStart && sourceSlotIndex <= playerInvEnd) { // playerInventorySlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!mergeItemStack(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else if (sourceStack.getItem() instanceof IMateriaTool) {
-                if (!mergeItemStack(sourceStack, toolInvId, toolInvId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
         } else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
-            if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
                 onSuccessfulTransfer();
             }
         } else if (sourceSlotIndex >= materiaInvStart && sourceSlotIndex <= materiaInvEnd) { // MateriaSlot clicked
-            if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
                 onSuccessfulTransfer();
             }
         } else {
@@ -141,9 +142,9 @@ public class EquippingStationContainer extends Container {
 
         // If stack size == 0 (the entire stack was moved) set slot contents to null
         if (sourceStack.getCount() == 0) {
-            sourceSlot.putStack(ItemStack.EMPTY);
+            sourceSlot.set(ItemStack.EMPTY);
         } else {
-            sourceSlot.onSlotChanged();
+            sourceSlot.setChanged();
         }
         sourceSlot.onTake(player, sourceStack);
 
@@ -159,15 +160,15 @@ public class EquippingStationContainer extends Container {
 
     // only drop MateriaTool ItemStack. It should have all the added effects
     @Override
-    public void onContainerClosed(PlayerEntity playerIn) {
+    public void removed(Player playerIn) {
         ItemStack stack = getMateriaToolStack();
         if (!stack.isEmpty()) {
-            playerIn.dropItem(stack, false);
+            playerIn.drop(stack, false);
         }
     }
 
     public ItemStack getMateriaToolStack() {
-        return this.getInventory().get(toolInvId);
+        return this.getItems().get(toolInvId);
     }
 
     public boolean isMateriaToolSlotEmpty() {
