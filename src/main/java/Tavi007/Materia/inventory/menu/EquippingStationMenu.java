@@ -1,12 +1,14 @@
-package Tavi007.Materia.inventory.container;
+package Tavi007.Materia.inventory.menu;
 
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.init.ContainerTypeList;
-import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
+import Tavi007.Materia.init.MenuList;
+import Tavi007.Materia.inventory.EquippingStationItemHandler;
+import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
-import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
+import Tavi007.Materia.util.CapabilityHelper;
+import Tavi007.Materia.util.MateriaEffectHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,27 +18,26 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.SlotItemHandler;
 
-public class MateriaIncubatorContainer extends AbstractContainerMenu {
+public class EquippingStationMenu extends AbstractContainerMenu {
 
     private final ContainerLevelAccess canInteractWithCallable;
 
     // ItemStackHandler
-    private final MateriaIncubatorItemHandler incubatorItemHandler;
+    private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
 
     // Helper for Index counts
     private final int hotbarInvStart = 0;
     private final int hotbarInvEnd = 8;
     private final int playerInvStart = 9;
     private final int playerInvEnd = 35;
-    private final int materiaSlotId = 36;
-    private final int fuelSlotId = 37;
+    private final int materiaInvStart = 36;
+    private final int materiaInvEnd = 43;
+    private final int toolInvId = 44;
 
-    public MateriaIncubatorContainer(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
-        super(ContainerTypeList.MATERIA_INCUBATOR.get(), windowId);
+    public EquippingStationMenu(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
+        super(MenuList.EQUIPPING_STATION.get(), windowId);
         this.canInteractWithCallable = ContainerLevelAccess.create(world, pos);
-        this.incubatorItemHandler = new MateriaIncubatorItemHandler(this, new MateriaIncubatorTileentity());
 
         // Hotbar (Id 0-8)
         int startX = 8;
@@ -53,24 +54,31 @@ public class MateriaIncubatorContainer extends AbstractContainerMenu {
             }
         }
 
-        // MateriaSlots (Id 36)
+        // MateriaSlots (Id 36-43)
+        startX = 49;
+        startY = 20;
+        for (int i = 0; i < 4; i++) {
+            addSlot(new MateriaContainerSlot(stationItemHandler, i, startX + 20 * i, startY));
+        }
+        startY = 75;
+        for (int i = 0; i < 4; i++) {
+            addSlot(new MateriaContainerSlot(stationItemHandler, 4 + i, startX + 20 * i, startY));
+        }
+
+        // MateriaToolSlot (Id 44)
         startX = 80;
-        startY = 71;
-        addSlot(new MateriaContainerSlot(incubatorItemHandler, 0, startX, startY));
-        // MateriaSlots (Id 37)
-        startX = 80;
-        startY = 21;
-        addSlot(new SlotItemHandler(incubatorItemHandler, 1, startX, startY));
+        startY = 48;
+        addSlot(new MateriaToolContainerSlot(stationItemHandler, 8, startX, startY));
     }
 
-    public MateriaIncubatorContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+    public EquippingStationMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
         this(windowId, playerInventory, playerInventory.player.level, new BlockPos(playerInventory.player.getOnPos()));
     }
 
     @Override
     public boolean stillValid(Player playerIn) {
-        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
         return true;
+        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
     }
 
     // shift-left click handling
@@ -85,37 +93,45 @@ public class MateriaIncubatorContainer extends AbstractContainerMenu {
 
         if (sourceSlotIndex >= hotbarInvStart && sourceSlotIndex <= hotbarInvEnd) { // HotBarSlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!moveItemStackTo(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                    onSuccessfulTransfer();
+                }
+            } else if (sourceStack.getItem() instanceof IMateriaTool) {
+                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
                     onSuccessfulTransfer();
                 } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
         } else if (sourceSlotIndex >= playerInvStart && sourceSlotIndex <= playerInvEnd) { // playerInventorySlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!moveItemStackTo(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                    onSuccessfulTransfer();
+                }
+            } else if (sourceStack.getItem() instanceof IMateriaTool) {
+                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
                     onSuccessfulTransfer();
                 } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
-        } else if (sourceSlotIndex >= materiaSlotId && sourceSlotIndex <= fuelSlotId) {
+        } else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
+            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+                onSuccessfulTransfer();
+            }
+        } else if (sourceSlotIndex >= materiaInvStart && sourceSlotIndex <= materiaInvEnd) { // MateriaSlot clicked
             if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
                 onSuccessfulTransfer();
             }
@@ -135,22 +151,27 @@ public class MateriaIncubatorContainer extends AbstractContainerMenu {
         return copyOfSourceStack;
     }
 
-    private void onSuccessfulTransfer() {
+    private ItemStack onSuccessfulTransfer() {
+        ItemStack stack = getMateriaToolStack();
+        CapabilityHelper.getMateriaCollection(stack).markDirty();
+        MateriaEffectHelper.computeEffectList(stack);
+        return ItemStack.EMPTY;
     }
 
-    public ItemStack getMateriaStack() {
-        return getSlot(materiaSlotId).getItem();
+    // only drop MateriaTool ItemStack. It should have all the added effects
+    @Override
+    public void removed(Player playerIn) {
+        ItemStack stack = getMateriaToolStack();
+        if (!stack.isEmpty()) {
+            playerIn.drop(stack, false);
+        }
     }
 
-    public boolean isMateriaSlotEmpty() {
-        return getMateriaStack().isEmpty();
+    public ItemStack getMateriaToolStack() {
+        return this.getItems().get(toolInvId);
     }
 
-    public ItemStack getFuelStack() {
-        return getSlot(fuelSlotId).getItem();
-    }
-
-    public boolean isFuelSlotEmpty() {
-        return getMateriaStack().isEmpty();
+    public boolean isMateriaToolSlotEmpty() {
+        return getMateriaToolStack().isEmpty();
     }
 }

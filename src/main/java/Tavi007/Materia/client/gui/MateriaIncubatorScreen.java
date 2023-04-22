@@ -4,18 +4,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
+import Tavi007.Materia.inventory.menu.MateriaIncubatorMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncubatorContainer> {
+public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncubatorMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_incubator_container.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_incubator_menu.png");
 
-    public MateriaIncubatorScreen(MateriaIncubatorContainer menu, Inventory playerInv, Component title) {
+    public MateriaIncubatorScreen(MateriaIncubatorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
         this.leftPos = 0;
         this.topPos = 0;

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.inventory.container.EquippingStationContainer;
+import Tavi007.Materia.inventory.menu.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -12,11 +12,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-public class EquippingStationScreen extends AbstractContainerScreen<EquippingStationContainer> {
+public class EquippingStationScreen extends AbstractContainerScreen<EquippingStationMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/equipping_station_container.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/equipping_station_menu.png");
 
-    public EquippingStationScreen(EquippingStationContainer menu, Inventory playerInv, Component title) {
+    public EquippingStationScreen(EquippingStationMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
         this.leftPos = 0;
         this.topPos = 0;

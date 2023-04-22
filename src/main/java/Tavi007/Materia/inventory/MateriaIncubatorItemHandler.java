@@ -1,6 +1,6 @@
 package Tavi007.Materia.inventory;
 
-import Tavi007.Materia.inventory.container.MateriaIncubatorContainer;
+import Tavi007.Materia.inventory.menu.MateriaIncubatorMenu;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -8,12 +8,12 @@ import net.minecraftforge.items.ItemStackHandler;
 public class MateriaIncubatorItemHandler extends ItemStackHandler {
 
     private final MateriaIncubatorTileentity tile;
-    private final MateriaIncubatorContainer container;
+    private final MateriaIncubatorMenu menu;
 
-    public MateriaIncubatorItemHandler(MateriaIncubatorContainer container, MateriaIncubatorTileentity tile) {
+    public MateriaIncubatorItemHandler(MateriaIncubatorMenu menu, MateriaIncubatorTileentity tile) {
         super(2);
         this.tile = tile;
-        this.container = container;
+        this.menu = menu;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MateriaIncubatorItemHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slotId, ItemStack stack) {
-        return container.getSlot(slotId).mayPlace(stack);
+        return menu.getSlot(slotId).mayPlace(stack);
     }
 
     public ItemStack getMateriaStack() {

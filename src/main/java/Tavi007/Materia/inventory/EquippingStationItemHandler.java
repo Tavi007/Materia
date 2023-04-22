@@ -3,7 +3,7 @@ package Tavi007.Materia.inventory;
 import org.jline.utils.Log;
 
 import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
-import Tavi007.Materia.inventory.container.EquippingStationContainer;
+import Tavi007.Materia.inventory.menu.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaEffectHelper;
@@ -13,11 +13,11 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class EquippingStationItemHandler extends ItemStackHandler {
 
-    private final EquippingStationContainer container;
+    private final EquippingStationMenu menu;
 
-    public EquippingStationItemHandler(EquippingStationContainer container) {
+    public EquippingStationItemHandler(EquippingStationMenu menu) {
         super(9);
-        this.container = container;
+        this.menu = menu;
     }
 
     @Override
@@ -62,11 +62,11 @@ public class EquippingStationItemHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slotId, ItemStack stack) {
-        return container.getSlot(slotId).mayPlace(stack);
+        return menu.getSlot(slotId).mayPlace(stack);
     }
 
     public boolean isMateriaSlotEnabled(int slotIndex) {
-        ItemStack itemstack = container.getMateriaToolStack();
+        ItemStack itemstack = menu.getMateriaToolStack();
         if (itemstack.isEmpty()) {
             return false;
         }
