@@ -34,8 +34,8 @@ public class MateriaIncubatorItemHandler extends ItemStackHandler {
     }
 
     @Override
-    public boolean isItemValid(int slot, ItemStack stack) {
-        return container.inventorySlots.get(slot).isItemValid(stack);
+    public boolean isItemValid(int slotId, ItemStack stack) {
+        return container.getSlot(slotId).mayPlace(stack);
     }
 
     public ItemStack getMateriaStack() {

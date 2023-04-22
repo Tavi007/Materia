@@ -3,24 +3,24 @@ package Tavi007.Materia.inventory.container;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ContainerTypeList;
 import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.world.World;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class MateriaIncubatorContainer extends Container {
+public class MateriaIncubatorContainer extends AbstractContainerMenu {
 
-    private final IWorldPosCallable canInteractWithCallable;
+    private final ContainerLevelAccess canInteractWithCallable;
 
     // ItemStackHandler
     private final MateriaIncubatorItemHandler incubatorItemHandler;
@@ -33,9 +33,9 @@ public class MateriaIncubatorContainer extends Container {
     private final int materiaSlotId = 36;
     private final int fuelSlotId = 37;
 
-    public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final World world, final BlockPos pos) {
+    public MateriaIncubatorContainer(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
         super(ContainerTypeList.MATERIA_INCUBATOR.get(), windowId);
-        this.canInteractWithCallable = IWorldPosCallable.of(world, pos);
+        this.canInteractWithCallable = ContainerLevelAccess.create(world, pos);
         this.incubatorItemHandler = new MateriaIncubatorItemHandler(this, new MateriaIncubatorTileentity());
 
         // Hotbar (Id 0-8)
@@ -63,59 +63,60 @@ public class MateriaIncubatorContainer extends Container {
         addSlot(new SlotItemHandler(incubatorItemHandler, 1, startX, startY));
     }
 
-    public MateriaIncubatorContainer(final int windowId, final PlayerInventory playerInventory, final PacketBuffer data) {
-        this(windowId, playerInventory, playerInventory.player.world, new BlockPos(playerInventory.player.getPositionVec()));
+    public MateriaIncubatorContainer(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+        this(windowId, playerInventory, playerInventory.player.level, new BlockPos(playerInventory.player.getOnPos()));
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
+    public boolean stillValid(Player playerIn) {
+        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
+        return true;
     }
 
     // shift-left click handling
     @Nonnull
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity player, int sourceSlotIndex) {
-        Slot sourceSlot = inventorySlots.get(sourceSlotIndex);
-        if (sourceSlot == null || !sourceSlot.getHasStack())
+    public ItemStack quickMoveStack(Player player, int sourceSlotIndex) {
+        Slot sourceSlot = slots.get(sourceSlotIndex);
+        if (sourceSlot == null || !sourceSlot.hasItem())
             return ItemStack.EMPTY; // EMPTY_ITEM
-        ItemStack sourceStack = sourceSlot.getStack();
+        ItemStack sourceStack = sourceSlot.getItem();
         ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (sourceSlotIndex >= hotbarInvStart && sourceSlotIndex <= hotbarInvEnd) { // HotBarSlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!mergeItemStack(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
         } else if (sourceSlotIndex >= playerInvStart && sourceSlotIndex <= playerInvEnd) { // playerInventorySlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!mergeItemStack(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, materiaSlotId, materiaSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             } else {
-                if (!mergeItemStack(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
+                if (!moveItemStackTo(sourceStack, fuelSlotId, fuelSlotId + 1, false)) {
                     onSuccessfulTransfer();
-                } else if (!mergeItemStack(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
                     onSuccessfulTransfer();
                 }
             }
         } else if (sourceSlotIndex >= materiaSlotId && sourceSlotIndex <= fuelSlotId) {
-            if (!mergeItemStack(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
                 onSuccessfulTransfer();
             }
         } else {
@@ -125,9 +126,9 @@ public class MateriaIncubatorContainer extends Container {
 
         // If stack size == 0 (the entire stack was moved) set slot contents to null
         if (sourceStack.getCount() == 0) {
-            sourceSlot.putStack(ItemStack.EMPTY);
+            sourceSlot.set(ItemStack.EMPTY);
         } else {
-            sourceSlot.onSlotChanged();
+            sourceSlot.setChanged();
         }
         sourceSlot.onTake(player, sourceStack);
 
@@ -138,7 +139,7 @@ public class MateriaIncubatorContainer extends Container {
     }
 
     public ItemStack getMateriaStack() {
-        return this.getInventory().get(materiaSlotId);
+        return getSlot(materiaSlotId).getItem();
     }
 
     public boolean isMateriaSlotEmpty() {
@@ -146,7 +147,7 @@ public class MateriaIncubatorContainer extends Container {
     }
 
     public ItemStack getFuelStack() {
-        return this.getInventory().get(fuelSlotId);
+        return getSlot(fuelSlotId).getItem();
     }
 
     public boolean isFuelSlotEmpty() {
