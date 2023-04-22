@@ -3,6 +3,7 @@ package Tavi007.Materia.inventory.menu;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.IMateriaTool;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class EquippingStationMenu extends AbstractContainerMenu {
 
-    private final ContainerLevelAccess canInteractWithCallable;
+    private final ContainerLevelAccess access;
 
     // ItemStackHandler
     private final EquippingStationItemHandler stationItemHandler = new EquippingStationItemHandler(this);
@@ -37,7 +38,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
 
     public EquippingStationMenu(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
         super(MenuList.EQUIPPING_STATION.get(), windowId);
-        this.canInteractWithCallable = ContainerLevelAccess.create(world, pos);
+        this.access = ContainerLevelAccess.create(world, pos);
 
         // Hotbar (Id 0-8)
         int startX = 8;
@@ -77,8 +78,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return true;
-        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
+        return stillValid(this.access, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
     }
 
     // shift-left click handling

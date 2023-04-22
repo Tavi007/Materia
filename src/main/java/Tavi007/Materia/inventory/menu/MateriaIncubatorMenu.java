@@ -3,6 +3,7 @@ package Tavi007.Materia.inventory.menu;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
 import Tavi007.Materia.items.MateriaItem;
@@ -20,7 +21,7 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
-    private final ContainerLevelAccess canInteractWithCallable;
+    private final ContainerLevelAccess access;
 
     // ItemStackHandler
     private final MateriaIncubatorItemHandler incubatorItemHandler;
@@ -35,7 +36,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     public MateriaIncubatorMenu(final int windowId, final Inventory playerInventory, final Level world, final BlockPos pos) {
         super(MenuList.MATERIA_INCUBATOR.get(), windowId);
-        this.canInteractWithCallable = ContainerLevelAccess.create(world, pos);
+        this.access = ContainerLevelAccess.create(world, pos);
         this.incubatorItemHandler = new MateriaIncubatorItemHandler(this, new MateriaIncubatorTileentity());
 
         // Hotbar (Id 0-8)
@@ -69,8 +70,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        // return isWithinUsableDistance(canInteractWithCallable, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
-        return true;
+        return stillValid(this.access, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
     }
 
     // shift-left click handling
