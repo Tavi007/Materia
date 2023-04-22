@@ -7,6 +7,7 @@ import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ItemList;
 import Tavi007.Materia.init.MateriaEffectList;
 import Tavi007.Materia.init.MenuList;
+import Tavi007.Materia.init.StartupCommon;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -15,22 +16,25 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod("materia")
 public class Materia {
 
-    public static Materia instance;
+    public static Materia INSTANCE;
     public static final String MOD_ID = "materia";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    public static IEventBus MOD_EVENT_BUS;
 
     public Materia() {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
+        INSTANCE = this;
 
         // register common
-        ItemList.ITEMS.register(modEventBus);
-        BlockList.BLOCKS.register(modEventBus);
-        BlockList.ITEMS.register(modEventBus);
-        MenuList.MENU_TYPES.register(modEventBus);
+        MOD_EVENT_BUS.register(StartupCommon.class);
+        ItemList.ITEMS.register(MOD_EVENT_BUS);
+        MOD_EVENT_BUS.register(ItemList.class);
+        BlockList.BLOCKS.register(MOD_EVENT_BUS);
+        BlockList.ITEMS.register(MOD_EVENT_BUS);
+        MenuList.MENU_TYPES.register(MOD_EVENT_BUS);
 
         MateriaEffectList.init();
 
-        instance = this;
         MinecraftForge.EVENT_BUS.register(this);
     }
 }
