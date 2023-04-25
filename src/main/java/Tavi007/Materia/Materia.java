@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ItemList;
-import Tavi007.Materia.init.MateriaEffectList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.init.StartupCommon;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,8 +31,6 @@ public class Materia {
         BlockList.BLOCKS.register(MOD_EVENT_BUS);
         BlockList.ITEMS.register(MOD_EVENT_BUS);
         MenuList.MENU_TYPES.register(MOD_EVENT_BUS);
-
-        MateriaEffectList.init();
 
         MinecraftForge.EVENT_BUS.register(this);
     }

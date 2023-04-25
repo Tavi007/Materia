@@ -3,7 +3,6 @@ package Tavi007.Materia.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.effects.IAreaEffect;
 import Tavi007.Materia.effects.MateriaEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -83,8 +82,8 @@ public class MateriaToolHelper {
         ArrayList<MateriaEffect> effectList = CapabilityHelper.getMateriaCollection(stack).getEffects();
         int[] maxAreaLevel = { 0 };
         effectList.forEach(effect -> {
-            if (effect instanceof IAreaEffect) {
-                maxAreaLevel[0] = Math.max(maxAreaLevel[0], ((IAreaEffect) effect).getAreaLevel());
+            if (effect instanceof AreaEffect) {
+                maxAreaLevel[0] = Math.max(maxAreaLevel[0], ((AreaEffect) effect).getAreaLevel());
             }
         });
         return maxAreaLevel[0];
