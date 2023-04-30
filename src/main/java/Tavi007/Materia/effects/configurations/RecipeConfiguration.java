@@ -3,29 +3,29 @@ package Tavi007.Materia.effects.configurations;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.util.CapabilityHelper;
+import com.google.gson.JsonObject;
+
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class RecipeConfiguration {
 
-    private Item levelItem;
+    private LevelConfiguration levelConfiguration;
     private ResourceLocation recipe;
 
-    public RecipeConfiguration(String itemRl, String recipe) {
-        this.levelItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemRl));
-        this.recipe = new ResourceLocation(recipe);
+    // TODO make NullPointer Safe
+    public RecipeConfiguration(JsonObject json) {
+        this.levelConfiguration = new LevelConfiguration(json.getAsJsonObject("level"));
+        this.recipe = new ResourceLocation(json.get("recipe").getAsString());
+    }
+
+    public RecipeConfiguration(LevelConfiguration levelConfiguration, ResourceLocation recipe) {
+        this.levelConfiguration = levelConfiguration;
+        this.recipe = recipe;
     }
 
     public int getLevel(List<ItemStack> stacks) {
-        for (ItemStack stack : stacks) {
-            if (stack.getItem().equals(levelItem)) {
-                return CapabilityHelper.getLevelData(stack).level;
-            }
-        }
-        return 0;
+        return levelConfiguration.getLevel(stacks);
     }
 
     public List<ItemStack> applyRecipe(List<ItemStack> stacks) {

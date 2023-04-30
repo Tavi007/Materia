@@ -3,7 +3,6 @@ package Tavi007.Materia.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.effects.MateriaEffect;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -34,27 +33,6 @@ public class MateriaToolHelper {
         return true;
     }
 
-    // public static void addToolTip(ItemStack stack, List<ITextComponent> tooltip) {
-    // tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Slots:" + TextFormatting.RESET));
-    // tooltip.add(
-    // new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getTopCollectionSizes()) + TextFormatting.RESET));
-    // tooltip.add(
-    // new StringTextComponent(" " + TextFormatting.GRAY + asString(((IMateriaTool) stack.getItem()).getBotCollectionSizes()) + TextFormatting.RESET));
-    // tooltip.add(new StringTextComponent("" + TextFormatting.GRAY + "Materia Effects:" + TextFormatting.RESET));
-    // addMateriaEffectToTooltip(stack, tooltip);
-    // }
-    //
-    // public static void addMateriaEffectToTooltip(ItemStack stack, List<ITextComponent> tooltip) {
-    // Item item = stack.getItem();
-    // if (item instanceof IMateriaTool) {
-    // IMateriaTool materiaTool = (IMateriaTool) item;
-    // ArrayList<MateriaEffect> effects = CapabilityHelper.getEffects(stack);
-    // effects.forEach(effect -> {
-    // tooltip.add(new StringTextComponent(materiaTool.getEffectTooltip(effect)));
-    // });
-    // }
-    // }
-
     private static String asString(int[] array) {
         String ret = "";
         for (int i = 0; i < array.length; i++) {
@@ -76,17 +54,6 @@ public class MateriaToolHelper {
         }
 
         return ret;
-    }
-
-    public static int getMaxAreaLevel(ItemStack stack) {
-        ArrayList<MateriaEffect> effectList = CapabilityHelper.getMateriaCollection(stack).getEffects();
-        int[] maxAreaLevel = { 0 };
-        effectList.forEach(effect -> {
-            if (effect instanceof AreaEffect) {
-                maxAreaLevel[0] = Math.max(maxAreaLevel[0], ((AreaEffect) effect).getAreaLevel());
-            }
-        });
-        return maxAreaLevel[0];
     }
 
     public static List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, int maxAreaLevel) {

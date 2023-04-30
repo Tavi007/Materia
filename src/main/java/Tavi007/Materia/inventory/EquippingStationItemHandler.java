@@ -6,7 +6,6 @@ import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
 import Tavi007.Materia.inventory.menu.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
-import Tavi007.Materia.util.MateriaEffectHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -52,7 +51,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
         }
         ItemStack stack = getMateriaToolStack();
         CapabilityHelper.getMateriaCollection(stack).markDirty();
-        MateriaEffectHelper.computeEffectList(stack);
+
     }
 
     @Override

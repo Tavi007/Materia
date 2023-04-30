@@ -2,30 +2,29 @@ package Tavi007.Materia.effects.configurations;
 
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import Tavi007.Materia.effects.Stat;
-import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class StatUpConfiguration {
 
     private Stat stat;
-    private Item levelItem;
+    private LevelConfiguration levelConfiguration;
 
-    public StatUpConfiguration(String itemRl, Stat stat) {
-        this.levelItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemRl));
+    // TODO make NullPointer Safe
+    public StatUpConfiguration(JsonObject json) {
+        this.stat = Stat.valueOf(json.get("stat").getAsString());
+        this.levelConfiguration = new LevelConfiguration(json.getAsJsonObject("level"));
+    }
+
+    public StatUpConfiguration(Stat stat, LevelConfiguration levelConfiguration) {
         this.stat = stat;
+        this.levelConfiguration = levelConfiguration;
     }
 
     public int getLevel(List<ItemStack> stacks) {
-        for (ItemStack stack : stacks) {
-            if (stack.getItem().equals(levelItem)) {
-                return CapabilityHelper.getLevelData(stack).level;
-            }
-        }
-        return 0;
+        return levelConfiguration.getLevel(stacks);
     }
 
     public Stat getStat() {

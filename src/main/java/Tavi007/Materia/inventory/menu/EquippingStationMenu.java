@@ -9,7 +9,6 @@ import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
-import Tavi007.Materia.util.MateriaEffectHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -154,7 +153,6 @@ public class EquippingStationMenu extends AbstractContainerMenu {
     private ItemStack onSuccessfulTransfer() {
         ItemStack stack = getMateriaToolStack();
         CapabilityHelper.getMateriaCollection(stack).markDirty();
-        MateriaEffectHelper.computeEffectList(stack);
         return ItemStack.EMPTY;
     }
 

@@ -1,6 +1,5 @@
 package Tavi007.Materia.items;
 
-import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
@@ -34,16 +33,6 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     @Override
     public int[] getBotCollectionSizes() {
         return botCollectionSizes;
-    }
-
-    // @Override
-    // public void addInformation(ItemStack stack, @Nullable Level worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    // MateriaToolHelper.addToolTip(stack, tooltip);
-    // }
-
-    @Override
-    public String getEffectTooltip(MateriaEffect effect) {
-        return effect.getWandTooltip();
     }
 
     @Override

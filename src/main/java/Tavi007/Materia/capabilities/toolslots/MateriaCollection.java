@@ -1,10 +1,7 @@
 package Tavi007.Materia.capabilities.toolslots;
 
-import java.util.ArrayList;
-
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.effects.MateriaEffect;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.world.item.ItemStack;
@@ -12,22 +9,12 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class MateriaCollection extends ItemStackHandler {
 
-    // should be saved in nbt too or rather be recalculated everytime?
-    private ArrayList<MateriaEffect> effectList = new ArrayList<MateriaEffect>();
     private Boolean dirty = false;
 
     private final static int maxItemStackSlots = 8;
 
     public MateriaCollection() {
         super(maxItemStackSlots);
-    }
-
-    public ArrayList<MateriaEffect> getEffects() {
-        return effectList;
-    }
-
-    public void setEffects(ArrayList<MateriaEffect> effectList) {
-        this.effectList = effectList;
     }
 
     public boolean isDirty() {
@@ -54,15 +41,5 @@ public class MateriaCollection extends ItemStackHandler {
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return stack.getItem() instanceof MateriaItem;
-    }
-
-    @Override
-    protected void onLoad() {
-        dirty = true;
-    }
-
-    @Override
-    protected void onContentsChanged(int slot) {
-        onLoad(); // highly inefficient. TODO: make this better
     }
 }
