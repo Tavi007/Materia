@@ -20,11 +20,13 @@ public class RecipeTypeList {
         ForgeRegistries.Keys.RECIPE_TYPES,
         Materia.MOD_ID);
 
-    public static final String MATERIA_EFFECT_RECIPE = "materia_effect";
+    public static final String MATERIA_EFFECT_RECIPE_NAME = "recipes/materia_effect";
 
-    public static final RegistryObject<RecipeType<MateriaEffectRecipe>> APPARATUS_TYPE = RECIPE_TYPES.register(MATERIA_EFFECT_RECIPE,
+    public static final RegistryObject<RecipeType<MateriaEffectRecipe>> MATERIA_EFFECT_RECIPE = RECIPE_TYPES.register(
+        MATERIA_EFFECT_RECIPE_NAME,
         () -> new ModRecipeType<>());
-    public static final RegistryObject<RecipeSerializer<MateriaEffectRecipe>> APPARATUS_SERIALIZER = RECIPE_SERIALIZERS.register(MATERIA_EFFECT_RECIPE,
+    public static final RegistryObject<RecipeSerializer<MateriaEffectRecipe>> MATERIA_EFFECT_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register(
+        MATERIA_EFFECT_RECIPE_NAME,
         () -> new MateriaEffectRecipe.Serializer());
 
     private static class ModRecipeType<T extends Recipe<?>> implements RecipeType<T> {

@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -15,45 +16,48 @@ import net.minecraft.world.level.Level;
 
 public class MateriaEffectRecipe implements Recipe<Container> {
 
+    ResourceLocation recipeId;
+    protected final Ingredient ingredient;
+    protected final ItemStack result;
+
+    protected MateriaEffectRecipe(ResourceLocation recipeId, Ingredient ingredient, ItemStack result) {
+        this.recipeId = recipeId;
+        this.ingredient = ingredient;
+        this.result = result;
+    }
+
     @Override
     public boolean matches(Container p_44002_, Level p_44003_) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public ItemStack assemble(Container p_44001_) {
-        // TODO Auto-generated method stub
-        return null;
+        return null; // not needed
     }
 
     @Override
     public boolean canCraftInDimensions(int p_43999_, int p_44000_) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public ItemStack getResultItem() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public ResourceLocation getId() {
-        // TODO Auto-generated method stub
-        return null;
+        return recipeId;
     }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public RecipeType<?> getType() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -70,7 +74,7 @@ public class MateriaEffectRecipe implements Recipe<Container> {
 
         @Nullable
         @Override
-        public MateriaEffectRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public MateriaEffectRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
             return null;
         }
     }

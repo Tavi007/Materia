@@ -1,0 +1,7 @@
+{
+    "effect_type":"materia:spell",
+    "level": {
+        "base": 1,
+        "add": ["materia:fire_materia"]
+    }
+}
