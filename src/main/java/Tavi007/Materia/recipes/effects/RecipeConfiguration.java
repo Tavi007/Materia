@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
@@ -12,11 +11,19 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
     @SerializedName("level")
     LevelConfiguration levelConfiguration;
 
-    public RecipeConfiguration(ResourceLocation id) {
-        super(id);
+    private RecipeConfiguration() {
+        super();
     }
 
     public int getLevel(List<ItemStack> stacks) {
         return levelConfiguration.getLevel(stacks);
+    }
+
+    @Override
+    public AbstractMateriaEffectConfiguration copy() {
+        RecipeConfiguration copy = new RecipeConfiguration();
+        copy.setId(getId());
+        copy.levelConfiguration = levelConfiguration.copy();
+        return copy;
     }
 }

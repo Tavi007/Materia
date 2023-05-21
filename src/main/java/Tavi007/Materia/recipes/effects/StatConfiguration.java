@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 import Tavi007.Materia.effects.Stat;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
@@ -14,8 +13,8 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
     @SerializedName("level")
     private LevelConfiguration levelConfiguration;
 
-    public StatConfiguration(ResourceLocation id) {
-        super(id);
+    private StatConfiguration() {
+        super();
     }
 
     public Stat getStat() {
@@ -24,5 +23,14 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     public int getLevel(List<ItemStack> stacks) {
         return levelConfiguration.getLevel(stacks);
+    }
+
+    @Override
+    public AbstractMateriaEffectConfiguration copy() {
+        StatConfiguration copy = new StatConfiguration();
+        copy.setId(getId());
+        copy.stat = this.stat;
+        copy.levelConfiguration = levelConfiguration.copy();
+        return copy;
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
@@ -15,8 +14,8 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
     @SerializedName("size_level")
     private LevelConfiguration levelConfigurationSize;
 
-    public SpellConfiguration(ResourceLocation id) {
-        super(id);
+    private SpellConfiguration() {
+        super();
     }
 
     public String getElement() {
@@ -29,5 +28,15 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
 
     public int getSizeLevel(List<ItemStack> stacks) {
         return levelConfigurationSize.getLevel(stacks);
+    }
+
+    @Override
+    public AbstractMateriaEffectConfiguration copy() {
+        SpellConfiguration copy = new SpellConfiguration();
+        copy.setId(getId());
+        copy.element = this.element;
+        copy.levelConfigurationSpell = levelConfigurationSpell.copy();
+        copy.levelConfigurationSize = levelConfigurationSize.copy();
+        return copy;
     }
 }

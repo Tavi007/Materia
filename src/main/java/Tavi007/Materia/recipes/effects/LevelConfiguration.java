@@ -13,6 +13,16 @@ public class LevelConfiguration {
     List<Item> add = new ArrayList<>();
     List<Item> subtract = new ArrayList<>();
 
+    public LevelConfiguration copy() {
+        LevelConfiguration copy = new LevelConfiguration();
+        copy.base = this.base;
+        copy.add = new ArrayList<>();
+        copy.add.addAll(this.add);
+        copy.subtract = new ArrayList<>();
+        copy.subtract.addAll(this.subtract);
+        return copy;
+    }
+
     public int getLevel(List<ItemStack> stacks) {
         int result = base;
         for (ItemStack stack : stacks) {

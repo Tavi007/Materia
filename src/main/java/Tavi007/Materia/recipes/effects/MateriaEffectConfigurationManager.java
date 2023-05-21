@@ -1,6 +1,7 @@
 package Tavi007.Materia.recipes.effects;
 
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -26,50 +27,61 @@ import net.minecraftforge.fml.common.Mod;
 public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    public static final ResourceLocation EMPTY_RESOURCELOCATION = new ResourceLocation(Materia.MOD_ID, "empty");
 
     private static ThreadLocal<Deque<MateriaEffectCofigurationContext>> dataContext = new ThreadLocal<Deque<MateriaEffectCofigurationContext>>();
 
     private Map<ResourceLocation, AbstractMateriaEffectConfiguration> registeredEffectConfigurations = ImmutableMap.of();
 
     public MateriaEffectConfigurationManager() {
-        super(GSON, "materia_effects");
+        super(GSON, "effect_configurations");
     }
 
     private void logLoading(String side, int size, String type) {
         Materia.LOGGER.info(side + " loaded " + size + " materia effect configuration for " + type);
     }
 
+    public AbstractMateriaEffectConfiguration getConfiguration(ResourceLocation id) {
+        return registeredEffectConfigurations.get(id).copy();
+    }
+
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
-        if (objectIn.remove(EMPTY_RESOURCELOCATION) != null) {
-            Materia.LOGGER.warn("Datapack tried to redefine materia effect configuration {}, ignoring it", (Object) EMPTY_RESOURCELOCATION);
-        }
-
         Builder<ResourceLocation, AbstractMateriaEffectConfiguration> effectMapBuilder = ImmutableMap.builder();
+        Map<String, Integer> counterMap = new HashMap<>();
 
         objectIn.forEach((rl, json) -> {
             try {
                 Resource res = resourceManagerIn.getResourceOrThrow(getPreparedPath(rl));
-                String modid = rl.getNamespace();
 
                 JsonObject jsonObject = json.getAsJsonObject();
-                String effectType = jsonObject.get("effect_type").getAsString();
+                // TODO: add event as api entry point to add other configurations types
+                String path = rl.getPath();
+                AbstractMateriaEffectConfiguration configuration = null;
+                if (path.contains("spells/")) {
+                    configuration = loadData(GSON, rl, jsonObject, SpellConfiguration.class);
+                    counterMap.put("spell", counterMap.getOrDefault("spell", 0) + 1);
+                } else if (path.contains("recipes/")) {
+                    configuration = loadData(GSON, rl, jsonObject, RecipeConfiguration.class);
+                    counterMap.put("recipe", counterMap.getOrDefault("recipe", 0) + 1);
+                } else if (path.contains("stats/")) {
+                    configuration = loadData(GSON, rl, jsonObject, StatConfiguration.class);
+                    counterMap.put("stat", counterMap.getOrDefault("stat", 0) + 1);
+                } else {
+                    Materia.LOGGER.warn("Don't know how to handle path: " + path);
+                }
 
-                // TODO resolve effect type by checking the registry
+                if (configuration != null) {
+                    configuration.setId(rl);
+                    effectMapBuilder.put(rl, configuration);
+                }
 
-                effectMapBuilder.put(rl, null);
             } catch (Exception exception) {
                 Materia.LOGGER.error("Couldn't parse materia effect configuration {}", rl, exception);
             }
         });
 
-        // not sure if empty resourceLocation is necessary...
-        effectMapBuilder.put(EMPTY_RESOURCELOCATION, new AbstractMateriaEffectConfiguration(EMPTY_RESOURCELOCATION));
-
         registeredEffectConfigurations = effectMapBuilder.build();
-
-        logLoading("server", registeredEffectConfigurations.size(), "damage sources");
+        counterMap.forEach((type, count) -> logLoading("Server", count, type));
     }
 
     @Nullable
