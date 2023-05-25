@@ -1,7 +1,12 @@
 {
     "effect_type":"materia:spell",
-    "level": {
+    "element": "fire",
+    "spell_level": {
         "base": 1,
         "add": ["materia:fire_materia"]
+    },
+    "size_level": {
+        "base": 1,
+        "add": ["materia:size_up_materia"]
     }
 }

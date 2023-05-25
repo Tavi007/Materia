@@ -1,9 +1,10 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.recipes.effects.configuration;
 
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import Tavi007.Materia.recipes.effects.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
@@ -34,9 +35,14 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
     public AbstractMateriaEffectConfiguration copy() {
         SpellConfiguration copy = new SpellConfiguration();
         copy.setId(getId());
-        copy.element = this.element;
+        copy.element = new String(element);
         copy.levelConfigurationSpell = levelConfigurationSpell.copy();
         copy.levelConfigurationSize = levelConfigurationSize.copy();
         return copy;
+    }
+
+    @Override
+    public boolean isValid() {
+        return element != null && levelConfigurationSpell.isValid() && levelConfigurationSize.isValid();
     }
 }

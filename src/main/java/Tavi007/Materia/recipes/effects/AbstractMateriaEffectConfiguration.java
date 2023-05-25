@@ -18,4 +18,6 @@ public abstract class AbstractMateriaEffectConfiguration {
     }
 
     public abstract AbstractMateriaEffectConfiguration copy();
+
+    public abstract boolean isValid();
 }

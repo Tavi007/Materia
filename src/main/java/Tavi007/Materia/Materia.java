@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.ItemList;
+import Tavi007.Materia.init.MateriaEffectTypeList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.init.RecipeTypeList;
 import Tavi007.Materia.init.StartupCommon;
@@ -35,6 +36,7 @@ public class Materia {
         BlockList.BLOCKS.register(MOD_EVENT_BUS);
         BlockList.ITEMS.register(MOD_EVENT_BUS);
         MenuList.MENU_TYPES.register(MOD_EVENT_BUS);
+        MateriaEffectTypeList.init();
 
         RecipeTypeList.RECIPE_TYPES.register(MOD_EVENT_BUS);
         RecipeTypeList.RECIPE_SERIALIZERS.register(MOD_EVENT_BUS);

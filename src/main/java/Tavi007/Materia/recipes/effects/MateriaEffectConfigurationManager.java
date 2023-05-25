@@ -36,10 +36,6 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
         super(GSON, "effect_configurations");
     }
 
-    private void logLoading(String side, int size, String type) {
-        Materia.LOGGER.info(side + " loaded " + size + " materia effect configuration for " + type);
-    }
-
     public AbstractMateriaEffectConfiguration getConfiguration(ResourceLocation id) {
         return registeredEffectConfigurations.get(id).copy();
     }
@@ -47,41 +43,44 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         Builder<ResourceLocation, AbstractMateriaEffectConfiguration> effectMapBuilder = ImmutableMap.builder();
-        Map<String, Integer> counterMap = new HashMap<>();
+        Map<Class<? extends AbstractMateriaEffectConfiguration>, Integer> counterMap = new HashMap<>();
 
         objectIn.forEach((rl, json) -> {
             try {
                 Resource res = resourceManagerIn.getResourceOrThrow(getPreparedPath(rl));
 
-                JsonObject jsonObject = json.getAsJsonObject();
-                // TODO: add event as api entry point to add other configurations types
-                String path = rl.getPath();
-                AbstractMateriaEffectConfiguration configuration = null;
-                if (path.contains("spells/")) {
-                    configuration = loadData(GSON, rl, jsonObject, SpellConfiguration.class);
-                    counterMap.put("spell", counterMap.getOrDefault("spell", 0) + 1);
-                } else if (path.contains("recipes/")) {
-                    configuration = loadData(GSON, rl, jsonObject, RecipeConfiguration.class);
-                    counterMap.put("recipe", counterMap.getOrDefault("recipe", 0) + 1);
-                } else if (path.contains("stats/")) {
-                    configuration = loadData(GSON, rl, jsonObject, StatConfiguration.class);
-                    counterMap.put("stat", counterMap.getOrDefault("stat", 0) + 1);
-                } else {
-                    Materia.LOGGER.warn("Don't know how to handle path: " + path);
+                ResourceLocation effectType = getEffectType(json.getAsJsonObject());
+                if (effectType == null) {
+                    throw new Exception("Could not find 'effect_type' property.");
                 }
 
-                if (configuration != null) {
-                    configuration.setId(rl);
-                    effectMapBuilder.put(rl, configuration);
+                Class<? extends AbstractMateriaEffectConfiguration> clazz = MateriaEffectTypeRegistry.get(effectType);
+                if (clazz == null) {
+                    throw new Exception("Unknown effect type '" + effectType + "'.");
                 }
 
+                AbstractMateriaEffectConfiguration configuration = loadData(GSON, rl, json, clazz);
+                if (!configuration.isValid()) {
+                    throw new Exception("Invalid configuration encountered: " + configuration.toString());
+                }
+
+                configuration.setId(rl);
+                effectMapBuilder.put(rl, configuration);
+                counterMap.put(clazz, counterMap.getOrDefault(clazz, 0) + 1);
             } catch (Exception exception) {
                 Materia.LOGGER.error("Couldn't parse materia effect configuration {}", rl, exception);
             }
         });
 
         registeredEffectConfigurations = effectMapBuilder.build();
-        counterMap.forEach((type, count) -> logLoading("Server", count, type));
+        counterMap.forEach((type, count) -> logLoading("Server", count, type.toString()));
+    }
+
+    private ResourceLocation getEffectType(JsonObject json) {
+        if (json.has("effect_type")) {
+            return new ResourceLocation(json.get("effect_type").getAsString());
+        }
+        return null;
     }
 
     @Nullable
@@ -102,5 +101,9 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
             throw e;
         }
         return ret;
+    }
+
+    private void logLoading(String side, int size, String type) {
+        Materia.LOGGER.info(side + " loaded " + size + " materia effect configuration for " + type);
     }
 }

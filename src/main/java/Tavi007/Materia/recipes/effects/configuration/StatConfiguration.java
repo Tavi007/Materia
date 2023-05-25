@@ -1,10 +1,11 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.recipes.effects.configuration;
 
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
 import Tavi007.Materia.effects.Stat;
+import Tavi007.Materia.recipes.effects.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
@@ -32,5 +33,10 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
         copy.stat = this.stat;
         copy.levelConfiguration = levelConfiguration.copy();
         return copy;
+    }
+
+    @Override
+    public boolean isValid() {
+        return stat != null && levelConfiguration.isValid();
     }
 }
