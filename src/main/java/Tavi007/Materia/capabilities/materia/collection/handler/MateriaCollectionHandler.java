@@ -18,10 +18,12 @@ public class MateriaCollectionHandler extends ItemStackHandler {
 
     private final static int maxItemStackSlots = 8;
     private List<CollectionToEffectMapper> mappers;
+    private int selectedMapperIndex;
 
     public MateriaCollectionHandler() {
         super(maxItemStackSlots);
         mappers = Collections.emptyList();
+        selectedMapperIndex = 0;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         ListTag listTag = new ListTag();
         mappers.forEach(mapper -> listTag.add(mapper.serializeNBT()));
         nbt.put("mappers", listTag);
+        nbt.putInt("selected_mapper", selectedMapperIndex);
         return nbt;
     }
 
@@ -49,21 +52,18 @@ public class MateriaCollectionHandler extends ItemStackHandler {
             mapper.deserializeNBT(nbt);
             mappers.add(mapper);
         });
+        selectedMapperIndex = nbt.getInt("selected_mapper");
     }
 
-    public void markDirty(int slotIndex) {
-        for (CollectionToEffectMapper mapper : mappers) {
-            if (mapper.hasSlotIndex(slotIndex)) {
-                mapper.markAsDirty();
-            }
-        }
+    public void recomputeEffects() {
+
     }
 
-    public List<ResourceLocation> getEffects(int selectedCollectionId) {
-        if (selectedCollectionId >= 0 && selectedCollectionId < mappers.size()) {
-            return mappers.get(selectedCollectionId).getEffects();
+    public List<ResourceLocation> getEffects() {
+        if (selectedMapperIndex < 0 || selectedMapperIndex >= mappers.size()) {
+            selectedMapperIndex = 0;
         }
-        return Collections.emptyList();
+        return mappers.get(selectedMapperIndex).getEffects();
     }
 
     public void addAp(int ap) {

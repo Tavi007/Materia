@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -12,7 +14,6 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
 
     List<Integer> slotIndexList;
     List<ResourceLocation> effects;
-    private boolean dirty;
 
     protected CollectionToEffectMapper() {
         this.slotIndexList = new ArrayList<>();
@@ -29,10 +30,6 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
     }
 
     public List<ResourceLocation> getEffects() {
-        if (dirty) {
-            // TODO recompute effects
-            dirty = false;
-        }
         return effects;
     }
 
@@ -40,23 +37,27 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
         return slotIndexList.contains(slotIndex);
     }
 
-    public void markAsDirty() {
-        dirty = true;
-    }
-
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
         nbt.put("slot_index_list", new IntArrayTag(slotIndexList));
+        ListTag effectsTag = new ListTag();
+        effects.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
+        nbt.put("effects", effectsTag);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         slotIndexList = new ArrayList<>();
-        IntArrayTag arrayTag = (IntArrayTag) nbt.get("slot_index_list");
-        arrayTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
-        dirty = true;
+        IntArrayTag slotIndexTag = (IntArrayTag) nbt.get("slot_index_list");
+        slotIndexTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
+        effects = new ArrayList<>();
+        ListTag effectsTag = (ListTag) nbt.get("effects");
+        effectsTag.forEach(effectTag -> {
+            StringTag stringTag = (StringTag) effectTag;
+            effects.add(new ResourceLocation(stringTag.getAsString()));
+        });
     }
 
 }
