@@ -1,5 +1,6 @@
 package Tavi007.Materia.capabilities.materia.collection.handler;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.annotation.Nonnull;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -31,16 +33,22 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
         nbt.put("stacks", super.serializeNBT());
-
-        // TODO add mappers to compound
+        ListTag listTag = new ListTag();
+        mappers.forEach(mapper -> listTag.add(mapper.serializeNBT()));
+        nbt.put("mappers", listTag);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt.getCompound("stacks"));
-
-        // TODO deserialize mappers
+        mappers = new ArrayList<>();
+        ListTag listTag = (ListTag) nbt.get("mappers");
+        listTag.forEach(tag -> {
+            CollectionToEffectMapper mapper = new CollectionToEffectMapper();
+            mapper.deserializeNBT(nbt);
+            mappers.add(mapper);
+        });
     }
 
     public void markDirty(int slotIndex) {
