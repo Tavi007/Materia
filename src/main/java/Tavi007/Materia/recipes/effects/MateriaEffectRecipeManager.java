@@ -25,7 +25,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadListener {
+public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
 
@@ -33,7 +33,7 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
 
     private Map<ResourceLocation, AbstractMateriaEffectConfiguration> registeredEffectConfigurations = ImmutableMap.of();
 
-    public MateriaEffectConfigurationManager() {
+    public MateriaEffectRecipeManager() {
         super(GSON, "effect_configurations");
     }
 

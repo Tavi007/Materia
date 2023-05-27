@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.recipes.effects.configuration;
 
 import net.minecraft.resources.ResourceLocation;
 

@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 import Tavi007.Materia.effects.Stat;
-import Tavi007.Materia.recipes.effects.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.recipes.effects.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellConfiguration extends AbstractMateriaEffectConfiguration {

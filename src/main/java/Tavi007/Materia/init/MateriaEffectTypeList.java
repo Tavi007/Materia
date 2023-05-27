@@ -1,8 +1,8 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.recipes.effects.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.recipes.effects.MateriaEffectTypeRegistry;
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.SpellConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;

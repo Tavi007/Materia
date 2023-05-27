@@ -1,7 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.recipes.MateriaEffectRecipe;
+import Tavi007.Materia.recipes.MateriaRecipeEffect;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -22,12 +22,12 @@ public class RecipeTypeList {
 
     public static final String MATERIA_EFFECT_RECIPE_NAME = "recipes/materia_effect";
 
-    public static final RegistryObject<RecipeType<MateriaEffectRecipe>> MATERIA_EFFECT_RECIPE = RECIPE_TYPES.register(
+    public static final RegistryObject<RecipeType<MateriaRecipeEffect>> MATERIA_RECIPE_EFFECT = RECIPE_TYPES.register(
         MATERIA_EFFECT_RECIPE_NAME,
         () -> new ModRecipeType<>());
-    public static final RegistryObject<RecipeSerializer<MateriaEffectRecipe>> MATERIA_EFFECT_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register(
+    public static final RegistryObject<RecipeSerializer<MateriaRecipeEffect>> MATERIA_RECIPE_EFFECT_SERIALIZER = RECIPE_SERIALIZERS.register(
         MATERIA_EFFECT_RECIPE_NAME,
-        () -> new MateriaEffectRecipe.Serializer());
+        () -> new MateriaRecipeEffect.Serializer());
 
     private static class ModRecipeType<T extends Recipe<?>> implements RecipeType<T> {
 

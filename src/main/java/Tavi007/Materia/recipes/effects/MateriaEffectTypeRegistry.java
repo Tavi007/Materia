@@ -3,6 +3,7 @@ package Tavi007.Materia.recipes.effects;
 import java.util.HashMap;
 import java.util.Map;
 
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectTypeRegistry {

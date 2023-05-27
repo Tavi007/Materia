@@ -14,13 +14,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 
-public class MateriaEffectRecipe implements Recipe<Container> {
+public class MateriaRecipeEffect implements Recipe<Container> {
 
     ResourceLocation recipeId;
     protected final Ingredient ingredient;
     protected final ItemStack result;
 
-    protected MateriaEffectRecipe(ResourceLocation recipeId, Ingredient ingredient, ItemStack result) {
+    protected MateriaRecipeEffect(ResourceLocation recipeId, Ingredient ingredient, ItemStack result) {
         this.recipeId = recipeId;
         this.ingredient = ingredient;
         this.result = result;
@@ -61,20 +61,20 @@ public class MateriaEffectRecipe implements Recipe<Container> {
         return null;
     }
 
-    public static class Serializer implements RecipeSerializer<MateriaEffectRecipe> {
+    public static class Serializer implements RecipeSerializer<MateriaRecipeEffect> {
 
         @Override
-        public MateriaEffectRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+        public MateriaRecipeEffect fromJson(ResourceLocation recipeId, JsonObject json) {
             return null;
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, MateriaEffectRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buf, MateriaRecipeEffect recipe) {
         }
 
         @Nullable
         @Override
-        public MateriaEffectRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
+        public MateriaRecipeEffect fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buf) {
             return null;
         }
     }
