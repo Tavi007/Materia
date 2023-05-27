@@ -3,7 +3,11 @@ package Tavi007.Materia.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -11,26 +15,39 @@ import net.minecraft.world.level.block.Block;
 
 public class MateriaToolHelper {
 
-    public static int getNoCollectionSlot(int[] array) {
+    public static int getNoCollectionSlot(List<Integer> slotList) {
         int counter = 0;
-        for (int i = 0; i < array.length; i++) {
-            counter += array[i];
+        for (Integer i : slotList) {
+            counter += i;
         }
         return counter;
     }
 
-    public static boolean isCollectionSizesValid(int[] array) {
+    public static boolean isCollectionSizesValid(List<Integer> slotList) {
         int counter = 0;
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] < 0) {
+        for (Integer i : slotList) {
+            if (i < 0) {
                 return false;
             }
-            counter += array[i];
+            counter += i;
         }
         if (counter > 4) {
             return false;
         }
         return true;
+    }
+
+    public static CompoundTag getShareTag(ItemStack stack) {
+        CompoundTag nbt = stack.getTag();
+        MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
+        nbt.put("materia_collection_handler", collectionHandler.serializeNBT());
+        return nbt;
+    }
+
+    public static void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
+        stack.setTag(nbt);
+        MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
+        collectionHandler.deserializeNBT((CompoundTag) nbt.get("materia_collection_handler"));
     }
 
     private static String asString(int[] array) {

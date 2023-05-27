@@ -16,9 +16,9 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-public class MateriaCollectionCapability {
+public class MateriaCollectionHandlerCapability {
 
-    public static final Capability<MateriaCollection> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    public static final Capability<MateriaCollectionHandler> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });
 
     /**
@@ -32,10 +32,10 @@ public class MateriaCollectionCapability {
     public static final ResourceLocation ID = new ResourceLocation(Materia.MOD_ID, "materia_collection");
 
     public static void register(final RegisterCapabilitiesEvent event) {
-        event.register(MateriaCollection.class);
+        event.register(MateriaCollectionHandler.class);
     }
 
-    public static ICapabilityProvider createProvider(final MateriaCollection materiaCollection) {
+    public static ICapabilityProvider createProvider(final MateriaCollectionHandler materiaCollection) {
         return new SerializableCapabilityProvider<>(CAPABILITY, defaultFacing, materiaCollection);
     }
 
@@ -46,8 +46,8 @@ public class MateriaCollectionCapability {
         public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
             Item item = event.getObject().getItem();
             if (item instanceof IMateriaTool) {
-                final MateriaCollection collection = new MateriaCollection();
-                event.addCapability(ID, createProvider(collection));
+                final MateriaCollectionHandler collectionHandler = new MateriaCollectionHandler();
+                event.addCapability(ID, createProvider(collectionHandler));
             }
         }
     }

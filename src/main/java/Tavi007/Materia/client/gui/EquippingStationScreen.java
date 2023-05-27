@@ -1,5 +1,7 @@
 package Tavi007.Materia.client.gui;
 
+import java.util.List;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -48,9 +50,9 @@ public class EquippingStationScreen extends AbstractContainerScreen<EquippingSta
         }
     }
 
-    private void drawMateriaSlots(PoseStack poseStack, int startX, int startY, int[] slots) {
-        for (int i = 0; i < slots.length; i++) {
-            switch (slots[i]) {
+    private void drawMateriaSlots(PoseStack poseStack, int startX, int startY, List<Integer> collectionSizes) {
+        for (Integer collectionSize : collectionSizes) {
+            switch (collectionSize) {
             case 1:
                 blit(poseStack, startX, startY, 0, 193, 15, 15);
                 startX += 20;

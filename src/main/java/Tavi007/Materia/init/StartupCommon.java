@@ -2,7 +2,7 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.magic.MagicDataCapability;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollectionCapability;
+import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandlerCapability;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -13,6 +13,6 @@ public class StartupCommon {
         // capabilities
         LevelDataCapability.register(event);
         MagicDataCapability.register(event);
-        MateriaCollectionCapability.register(event);
+        MateriaCollectionHandlerCapability.register(event);
     }
 }

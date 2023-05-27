@@ -1,8 +1,10 @@
 package Tavi007.Materia.items;
 
+import java.util.List;
+
 public interface IMateriaTool {
 
-    public int[] getTopCollectionSizes();
+    public List<Integer> getTopCollectionSizes();
 
-    public int[] getBotCollectionSizes();
+    public List<Integer> getBotCollectionSizes();
 }

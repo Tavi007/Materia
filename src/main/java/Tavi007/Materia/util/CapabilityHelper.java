@@ -4,8 +4,8 @@ import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.magic.MagicData;
 import Tavi007.Materia.capabilities.magic.MagicDataCapability;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollectionCapability;
+import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandler;
+import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandlerCapability;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,8 +29,8 @@ public class CapabilityHelper {
      *            An ItemStack.
      * @return the MateriaCollection, containing the materiaStacks, current ap and the array for leveling up.
      */
-    public static MateriaCollection getMateriaCollection(ItemStack stack) {
-        return stack.getCapability(MateriaCollectionCapability.CAPABILITY, null).orElse(new MateriaCollection());
+    public static MateriaCollectionHandler getMateriaCollectionHandler(ItemStack stack) {
+        return stack.getCapability(MateriaCollectionHandlerCapability.CAPABILITY, null).orElse(new MateriaCollectionHandler());
     }
 
     /**

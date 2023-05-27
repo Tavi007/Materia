@@ -2,7 +2,7 @@ package Tavi007.Materia.inventory;
 
 import org.jline.utils.Log;
 
-import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
+import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandler;
 import Tavi007.Materia.inventory.menu.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
@@ -26,10 +26,10 @@ public class EquippingStationItemHandler extends ItemStackHandler {
             ItemStack stack = getStackInSlot(slot);
             if (stack.isEmpty()) {
                 // Materia got removed
-                CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setStackInSlot(slot, ItemStack.EMPTY);
+                CapabilityHelper.getMateriaCollectionHandler(getMateriaToolStack()).setStackInSlot(slot, ItemStack.EMPTY);
             } else {
                 // Materia got inserted
-                CapabilityHelper.getMateriaCollection(getMateriaToolStack()).setStackInSlot(slot, stack);
+                CapabilityHelper.getMateriaCollectionHandler(getMateriaToolStack()).setStackInSlot(slot, stack);
             }
         } else if (slot == 8) {
             // IMateriaTool
@@ -41,7 +41,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
                 }
             } else {
                 // IMateriaTool got inserted
-                MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
+                MateriaCollectionHandler collection = CapabilityHelper.getMateriaCollectionHandler(stack);
                 for (int i = 0; i < collection.getSlots(); i++) {
                     stacks.set(i, collection.getStackInSlot(i));
                 }
@@ -50,7 +50,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
             Log.warn("Slot index is greater than 8. This should not have happened");
         }
         ItemStack stack = getMateriaToolStack();
-        CapabilityHelper.getMateriaCollection(stack).markDirty();
+        CapabilityHelper.getMateriaCollectionHandler(stack).markDirty();
 
     }
 

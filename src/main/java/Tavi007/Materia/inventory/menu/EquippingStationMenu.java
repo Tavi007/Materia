@@ -150,9 +150,9 @@ public class EquippingStationMenu extends AbstractContainerMenu {
         return copyOfSourceStack;
     }
 
-    private ItemStack onSuccessfulTransfer() {
+    private ItemStack onSuccessfulTransfer(int slot) {
         ItemStack stack = getMateriaToolStack();
-        CapabilityHelper.getMateriaCollection(stack).markDirty();
+        CapabilityHelper.getMateriaCollectionHandler(stack).markDirty(slot);
         return ItemStack.EMPTY;
     }
 

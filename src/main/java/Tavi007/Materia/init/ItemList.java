@@ -1,5 +1,7 @@
 package Tavi007.Materia.init;
 
+import java.util.Arrays;
+
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.items.MateriaAccessory;
 import Tavi007.Materia.items.MateriaAxe;
@@ -32,37 +34,37 @@ public class ItemList {
     // materia
     public static final RegistryObject<Item> FIRE_MATERIA = ITEMS.register("fire_materia", () -> new MateriaItem(singleStack, new int[] { 10, 25 }));
     public static final RegistryObject<Item> ICE_MATERIA = ITEMS.register("ice_materia", () -> new MateriaItem(singleStack, new int[] { 10, 25 }));
-    public static final RegistryObject<Item> AREA_MATERIA = ITEMS.register("area_materia", () -> new MateriaItem(singleStack, new int[] { 50 }));
+    public static final RegistryObject<Item> SIZE_UP_MATERIA = ITEMS.register("size_up_materia", () -> new MateriaItem(singleStack, new int[] { 50 }));
 
     public static final RegistryObject<Item> SPEED_UP_MATERIA = ITEMS.register("speed_up_materia", () -> new MateriaItem(singleStack, new int[] { 100 }));
 
     // pickaxes
     public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe",
-        () -> new MateriaPickaxe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1 }, new int[] { 3 }));
+        () -> new MateriaPickaxe(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(1), Arrays.asList(3)));
 
     // axes
     public static final RegistryObject<Item> MATERIA_DIAMOND_AXE = ITEMS.register("materia_diamond_axe",
-        () -> new MateriaAxe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 1 }, new int[] { 2 }));
+        () -> new MateriaAxe(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(1, 1), Arrays.asList(2)));
 
     // shovel
     public static final RegistryObject<Item> MATERIA_DIAMOND_SHOVEL = ITEMS.register("materia_diamond_shovel",
-        () -> new MateriaShovel(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 2 }, new int[] { 2, 1 }));
+        () -> new MateriaShovel(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(1, 2), Arrays.asList(2, 1)));
 
     // hoe
     public static final RegistryObject<Item> MATERIA_DIAMOND_HOE = ITEMS.register("materia_diamond_hoe",
-        () -> new MateriaHoe(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 1, 3 }, new int[] { 3, 1 }));
+        () -> new MateriaHoe(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(1, 3), Arrays.asList(3, 1)));
 
     // sword
     public static final RegistryObject<Item> MATERIA_DIAMOND_SWORD = ITEMS.register("materia_diamond_sword",
-        () -> new MateriaSword(Tiers.DIAMOND, 1, -2.8F, singleStack, new int[] { 2, 2 }, new int[] { 4 }));
+        () -> new MateriaSword(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(2, 2), Arrays.asList(4)));
 
     // wand
     public static final RegistryObject<Item> MATERIA_DIAMOND_WAND = ITEMS.register("materia_diamond_wand",
-        () -> new MateriaWand(Tiers.DIAMOND, singleStack, new int[] { 1, 1, 1 }, new int[] { 1, 1, 2 }));
+        () -> new MateriaWand(Tiers.DIAMOND, singleStack, Arrays.asList(1, 1, 1), Arrays.asList(1, 1, 2)));
 
     // accessory
     public static final RegistryObject<Item> MATERIA_DIAMOND_ACCESSORY = ITEMS.register("materia_diamond_accessory",
-        () -> new MateriaAccessory(Tiers.DIAMOND, singleStack, new int[] { 1, 2, 1 }, new int[] { 2, 1, 1 }));
+        () -> new MateriaAccessory(Tiers.DIAMOND, singleStack, Arrays.asList(1, 2, 1), Arrays.asList(2, 1, 1)));
 
     @SubscribeEvent
     public static void onRegisterCreativeTabEvent(CreativeModeTabEvent.Register event) {
@@ -74,7 +76,7 @@ public class ItemList {
                 .displayItems((featureFlag, output, flag) -> {
                     output.accept(ItemList.FIRE_MATERIA.get());
                     output.accept(ItemList.ICE_MATERIA.get());
-                    output.accept(ItemList.AREA_MATERIA.get());
+                    output.accept(ItemList.SIZE_UP_MATERIA.get());
                     output.accept(ItemList.SPEED_UP_MATERIA.get());
 
                     output.accept(ItemList.MATERIA_DIAMOND_PICKAXE.get());

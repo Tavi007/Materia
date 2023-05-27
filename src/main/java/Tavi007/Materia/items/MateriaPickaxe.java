@@ -1,9 +1,10 @@
 package Tavi007.Materia.items;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
-import Tavi007.Materia.capabilities.toolslots.MateriaCollection;
-import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,57 +19,53 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
     // change these later
-    private final int[] topCollectionSizes;
-    private final int[] botCollectionSizes;
+    private List<Integer> topCollectionSizes;
+    private List<Integer> botCollectionSizes;
 
-    public MateriaPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder, int[] topCollectionSizes, int[] botCollectionSizes) {
+    public MateriaPickaxe(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builder, List<Integer> topCollectionSizes,
+            List<Integer> botCollectionSizes) {
         super(tier, attackDamageIn, attackSpeedIn, builder);
         if (MateriaToolHelper.isCollectionSizesValid(topCollectionSizes)) {
             this.topCollectionSizes = topCollectionSizes;
         } else {
-            this.topCollectionSizes = new int[] { 0 }; // might need to change this to 1
+            this.topCollectionSizes = Arrays.asList(0); // might need to change this to 1
         }
         if (MateriaToolHelper.isCollectionSizesValid(botCollectionSizes)) {
             this.botCollectionSizes = botCollectionSizes;
         } else {
-            this.botCollectionSizes = new int[] { 0 };
+            this.botCollectionSizes = Arrays.asList(0);
         }
     }
 
     @Override
-    public int[] getTopCollectionSizes() {
+    public List<Integer> getTopCollectionSizes() {
         return topCollectionSizes;
     }
 
     @Override
-    public int[] getBotCollectionSizes() {
+    public List<Integer> getBotCollectionSizes() {
         return botCollectionSizes;
-    }
-
-    @Override
-    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        return true;
     }
 
     @Override
     @Nullable
     public CompoundTag getShareTag(ItemStack stack) {
-        CompoundTag nbt = stack.getTag();
-        // MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
-        // nbt.put("collection", collection.serializeNBT());
-        return nbt;
+        return MateriaToolHelper.getShareTag(stack);
     }
 
     @Override
     @Nullable
     public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
-        stack.setTag(nbt);
-        MateriaCollection collection = CapabilityHelper.getMateriaCollection(stack);
-        collection.deserializeNBT((CompoundTag) nbt.get("collection"));
+        MateriaToolHelper.readShareTag(stack, nbt);
     }
 
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        return true;
     }
 }

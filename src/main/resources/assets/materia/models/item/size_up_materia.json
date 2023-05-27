@@ -2,6 +2,6 @@
     "parent": "item/generated",
     "textures": 
 	{
-        "layer0": "materia:item/area_materia"
+        "layer0": "materia:item/size_up_materia"
     }
 }
