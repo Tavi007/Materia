@@ -31,6 +31,8 @@ public class EquippingStationItemHandler extends ItemStackHandler {
                 // Materia got inserted
                 CapabilityHelper.getMateriaCollectionHandler(getMateriaToolStack()).setStackInSlot(slot, stack);
             }
+            ItemStack toolStack = getMateriaToolStack();
+            CapabilityHelper.getMateriaCollectionHandler(toolStack).markDirty(slot);
         } else if (slot == 8) {
             // IMateriaTool
             ItemStack stack = getStackInSlot(slot);
@@ -49,9 +51,6 @@ public class EquippingStationItemHandler extends ItemStackHandler {
         } else {
             Log.warn("Slot index is greater than 8. This should not have happened");
         }
-        ItemStack stack = getMateriaToolStack();
-        CapabilityHelper.getMateriaCollectionHandler(stack).markDirty();
-
     }
 
     @Override

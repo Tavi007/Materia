@@ -32,14 +32,4 @@ public class MateriaContainerSlot extends SlotItemHandler {
         }
     }
 
-    // @Override
-    // @OnlyIn(Dist.CLIENT)
-    // public boolean isEnabled() {
-    // if (getItemHandler() instanceof EquippingStationItemHandler) {
-    // return ((EquippingStationItemHandler) getItemHandler()).isMateriaSlotEnabled(slotIndex);
-    // } else if (getItemHandler() instanceof MateriaIncubatorItemHandler) {
-    // return true;
-    // }
-    // return false;
-    // }
 }

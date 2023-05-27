@@ -8,7 +8,6 @@ import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
-import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -88,57 +87,63 @@ public class EquippingStationMenu extends AbstractContainerMenu {
         if (sourceSlot == null || !sourceSlot.hasItem())
             return ItemStack.EMPTY; // EMPTY_ITEM
         ItemStack sourceStack = sourceSlot.getItem();
-        ItemStack copyOfSourceStack = sourceStack.copy();
 
         if (sourceSlotIndex >= hotbarInvStart && sourceSlotIndex <= hotbarInvEnd) { // HotBarSlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+                } else if (moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             } else if (sourceStack.getItem() instanceof IMateriaTool) {
-                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+                } else if (moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             } else {
-                if (!moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, playerInvStart, playerInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             }
         } else if (sourceSlotIndex >= playerInvStart && sourceSlotIndex <= playerInvEnd) { // playerInventorySlot clicked
             if (sourceStack.getItem() instanceof MateriaItem) {
-                if (!moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, materiaInvStart, materiaInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+                } else if (moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             } else if (sourceStack.getItem() instanceof IMateriaTool) {
-                if (!moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
-                    onSuccessfulTransfer();
-                } else if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, toolInvId, toolInvId + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+                } else if (moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             } else {
-                if (!moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
-                    onSuccessfulTransfer();
+                if (moveItemStackTo(sourceStack, hotbarInvStart, hotbarInvEnd + 1, false)) {
+                    return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
                 }
             }
-        } else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
-            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
-                onSuccessfulTransfer();
-            }
         } else if (sourceSlotIndex >= materiaInvStart && sourceSlotIndex <= materiaInvEnd) { // MateriaSlot clicked
-            if (!moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
-                onSuccessfulTransfer();
+            if (moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+                return onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+            }
+        } else if (sourceSlotIndex == toolInvId) { // ToolSlot clicked
+            if (moveItemStackTo(sourceStack, hotbarInvStart, playerInvEnd + 1, false)) {
+                ItemStack copy = onSuccesfulQuickMove(sourceStack, sourceSlot, player);
+                // empties materia slots
+                for (int i = materiaInvStart; i <= materiaInvEnd; i++) {
+                    slots.get(i).remove(1);
+                }
+                return copy;
             }
         } else {
             Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
-            return ItemStack.EMPTY;
         }
+        return ItemStack.EMPTY;
+    }
 
+    private ItemStack onSuccesfulQuickMove(ItemStack sourceStack, Slot sourceSlot, Player player) {
         // If stack size == 0 (the entire stack was moved) set slot contents to null
         if (sourceStack.getCount() == 0) {
             sourceSlot.set(ItemStack.EMPTY);
@@ -147,13 +152,8 @@ public class EquippingStationMenu extends AbstractContainerMenu {
         }
         sourceSlot.onTake(player, sourceStack);
 
-        return copyOfSourceStack;
-    }
+        return sourceStack.copy();
 
-    private ItemStack onSuccessfulTransfer(int slot) {
-        ItemStack stack = getMateriaToolStack();
-        CapabilityHelper.getMateriaCollectionHandler(stack).markDirty(slot);
-        return ItemStack.EMPTY;
     }
 
     // only drop MateriaTool ItemStack. It should have all the added effects

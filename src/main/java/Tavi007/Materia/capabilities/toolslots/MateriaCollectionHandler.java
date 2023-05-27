@@ -19,6 +19,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
 
     public MateriaCollectionHandler() {
         super(maxItemStackSlots);
+        mappers = Collections.emptyList();
     }
 
     @Override
