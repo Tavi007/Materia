@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandler;
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;

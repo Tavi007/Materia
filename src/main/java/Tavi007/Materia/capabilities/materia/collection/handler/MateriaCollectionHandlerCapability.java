@@ -1,4 +1,4 @@
-package Tavi007.Materia.capabilities.toolslots;
+package Tavi007.Materia.capabilities.materia.collection.handler;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.SerializableCapabilityProvider;

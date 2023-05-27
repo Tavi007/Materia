@@ -4,8 +4,8 @@ import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.magic.MagicData;
 import Tavi007.Materia.capabilities.magic.MagicDataCapability;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandler;
-import Tavi007.Materia.capabilities.toolslots.MateriaCollectionHandlerCapability;
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
