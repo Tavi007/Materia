@@ -24,6 +24,7 @@ public class EquippingStationScreen extends AbstractContainerScreen<EquippingSta
         this.topPos = 0;
         this.imageWidth = 175;
         this.imageHeight = 191;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
