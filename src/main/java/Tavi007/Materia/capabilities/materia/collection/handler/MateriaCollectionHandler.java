@@ -55,7 +55,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         selectedMapperIndex = nbt.getInt("selected_mapper");
     }
 
-    public void recomputeEffects() {
+    public void computeEffects() {
 
     }
 

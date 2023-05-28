@@ -1,4 +1,4 @@
-package Tavi007.Materia.entity;
+package Tavi007.Materia.entities;
 
 import java.util.List;
 import java.util.Map;

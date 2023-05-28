@@ -9,7 +9,6 @@ import Tavi007.Materia.init.MateriaEffectTypeList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.init.RecipeTypeList;
 import Tavi007.Materia.init.StartupCommon;
-import Tavi007.Materia.recipes.effects.MateriaEffectConfigurationManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -22,8 +21,6 @@ public class Materia {
     public static final String MOD_ID = "materia";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static IEventBus MOD_EVENT_BUS;
-
-    public static MateriaEffectConfigurationManager MATERIA_EFFECT_CONFIGURATION_MANGER = new MateriaEffectConfigurationManager();
 
     public Materia() {
         MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();

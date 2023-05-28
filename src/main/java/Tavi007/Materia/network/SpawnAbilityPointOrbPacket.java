@@ -1,6 +1,6 @@
 package Tavi007.Materia.network;
 
-import Tavi007.Materia.entity.AbilityPointOrb;
+import Tavi007.Materia.entities.AbilityPointOrb;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;

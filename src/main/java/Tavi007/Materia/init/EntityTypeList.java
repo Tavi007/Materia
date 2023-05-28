@@ -1,7 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.entity.AbilityPointOrb;
+import Tavi007.Materia.entities.AbilityPointOrb;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;

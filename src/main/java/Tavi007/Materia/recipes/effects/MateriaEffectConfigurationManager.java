@@ -1,19 +1,14 @@
 package Tavi007.Materia.recipes.effects;
 
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import com.google.common.collect.Queues;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
@@ -28,9 +23,6 @@ import net.minecraftforge.fml.common.Mod;
 public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-
-    private static ThreadLocal<Deque<MateriaEffectCofigurationContext>> dataContext = new ThreadLocal<Deque<MateriaEffectCofigurationContext>>();
-
     private Map<ResourceLocation, AbstractMateriaEffectConfiguration> registeredEffectConfigurations = ImmutableMap.of();
 
     public MateriaEffectConfigurationManager() {
@@ -60,7 +52,7 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
                     throw new Exception("Unknown effect type '" + effectType + "'.");
                 }
 
-                AbstractMateriaEffectConfiguration configuration = loadData(GSON, rl, json, clazz);
+                AbstractMateriaEffectConfiguration configuration = GSON.fromJson(json, clazz);
                 if (!configuration.isValid()) {
                     throw new Exception("Invalid configuration encountered: " + configuration.toString());
                 }
@@ -82,26 +74,6 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
             return new ResourceLocation(json.get("effect_type").getAsString());
         }
         return null;
-    }
-
-    @Nullable
-    private <T> T loadData(Gson gson, ResourceLocation name, JsonElement data, Class<T> classOfT) {
-        Deque<MateriaEffectCofigurationContext> que = dataContext.get();
-        if (que == null) {
-            que = Queues.newArrayDeque();
-            dataContext.set(que);
-        }
-
-        T ret = null;
-        try {
-            que.push(new MateriaEffectCofigurationContext(name, false));
-            ret = gson.fromJson(data, classOfT);
-            que.pop();
-        } catch (JsonParseException e) {
-            que.pop();
-            throw e;
-        }
-        return ret;
     }
 
     private void logLoading(String side, int size, String type) {

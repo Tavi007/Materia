@@ -32,7 +32,7 @@ public class EquippingStationItemHandler extends ItemStackHandler {
                 CapabilityHelper.getMateriaCollectionHandler(getMateriaToolStack()).setStackInSlot(slot, stack);
             }
             ItemStack toolStack = getMateriaToolStack();
-            CapabilityHelper.getMateriaCollectionHandler(toolStack).recomputeEffects();
+            CapabilityHelper.getMateriaCollectionHandler(toolStack).computeEffects();
         } else if (slot == 8) {
             // IMateriaTool
             ItemStack stack = getStackInSlot(slot);
