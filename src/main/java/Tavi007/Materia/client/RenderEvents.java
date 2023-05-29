@@ -5,8 +5,10 @@ import java.util.List;
 import com.mojang.datafixers.util.Either;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.client.gui.MateriaToolTooltipComponent;
 import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
@@ -24,7 +26,9 @@ public class RenderEvents {
         List<Either<FormattedText, TooltipComponent>> tooltip = event.getTooltipElements();
         ItemStack stack = event.getItemStack();
         Item item = stack.getItem();
-        if (item instanceof IMateriaTool tool)
-            tooltip.add(Either.right(new MateriaToolTooltipComponent(tool.getTopCollectionSizes(), tool.getBotCollectionSizes())));
+        if (item instanceof IMateriaTool tool) {
+            MateriaCollectionHandler materiaCollection = CapabilityHelper.getMateriaCollectionHandler(stack);
+            tooltip.add(Either.right(new MateriaToolTooltipComponent(tool.getTopCollectionSizes(), tool.getBotCollectionSizes(), materiaCollection)));
+        }
     }
 }

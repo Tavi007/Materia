@@ -1,21 +1,22 @@
 package Tavi007.Materia.client.gui;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import net.minecraft.resources.ResourceLocation;
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.ItemStack;
 
 public class MateriaToolTooltipComponent implements TooltipComponent {
 
-    Map<Integer, ResourceLocation> materiaToSlotMapping;
+    MateriaCollectionHandler materiaCollection;
     List<Integer> topCollectionSizes;
     List<Integer> botCollectionSizes;
 
-    public MateriaToolTooltipComponent(List<Integer> topCollectionSizes, List<Integer> botCollectionSizes) {
+    public MateriaToolTooltipComponent(List<Integer> topCollectionSizes, List<Integer> botCollectionSizes, MateriaCollectionHandler materiaCollection) {
         this.topCollectionSizes = topCollectionSizes;
         this.botCollectionSizes = botCollectionSizes;
+        this.materiaCollection = materiaCollection;
     }
 
     public List<Integer> getTopCollectionSizes() {
@@ -27,14 +28,11 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
     }
 
     public int getHeight() {
-        int height = 0;
-        if (topCollectionSizes != null && !topCollectionSizes.isEmpty()) {
-            height += 18;
-        }
-        if (botCollectionSizes != null && !botCollectionSizes.isEmpty()) {
-            height += 18;
-        }
-        return height;
+        return 36;
+    }
+
+    public ItemStack getStack(int slotIndex) {
+        return materiaCollection.getStackInSlot(slotIndex);
     }
 
     public int getWidth() {

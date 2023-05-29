@@ -12,29 +12,28 @@ import net.minecraft.resources.ResourceLocation;
 public class RenderUtil {
 
     public static void drawMateriaCollectionSlots(PoseStack poseStack, int startX, int startY, List<Integer> collectionSizes) {
+        int xOffSet = 0;
         for (Integer collectionSize : collectionSizes) {
             ResourceLocation texture = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
             RenderSystem.setShaderTexture(0, texture);
             switch (collectionSize) {
             case 1:
                 // gui_start_x, gui_start_y, texture_start_x, texture_start_y, width, height, size x, size y?
-                GuiComponent.blit(poseStack, startX, startY, 0, 0, 16, 16, 16, 16);
-                startX += 20;
+                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 16, 16, 16, 16);
                 break;
             case 2:
-                GuiComponent.blit(poseStack, startX, startY, 0, 0, 36, 16, 36, 16);
-                startX += 40;
+                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 36, 16, 36, 16);
                 break;
             case 3:
-                GuiComponent.blit(poseStack, startX, startY, 0, 0, 56, 16, 56, 16);
-                startX += 60;
+                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 56, 16, 56, 16);
                 break;
             case 4:
-                GuiComponent.blit(poseStack, startX, startY, 0, 0, 76, 16, 76, 16);
+                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 76, 16, 76, 16);
                 break;
             default:
                 break;
             }
+            xOffSet += 20 * collectionSize;
         }
     }
 }
