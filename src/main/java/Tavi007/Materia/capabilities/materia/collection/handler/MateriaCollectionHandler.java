@@ -40,7 +40,9 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         CompoundTag nbt = new CompoundTag();
         nbt.put("stacks", super.serializeNBT());
         ListTag listTag = new ListTag();
-        mappers.forEach(mapper -> listTag.add(mapper.serializeNBT()));
+        if (mappers != null) {
+            mappers.forEach(mapper -> listTag.add(mapper.serializeNBT()));
+        }
         nbt.put("mappers", listTag);
         nbt.putInt("selected_mapper", selectedMapperIndex);
         return nbt;
@@ -51,11 +53,13 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         super.deserializeNBT(nbt.getCompound("stacks"));
         mappers = new ArrayList<>();
         ListTag listTag = (ListTag) nbt.get("mappers");
-        listTag.forEach(tag -> {
-            CollectionToEffectMapper mapper = new CollectionToEffectMapper();
-            mapper.deserializeNBT(nbt);
-            mappers.add(mapper);
-        });
+        if (listTag != null) {
+            listTag.forEach(tag -> {
+                CollectionToEffectMapper mapper = new CollectionToEffectMapper();
+                mapper.deserializeNBT(nbt);
+                mappers.add(mapper);
+            });
+        }
         selectedMapperIndex = nbt.getInt("selected_mapper");
     }
 

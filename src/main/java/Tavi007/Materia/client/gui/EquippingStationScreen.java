@@ -1,11 +1,10 @@
 package Tavi007.Materia.client.gui;
 
-import java.util.List;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.client.util.RenderUtil;
 import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -46,32 +45,8 @@ public class EquippingStationScreen extends AbstractContainerScreen<EquippingSta
         ItemStack toolStack = getMenu().getMateriaToolStack();
         if (!toolStack.isEmpty() && toolStack.getItem() instanceof IMateriaTool) {
             IMateriaTool item = (IMateriaTool) toolStack.getItem();
-            drawMateriaSlots(poseStack, x + 50, y + 21, item.getTopCollectionSizes());
-            drawMateriaSlots(poseStack, x + 50, y + 76, item.getBotCollectionSizes());
-        }
-    }
-
-    private void drawMateriaSlots(PoseStack poseStack, int startX, int startY, List<Integer> collectionSizes) {
-        for (Integer collectionSize : collectionSizes) {
-            switch (collectionSize) {
-            case 1:
-                blit(poseStack, startX, startY, 0, 193, 15, 15);
-                startX += 20;
-                break;
-            case 2:
-                blit(poseStack, startX, startY, 0, 209, 36, 15);
-                startX += 40;
-                break;
-            case 3:
-                blit(poseStack, startX, startY, 0, 225, 57, 15);
-                startX += 60;
-                break;
-            case 4:
-                blit(poseStack, startX, startY, 0, 241, 78, 15);
-                break;
-            default:
-                break;
-            }
+            RenderUtil.drawMateriaCollectionSlots(poseStack, x + 50, y + 20, item.getTopCollectionSizes());
+            RenderUtil.drawMateriaCollectionSlots(poseStack, x + 50, y + 75, item.getBotCollectionSizes());
         }
     }
 }
