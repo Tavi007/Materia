@@ -31,7 +31,7 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
     }
 
     public int getHeight() {
-        return 36;
+        return 36 + 9 * getEffects().size();
     }
 
     public ItemStack getStack(int slotIndex) {

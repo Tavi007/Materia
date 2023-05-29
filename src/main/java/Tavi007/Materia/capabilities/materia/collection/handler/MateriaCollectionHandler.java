@@ -56,7 +56,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         if (listTag != null) {
             listTag.forEach(tag -> {
                 CollectionToEffectMapper mapper = new CollectionToEffectMapper();
-                mapper.deserializeNBT(nbt);
+                mapper.deserializeNBT((CompoundTag) tag);
                 mappers.add(mapper);
             });
         }

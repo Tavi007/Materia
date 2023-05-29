@@ -5,6 +5,7 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.client.util.RenderUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -36,7 +37,7 @@ public class MateriaToolClientTooltipComponent implements ClientTooltipComponent
         int yOffSet = 36;
         for (ResourceLocation effectRL : componentData.getEffects()) {
             String text = componentData.isEffectSelected(effectRL) ? ">" : "-" + effectRL;
-            font.drawInBatch(text, posX, posY + yOffSet, 0, false, matrix4f, bufferSource, false, 0, 15728880);
+            font.drawInBatch(ChatFormatting.GRAY + text, posX, posY + yOffSet, 0, false, matrix4f, bufferSource, false, 0, 15728880);
             yOffSet += font.lineHeight;
         }
     }
