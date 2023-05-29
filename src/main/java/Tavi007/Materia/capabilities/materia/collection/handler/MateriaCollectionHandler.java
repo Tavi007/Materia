@@ -6,13 +6,17 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import Tavi007.Materia.init.ReloadListenerList;
+import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class MateriaCollectionHandler extends ItemStackHandler {
 
@@ -55,11 +59,35 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         selectedMapperIndex = nbt.getInt("selected_mapper");
     }
 
-    public void computeEffects() {
-
+    public void computeEffects(ItemStack toolStack) {
+        Item tool = toolStack.getItem();
+        if (tool instanceof IMateriaTool materiaTool) {
+            mappers = getCollectionToEffectMapper(materiaTool.getTopSlotIdMappings());
+            mappers.addAll(getCollectionToEffectMapper(materiaTool.getBotSlotIdMappings()));
+        }
     }
 
-    public List<ResourceLocation> getEffects() {
+    private List<CollectionToEffectMapper> getCollectionToEffectMapper(List<List<Integer>> slotIdMappings) {
+        List<CollectionToEffectMapper> mappers = new ArrayList<>();
+        for (List<Integer> slotIndexList : slotIdMappings) {
+            CollectionToEffectMapper mapper = new CollectionToEffectMapper(slotIndexList, getEffects(slotIndexList));
+            mappers.add(mapper);
+        }
+        return mappers;
+    }
+
+    private List<ResourceLocation> getEffects(List<Integer> slotIndexList) {
+        List<ResourceLocation> itemLocations = new ArrayList<>();
+        for (Integer index : slotIndexList) {
+            ItemStack stack = getStackInSlot(index);
+            if (!stack.isEmpty()) {
+                itemLocations.add(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            }
+        }
+        return ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(itemLocations);
+    }
+
+    public List<ResourceLocation> getSelectedEffects() {
         if (selectedMapperIndex < 0 || selectedMapperIndex >= mappers.size()) {
             selectedMapperIndex = 0;
         }

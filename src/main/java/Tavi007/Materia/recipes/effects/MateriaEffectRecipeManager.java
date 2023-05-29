@@ -1,6 +1,10 @@
 package Tavi007.Materia.recipes.effects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
@@ -26,7 +30,33 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
         super(GSON, "materia_effect_recipes");
     }
 
-    public MateriaEffectRecipePojo getConfiguration(ResourceLocation id) {
+    public List<ResourceLocation> getEffects(List<ResourceLocation> itemLocations) {
+        List<ResourceLocation> effects = new ArrayList<>();
+        ResourceLocation combinedEffect = getMatch(itemLocations);
+        if (combinedEffect != null) {
+            effects.add(combinedEffect);
+            return effects;
+        }
+
+        for (ResourceLocation itemLocation : itemLocations) {
+            ResourceLocation singleEffect = getMatch(Arrays.asList(itemLocation));
+            if (singleEffect != null) {
+                effects.add(combinedEffect);
+            }
+        }
+        return effects;
+    }
+
+    public ResourceLocation getMatch(List<ResourceLocation> itemLocations) {
+        for (Entry<ResourceLocation, MateriaEffectRecipePojo> entry : registeredEffectRecipes.entrySet()) {
+            if (entry.getValue().doesInputMatch(itemLocations)) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    public MateriaEffectRecipePojo getRecipePojo(ResourceLocation id) {
         return registeredEffectRecipes.get(id).copy();
     }
 

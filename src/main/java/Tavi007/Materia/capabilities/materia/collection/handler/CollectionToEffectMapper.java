@@ -40,9 +40,12 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
-        nbt.put("slot_index_list", new IntArrayTag(slotIndexList));
+        IntArrayTag slotIndexTag = new IntArrayTag(slotIndexList);
+        nbt.put("slot_index_list", slotIndexTag);
         ListTag effectsTag = new ListTag();
-        effects.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
+        if (effects != null) {
+            effects.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
+        }
         nbt.put("effects", effectsTag);
         return nbt;
     }
@@ -51,13 +54,22 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
     public void deserializeNBT(CompoundTag nbt) {
         slotIndexList = new ArrayList<>();
         IntArrayTag slotIndexTag = (IntArrayTag) nbt.get("slot_index_list");
-        slotIndexTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
+        if (slotIndexTag != null) {
+            slotIndexTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
+        }
         effects = new ArrayList<>();
         ListTag effectsTag = (ListTag) nbt.get("effects");
-        effectsTag.forEach(effectTag -> {
-            StringTag stringTag = (StringTag) effectTag;
-            effects.add(new ResourceLocation(stringTag.getAsString()));
-        });
+        if (effectsTag != null) {
+            effectsTag.forEach(effectTag -> {
+                StringTag stringTag = (StringTag) effectTag;
+                effects.add(new ResourceLocation(stringTag.getAsString()));
+            });
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "{slotIndexList:" + slotIndexList.toString() + "=>effects:" + effects.toString() + "}";
     }
 
 }

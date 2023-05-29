@@ -39,4 +39,10 @@ public class MateriaEffectRecipePojo {
         output.forEach(entry -> copy.output.add(entry));
         return copy;
     }
+
+    public boolean doesInputMatch(List<ResourceLocation> itemRL) {
+        List<ResourceLocation> inputRL = toResourceLocationList(input);
+        return inputRL.size() == itemRL.size()
+            && inputRL.containsAll(itemRL);
+    }
 }

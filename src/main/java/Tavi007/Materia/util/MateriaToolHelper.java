@@ -2,6 +2,8 @@ package Tavi007.Materia.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.annotation.Nullable;
 
@@ -14,6 +16,23 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 public class MateriaToolHelper {
+
+    public static List<List<Integer>> fromCollectionSizesToIdMappings(List<Integer> sizes, int counterStart) {
+        List<List<Integer>> idMappings = new ArrayList<>();
+        int counter = counterStart;
+        for (Integer size : sizes) {
+            idMappings.add(IntStream.range(counter, counter + size).boxed().collect(Collectors.toList()));
+        }
+        return idMappings;
+    }
+
+    public static List<Integer> fromIdMappingToCollectionSizes(List<List<Integer>> idMappings) {
+        List<Integer> sizes = new ArrayList<>();
+        for (List<Integer> idMapping : idMappings) {
+            sizes.add(idMapping.size());
+        }
+        return sizes;
+    }
 
     public static int getNoCollectionSlot(List<Integer> slotList) {
         int counter = 0;
@@ -48,29 +67,6 @@ public class MateriaToolHelper {
         stack.setTag(nbt);
         MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
         collectionHandler.deserializeNBT((CompoundTag) nbt.get("materia_collection_handler"));
-    }
-
-    private static String asString(int[] array) {
-        String ret = "";
-        for (int i = 0; i < array.length; i++) {
-            switch (array[i]) {
-            case (1):
-                ret = ret + "O";
-                break;
-            case (2):
-                ret = ret + "O-O";
-                break;
-            case (3):
-                ret = ret + "O-O-O";
-                break;
-            case (4):
-                ret = ret + "O-O-O-O";
-                break;
-            }
-            ret = ret + " ";
-        }
-
-        return ret;
     }
 
     public static List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, int maxAreaLevel) {
