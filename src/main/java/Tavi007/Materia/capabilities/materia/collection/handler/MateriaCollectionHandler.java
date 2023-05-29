@@ -98,6 +98,12 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         return mappers.get(selectedMapperIndex).getEffects();
     }
 
+    public List<ResourceLocation> getAllEffects() {
+        List<ResourceLocation> effects = new ArrayList<>();
+        mappers.forEach(mapper -> effects.addAll(mapper.getEffects()));
+        return effects;
+    }
+
     public void addAp(int ap) {
         for (ItemStack stack : stacks) {
             if (!stack.isEmpty() && isItemValid(0, stack)) {

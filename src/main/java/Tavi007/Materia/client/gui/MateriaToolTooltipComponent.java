@@ -1,9 +1,12 @@
 package Tavi007.Materia.client.gui;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 
@@ -46,6 +49,14 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
 
     public boolean hasBotCollection() {
         return botCollectionSizes != null && !botCollectionSizes.isEmpty();
+    }
+
+    public Set<ResourceLocation> getEffects() {
+        return new HashSet<>(materiaCollection.getAllEffects());
+    }
+
+    public boolean isEffectSelected(ResourceLocation effectRL) {
+        return materiaCollection.getSelectedEffects().contains(effectRL);
     }
 
 }
