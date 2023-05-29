@@ -16,23 +16,8 @@ public class RenderUtil {
         for (Integer collectionSize : collectionSizes) {
             ResourceLocation texture = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
             RenderSystem.setShaderTexture(0, texture);
-            switch (collectionSize) {
-            case 1:
-                // gui_start_x, gui_start_y, texture_start_x, texture_start_y, width, height, size x, size y?
-                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 16, 16, 16, 16);
-                break;
-            case 2:
-                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 36, 16, 36, 16);
-                break;
-            case 3:
-                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 56, 16, 56, 16);
-                break;
-            case 4:
-                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, 76, 16, 76, 16);
-                break;
-            default:
-                break;
-            }
+            int width = 16 + (collectionSize - 1) * 20;
+            GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, width, 16, width, 16);
             xOffSet += 20 * collectionSize;
         }
     }
