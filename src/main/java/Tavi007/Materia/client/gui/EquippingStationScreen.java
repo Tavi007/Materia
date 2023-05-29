@@ -6,7 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.inventory.menu.EquippingStationMenu;
+import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

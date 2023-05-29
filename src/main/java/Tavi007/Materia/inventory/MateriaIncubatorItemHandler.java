@@ -1,6 +1,6 @@
 package Tavi007.Materia.inventory;
 
-import Tavi007.Materia.inventory.menu.MateriaIncubatorMenu;
+import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;

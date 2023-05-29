@@ -1,6 +1,6 @@
 package Tavi007.Materia.blocks;
 
-import Tavi007.Materia.inventory.menu.EquippingStationMenu;
+import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

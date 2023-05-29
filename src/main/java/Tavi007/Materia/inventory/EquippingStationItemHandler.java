@@ -3,7 +3,7 @@ package Tavi007.Materia.inventory;
 import org.jline.utils.Log;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
-import Tavi007.Materia.inventory.menu.EquippingStationMenu;
+import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;

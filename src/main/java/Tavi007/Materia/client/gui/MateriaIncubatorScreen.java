@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.inventory.menu.MateriaIncubatorMenu;
+import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;

@@ -1,4 +1,4 @@
-package Tavi007.Materia.inventory.menu;
+package Tavi007.Materia.inventory.menus;
 
 import javax.annotation.Nonnull;
 
@@ -6,6 +6,8 @@ import Tavi007.Materia.Materia;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
+import Tavi007.Materia.inventory.menus.slots.MateriaContainerSlot;
+import Tavi007.Materia.inventory.menus.slots.MateriaToolContainerSlot;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
 import net.minecraft.core.BlockPos;

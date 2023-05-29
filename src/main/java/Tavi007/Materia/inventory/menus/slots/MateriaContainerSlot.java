@@ -1,4 +1,4 @@
-package Tavi007.Materia.inventory.menu;
+package Tavi007.Materia.inventory.menus.slots;
 
 import javax.annotation.Nonnull;
 
