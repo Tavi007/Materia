@@ -2,7 +2,6 @@ package Tavi007.Materia.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import javax.annotation.Nullable;
@@ -21,7 +20,7 @@ public class MateriaToolHelper {
         List<List<Integer>> idMappings = new ArrayList<>();
         int counter = counterStart;
         for (Integer size : sizes) {
-            idMappings.add(IntStream.range(counter, counter + size).boxed().collect(Collectors.toList()));
+            idMappings.add(IntStream.range(counter, counter + size).boxed().toList());
         }
         return idMappings;
     }
