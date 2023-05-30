@@ -26,4 +26,9 @@ public abstract class AbstractMateriaEffectConfiguration {
         return Util.makeDescriptionId("materia_effect", id) + "." + toolSuffix;
     }
 
+    @Override
+    public String toString() {
+        return id.toString();
+    }
+
 }

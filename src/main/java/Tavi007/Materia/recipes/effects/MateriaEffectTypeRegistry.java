@@ -10,7 +10,7 @@ public class MateriaEffectTypeRegistry {
 
     private static Map<ResourceLocation, Class<? extends AbstractMateriaEffectConfiguration>> registeredEffectType = new HashMap<>();
 
-    public static <T extends AbstractMateriaEffectConfiguration> void register(ResourceLocation name,
+    public static void register(ResourceLocation name,
             Class<? extends AbstractMateriaEffectConfiguration> clazz) {
         registeredEffectType.put(name, clazz);
     }

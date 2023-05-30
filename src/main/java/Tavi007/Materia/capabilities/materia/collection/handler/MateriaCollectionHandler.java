@@ -76,13 +76,13 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     private List<CollectionToEffectRecipeMapper> computeCollectionToEffectRecipeMapper(List<List<Integer>> slotIdMappings) {
         List<CollectionToEffectRecipeMapper> mappers = new ArrayList<>();
         for (List<Integer> slotIndexList : slotIdMappings) {
-            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffects(slotIndexList));
+            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffectConfigurations(slotIndexList));
             mappers.add(mapper);
         }
         return mappers;
     }
 
-    private List<ResourceLocation> computeEffects(List<Integer> slotIndexList) {
+    private List<AbstractMateriaEffectConfiguration> computeEffectConfigurations(List<Integer> slotIndexList) {
         List<ResourceLocation> itemLocations = new ArrayList<>();
         for (Integer index : slotIndexList) {
             ItemStack stack = getStackInSlot(index);
@@ -90,7 +90,19 @@ public class MateriaCollectionHandler extends ItemStackHandler {
                 itemLocations.add(ForgeRegistries.ITEMS.getKey(stack.getItem()));
             }
         }
-        return ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(itemLocations);
+
+        List<AbstractMateriaEffectConfiguration> configurations = new ArrayList<>();
+        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(itemLocations);
+        for (ResourceLocation effectRecipe : effectRecipes) {
+            MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
+            for (ResourceLocation effect : recipePojo.getOutput()) {
+                AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
+                if (configuration != null) {
+                    configurations.add(configuration);
+                }
+            }
+        }
+        return configurations;
     }
 
     public List<AbstractMateriaEffectConfiguration> getSelectedEffectConfigurations() {
@@ -102,19 +114,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
             selectedMapperIndex = 0;
         }
 
-        // TODO: maybe optimize here?
-        List<AbstractMateriaEffectConfiguration> configurations = new ArrayList<>();
-        List<ResourceLocation> effectRecipes = mappers.get(selectedMapperIndex).getEffectRecipes();
-        for (ResourceLocation effectRecipe : effectRecipes) {
-            MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
-            for (ResourceLocation effect : recipePojo.getOutput()) {
-                AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
-                if (configuration != null) {
-                    configurations.add(configuration);
-                }
-            }
-        }
-        return configurations;
+        return mappers.get(selectedMapperIndex).getEffectConfigurations();
     }
 
     public void addAp(int ap) {

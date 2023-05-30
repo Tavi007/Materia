@@ -3,6 +3,8 @@ package Tavi007.Materia.capabilities.materia.collection.handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import Tavi007.Materia.init.ReloadListenerList;
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
@@ -13,24 +15,24 @@ import net.minecraftforge.common.util.INBTSerializable;
 public class CollectionToEffectRecipeMapper implements INBTSerializable<CompoundTag> {
 
     List<Integer> slotIndexList;
-    List<ResourceLocation> effectRecipes;
+    List<AbstractMateriaEffectConfiguration> effectConfigurations;
 
     protected CollectionToEffectRecipeMapper() {
         this.slotIndexList = new ArrayList<>();
-        this.effectRecipes = new ArrayList<>();
+        this.effectConfigurations = new ArrayList<>();
     }
 
-    public CollectionToEffectRecipeMapper(List<Integer> slotIndexList, List<ResourceLocation> effectRecipes) {
+    public CollectionToEffectRecipeMapper(List<Integer> slotIndexList, List<AbstractMateriaEffectConfiguration> effectConfigurations) {
         this.slotIndexList = slotIndexList;
-        this.effectRecipes = effectRecipes;
+        this.effectConfigurations = effectConfigurations;
     }
 
     public List<Integer> getSlotIndexList() {
         return slotIndexList;
     }
 
-    public List<ResourceLocation> getEffectRecipes() {
-        return effectRecipes;
+    public List<AbstractMateriaEffectConfiguration> getEffectConfigurations() {
+        return effectConfigurations;
     }
 
     public boolean hasSlotIndex(int slotIndex) {
@@ -42,11 +44,11 @@ public class CollectionToEffectRecipeMapper implements INBTSerializable<Compound
         CompoundTag nbt = new CompoundTag();
         IntArrayTag slotIndexTag = new IntArrayTag(slotIndexList);
         nbt.put("slot_index_list", slotIndexTag);
-        ListTag effectsTag = new ListTag();
-        if (effectRecipes != null) {
-            effectRecipes.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
+        ListTag configurationIds = new ListTag();
+        if (effectConfigurations != null) {
+            effectConfigurations.forEach(configuration -> configurationIds.add(StringTag.valueOf(configuration.getId().toString())));
         }
-        nbt.put("effect_recipes", effectsTag);
+        nbt.put("effect_configuration_ids", configurationIds);
         return nbt;
     }
 
@@ -57,19 +59,23 @@ public class CollectionToEffectRecipeMapper implements INBTSerializable<Compound
         if (slotIndexTag != null) {
             slotIndexTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
         }
-        effectRecipes = new ArrayList<>();
-        ListTag effectsTag = (ListTag) nbt.get("effect_recipes");
-        if (effectsTag != null) {
-            effectsTag.forEach(effectTag -> {
-                StringTag stringTag = (StringTag) effectTag;
-                effectRecipes.add(new ResourceLocation(stringTag.getAsString()));
+        effectConfigurations = new ArrayList<>();
+        ListTag configurationIds = (ListTag) nbt.get("effect_configuration_ids");
+        if (configurationIds != null) {
+            configurationIds.forEach(entry -> {
+                StringTag configTag = (StringTag) entry;
+                ResourceLocation configurationId = new ResourceLocation(configTag.getAsString());
+                AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(configurationId);
+                if (configuration != null) {
+                    effectConfigurations.add(configuration);
+                }
             });
         }
     }
 
     @Override
     public String toString() {
-        return "{slotIndexList:" + slotIndexList.toString() + "=>effectRecipes:" + effectRecipes.toString() + "}";
+        return "{slotIndexList:" + slotIndexList.toString() + "=>effectRecipes:" + effectConfigurations.toString() + "}";
     }
 
 }
