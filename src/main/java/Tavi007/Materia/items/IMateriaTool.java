@@ -11,4 +11,6 @@ public interface IMateriaTool {
     public List<Integer> getTopCollectionSizes();
 
     public List<Integer> getBotCollectionSizes();
+
+    public String getDescriptionIdSuffix();
 }

@@ -68,4 +68,9 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
+
+    @Override
+    public String getDescriptionIdSuffix() {
+        return "sword";
+    }
 }

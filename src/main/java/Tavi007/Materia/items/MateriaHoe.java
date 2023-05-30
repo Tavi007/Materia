@@ -68,4 +68,9 @@ public class MateriaHoe extends HoeItem implements IMateriaTool {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
+
+    @Override
+    public String getDescriptionIdSuffix() {
+        return "hoe";
+    }
 }

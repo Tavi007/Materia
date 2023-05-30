@@ -68,4 +68,9 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
+
+    @Override
+    public String getDescriptionIdSuffix() {
+        return "shovel";
+    }
 }

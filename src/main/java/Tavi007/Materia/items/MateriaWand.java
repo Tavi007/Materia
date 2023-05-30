@@ -67,4 +67,9 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
+
+    @Override
+    public String getDescriptionIdSuffix() {
+        return "wand";
+    }
 }

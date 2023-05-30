@@ -75,6 +75,11 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
     }
 
     @Override
+    public String getDescriptionIdSuffix() {
+        return "pickaxe";
+    }
+
+    @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         return true;
     }

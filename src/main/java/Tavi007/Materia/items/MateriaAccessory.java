@@ -69,4 +69,9 @@ public class MateriaAccessory extends TieredItem implements IMateriaTool, ICurio
         return false;
     }
 
+    @Override
+    public String getDescriptionIdSuffix() {
+        return "accessory";
+    }
+
 }
