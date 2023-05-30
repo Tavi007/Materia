@@ -19,7 +19,7 @@ public class MateriaEffectRecipePojo {
         return toResourceLocationList(input);
     }
 
-    public List<ResourceLocation> getOuput() {
+    public List<ResourceLocation> getOutput() {
         return toResourceLocationList(output);
     }
 

@@ -1,0 +1,4 @@
+{
+    "input":["materia:ice_materia"],
+    "output":["materia:recipe/ice", "materia:spell/ice"]
+}

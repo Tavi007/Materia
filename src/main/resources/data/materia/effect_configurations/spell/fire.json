@@ -8,6 +8,5 @@
     "size_level": {
         "base": 1,
         "add": ["materia:size_up_materia"]
-    },
-    "description_id": "materia.effect.fire.spell"
+    }
 }

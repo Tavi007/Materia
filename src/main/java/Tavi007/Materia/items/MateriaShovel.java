@@ -71,6 +71,6 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
 
     @Override
     public String getDescriptionIdSuffix() {
-        return "shovel";
+        return "tool";
     }
 }

@@ -4,6 +4,5 @@
         "base": 1,
         "add": ["materia:fire_materia"]
     },
-    "recipe": "materia:fire",
-    "description_id": "materia.effect.fire.recipe"
+    "recipe": "materia:fire"
 }

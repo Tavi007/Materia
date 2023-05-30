@@ -71,7 +71,7 @@ public class MateriaAxe extends AxeItem implements IMateriaTool {
 
     @Override
     public String getDescriptionIdSuffix() {
-        return "axe";
+        return "tool";
     }
 
 }

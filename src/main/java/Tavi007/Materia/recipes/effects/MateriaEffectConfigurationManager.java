@@ -30,7 +30,11 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
     }
 
     public AbstractMateriaEffectConfiguration getConfiguration(ResourceLocation id) {
-        return registeredEffectConfigurations.get(id).copy();
+        AbstractMateriaEffectConfiguration configuration = registeredEffectConfigurations.get(id);
+        if (configuration != null) {
+            return configuration.copy();
+        }
+        return null;
     }
 
     @Override

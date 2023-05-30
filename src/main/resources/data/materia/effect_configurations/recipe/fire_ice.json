@@ -1,0 +1,8 @@
+{
+    "effect_type":"materia:recipe",
+    "level": {
+        "base": 1,
+        "add": ["materia:fire_materia", "materia:ice_materia"]
+    },
+    "recipe": "materia:fire_ice"
+}

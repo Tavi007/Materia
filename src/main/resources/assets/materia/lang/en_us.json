@@ -20,5 +20,32 @@
 	"menu.equipping_station": "Equipping Station",
 	
 	"block.materia.materia_incubator" : "Materia Incubator",
-	"menu.materia_incubator": "Materia Incubator"
+	"menu.materia_incubator": "Materia Incubator",
+	
+	
+	
+	"materia_effect.materia.spell.ice.accessory" : "Ice Resistance",
+	"materia_effect.materia.spell.ice.tool" : "Ice Attack",
+	"materia_effect.materia.spell.ice.sword" : "Ice Attack",
+	"materia_effect.materia.spell.ice.wand" : "Cast Ice Magic",
+	
+	"materia_effect.materia.spell.fire.accessory" : "Fire Resistance",
+	"materia_effect.materia.spell.fire.tool" : "Fire Attack",
+	"materia_effect.materia.spell.fire.sword" : "Fire Attack",
+	"materia_effect.materia.spell.fire.wand" : "Cast Fire Magic",
+	
+	"materia_effect.materia.recipe.ice.accessory" : "",
+	"materia_effect.materia.recipe.ice.tool" : "Freeze Items",
+	"materia_effect.materia.recipe.ice.sword" : "Freeze Items",
+	"materia_effect.materia.recipe.ice.wand" : "",
+	
+	"materia_effect.materia.recipe.fire.accessory" : "",
+	"materia_effect.materia.recipe.fire.tool" : "Smelt Items",
+	"materia_effect.materia.recipe.fire.sword" : "Smelt Items",
+	"materia_effect.materia.recipe.fire.wand" : "",
+	
+	"materia_effect.materia.recipe.fire_ice.accessory" : "",
+	"materia_effect.materia.recipe.fire_ice.tool" : "First smelt then freeze Items",
+	"materia_effect.materia.recipe.fire_ice.sword" : "First smelt then freeze Items",
+	"materia_effect.materia.recipe.fire_ice.wand" : ""
 }

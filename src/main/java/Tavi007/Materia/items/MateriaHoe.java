@@ -71,6 +71,6 @@ public class MateriaHoe extends HoeItem implements IMateriaTool {
 
     @Override
     public String getDescriptionIdSuffix() {
-        return "hoe";
+        return "tool";
     }
 }

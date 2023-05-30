@@ -76,7 +76,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
     @Override
     public String getDescriptionIdSuffix() {
-        return "pickaxe";
+        return "tool";
     }
 
     @Override

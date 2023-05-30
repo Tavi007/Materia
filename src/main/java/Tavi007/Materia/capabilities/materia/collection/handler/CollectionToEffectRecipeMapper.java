@@ -10,27 +10,27 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
+public class CollectionToEffectRecipeMapper implements INBTSerializable<CompoundTag> {
 
     List<Integer> slotIndexList;
-    List<ResourceLocation> effects;
+    List<ResourceLocation> effectRecipes;
 
-    protected CollectionToEffectMapper() {
+    protected CollectionToEffectRecipeMapper() {
         this.slotIndexList = new ArrayList<>();
-        this.effects = new ArrayList<>();
+        this.effectRecipes = new ArrayList<>();
     }
 
-    public CollectionToEffectMapper(List<Integer> slotIndexList, List<ResourceLocation> effects) {
+    public CollectionToEffectRecipeMapper(List<Integer> slotIndexList, List<ResourceLocation> effectRecipes) {
         this.slotIndexList = slotIndexList;
-        this.effects = effects;
+        this.effectRecipes = effectRecipes;
     }
 
     public List<Integer> getSlotIndexList() {
         return slotIndexList;
     }
 
-    public List<ResourceLocation> getEffects() {
-        return effects;
+    public List<ResourceLocation> getEffectRecipes() {
+        return effectRecipes;
     }
 
     public boolean hasSlotIndex(int slotIndex) {
@@ -43,10 +43,10 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
         IntArrayTag slotIndexTag = new IntArrayTag(slotIndexList);
         nbt.put("slot_index_list", slotIndexTag);
         ListTag effectsTag = new ListTag();
-        if (effects != null) {
-            effects.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
+        if (effectRecipes != null) {
+            effectRecipes.forEach(effect -> effectsTag.add(StringTag.valueOf(effect.toString())));
         }
-        nbt.put("effects", effectsTag);
+        nbt.put("effect_recipes", effectsTag);
         return nbt;
     }
 
@@ -57,19 +57,19 @@ public class CollectionToEffectMapper implements INBTSerializable<CompoundTag> {
         if (slotIndexTag != null) {
             slotIndexTag.forEach(tag -> slotIndexList.add(tag.getAsInt()));
         }
-        effects = new ArrayList<>();
-        ListTag effectsTag = (ListTag) nbt.get("effects");
+        effectRecipes = new ArrayList<>();
+        ListTag effectsTag = (ListTag) nbt.get("effect_recipes");
         if (effectsTag != null) {
             effectsTag.forEach(effectTag -> {
                 StringTag stringTag = (StringTag) effectTag;
-                effects.add(new ResourceLocation(stringTag.getAsString()));
+                effectRecipes.add(new ResourceLocation(stringTag.getAsString()));
             });
         }
     }
 
     @Override
     public String toString() {
-        return "{slotIndexList:" + slotIndexList.toString() + "=>effects:" + effects.toString() + "}";
+        return "{slotIndexList:" + slotIndexList.toString() + "=>effectRecipes:" + effectRecipes.toString() + "}";
     }
 
 }

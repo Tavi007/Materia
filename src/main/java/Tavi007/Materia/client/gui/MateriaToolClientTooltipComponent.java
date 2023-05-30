@@ -11,7 +11,6 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class MateriaToolClientTooltipComponent implements ClientTooltipComponent {
@@ -35,13 +34,10 @@ public class MateriaToolClientTooltipComponent implements ClientTooltipComponent
     @Override
     public void renderText(Font font, int posX, int posY, Matrix4f matrix4f, MultiBufferSource.BufferSource bufferSource) {
         int yOffSet = 36;
-        for (ResourceLocation effectRL : componentData.getEffects()) {
-            String text = componentData.isEffectSelected(effectRL) ? ">" : "-" + effectRL;
-
-            String descriptionId = "";
-            Component localizedDescription = Component.translatable(descriptionId + "." + componentData.getDescriptionIdSuffix());
+        for (String description : componentData.getEffectDescriptions()) {
+            Component localizedDescription = Component.translatable(description);
             if (localizedDescription != null) {
-                font.drawInBatch(localizedDescription, posX, posY + yOffSet, 0, false, matrix4f, bufferSource, false, 0, 15728880);
+                font.drawInBatch(localizedDescription, posX, posY + yOffSet, 16777215, false, matrix4f, bufferSource, false, 0, 15728880);
                 yOffSet += font.lineHeight;
             }
         }
