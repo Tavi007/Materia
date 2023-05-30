@@ -5,12 +5,12 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import Tavi007.Materia.client.util.RenderUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -37,8 +37,13 @@ public class MateriaToolClientTooltipComponent implements ClientTooltipComponent
         int yOffSet = 36;
         for (ResourceLocation effectRL : componentData.getEffects()) {
             String text = componentData.isEffectSelected(effectRL) ? ">" : "-" + effectRL;
-            font.drawInBatch(ChatFormatting.GRAY + text, posX, posY + yOffSet, 0, false, matrix4f, bufferSource, false, 0, 15728880);
-            yOffSet += font.lineHeight;
+
+            String descriptionId = "";
+            Component localizedDescription = Component.translatable(descriptionId + "." + componentData.getDescriptionIdSuffix());
+            if (localizedDescription != null) {
+                font.drawInBatch(localizedDescription, posX, posY + yOffSet, 0, false, matrix4f, bufferSource, false, 0, 15728880);
+                yOffSet += font.lineHeight;
+            }
         }
     }
 

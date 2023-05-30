@@ -12,14 +12,17 @@ import net.minecraft.world.item.ItemStack;
 
 public class MateriaToolTooltipComponent implements TooltipComponent {
 
-    MateriaCollectionHandler materiaCollection;
-    List<Integer> topCollectionSizes;
-    List<Integer> botCollectionSizes;
+    private MateriaCollectionHandler materiaCollection;
+    private List<Integer> topCollectionSizes;
+    private List<Integer> botCollectionSizes;
+    private String descriptionIdSuffix;
 
-    public MateriaToolTooltipComponent(List<Integer> topCollectionSizes, List<Integer> botCollectionSizes, MateriaCollectionHandler materiaCollection) {
+    public MateriaToolTooltipComponent(List<Integer> topCollectionSizes, List<Integer> botCollectionSizes, MateriaCollectionHandler materiaCollection,
+            String descriptionIdSuffix) {
         this.topCollectionSizes = topCollectionSizes;
         this.botCollectionSizes = botCollectionSizes;
         this.materiaCollection = materiaCollection;
+        this.descriptionIdSuffix = descriptionIdSuffix;
     }
 
     public List<Integer> getTopCollectionSizes() {
@@ -57,6 +60,10 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
 
     public boolean isEffectSelected(ResourceLocation effectRL) {
         return materiaCollection.getSelectedEffects().contains(effectRL);
+    }
+
+    public String getDescriptionIdSuffix() {
+        return descriptionIdSuffix;
     }
 
 }

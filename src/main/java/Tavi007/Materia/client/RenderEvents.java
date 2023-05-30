@@ -28,7 +28,11 @@ public class RenderEvents {
         Item item = stack.getItem();
         if (item instanceof IMateriaTool tool) {
             MateriaCollectionHandler materiaCollection = CapabilityHelper.getMateriaCollectionHandler(stack);
-            tooltip.add(Either.right(new MateriaToolTooltipComponent(tool.getTopCollectionSizes(), tool.getBotCollectionSizes(), materiaCollection)));
+            tooltip.add(Either.right(new MateriaToolTooltipComponent(
+                tool.getTopCollectionSizes(),
+                tool.getBotCollectionSizes(),
+                materiaCollection,
+                tool.getDescriptionIdSuffix())));
         }
     }
 }
