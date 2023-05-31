@@ -2,11 +2,17 @@ package Tavi007.Materia.items;
 
 import java.util.List;
 
+import Tavi007.Materia.util.MateriaToolHelper;
+
 public interface IMateriaTool {
 
-    public List<List<Integer>> getTopSlotIdMappings();
+    public default List<List<Integer>> getTopSlotIdMappings() {
+        return MateriaToolHelper.fromCollectionSizesToIdMappings(getTopCollectionSizes(), 0);
+    }
 
-    public List<List<Integer>> getBotSlotIdMappings();
+    public default List<List<Integer>> getBotSlotIdMappings() {
+        return MateriaToolHelper.fromCollectionSizesToIdMappings(getBotCollectionSizes(), 4);
+    }
 
     public List<Integer> getTopCollectionSizes();
 

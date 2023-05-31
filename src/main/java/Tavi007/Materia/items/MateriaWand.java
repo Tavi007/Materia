@@ -42,16 +42,6 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     }
 
     @Override
-    public List<List<Integer>> getTopSlotIdMappings() {
-        return MateriaToolHelper.fromCollectionSizesToIdMappings(topCollectionSizes, 0);
-    }
-
-    @Override
-    public List<List<Integer>> getBotSlotIdMappings() {
-        return MateriaToolHelper.fromCollectionSizesToIdMappings(botCollectionSizes, 4);
-    }
-
-    @Override
     @Nullable
     public CompoundTag getShareTag(ItemStack stack) {
         return MateriaToolHelper.getShareTag(stack);
