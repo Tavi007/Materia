@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
@@ -69,7 +70,8 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
 
     @Override
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
-        return configuration instanceof RecipeConfiguration
+        return configuration instanceof AttackConfiguration
+            || configuration instanceof RecipeConfiguration
             || configuration instanceof StatConfiguration;
     }
 }

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.SpellConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -69,7 +69,7 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
 
     @Override
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
-        return configuration instanceof SpellConfiguration
+        return configuration instanceof AttackConfiguration
             || configuration instanceof RecipeConfiguration
             || configuration instanceof StatConfiguration;
     }

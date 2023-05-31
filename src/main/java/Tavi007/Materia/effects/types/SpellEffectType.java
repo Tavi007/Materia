@@ -2,10 +2,10 @@ package Tavi007.Materia.effects.types;
 
 import java.util.List;
 
-import Tavi007.Materia.recipes.effects.configuration.SpellConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
 import net.minecraft.world.item.ItemStack;
 
-public class SpellEffectType<T extends SpellConfiguration> extends AbstractMateriaEffectType<T> {
+public class SpellEffectType<T extends AttackConfiguration> extends AbstractMateriaEffectType<T> {
 
     public int getSpellLevel(List<ItemStack> stacks, T configuration) {
         return configuration.getSpellLevel(stacks);

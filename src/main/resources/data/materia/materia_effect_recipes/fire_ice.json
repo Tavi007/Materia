@@ -1,4 +1,4 @@
 {
     "input":["materia:fire_materia", "materia:ice_materia"],
-    "output":["materia:recipe/fire_ice", "materia:spell/fire", "materia:spell/ice"]
+    "output":["materia:recipe/fire_ice", "materia:attack/fire", "materia:attack/ice"]
 }

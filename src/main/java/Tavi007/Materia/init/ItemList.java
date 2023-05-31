@@ -40,7 +40,7 @@ public class ItemList {
 
     // pickaxes
     public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe",
-        () -> new MateriaPickaxe(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(1), Arrays.asList(3)));
+        () -> new MateriaPickaxe(Tiers.DIAMOND, 1, -2.8F, singleStack, Arrays.asList(3), Arrays.asList(1)));
 
     // axes
     public static final RegistryObject<Item> MATERIA_DIAMOND_AXE = ITEMS.register("materia_diamond_axe",

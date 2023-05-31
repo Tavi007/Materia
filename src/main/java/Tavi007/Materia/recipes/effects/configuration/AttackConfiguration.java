@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.world.item.ItemStack;
 
-public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
+public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
 
     private String element;
     @SerializedName("spell_level")
@@ -14,7 +14,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
     @SerializedName("size_level")
     private LevelConfiguration levelConfigurationSize;
 
-    private SpellConfiguration() {
+    private AttackConfiguration() {
         super();
     }
 
@@ -32,7 +32,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
 
     @Override
     public AbstractMateriaEffectConfiguration copy() {
-        SpellConfiguration copy = new SpellConfiguration();
+        AttackConfiguration copy = new AttackConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());
         copy.element = new String(element);
