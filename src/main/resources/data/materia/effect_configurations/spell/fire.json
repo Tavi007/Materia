@@ -1,5 +1,6 @@
 {
     "effect_type":"materia:spell",
+	"tooltip_color": 8852243,
     "element": "fire",
     "spell_level": {
         "base": 1,

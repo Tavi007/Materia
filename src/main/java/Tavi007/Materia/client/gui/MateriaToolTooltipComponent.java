@@ -3,6 +3,8 @@ package Tavi007.Materia.client.gui;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +33,7 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
     }
 
     public int getHeight() {
-        return 36 + 9 * getEffectDescriptions().size();
+        return 36 + 9 * materiaCollection.getSelectedEffectConfigurations().size();
     }
 
     public ItemStack getStack(int slotIndex) {
@@ -51,10 +53,10 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
         return botCollectionSizes != null && !botCollectionSizes.isEmpty();
     }
 
-    public List<String> getEffectDescriptions() {
+    public List<Pair<String, Integer>> getEffectDescriptions() {
         return materiaCollection.getSelectedEffectConfigurations()
             .stream()
-            .map(configuration -> configuration.getDescriptionId(suffix))
+            .map(configuration -> Pair.of(configuration.getDescriptionId(suffix), configuration.getTooltipColor()))
             .collect(Collectors.toList());
     }
 

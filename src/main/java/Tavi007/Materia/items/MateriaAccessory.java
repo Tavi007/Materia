@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -62,6 +63,11 @@ public class MateriaAccessory extends TieredItem implements IMateriaTool, ICurio
     @Override
     public String getDescriptionIdSuffix() {
         return "accessory";
+    }
+
+    @Override
+    public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
+        return false;
     }
 
 }

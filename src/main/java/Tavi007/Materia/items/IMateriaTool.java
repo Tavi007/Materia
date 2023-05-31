@@ -2,6 +2,7 @@ package Tavi007.Materia.items;
 
 import java.util.List;
 
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 
 public interface IMateriaTool {
@@ -19,4 +20,6 @@ public interface IMateriaTool {
     public List<Integer> getBotCollectionSizes();
 
     public String getDescriptionIdSuffix();
+
+    public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration);
 }

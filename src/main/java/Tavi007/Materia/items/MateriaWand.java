@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.SpellConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -61,5 +65,12 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     @Override
     public String getDescriptionIdSuffix() {
         return "wand";
+    }
+
+    @Override
+    public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
+        return configuration instanceof SpellConfiguration
+            || configuration instanceof RecipeConfiguration
+            || configuration instanceof StatConfiguration;
     }
 }

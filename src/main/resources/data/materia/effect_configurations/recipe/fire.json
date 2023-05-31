@@ -1,5 +1,6 @@
 {
     "effect_type":"materia:recipe",
+	"tooltip_color": 8852243,
     "level": {
         "base": 1,
         "add": ["materia:fire_materia"]

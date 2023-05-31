@@ -24,6 +24,7 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
     public AbstractMateriaEffectConfiguration copy() {
         RecipeConfiguration copy = new RecipeConfiguration();
         copy.setId(getId());
+        copy.setTooltipColor(getTooltipColor());
         copy.levelConfiguration = levelConfiguration.copy();
         copy.recipe = new String(recipe);
         return copy;

@@ -1,5 +1,6 @@
 {
     "effect_type":"materia:spell",
+	"tooltip_color": 9555437,
     "element": "ice",
     "spell_level": {
         "base": 1,

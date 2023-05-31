@@ -34,6 +34,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
     public AbstractMateriaEffectConfiguration copy() {
         SpellConfiguration copy = new SpellConfiguration();
         copy.setId(getId());
+        copy.setTooltipColor(getTooltipColor());
         copy.element = new String(element);
         copy.levelConfigurationSpell = levelConfigurationSpell.copy();
         copy.levelConfigurationSize = levelConfigurationSize.copy();

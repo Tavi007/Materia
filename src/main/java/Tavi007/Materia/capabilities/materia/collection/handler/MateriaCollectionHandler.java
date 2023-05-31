@@ -68,21 +68,21 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     public void computeEffects(ItemStack toolStack) {
         Item tool = toolStack.getItem();
         if (tool instanceof IMateriaTool materiaTool) {
-            mappers = computeCollectionToEffectRecipeMapper(materiaTool.getTopSlotIdMappings());
-            mappers.addAll(computeCollectionToEffectRecipeMapper(materiaTool.getBotSlotIdMappings()));
+            mappers = computeCollectionToEffectRecipeMapper(materiaTool.getTopSlotIdMappings(), materiaTool);
+            mappers.addAll(computeCollectionToEffectRecipeMapper(materiaTool.getBotSlotIdMappings(), materiaTool));
         }
     }
 
-    private List<CollectionToEffectRecipeMapper> computeCollectionToEffectRecipeMapper(List<List<Integer>> slotIdMappings) {
+    private List<CollectionToEffectRecipeMapper> computeCollectionToEffectRecipeMapper(List<List<Integer>> slotIdMappings, IMateriaTool materiaTool) {
         List<CollectionToEffectRecipeMapper> mappers = new ArrayList<>();
         for (List<Integer> slotIndexList : slotIdMappings) {
-            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffectConfigurations(slotIndexList));
+            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffectConfigurations(slotIndexList, materiaTool));
             mappers.add(mapper);
         }
         return mappers;
     }
 
-    private List<AbstractMateriaEffectConfiguration> computeEffectConfigurations(List<Integer> slotIndexList) {
+    private List<AbstractMateriaEffectConfiguration> computeEffectConfigurations(List<Integer> slotIndexList, IMateriaTool materiaTool) {
         List<ResourceLocation> itemLocations = new ArrayList<>();
         for (Integer index : slotIndexList) {
             ItemStack stack = getStackInSlot(index);
@@ -97,7 +97,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
             MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
             for (ResourceLocation effect : recipePojo.getOutput()) {
                 AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
-                if (configuration != null) {
+                if (configuration != null && materiaTool.canConfigurationBeApplied(configuration)) {
                     configurations.add(configuration);
                 }
             }

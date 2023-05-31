@@ -1,5 +1,6 @@
 package Tavi007.Materia.client.gui;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -34,10 +35,10 @@ public class MateriaToolClientTooltipComponent implements ClientTooltipComponent
     @Override
     public void renderText(Font font, int posX, int posY, Matrix4f matrix4f, MultiBufferSource.BufferSource bufferSource) {
         int yOffSet = 36;
-        for (String description : componentData.getEffectDescriptions()) {
-            Component localizedDescription = Component.translatable(description);
+        for (Pair<String, Integer> pair : componentData.getEffectDescriptions()) {
+            Component localizedDescription = Component.translatable(pair.getLeft());
             if (localizedDescription != null) {
-                font.drawInBatch(localizedDescription, posX, posY + yOffSet, 16777215, false, matrix4f, bufferSource, false, 0, 15728880);
+                font.drawInBatch(localizedDescription, posX, posY + yOffSet, pair.getRight(), false, matrix4f, bufferSource, false, 0, 15728880);
                 yOffSet += font.lineHeight;
             }
         }

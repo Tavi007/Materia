@@ -29,6 +29,7 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
     public AbstractMateriaEffectConfiguration copy() {
         StatConfiguration copy = new StatConfiguration();
         copy.setId(getId());
+        copy.setTooltipColor(getTooltipColor());
         copy.stat = this.stat;
         copy.levelConfiguration = levelConfiguration.copy();
         return copy;
