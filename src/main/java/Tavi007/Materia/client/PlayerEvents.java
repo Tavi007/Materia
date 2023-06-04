@@ -47,6 +47,7 @@ public class PlayerEvents {
     private static boolean checkSelectScreen(int key) {
         if (key == KeyBindingList.SELECT_MATERIA_EFFECT.getKey().getValue()) {
             if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
+                MINECRAFT.screen.onClose();
                 MINECRAFT.player.closeContainer();
                 return true;
             }

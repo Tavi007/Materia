@@ -21,6 +21,7 @@ public class MateriaToolHelper {
         int counter = counterStart;
         for (Integer size : sizes) {
             idMappings.add(IntStream.range(counter, counter + size).boxed().toList());
+            counter++;
         }
         return idMappings;
     }

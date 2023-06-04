@@ -35,7 +35,7 @@ public class MateriaToolClientTooltipComponent implements ClientTooltipComponent
     @Override
     public void renderText(Font font, int posX, int posY, Matrix4f matrix4f, MultiBufferSource.BufferSource bufferSource) {
         int yOffSet = 36;
-        for (Pair<String, Integer> pair : componentData.getEffectDescriptions()) {
+        for (Pair<String, Integer> pair : componentData.getSelectedEffectDescriptions()) {
             Component localizedDescription = Component.translatable(pair.getLeft());
             if (localizedDescription != null) {
                 font.drawInBatch(localizedDescription, posX, posY + yOffSet, pair.getRight(), false, matrix4f, bufferSource, false, 0, 15728880);

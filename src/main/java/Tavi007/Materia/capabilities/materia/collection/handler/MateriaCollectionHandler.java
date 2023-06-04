@@ -97,10 +97,12 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(itemLocations);
         for (ResourceLocation effectRecipe : effectRecipes) {
             MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
-            for (ResourceLocation effect : recipePojo.getOutput()) {
-                AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
-                if (configuration != null && materiaTool.canConfigurationBeApplied(configuration)) {
-                    configurations.add(configuration);
+            if (recipePojo != null) {
+                for (ResourceLocation effect : recipePojo.getOutput()) {
+                    AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
+                    if (configuration != null && materiaTool.canConfigurationBeApplied(configuration)) {
+                        configurations.add(configuration);
+                    }
                 }
             }
         }
@@ -120,12 +122,8 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     }
 
     public List<AbstractMateriaEffectConfiguration> getEffectConfigurations(int index) {
-        if (mappers.isEmpty()) {
+        if (mappers.isEmpty() || index < 0 || index >= mappers.size()) {
             return Collections.emptyList();
-        }
-
-        if (index < 0 || index >= mappers.size()) {
-            return mappers.get(0).getEffectConfigurations();
         }
 
         return mappers.get(index).getEffectConfigurations();

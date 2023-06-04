@@ -57,7 +57,11 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
     }
 
     public MateriaEffectRecipePojo getRecipePojo(ResourceLocation id) {
-        return registeredEffectRecipes.get(id).copy();
+        MateriaEffectRecipePojo pojo = registeredEffectRecipes.get(id);
+        if (pojo != null) {
+            return registeredEffectRecipes.get(id).copy();
+        }
+        return null;
     }
 
     @Override

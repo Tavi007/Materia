@@ -57,8 +57,15 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
         return botCollectionSizes != null && !botCollectionSizes.isEmpty();
     }
 
-    public List<Pair<String, Integer>> getEffectDescriptions() {
+    public List<Pair<String, Integer>> getSelectedEffectDescriptions() {
         return materiaCollection.getSelectedEffectConfigurations()
+            .stream()
+            .map(configuration -> Pair.of(configuration.getDescriptionId(suffix), configuration.getTooltipColor()))
+            .collect(Collectors.toList());
+    }
+
+    public List<Pair<String, Integer>> getEffectDescriptions(int index) {
+        return materiaCollection.getEffectConfigurations(index)
             .stream()
             .map(configuration -> Pair.of(configuration.getDescriptionId(suffix), configuration.getTooltipColor()))
             .collect(Collectors.toList());
