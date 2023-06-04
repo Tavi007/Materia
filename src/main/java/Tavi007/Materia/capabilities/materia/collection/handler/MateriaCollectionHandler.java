@@ -2,7 +2,9 @@ package Tavi007.Materia.capabilities.materia.collection.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -22,12 +24,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class MateriaCollectionHandler extends ItemStackHandler {
 
-    private final static int maxItemStackSlots = 8;
+    public final static int MAX_ITEM_SLOTS = 8;
     private List<CollectionToEffectRecipeMapper> mappers;
     private int selectedMapperIndex;
 
     public MateriaCollectionHandler() {
-        super(maxItemStackSlots);
+        super(MAX_ITEM_SLOTS);
         mappers = Collections.emptyList();
         selectedMapperIndex = 0;
     }
@@ -105,16 +107,38 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         return configurations;
     }
 
+    public int getSelectedConfigurationsIndex() {
+        return this.selectedMapperIndex;
+    }
+
+    public void setSelectedConfigurationsIndex(int index) {
+        this.selectedMapperIndex = index;
+    }
+
     public List<AbstractMateriaEffectConfiguration> getSelectedEffectConfigurations() {
+        return getEffectConfigurations(selectedMapperIndex);
+    }
+
+    public List<AbstractMateriaEffectConfiguration> getEffectConfigurations(int index) {
         if (mappers.isEmpty()) {
             return Collections.emptyList();
         }
 
-        if (selectedMapperIndex < 0 || selectedMapperIndex >= mappers.size()) {
-            selectedMapperIndex = 0;
+        if (index < 0 || index >= mappers.size()) {
+            return mappers.get(0).getEffectConfigurations();
         }
 
-        return mappers.get(selectedMapperIndex).getEffectConfigurations();
+        return mappers.get(index).getEffectConfigurations();
+    }
+
+    public Map<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> getItemstacksToEffectConfigurationMapping() {
+        Map<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> stackToConfigMapper = new HashMap<>();
+        mappers.forEach(mapping -> {
+            List<ItemStack> relevantStacks = new ArrayList<>();
+            mapping.getSlotIndexList().forEach(slotIndex -> relevantStacks.add(stacks.get(slotIndex)));
+            stackToConfigMapper.put(relevantStacks, mapping.getEffectConfigurations());
+        });
+        return stackToConfigMapper;
     }
 
     public void addAp(int ap) {

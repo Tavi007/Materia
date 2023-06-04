@@ -18,4 +18,5 @@ public class ScreenList {
         MenuScreens.register(MenuList.EQUIPPING_STATION.get(), EquippingStationScreen::new);
         MenuScreens.register(MenuList.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
     }
+
 }
