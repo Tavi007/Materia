@@ -16,8 +16,8 @@ public class KeyBindingList {
 
     public static final KeyMapping SELECT_MATERIA_EFFECT = new KeyMapping("key.materia.select.effect",
         KeyConflictContext.UNIVERSAL,
-        InputConstants.Type.MOUSE,
-        GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
+        InputConstants.Type.KEYSYM, // InputConstants.Type.MOUSE,
+        GLFW.GLFW_KEY_V, // GLFW.GLFW_MOUSE_BUTTON_MIDDLE,
         keyMappingCategory);
 
     @SubscribeEvent
