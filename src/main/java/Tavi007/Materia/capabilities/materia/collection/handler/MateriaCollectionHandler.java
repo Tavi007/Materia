@@ -118,6 +118,10 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     }
 
     public List<AbstractMateriaEffectConfiguration> getSelectedEffectConfigurations() {
+        if (selectedMapperIndex >= mappers.size()) {
+            selectedMapperIndex = 0;
+        }
+
         return getEffectConfigurations(selectedMapperIndex);
     }
 

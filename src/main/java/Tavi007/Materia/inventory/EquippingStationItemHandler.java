@@ -86,4 +86,9 @@ public class EquippingStationItemHandler extends ItemStackHandler {
     public ItemStack getMateriaToolStack() {
         return stacks.get(8);
     }
+
+    public void computeEffects() {
+        ItemStack toolStack = getMateriaToolStack();
+        CapabilityHelper.getMateriaCollectionHandler(toolStack).computeEffects(toolStack);
+    }
 }

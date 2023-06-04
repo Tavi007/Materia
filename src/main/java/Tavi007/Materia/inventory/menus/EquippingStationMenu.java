@@ -153,7 +153,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
             sourceSlot.setChanged();
         }
         sourceSlot.onTake(player, sourceStack);
-
+        stationItemHandler.computeEffects();
         return sourceStack.copy();
 
     }
