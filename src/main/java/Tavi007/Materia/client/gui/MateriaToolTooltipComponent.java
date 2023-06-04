@@ -32,6 +32,10 @@ public class MateriaToolTooltipComponent implements TooltipComponent {
         return botCollectionSizes;
     }
 
+    public MateriaCollectionHandler getMateriaCollection() {
+        return materiaCollection;
+    }
+
     public int getHeight() {
         return 36 + 9 * materiaCollection.getSelectedEffectConfigurations().size();
     }
