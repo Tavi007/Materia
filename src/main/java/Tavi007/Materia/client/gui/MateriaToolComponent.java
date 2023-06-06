@@ -6,22 +6,22 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 
-public class MateriaToolTooltipComponent implements TooltipComponent {
+public class MateriaToolComponent implements TooltipComponent {
 
     private MateriaCollectionHandler materiaCollection;
     private List<Integer> topCollectionSizes;
     private List<Integer> botCollectionSizes;
     private String suffix;
 
-    public MateriaToolTooltipComponent(List<Integer> topCollectionSizes, List<Integer> botCollectionSizes, MateriaCollectionHandler materiaCollection,
-            String descriptionIdSuffix) {
-        this.topCollectionSizes = topCollectionSizes;
-        this.botCollectionSizes = botCollectionSizes;
+    public MateriaToolComponent(IMateriaTool materiaTool, MateriaCollectionHandler materiaCollection) {
+        this.topCollectionSizes = materiaTool.getTopCollectionSizes();
+        this.botCollectionSizes = materiaTool.getBotCollectionSizes();
+        this.suffix = materiaTool.getDescriptionIdSuffix();
         this.materiaCollection = materiaCollection;
-        this.suffix = descriptionIdSuffix;
     }
 
     public List<Integer> getTopCollectionSizes() {

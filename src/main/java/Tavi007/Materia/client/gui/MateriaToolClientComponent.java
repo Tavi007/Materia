@@ -14,11 +14,11 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-public class MateriaToolClientTooltipComponent implements ClientTooltipComponent {
+public class MateriaToolClientComponent implements ClientTooltipComponent {
 
-    private MateriaToolTooltipComponent componentData;
+    private MateriaToolComponent componentData;
 
-    public MateriaToolClientTooltipComponent(MateriaToolTooltipComponent componentData) {
+    public MateriaToolClientComponent(MateriaToolComponent componentData) {
         this.componentData = componentData;
     }
 

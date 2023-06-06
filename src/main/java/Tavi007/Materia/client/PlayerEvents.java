@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
-import Tavi007.Materia.client.gui.MateriaToolTooltipComponent;
+import Tavi007.Materia.client.gui.MateriaToolComponent;
 import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
 import Tavi007.Materia.client.init.KeyBindingList;
 import Tavi007.Materia.items.IMateriaTool;
@@ -66,10 +66,7 @@ public class PlayerEvents {
     private static boolean checkAndOpenSelectScreen(ItemStack stack) {
         if (stack != null && stack.getItem() instanceof IMateriaTool materiaTool) {
             MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
-            MateriaToolTooltipComponent component = new MateriaToolTooltipComponent(materiaTool.getTopCollectionSizes(),
-                materiaTool.getBotCollectionSizes(),
-                collectionHandler,
-                materiaTool.getDescriptionIdSuffix());
+            MateriaToolComponent component = new MateriaToolComponent(materiaTool, collectionHandler);
             MINECRAFT.setScreen(new SelectMateriaEffectScreen(component));
             return true;
         }

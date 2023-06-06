@@ -36,11 +36,11 @@ public class SelectMateriaEffectScreen extends Screen {
     private float extraTick;
     private boolean opening;
 
-    private MateriaToolTooltipComponent materiaToolComponent;
+    private MateriaToolComponent materiaToolComponent;
 
     private int newSelectedConfiguration;
 
-    public SelectMateriaEffectScreen(MateriaToolTooltipComponent materiaToolComponent) {
+    public SelectMateriaEffectScreen(MateriaToolComponent materiaToolComponent) {
         super(Component.literal(""));
         this.minecraft = Minecraft.getInstance();
         this.materiaToolComponent = materiaToolComponent;
