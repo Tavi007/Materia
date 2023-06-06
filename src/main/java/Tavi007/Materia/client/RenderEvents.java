@@ -25,6 +25,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
 public class RenderEvents {
 
+    private static Minecraft MINECRAFT = Minecraft.getInstance();
+
     @SubscribeEvent
     public static void onGatherTooltip(RenderTooltipEvent.GatherComponents event) {
         List<Either<FormattedText, TooltipComponent>> tooltip = event.getTooltipElements();
@@ -38,7 +40,7 @@ public class RenderEvents {
 
     @SubscribeEvent
     public static void overlayEvent(RenderGuiOverlayEvent.Pre event) {
-        if (Minecraft.getInstance().screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
+        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
             event.setCanceled(true);
         }
     }

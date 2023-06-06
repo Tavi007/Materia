@@ -3,7 +3,6 @@ package Tavi007.Materia.client.gui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -14,9 +13,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
+import Tavi007.Materia.capabilities.materia.collection.handler.CollectionToEffectRecipeMapper;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.client.util.RenderUtil;
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -98,10 +97,10 @@ public class SelectMateriaEffectScreen extends Screen {
         float radiusOut = radiusIn * (2 * animationProgress);
 
         // divide selection ring into slices
-        Map<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> stacksToConfigurationMapping = materiaToolComponent
+        List<CollectionToEffectRecipeMapper> collectionToEffectMapper = materiaToolComponent
             .getMateriaCollection()
-            .getItemstacksToEffectConfigurationMapping();
-        int numberOfOptions = Math.min(MateriaCollectionHandler.MAX_ITEM_SLOTS, stacksToConfigurationMapping.size());
+            .getCollectionToEffectRecipeMapper();
+        int numberOfOptions = Math.min(MateriaCollectionHandler.MAX_ITEM_SLOTS, collectionToEffectMapper.size());
 
         // compute slices
         List<SelectSlice> slices = new ArrayList<>();
@@ -109,7 +108,7 @@ public class SelectMateriaEffectScreen extends Screen {
             newSelectedConfiguration = -1;
 
             int i = 0;
-            for (Map.Entry<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> entry : stacksToConfigurationMapping.entrySet()) {
+            for (CollectionToEffectRecipeMapper mapping : collectionToEffectMapper) {
                 float angle = (float) Math.PI * 2 / numberOfOptions;
                 float sliceBorderLeft = (i - 0.5f) * angle;
                 float sliceBorderRight = sliceBorderLeft + angle;
@@ -124,7 +123,10 @@ public class SelectMateriaEffectScreen extends Screen {
                         isSelected = true;
                     }
                 }
-                slices.add(new SelectSlice(sliceBorderLeft, sliceBorderRight, radiusIn, radiusOut, isSelected, entry.getKey()));
+
+                List<ItemStack> stacks = new ArrayList<>();
+                mapping.getSlotIndexList().forEach(slotIndex -> stacks.add(materiaToolComponent.getMateriaCollection().getStackInSlot(slotIndex)));
+                slices.add(new SelectSlice(sliceBorderLeft, sliceBorderRight, radiusIn, radiusOut, isSelected, stacks));
                 i++;
             }
         }

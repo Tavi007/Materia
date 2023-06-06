@@ -2,9 +2,7 @@ package Tavi007.Materia.capabilities.materia.collection.handler;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -129,18 +127,11 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         if (mappers.isEmpty() || index < 0 || index >= mappers.size()) {
             return Collections.emptyList();
         }
-
         return mappers.get(index).getEffectConfigurations();
     }
 
-    public Map<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> getItemstacksToEffectConfigurationMapping() {
-        Map<List<ItemStack>, List<AbstractMateriaEffectConfiguration>> stackToConfigMapper = new HashMap<>();
-        mappers.forEach(mapping -> {
-            List<ItemStack> relevantStacks = new ArrayList<>();
-            mapping.getSlotIndexList().forEach(slotIndex -> relevantStacks.add(stacks.get(slotIndex)));
-            stackToConfigMapper.put(relevantStacks, mapping.getEffectConfigurations());
-        });
-        return stackToConfigMapper;
+    public List<CollectionToEffectRecipeMapper> getCollectionToEffectRecipeMapper() {
+        return Collections.unmodifiableList(mappers);
     }
 
     public void addAp(int ap) {
