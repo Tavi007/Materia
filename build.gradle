@@ -140,11 +140,10 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
 	
-    compileOnly fg.deobf("mezz.jei:jei-${version_jei}-api")
-    runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
+    //compileOnly fg.deobf("mezz.jei:jei-${version_jei}-api")
+    //runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
     
-    compileOnly fg.deobf("curse.maven:elementalcombat-${version_elementalcombat_api}")
-    runtimeOnly fg.deobf("curse.maven:elementalcombat-${version_elementalcombat}")
+    implementation  fg.deobf("curse.maven:elementalcombat-${version_elementalcombat}-sources-api")
     
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
     testImplementation("junit:junit:4.13.2")
