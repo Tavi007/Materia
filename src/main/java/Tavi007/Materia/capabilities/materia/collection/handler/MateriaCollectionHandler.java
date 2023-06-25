@@ -77,7 +77,9 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         List<CollectionToEffectRecipeMapper> mappers = new ArrayList<>();
         for (List<Integer> slotIndexList : slotIdMappings) {
             CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffectConfigurations(slotIndexList, materiaTool));
-            mappers.add(mapper);
+            if (!mapper.hasEffectConfigurations()) {
+                mappers.add(mapper);
+            }
         }
         return mappers;
     }
