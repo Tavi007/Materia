@@ -81,7 +81,7 @@ public class SelectMateriaEffectScreen extends Screen {
 
         // polar coordinate with (r=1, phi=0) <=> (x=0, y= -1) and phi running clockwise
         double rSquared = posX * posX + posY * posY;
-        double phi = Math.atan2(-posX, posY) + Math.PI;
+        double phi = getPhiFromCartesian(posX, posY);
 
         // animation progress
         float openAnimation = opening ? totalTime / ANIMATION_LENGTH : 1.0f - totalTime / ANIMATION_LENGTH;
@@ -102,7 +102,7 @@ public class SelectMateriaEffectScreen extends Screen {
             .getCollectionToEffectRecipeMapper();
         int numberOfOptions = Math.min(MateriaCollectionHandler.MAX_ITEM_SLOTS, collectionToEffectMapper.size());
 
-        // compute slices
+        // compute slices and also the index of the slice the mouse hovers over
         List<SelectSlice> slices = new ArrayList<>();
         if (opening) {
             newSelectedConfiguration = -1;
@@ -133,28 +133,26 @@ public class SelectMateriaEffectScreen extends Screen {
 
         // draw select ring
         drawSlices(poseStack, slices, centerOfScreenX, centerOfScreenY, animationProgress > 0.99f);
+        poseStack.pushPose();
 
         // draw description of selected effect in the middle
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
         List<Pair<String, Integer>> descriptionsWithColor = materiaToolComponent.getEffectDescriptions(newSelectedConfiguration);
-        int yOffSet = -Math.round(((float) descriptionsWithColor.size()) / 2 * font.lineHeight);
-        int xOffSet = -materiaToolComponent.getWidth() / 2;
+        int xOffSet = -materiaToolComponent.getDescriptionWidth(newSelectedConfiguration, font) / 2;
+        int yOffSet = -materiaToolComponent.getDescriptionHeight(newSelectedConfiguration) / 2;
         for (Pair<String, Integer> pair : descriptionsWithColor) {
             Component localizedDescription = Component.translatable(pair.getLeft());
-
-            if (localizedDescription != null) {
-                font.drawInBatch(localizedDescription,
-                    centerOfScreenX + xOffSet,
-                    centerOfScreenY + yOffSet,
-                    pair.getRight(),
-                    false,
-                    poseStack.last().pose(),
-                    bufferSource,
-                    false,
-                    0,
-                    15728880);
-                yOffSet += font.lineHeight;
-            }
+            font.drawInBatch(localizedDescription,
+                centerOfScreenX + xOffSet,
+                centerOfScreenY + yOffSet,
+                pair.getRight(),
+                false,
+                poseStack.last().pose(),
+                bufferSource,
+                false,
+                0,
+                15728880);
+            yOffSet += font.lineHeight;
         }
         bufferSource.endBatch();
 
@@ -219,15 +217,14 @@ public class SelectMateriaEffectScreen extends Screen {
                 float angle1 = startAngle + (i / (float) sections) * angle;
                 float angle2 = startAngle + ((i + 1) / (float) sections) * angle;
 
-                // again using polar coordinate with (r=1, phi=0) <=> (x=0, y=1) and phi running clockwise
-                float pos1InX = x + (radiusIn * (float) Math.sin(angle1));
-                float pos1InY = y - (radiusIn * (float) Math.cos(angle1));
-                float pos1OutX = x + (radiusOut * (float) Math.sin(angle1));
-                float pos1OutY = y - (radiusOut * (float) Math.cos(angle1));
-                float pos2OutX = x + (radiusOut * (float) Math.sin(angle2));
-                float pos2OutY = y - (radiusOut * (float) Math.cos(angle2));
-                float pos2InX = x + (radiusIn * (float) Math.sin(angle2));
-                float pos2InY = y - (radiusIn * (float) Math.cos(angle2));
+                float pos1InX = x + getXFromPolar(radiusIn, angle1);
+                float pos1InY = y + getYFromPolar(radiusIn, angle1);
+                float pos1OutX = x + getXFromPolar(radiusOut, angle1);
+                float pos1OutY = y + getYFromPolar(radiusOut, angle1);
+                float pos2OutX = x + getXFromPolar(radiusOut, angle2);
+                float pos2OutY = y + getYFromPolar(radiusOut, angle2);
+                float pos2InX = x + getXFromPolar(radiusIn, angle2);
+                float pos2InY = y + getYFromPolar(radiusIn, angle2);
 
                 buffer.vertex(pos1OutX, pos1OutY, 10).color(r, g, b, a).endVertex();
                 buffer.vertex(pos1InX, pos1InY, 10).color(r, g, b, a).endVertex();
@@ -238,8 +235,8 @@ public class SelectMateriaEffectScreen extends Screen {
 
         protected void renderImage(PoseStack poseStack, ItemRenderer itemRenderer, int x, int y) {
             float angle = startAngle + ((endAngle - startAngle) / 2);
-            int posX = Math.round(x + (radiusStacks * (float) Math.sin(angle)) - (stacks.size() * 10));
-            int posY = Math.round(y - (radiusStacks * (float) Math.cos(angle)) - 10);
+            int posX = Math.round(x + getXFromPolar(radiusStacks, angle) - 10 * stacks.size());
+            int posY = Math.round(y + getYFromPolar(radiusStacks, angle) - 10);
 
             RenderUtil.drawMateriaCollectionSlots(poseStack, posX, posY, Arrays.asList(stacks.size()));
 
@@ -252,6 +249,19 @@ public class SelectMateriaEffectScreen extends Screen {
                 xOffSet += 20;
             }
         }
+    }
+
+    // math for changing coordinate system: polar coordinate with (r=1, phi=0) <=> (x=0, y=1) and phi running clockwise
+    private static float getXFromPolar(float r, float phi) {
+        return r * (float) Math.sin(phi);
+    }
+
+    private static float getYFromPolar(float r, float phi) {
+        return -r * (float) Math.cos(phi);
+    }
+
+    private static double getPhiFromCartesian(float x, float y) {
+        return Math.atan2(-x, y) + Math.PI;
     }
 
 }

@@ -24,12 +24,12 @@ public class MateriaToolClientComponent implements ClientTooltipComponent {
 
     @Override
     public int getHeight() {
-        return componentData.getHeight();
+        return componentData.getCollectionHeight() + componentData.getSelectedDescriptionHeight();
     }
 
     @Override
     public int getWidth(Font font) {
-        return componentData.getWidth();
+        return Math.max(componentData.getCollectionWidth(), componentData.getSelectedDescriptionWidth(font));
     }
 
     @Override
