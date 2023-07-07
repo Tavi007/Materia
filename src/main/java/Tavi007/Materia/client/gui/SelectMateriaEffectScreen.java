@@ -2,6 +2,7 @@ package Tavi007.Materia.client.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -70,9 +71,75 @@ public class SelectMateriaEffectScreen extends Screen {
 
     int tickForLogging = 0;
 
+    private float getAnimationProgress() {
+        // animation progress
+        float openAnimation = opening ? totalTime / ANIMATION_LENGTH : 1.0f - totalTime / ANIMATION_LENGTH;
+        float currTick = minecraft.getFrameTime();
+        totalTime += (currTick + extraTick - prevTick) / 20f;
+        extraTick = 0;
+        prevTick = currTick;
+        float animationProgress = Mth.clamp(openAnimation, 0, 1);
+        animationProgress = (float) (1 - Math.pow(1 - animationProgress, 3));
+        return animationProgress;
+    }
+
+    private Pair<Float, Float> getRadius(float animationProgress) {
+        // radius definitions
+        float radiusIn = Math.max(0.1f, 45);
+        float radiusOut = radiusIn * (2 * animationProgress);
+        return Pair.of(radiusIn, radiusOut);
+    }
+
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
         super.render(poseStack, mouseX, mouseY, partialTicks);
+
+        // divide selection ring into slices
+        List<CollectionToEffectRecipeMapper> collectionToEffectMapper = materiaToolComponent
+            .getMateriaCollection()
+            .getCollectionToEffectRecipeMapper();
+
+        if (collectionToEffectMapper.isEmpty()) {
+            renderEmptySelection(poseStack, mouseX, mouseY, partialTicks);
+        } else {
+            renderEffectSelection(poseStack, mouseX, mouseY, partialTicks, collectionToEffectMapper);
+        }
+    }
+
+    private void renderEmptySelection(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        int centerOfScreenX = width / 2;
+        int centerOfScreenY = height / 2;
+        float animationProgress = getAnimationProgress();
+        Pair<Float, Float> radius = getRadius(animationProgress);
+        float radiusIn = radius.getLeft();
+        float radiusOut = radius.getRight();
+
+        List<SelectSlice> slices = new ArrayList<>();
+        slices.add(new SelectSlice(0.0f, (float) (2 * Math.PI), radiusIn, radiusOut, false, Collections.emptyList()));
+
+        drawSlices(poseStack, slices, centerOfScreenX, centerOfScreenY, animationProgress > 0.99f);
+
+        MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+        Component localizedDescription = Component.translatable("materia.effect.select.empty");
+        int xOffSet = -font.width(localizedDescription.getString()) / 2;
+        int yOffSet = -font.lineHeight / 2;
+        if (localizedDescription != null) {
+            font.drawInBatch(localizedDescription,
+                centerOfScreenX + xOffSet,
+                centerOfScreenY + yOffSet,
+                16711680,
+                false,
+                poseStack.last().pose(),
+                bufferSource,
+                false,
+                0,
+                15728880);
+        }
+        bufferSource.endBatch();
+    }
+
+    private void renderEffectSelection(PoseStack poseStack, int mouseX, int mouseY, float partialTicks,
+            List<CollectionToEffectRecipeMapper> collectionToEffectMapper) {
         // new midpoint of coordinate system is center of screen
         int centerOfScreenX = width / 2;
         int centerOfScreenY = height / 2;
@@ -83,26 +150,14 @@ public class SelectMateriaEffectScreen extends Screen {
         double rSquared = posX * posX + posY * posY;
         double phi = getPhiFromCartesian(posX, posY);
 
-        // animation progress
-        float openAnimation = opening ? totalTime / ANIMATION_LENGTH : 1.0f - totalTime / ANIMATION_LENGTH;
-        float currTick = minecraft.getFrameTime();
-        totalTime += (currTick + extraTick - prevTick) / 20f;
-        extraTick = 0;
-        prevTick = currTick;
-        float animationProgress = Mth.clamp(openAnimation, 0, 1);
-        animationProgress = (float) (1 - Math.pow(1 - animationProgress, 3));
+        float animationProgress = getAnimationProgress();
+        Pair<Float, Float> radius = getRadius(animationProgress);
+        float radiusIn = radius.getLeft();
+        float radiusOut = radius.getRight();
 
-        // radius definitions
-        float radiusIn = Math.max(0.1f, 45);
-        float radiusOut = radiusIn * (2 * animationProgress);
-
-        // divide selection ring into slices
-        List<CollectionToEffectRecipeMapper> collectionToEffectMapper = materiaToolComponent
-            .getMateriaCollection()
-            .getCollectionToEffectRecipeMapper();
+        // compute slices
         int numberOfOptions = Math.min(MateriaCollectionHandler.MAX_ITEM_SLOTS, collectionToEffectMapper.size());
 
-        // compute slices and also the index of the slice the mouse hovers over
         List<SelectSlice> slices = new ArrayList<>();
         if (opening) {
             newSelectedConfiguration = -1;
@@ -155,7 +210,6 @@ public class SelectMateriaEffectScreen extends Screen {
             yOffSet += font.lineHeight;
         }
         bufferSource.endBatch();
-
     }
 
     private void drawSlices(PoseStack poseStack, List<SelectSlice> slices, int posX, int posY, boolean animationFinished) {

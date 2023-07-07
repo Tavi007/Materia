@@ -35,6 +35,10 @@ public class CollectionToEffectRecipeMapper implements INBTSerializable<Compound
         return effectConfigurations;
     }
 
+    public boolean hasEffectConfigurations() {
+        return effectConfigurations != null && !effectConfigurations.isEmpty();
+    }
+
     public boolean hasSlotIndex(int slotIndex) {
         return slotIndexList.contains(slotIndex);
     }

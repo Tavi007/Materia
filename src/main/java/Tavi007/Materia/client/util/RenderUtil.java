@@ -14,11 +14,13 @@ public class RenderUtil {
     public static void drawMateriaCollectionSlots(PoseStack poseStack, int startX, int startY, List<Integer> collectionSizes) {
         int xOffSet = 0;
         for (Integer collectionSize : collectionSizes) {
-            ResourceLocation texture = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
-            RenderSystem.setShaderTexture(0, texture);
-            int width = 16 + (collectionSize - 1) * 20;
-            GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, width, 16, width, 16);
-            xOffSet += 20 * collectionSize;
+            if (1 <= collectionSize && collectionSize <= 4) {
+                ResourceLocation texture = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
+                RenderSystem.setShaderTexture(0, texture);
+                int width = 16 + (collectionSize - 1) * 20;
+                GuiComponent.blit(poseStack, startX + xOffSet, startY, 0, 0, width, 16, width, 16);
+                xOffSet += 20 * collectionSize;
+            }
         }
     }
 }

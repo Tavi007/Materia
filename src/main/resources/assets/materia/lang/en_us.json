@@ -1,49 +1,50 @@
 {
-	"itemGroup.materia" : "Materia",
-	"item.materia.base_materia" : "Base Materia",
-	
-	"item.materia.size_up_materia" : "Size Up Materia",
-	"item.materia.ice_materia" : "Ice Materia",
-	"item.materia.fire_materia" : "Fire Materia",
+    "itemGroup.materia" : "Materia",
+    "item.materia.base_materia" : "Base Materia",
+    
+    "item.materia.size_up_materia" : "Size Up Materia",
+    "item.materia.ice_materia" : "Ice Materia",
+    "item.materia.fire_materia" : "Fire Materia",
     
     "item.materia.speed_up_materia" : "Speed Up Materia",
-	
-	"item.materia.materia_diamond_axe" : "Materia Axe",
-	"item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
-	"item.materia.materia_diamond_shovel" : "Materia Shovel",
-	"item.materia.materia_diamond_hoe" : "Materia Hoe",
-	"item.materia.materia_diamond_sword" : "Materia Sword",
-	"item.materia.materia_diamond_wand" : "Materia Wand",
-	"item.materia.materia_diamond_accessory" : "Materia Accessory",
-	
-	"block.materia.equipping_station" : "Equipping Station",
-	"menu.equipping_station": "Equipping Station",
-	
-	"block.materia.materia_incubator" : "Materia Incubator",
-	"menu.materia_incubator": "Materia Incubator",
-	
-	
-	
-	"materia_effect.materia.resistance.fire.accessory" : "Fire Resistance",
-	"materia_effect.materia.resistance.ice.accessory" : "Ice Resistance",
-	
-	"materia_effect.materia.attack.ice.tool" : "Can deal ice damage",
-	"materia_effect.materia.attack.ice.sword" : "Can deal ice damage",
-	"materia_effect.materia.attack.ice.wand" : "Cast Ice Magic",
-	
-	"materia_effect.materia.attack.fire.tool" : "Can deal fire damage",
-	"materia_effect.materia.attack.fire.sword" : "Can deal fire damage",
-	"materia_effect.materia.attack.fire.wand" : "Cast Fire Magic",
-	
-	"materia_effect.materia.recipe.ice.tool" : "Freeze Items",
-	"materia_effect.materia.recipe.ice.sword" : "Freeze mob drops",
-	"materia_effect.materia.recipe.ice.wand" : "Freeze mob drops",
-	
-	"materia_effect.materia.recipe.fire.tool" : "Smelt Items",
-	"materia_effect.materia.recipe.fire.sword" : "Smelt mob drops",
-	"materia_effect.materia.recipe.fire.wand" : "Smelt mob drops",
-	
-	"materia_effect.materia.recipe.fire_ice.tool" : "First smelt then freeze Items",
-	"materia_effect.materia.recipe.fire_ice.sword" : "First smelt then freeze Items",
-	"materia_effect.materia.recipe.fire_ice.wand" : "First smelt then freeze mob drops"
+    
+    "item.materia.materia_diamond_axe" : "Materia Axe",
+    "item.materia.materia_diamond_pickaxe" : "Materia Pickaxe",
+    "item.materia.materia_diamond_shovel" : "Materia Shovel",
+    "item.materia.materia_diamond_hoe" : "Materia Hoe",
+    "item.materia.materia_diamond_sword" : "Materia Sword",
+    "item.materia.materia_diamond_wand" : "Materia Wand",
+    "item.materia.materia_diamond_accessory" : "Materia Accessory",
+    
+    "block.materia.equipping_station" : "Equipping Station",
+    "menu.equipping_station": "Equipping Station",
+    
+    "block.materia.materia_incubator" : "Materia Incubator",
+    "menu.materia_incubator": "Materia Incubator",
+    
+    
+    "materia.effect.select.empty": "No effects available",
+    
+    "materia_effect.materia.resistance.fire.accessory" : "Fire Resistance",
+    "materia_effect.materia.resistance.ice.accessory" : "Ice Resistance",
+    
+    "materia_effect.materia.attack.ice.tool" : "Can deal ice damage",
+    "materia_effect.materia.attack.ice.sword" : "Can deal ice damage",
+    "materia_effect.materia.attack.ice.wand" : "Cast Ice Magic",
+    
+    "materia_effect.materia.attack.fire.tool" : "Can deal fire damage",
+    "materia_effect.materia.attack.fire.sword" : "Can deal fire damage",
+    "materia_effect.materia.attack.fire.wand" : "Cast Fire Magic",
+    
+    "materia_effect.materia.recipe.ice.tool" : "Freeze Items",
+    "materia_effect.materia.recipe.ice.sword" : "Freeze mob drops",
+    "materia_effect.materia.recipe.ice.wand" : "Freeze mob drops",
+    
+    "materia_effect.materia.recipe.fire.tool" : "Smelt Items",
+    "materia_effect.materia.recipe.fire.sword" : "Smelt mob drops",
+    "materia_effect.materia.recipe.fire.wand" : "Smelt mob drops",
+    
+    "materia_effect.materia.recipe.fire_ice.tool" : "First smelt then freeze Items",
+    "materia_effect.materia.recipe.fire_ice.sword" : "First smelt then freeze Items",
+    "materia_effect.materia.recipe.fire_ice.wand" : "First smelt then freeze mob drops"
 }
