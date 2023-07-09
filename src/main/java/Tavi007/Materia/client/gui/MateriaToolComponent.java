@@ -8,6 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 
@@ -60,10 +62,10 @@ public class MateriaToolComponent implements TooltipComponent {
     }
 
     // height and width and the description of effects of a specific mapping
-    public List<Pair<String, Integer>> getEffectDescriptions(int index) {
+    public List<Pair<FormattedCharSequence, Integer>> getEffectDescriptions(int index) {
         return materiaCollection.getEffectConfigurations(index)
             .stream()
-            .map(configuration -> Pair.of(configuration.getDescriptionId(suffix), configuration.getTooltipColor()))
+            .map(configuration -> Pair.of(Component.translatable(configuration.getDescriptionId(suffix)).getVisualOrderText(), configuration.getTooltipColor()))
             .collect(Collectors.toList());
     }
 
@@ -73,14 +75,14 @@ public class MateriaToolComponent implements TooltipComponent {
 
     public int getDescriptionWidth(int effectMapperIndex, Font font) {
         int width = 0;
-        for (Pair<String, Integer> pair : getEffectDescriptions(effectMapperIndex)) {
+        for (Pair<FormattedCharSequence, Integer> pair : getEffectDescriptions(effectMapperIndex)) {
             width = Math.max(width, font.width(pair.getLeft()));
         }
         return width;
     }
 
     // height and width of description of currently selected effects
-    public List<Pair<String, Integer>> getSelectedEffectDescriptions() {
+    public List<Pair<FormattedCharSequence, Integer>> getSelectedEffectDescriptions() {
         return getEffectDescriptions(materiaCollection.getSelectedConfigurationsIndex());
     }
 

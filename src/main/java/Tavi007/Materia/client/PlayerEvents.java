@@ -45,12 +45,12 @@ public class PlayerEvents {
     }
 
     private static boolean checkSelectScreen(int key) {
+        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
+            MINECRAFT.screen.onClose();
+            MINECRAFT.player.closeContainer();
+            return true;
+        }
         if (key == KeyBindingList.SELECT_MATERIA_EFFECT.getKey().getValue()) {
-            if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
-                MINECRAFT.screen.onClose();
-                MINECRAFT.player.closeContainer();
-                return true;
-            }
             if (MINECRAFT.screen == null) {
                 if (checkAndOpenSelectScreen(MINECRAFT.player.getMainHandItem())) {
                     return true;
@@ -60,6 +60,7 @@ public class PlayerEvents {
                 }
             }
         }
+
         return false;
     }
 

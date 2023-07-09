@@ -28,23 +28,23 @@
     "materia_effect.materia.resistance.fire.accessory" : "Fire Resistance",
     "materia_effect.materia.resistance.ice.accessory" : "Ice Resistance",
     
-    "materia_effect.materia.attack.ice.tool" : "Can deal ice damage",
-    "materia_effect.materia.attack.ice.sword" : "Can deal ice damage",
-    "materia_effect.materia.attack.ice.wand" : "Cast Ice Magic",
+    "materia_effect.materia.attack.ice.tool" : "Ice Damage",
+    "materia_effect.materia.attack.ice.sword" : "Ice Damage",
+    "materia_effect.materia.attack.ice.wand" : "Ice Magic",
     
-    "materia_effect.materia.attack.fire.tool" : "Can deal fire damage",
-    "materia_effect.materia.attack.fire.sword" : "Can deal fire damage",
-    "materia_effect.materia.attack.fire.wand" : "Cast Fire Magic",
+    "materia_effect.materia.attack.fire.tool" : "Fire Damage",
+    "materia_effect.materia.attack.fire.sword" : "Fire Damage",
+    "materia_effect.materia.attack.fire.wand" : "Fire Magic",
     
     "materia_effect.materia.recipe.ice.tool" : "Freeze Items",
-    "materia_effect.materia.recipe.ice.sword" : "Freeze mob drops",
-    "materia_effect.materia.recipe.ice.wand" : "Freeze mob drops",
+    "materia_effect.materia.recipe.ice.sword" : "Freeze Items",
+    "materia_effect.materia.recipe.ice.wand" : "Freeze Items",
     
     "materia_effect.materia.recipe.fire.tool" : "Smelt Items",
-    "materia_effect.materia.recipe.fire.sword" : "Smelt mob drops",
-    "materia_effect.materia.recipe.fire.wand" : "Smelt mob drops",
+    "materia_effect.materia.recipe.fire.sword" : "Smelt Items",
+    "materia_effect.materia.recipe.fire.wand" : "Smelt Items",
     
-    "materia_effect.materia.recipe.fire_ice.tool" : "First smelt then freeze Items",
-    "materia_effect.materia.recipe.fire_ice.sword" : "First smelt then freeze Items",
-    "materia_effect.materia.recipe.fire_ice.wand" : "First smelt then freeze mob drops"
+    "materia_effect.materia.recipe.fire_ice.tool" : "Smelt & Freeze",
+    "materia_effect.materia.recipe.fire_ice.sword" : "Smelt & Freeze",
+    "materia_effect.materia.recipe.fire_ice.wand" : "Smelt & Freeze"
 }

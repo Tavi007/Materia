@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
@@ -192,12 +193,15 @@ public class SelectMateriaEffectScreen extends Screen {
 
         // draw description of selected effect in the middle
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-        List<Pair<String, Integer>> descriptionsWithColor = materiaToolComponent.getEffectDescriptions(newSelectedConfiguration);
+        List<Pair<FormattedCharSequence, Integer>> descriptionsWithColor = materiaToolComponent.getEffectDescriptions(newSelectedConfiguration);
+        int descriptionWidth = materiaToolComponent.getSelectedDescriptionWidth(font);
         int xOffSet = -materiaToolComponent.getDescriptionWidth(newSelectedConfiguration, font) / 2;
         int yOffSet = -materiaToolComponent.getDescriptionHeight(newSelectedConfiguration) / 2;
-        for (Pair<String, Integer> pair : descriptionsWithColor) {
-            Component localizedDescription = Component.translatable(pair.getLeft());
-            font.drawInBatch(localizedDescription,
+
+        float maximumWidth = radiusIn * 2;
+
+        for (Pair<FormattedCharSequence, Integer> pair : descriptionsWithColor) {
+            font.drawInBatch(pair.getLeft(),
                 centerOfScreenX + xOffSet,
                 centerOfScreenY + yOffSet,
                 pair.getRight(),
@@ -271,20 +275,30 @@ public class SelectMateriaEffectScreen extends Screen {
                 float angle1 = startAngle + (i / (float) sections) * angle;
                 float angle2 = startAngle + ((i + 1) / (float) sections) * angle;
 
-                float pos1InX = x + getXFromPolar(radiusIn, angle1);
-                float pos1InY = y + getYFromPolar(radiusIn, angle1);
-                float pos1OutX = x + getXFromPolar(radiusOut, angle1);
-                float pos1OutY = y + getYFromPolar(radiusOut, angle1);
-                float pos2OutX = x + getXFromPolar(radiusOut, angle2);
-                float pos2OutY = y + getYFromPolar(radiusOut, angle2);
-                float pos2InX = x + getXFromPolar(radiusIn, angle2);
-                float pos2InY = y + getYFromPolar(radiusIn, angle2);
-
-                buffer.vertex(pos1OutX, pos1OutY, 10).color(r, g, b, a).endVertex();
-                buffer.vertex(pos1InX, pos1InY, 10).color(r, g, b, a).endVertex();
-                buffer.vertex(pos2InX, pos2InY, 10).color(r, g, b, a).endVertex();
-                buffer.vertex(pos2OutX, pos2OutY, 10).color(r, g, b, a).endVertex();
+                renderVertecies(buffer, x, y, 0, radiusIn, angle1, angle2, 0, 0, 0, 70);
+                renderVertecies(buffer, x, y, radiusIn, radiusOut, angle1, angle2, r, g, b, a);
+                renderVertecies(buffer, x, y, radiusIn, radiusIn + 1f, angle1, angle2, 0, 0, 0, 90);
             }
+
+            renderVertecies(buffer, x, y, radiusIn, radiusOut, startAngle, startAngle + 0.01f, 0, 0, 0, 90);
+            renderVertecies(buffer, x, y, radiusIn, radiusOut, endAngle - 0.01f, endAngle, 0, 0, 0, 90);
+        }
+
+        private void renderVertecies(BufferBuilder buffer, int x, int y, float radiusIn, float radiusOut, float angle1, float angle2,
+                int r, int g, int b, int a) {
+            float pos1InX = x + getXFromPolar(radiusIn, angle1);
+            float pos1InY = y + getYFromPolar(radiusIn, angle1);
+            float pos1OutX = x + getXFromPolar(radiusOut, angle1);
+            float pos1OutY = y + getYFromPolar(radiusOut, angle1);
+            float pos2OutX = x + getXFromPolar(radiusOut, angle2);
+            float pos2OutY = y + getYFromPolar(radiusOut, angle2);
+            float pos2InX = x + getXFromPolar(radiusIn, angle2);
+            float pos2InY = y + getYFromPolar(radiusIn, angle2);
+
+            buffer.vertex(pos1OutX, pos1OutY, 10).color(r, g, b, a).endVertex();
+            buffer.vertex(pos1InX, pos1InY, 10).color(r, g, b, a).endVertex();
+            buffer.vertex(pos2InX, pos2InY, 10).color(r, g, b, a).endVertex();
+            buffer.vertex(pos2OutX, pos2OutY, 10).color(r, g, b, a).endVertex();
         }
 
         protected void renderImage(PoseStack poseStack, ItemRenderer itemRenderer, int x, int y) {
