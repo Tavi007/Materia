@@ -14,10 +14,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.CollectionToEffectRecipeMapper;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.client.util.RenderUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,11 +39,11 @@ public class SelectMateriaEffectScreen extends Screen {
 
     private MateriaToolComponent materiaToolComponent;
 
-    private int newSelectedConfiguration;
+    private int newSelectedConfiguration = -1;
 
     public SelectMateriaEffectScreen(MateriaToolComponent materiaToolComponent) {
         super(Component.literal(""));
-        this.minecraft = Minecraft.getInstance();
+        this.minecraft = Materia.MINECRAFT;
         this.materiaToolComponent = materiaToolComponent;
         this.opening = true;
 
@@ -198,7 +198,9 @@ public class SelectMateriaEffectScreen extends Screen {
         int xOffSet = -materiaToolComponent.getDescriptionWidth(newSelectedConfiguration, font) / 2;
         int yOffSet = -materiaToolComponent.getDescriptionHeight(newSelectedConfiguration) / 2;
 
-        float maximumWidth = radiusIn * 2;
+        // need some rescaling of description in the middle, if necessary
+        float maximumWidth = radiusIn * 2 - 0.1f;
+        // TODO
 
         for (Pair<FormattedCharSequence, Integer> pair : descriptionsWithColor) {
             font.drawInBatch(pair.getLeft(),

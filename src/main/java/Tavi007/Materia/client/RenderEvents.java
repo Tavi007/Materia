@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
 public class RenderEvents {
 
-    private static Minecraft MINECRAFT = Minecraft.getInstance();
+    private static Minecraft MINECRAFT = Materia.MINECRAFT;
 
     @SubscribeEvent
     public static void onGatherTooltip(RenderTooltipEvent.GatherComponents event) {

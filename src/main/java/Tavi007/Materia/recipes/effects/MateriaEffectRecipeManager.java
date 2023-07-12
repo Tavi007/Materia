@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -28,6 +29,14 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
 
     public MateriaEffectRecipeManager() {
         super(GSON, "materia_effect_recipes");
+    }
+
+    public void applySyncPacket(SyncMateriaEffectRecipesPacket packet) {
+        this.registeredEffectRecipes = packet.getEffectRecipes();
+    }
+
+    public SyncMateriaEffectRecipesPacket getSyncPacket() {
+        return new SyncMateriaEffectRecipesPacket(registeredEffectRecipes);
     }
 
     public List<ResourceLocation> getEffects(List<ResourceLocation> itemLocations) {

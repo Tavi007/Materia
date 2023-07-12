@@ -8,7 +8,7 @@ import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import net.minecraft.resources.ResourceLocation;
 
-public class MateriaEffectTypeList {
+public class MateriaEffectConfigurationTypeList {
 
     public static void init() {
         register("attack", AttackConfiguration.class);

@@ -1,9 +1,12 @@
 package Tavi007.Materia.entities;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.init.EntityTypeList;
+import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -12,16 +15,14 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import top.theillusivec4.curios.api.CuriosApi;
 
 public class AbilityPointOrb extends Entity {
 
@@ -211,44 +212,38 @@ public class AbilityPointOrb extends Entity {
         this.count = Math.max(p_20788_.getInt("Count"), 1);
     }
 
-    public void playerTouch(Player p_20792_) {
+    public void playerTouch(Player player) {
         if (!this.level.isClientSide) {
-            if (p_20792_.takeXpDelay == 0) {
-                p_20792_.takeXpDelay = 2;
-                p_20792_.take(this, 1);
-                int i = this.repairPlayerItems(p_20792_, this.value);
-                if (i > 0) {
-                    p_20792_.giveExperiencePoints(i);
-                }
+            if (player.takeXpDelay == 0) {
+                player.takeXpDelay = 2;
+                player.take(this, 1);
+
+                List<ItemStack> stacks = getRelevantStacks(player);
+                stacks.forEach(stack -> {
+                    if (stack.getItem() instanceof IMateriaTool) {
+                        MateriaCollectionHandler collection = CapabilityHelper.getMateriaCollectionHandler(stack);
+                        collection.addAp(this.value);
+                    }
+                });
 
                 --this.count;
                 if (this.count == 0) {
                     this.discard();
                 }
             }
-
         }
     }
 
-    private int repairPlayerItems(Player p_147093_, int p_147094_) {
-        Map.Entry<EquipmentSlot, ItemStack> entry = EnchantmentHelper.getRandomItemWith(Enchantments.MENDING, p_147093_, ItemStack::isDamaged);
-        if (entry != null) {
-            ItemStack itemstack = entry.getValue();
-            int i = Math.min((int) (this.value * itemstack.getXpRepairRatio()), itemstack.getDamageValue());
-            itemstack.setDamageValue(itemstack.getDamageValue() - i);
-            int j = p_147094_ - this.durabilityToXp(i);
-            return j > 0 ? this.repairPlayerItems(p_147093_, j) : 0;
-        } else {
-            return p_147094_;
-        }
-    }
-
-    private int durabilityToXp(int p_20794_) {
-        return p_20794_ / 2;
-    }
-
-    private int xpToDurability(int p_20799_) {
-        return p_20799_ * 2;
+    private List<ItemStack> getRelevantStacks(Player player) {
+        List<ItemStack> stacks = new ArrayList<>();
+        stacks.add(player.getMainHandItem());
+        player.getArmorSlots().forEach(stack -> stacks.add(stack));
+        CuriosApi.getCuriosHelper().getEquippedCurios(player).ifPresent(curioConsumer -> {
+            for (int i = 0; i < curioConsumer.getSlots(); i++) {
+                stacks.add(curioConsumer.getStackInSlot(i));
+            }
+        });
+        return stacks;
     }
 
     public int getValue() {

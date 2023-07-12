@@ -41,7 +41,7 @@ public class MateriaEffectRecipePojo {
     }
 
     public boolean doesInputMatch(List<ResourceLocation> itemRL) {
-        List<ResourceLocation> inputRL = toResourceLocationList(input);
+        List<ResourceLocation> inputRL = getInput();
         return inputRL.size() == itemRL.size()
             && inputRL.containsAll(itemRL);
     }

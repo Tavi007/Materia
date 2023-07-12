@@ -5,8 +5,8 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import Tavi007.Materia.Materia;
 import Tavi007.Materia.client.util.RenderUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -54,7 +54,7 @@ public class MateriaToolClientComponent implements ClientTooltipComponent {
         for (int i = start; i < end; i++) {
             ItemStack stack = componentData.getStack(i);
             if (stack != null && !stack.isEmpty()) {
-                ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+                ItemRenderer itemRenderer = Materia.MINECRAFT.getItemRenderer();
                 itemRenderer.renderGuiItem(stack, posX + xOffSet, posY);
                 itemRenderer.renderGuiItemDecorations(font, stack, posX + xOffSet, posY);
             }

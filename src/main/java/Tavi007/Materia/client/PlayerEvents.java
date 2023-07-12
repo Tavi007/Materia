@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Materia.MOD_ID)
 public class PlayerEvents {
 
-    private static final Minecraft MINECRAFT = Minecraft.getInstance();
+    private static final Minecraft MINECRAFT = Materia.MINECRAFT;
 
     @SubscribeEvent
     public static void mouseEvent(final InputEvent.MouseButton.Post event) {
@@ -79,15 +79,15 @@ public class PlayerEvents {
         if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
             Options settings = MINECRAFT.options;
             Input eInput = event.getInput();
-            eInput.up = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyUp.getKey().getValue());
-            eInput.down = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyDown.getKey().getValue());
-            eInput.left = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyLeft.getKey().getValue());
-            eInput.right = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyRight.getKey().getValue());
+            eInput.up = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyUp.getKey().getValue());
+            eInput.down = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyDown.getKey().getValue());
+            eInput.left = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyLeft.getKey().getValue());
+            eInput.right = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyRight.getKey().getValue());
 
             eInput.forwardImpulse = eInput.up == eInput.down ? 0.0F : (eInput.up ? 1.0F : -1.0F);
             eInput.leftImpulse = eInput.left == eInput.right ? 0.0F : (eInput.left ? 1.0F : -1.0F);
-            eInput.jumping = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyJump.getKey().getValue());
-            eInput.shiftKeyDown = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), settings.keyShift.getKey().getValue());
+            eInput.jumping = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyJump.getKey().getValue());
+            eInput.shiftKeyDown = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyShift.getKey().getValue());
             if (MINECRAFT.player.isMovingSlowly()) {
                 eInput.leftImpulse = (float) ((double) eInput.leftImpulse * 0.3D);
                 eInput.forwardImpulse = (float) ((double) eInput.forwardImpulse * 0.3D);
