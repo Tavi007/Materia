@@ -18,13 +18,14 @@ public class SyncMateriaEffectRecipesPacket extends Packet {
     }
 
     public SyncMateriaEffectRecipesPacket(FriendlyByteBuf buf) {
-
+        buf.readMap(FriendlyByteBuf::readResourceLocation, MateriaEffectRecipePojo::new);
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
-        // TODO Auto-generated method stub
-
+        buf.writeMap(registeredEffectRecipes,
+            FriendlyByteBuf::writeResourceLocation,
+            (byteBuf, recipePojo) -> recipePojo.encode(byteBuf));
     }
 
     @Override

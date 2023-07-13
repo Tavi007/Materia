@@ -3,6 +3,8 @@ package Tavi007.Materia.recipes.effects;
 import java.util.ArrayList;
 import java.util.List;
 
+import Tavi007.Materia.util.NetworkHelper;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectRecipePojo {
@@ -14,6 +16,16 @@ public class MateriaEffectRecipePojo {
         input = new ArrayList<>();
         output = new ArrayList<>();
     };
+
+    public MateriaEffectRecipePojo(FriendlyByteBuf buf) {
+        input = NetworkHelper.readStringList(buf);
+        output = NetworkHelper.readStringList(buf);
+    };
+
+    public void encode(FriendlyByteBuf buf) {
+        NetworkHelper.writeStringList(buf, input);
+        NetworkHelper.writeStringList(buf, output);
+    }
 
     public List<ResourceLocation> getInput() {
         return toResourceLocationList(input);
