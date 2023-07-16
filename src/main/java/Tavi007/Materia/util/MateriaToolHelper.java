@@ -7,6 +7,8 @@ import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import Tavi007.Materia.recipes.effects.configuration.MiningConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -69,22 +71,27 @@ public class MateriaToolHelper {
         collectionHandler.deserializeNBT((CompoundTag) nbt.get("materia_collection_handler"));
     }
 
-    public static List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, int maxAreaLevel) {
+    public static List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, MiningConfiguration configuration) {
         List<BlockPos> posList = new ArrayList<BlockPos>();
         List<ItemStack> itemstackList = new ArrayList<ItemStack>();
         Block sourceBlock = worldIn.getBlockState(startPos).getBlock();
 
-        for (int dx = -maxAreaLevel; dx < maxAreaLevel + 1; dx++) {
-            for (int dy = -maxAreaLevel; dy < maxAreaLevel + 1; dy++) {
-                for (int dz = -maxAreaLevel; dz < maxAreaLevel + 1; dz++) {
-                    BlockPos pos_ = new BlockPos(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
-                    Block block = worldIn.getBlockState(pos_).getBlock();
-                    posList.add(pos_);
+        // TODO compute max values depending on line of sight
+        int maxDx = 0;
+        int maxDy = 0;
+        int maxDz = 0;
+
+        for (int dx = -maxDx; dx < maxDx + 1; dx++) {
+            for (int dy = -maxDy; dy < maxDy + 1; dy++) {
+                for (int dz = -maxDz; dz < maxDz + 1; dz++) {
+                    BlockPos pos = new BlockPos(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
+                    Block block = worldIn.getBlockState(pos).getBlock();
+                    posList.add(pos);
 
                     if (worldIn instanceof ServerLevel) {
-                        if (!worldIn.isEmptyBlock(pos_) && block == sourceBlock) {
-                            itemstackList.addAll(Block.getDrops(worldIn.getBlockState(pos_), (ServerLevel) worldIn, pos_, null));
-                            worldIn.destroyBlock(pos_, false);
+                        if (!worldIn.isEmptyBlock(pos) && block == sourceBlock) {
+                            itemstackList.addAll(Block.getDrops(worldIn.getBlockState(pos), (ServerLevel) worldIn, pos, null));
+                            worldIn.destroyBlock(pos, false);
                         }
                     }
                 }
@@ -92,5 +99,11 @@ public class MateriaToolHelper {
         }
 
         return itemstackList;
+    }
+
+    public static List<ItemStack> applyRecipe(List<ItemStack> stackIn, RecipeConfiguration configuration) {
+        List<ItemStack> stackOut = new ArrayList<ItemStack>();
+
+        return stackOut;
     }
 }

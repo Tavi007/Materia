@@ -3,9 +3,13 @@
     "item.materia.base_materia" : "Base Materia",
     
     "item.materia.size_up_materia" : "Size Up Materia",
+    "item.materia.width_up_materia" : "Width Up Materia",
+    "item.materia.height_up_materia" : "Height Up Materia",
+    "item.materia.range_up_materia" : "Range Up Materia",
     "item.materia.ice_materia" : "Ice Materia",
     "item.materia.fire_materia" : "Fire Materia",
     
+    "item.materia.target_materia" : "Target Materia",
     "item.materia.speed_up_materia" : "Speed Up Materia",
     
     "item.materia.materia_diamond_axe" : "Materia Axe",
