@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
@@ -42,7 +43,36 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
+    public void encode(FriendlyByteBuf buf) {
+        super.encode(buf);
+        levelConfigurationSpell.encode(buf);
+        levelConfigurationSize.encode(buf);
+        buf.writeUtf(element);
+    }
+
+    public AttackConfiguration(FriendlyByteBuf buf) {
+        super(buf);
+        levelConfigurationSpell = new LevelConfiguration(buf);
+        levelConfigurationSize = new LevelConfiguration(buf);
+        element = buf.readUtf();
+    }
+
+    @Override
     public boolean isValid() {
         return element != null && levelConfigurationSpell.isValid() && levelConfigurationSize.isValid();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof AttackConfiguration otherConfiguration) {
+            return super.equals(otherConfiguration)
+                && ((levelConfigurationSpell == null && otherConfiguration.levelConfigurationSpell == null)
+                    || levelConfigurationSpell.equals(otherConfiguration.levelConfigurationSpell))
+                && ((levelConfigurationSize == null && otherConfiguration.levelConfigurationSize == null)
+                    || levelConfigurationSize.equals(otherConfiguration.levelConfigurationSize))
+                && ((element == null && otherConfiguration == null)
+                    || element.equals(otherConfiguration.element));
+        }
+        return false;
     }
 }

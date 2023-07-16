@@ -1,0 +1,13 @@
+{
+    "effect_type":"materia:attack",
+	"tooltip_color": 8852243,
+    "element": "fire",
+    "spell_level": {
+        "base": 1,
+        "add": ["materia:fire_materia"]
+    },
+    "size_level": {
+        "base": 1,
+        "add": ["materia:size_up_materia"]
+    }
+}

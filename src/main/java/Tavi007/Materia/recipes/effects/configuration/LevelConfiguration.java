@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.util.CapabilityHelper;
+import Tavi007.Materia.util.NetworkHelper;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -12,6 +14,9 @@ public class LevelConfiguration {
     int base = 1;
     List<String> add = new ArrayList<>();
     List<String> subtract = new ArrayList<>();
+
+    private LevelConfiguration() {
+    }
 
     public LevelConfiguration copy() {
         LevelConfiguration copy = new LevelConfiguration();
@@ -42,5 +47,29 @@ public class LevelConfiguration {
 
     public boolean isValid() {
         return add != null && subtract != null;
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(base);
+        NetworkHelper.writeStringList(buf, add);
+        NetworkHelper.writeStringList(buf, subtract);
+    }
+
+    public LevelConfiguration(FriendlyByteBuf buf) {
+        base = buf.readInt();
+        add = NetworkHelper.readStringList(buf);
+        subtract = NetworkHelper.readStringList(buf);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof LevelConfiguration otherConfiguration) {
+            return base == otherConfiguration.base
+                && ((add == null && otherConfiguration.add == null)
+                    || add.equals(otherConfiguration.add))
+                && ((subtract == null && otherConfiguration.subtract == null)
+                    || subtract.equals(otherConfiguration.subtract));
+        }
+        return false;
     }
 }

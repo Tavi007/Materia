@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
@@ -33,5 +34,30 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
     @Override
     public boolean isValid() {
         return recipe != null && levelConfiguration.isValid();
+    }
+
+    @Override
+    public void encode(FriendlyByteBuf buf) {
+        super.encode(buf);
+        levelConfiguration.encode(buf);
+        buf.writeUtf(recipe);
+    }
+
+    public RecipeConfiguration(FriendlyByteBuf buf) {
+        super(buf);
+        levelConfiguration = new LevelConfiguration(buf);
+        recipe = buf.readUtf();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof RecipeConfiguration otherConfiguration) {
+            return super.equals(otherConfiguration)
+                && ((levelConfiguration == null && otherConfiguration.levelConfiguration == null)
+                    || levelConfiguration.equals(otherConfiguration.levelConfiguration))
+                && ((recipe == null && otherConfiguration.recipe == null)
+                    || recipe.equals(otherConfiguration.recipe));
+        }
+        return false;
     }
 }
