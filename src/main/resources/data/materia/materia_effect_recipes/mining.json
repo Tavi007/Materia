@@ -1,0 +1,7 @@
+{
+    "input":{
+		"items":[],
+		"tags":["materia:area_materia"]
+	},
+    "output":["materia:mining/mining"]
+}
