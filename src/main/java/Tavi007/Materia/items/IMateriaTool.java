@@ -21,5 +21,7 @@ public interface IMateriaTool {
 
     public String getDescriptionIdSuffix();
 
+    // Note: maybe move this logic to an event.
+    // or let the configuration check if it is applicable to the tool.
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration);
 }

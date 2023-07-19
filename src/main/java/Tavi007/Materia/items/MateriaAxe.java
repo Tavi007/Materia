@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.MiningConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
@@ -70,7 +71,8 @@ public class MateriaAxe extends AxeItem implements IMateriaTool {
     @Override
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
         return configuration instanceof RecipeConfiguration
-            || configuration instanceof StatConfiguration;
+            || configuration instanceof StatConfiguration
+            || configuration instanceof MiningConfiguration;
     }
 
 }

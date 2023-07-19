@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class MateriaEffectRecipePojo {
 
@@ -76,6 +77,10 @@ public class MateriaEffectRecipePojo {
         }
 
         public boolean doesMatch(List<ItemStack> stacks) {
+            if (stacks == null || stacks.isEmpty()) {
+                return false;
+            }
+
             // check if input matches any of the items or tags
             for (ItemStack stack : stacks) {
                 if (!getItems().contains(stack.getItem()) && !getTags().stream().anyMatch(tagKey -> stack.is(tagKey))) {
@@ -114,9 +119,9 @@ public class MateriaEffectRecipePojo {
         private List<Item> getItems() {
             if (items == null) {
                 items = new ArrayList<>();
-                for (String itemString : tagStrings) {
+                for (String itemString : itemStrings) {
                     Item item = RegistryHelper.getItem(new ResourceLocation(itemString));
-                    if (item != null) {
+                    if (item != null && !Items.AIR.equals(item)) {
                         items.add(item);
                     }
                 }
