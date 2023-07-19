@@ -11,7 +11,7 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
 
     @SerializedName("area")
     AreaConfiguration areaConfiguration;
-    @SerializedName("veinminer")
+    @SerializedName("vein_miner")
     Boolean veinMiner;
 
     private MiningConfiguration() {

@@ -1,4 +1,7 @@
 {
-    "input":["materia:ice_materia"],
+    "input":{
+		"items":["materia:ice_materia"],
+		"tags":[]
+	},
     "output":["materia:recipe/ice", "materia:attack/ice"]
 }

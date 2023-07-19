@@ -1,7 +1,7 @@
 {
     "input":{
 		"items":[],
-		"tags":["materia:area_materia"]
+		"tags":["materia:area_defining_materia"]
 	},
     "output":["materia:mining/mining"]
 }

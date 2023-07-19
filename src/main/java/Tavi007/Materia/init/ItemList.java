@@ -81,7 +81,14 @@ public class ItemList {
                 .displayItems((featureFlag, output, flag) -> {
                     output.accept(ItemList.FIRE_MATERIA.get());
                     output.accept(ItemList.ICE_MATERIA.get());
+
                     output.accept(ItemList.SIZE_UP_MATERIA.get());
+                    output.accept(ItemList.WIDTH_UP_MATERIA.get());
+                    output.accept(ItemList.HEIGHT_UP_MATERIA.get());
+                    output.accept(ItemList.RANGE_UP_MATERIA.get());
+
+                    output.accept(ItemList.TARGET_MATERIA.get());
+
                     output.accept(ItemList.SPEED_UP_MATERIA.get());
 
                     output.accept(ItemList.MATERIA_DIAMOND_PICKAXE.get());

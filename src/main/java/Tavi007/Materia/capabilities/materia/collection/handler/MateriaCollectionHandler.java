@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class MateriaCollectionHandler extends ItemStackHandler {
 
@@ -85,16 +84,16 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     }
 
     private List<AbstractMateriaEffectConfiguration> computeEffectConfigurations(List<Integer> slotIndexList, IMateriaTool materiaTool) {
-        List<ResourceLocation> itemLocations = new ArrayList<>();
+        List<ItemStack> stacks = new ArrayList<>();
         for (Integer index : slotIndexList) {
             ItemStack stack = getStackInSlot(index);
             if (!stack.isEmpty()) {
-                itemLocations.add(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+                stacks.add(stack);
             }
         }
 
         List<AbstractMateriaEffectConfiguration> configurations = new ArrayList<>();
-        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(itemLocations);
+        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacks);
         for (ResourceLocation effectRecipe : effectRecipes) {
             MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
             if (recipePojo != null) {

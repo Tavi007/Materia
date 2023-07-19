@@ -4,6 +4,8 @@ import java.util.function.Function;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.network.clientbound.SpawnAbilityPointOrbPacket;
+import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
+import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,6 +31,8 @@ public class PacketManager {
 
     public static void init() {
         register(SpawnAbilityPointOrbPacket.class, SpawnAbilityPointOrbPacket::new);
+        register(SyncMateriaEffectConfigurationsPacket.class, SyncMateriaEffectConfigurationsPacket::new);
+        register(SyncMateriaEffectRecipesPacket.class, SyncMateriaEffectRecipesPacket::new);
 
         Materia.LOGGER.info("Registered {} packets", NUM_PACKETS);
     }

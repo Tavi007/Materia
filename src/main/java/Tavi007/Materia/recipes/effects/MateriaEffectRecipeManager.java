@@ -19,6 +19,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -39,16 +40,16 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
         return new SyncMateriaEffectRecipesPacket(registeredEffectRecipes);
     }
 
-    public List<ResourceLocation> getEffects(List<ResourceLocation> itemLocations) {
+    public List<ResourceLocation> getEffects(List<ItemStack> stacks) {
         List<ResourceLocation> effects = new ArrayList<>();
-        ResourceLocation combinedEffect = getMatch(itemLocations);
+        ResourceLocation combinedEffect = getMatch(stacks);
         if (combinedEffect != null) {
             effects.add(combinedEffect);
             return effects;
         }
 
-        for (ResourceLocation itemLocation : itemLocations) {
-            ResourceLocation singleEffect = getMatch(Arrays.asList(itemLocation));
+        for (ItemStack stack : stacks) {
+            ResourceLocation singleEffect = getMatch(Arrays.asList(stack));
             if (singleEffect != null) {
                 effects.add(combinedEffect);
             }
@@ -56,9 +57,9 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
         return effects;
     }
 
-    public ResourceLocation getMatch(List<ResourceLocation> itemLocations) {
+    public ResourceLocation getMatch(List<ItemStack> stacks) {
         for (Entry<ResourceLocation, MateriaEffectRecipePojo> entry : registeredEffectRecipes.entrySet()) {
-            if (entry.getValue().doesInputMatch(itemLocations)) {
+            if (entry.getValue().doesInputMatch(stacks)) {
                 return entry.getKey();
             }
         }

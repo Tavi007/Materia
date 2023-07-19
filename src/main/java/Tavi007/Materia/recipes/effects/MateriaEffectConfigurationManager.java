@@ -67,7 +67,7 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
 
                 AbstractMateriaEffectConfiguration configuration = GSON.fromJson(json, clazz);
                 if (!configuration.isValid()) {
-                    throw new Exception("Invalid configuration encountered: " + configuration.toString());
+                    throw new Exception("Invalid configuration encountered: " + rl);
                 }
 
                 configuration.setId(rl);
