@@ -1,5 +1,6 @@
 package Tavi007.Materia.recipes.effects.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -15,10 +16,6 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
     private RecipeConfiguration() {
         super();
-    }
-
-    public int getLevel(List<ItemStack> stacks) {
-        return levelConfiguration.getLevel(stacks);
     }
 
     @Override
@@ -59,5 +56,11 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
                     || recipe.equals(otherConfiguration.recipe));
         }
         return false;
+    }
+
+    public List<ItemStack> applyRecipe(List<ItemStack> stackIn) {
+        List<ItemStack> stackOut = new ArrayList<ItemStack>();
+
+        return stackOut;
     }
 }

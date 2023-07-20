@@ -1,11 +1,14 @@
 package Tavi007.Materia.util;
 
+import java.util.List;
+
 import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.magic.MagicData;
 import Tavi007.Materia.capabilities.magic.MagicDataCapability;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
+import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -31,6 +34,11 @@ public class CapabilityHelper {
      */
     public static MateriaCollectionHandler getMateriaCollectionHandler(ItemStack stack) {
         return stack.getCapability(MateriaCollectionHandlerCapability.CAPABILITY, null).orElse(new MateriaCollectionHandler());
+    }
+
+    public static List<AbstractMateriaEffectConfiguration> getCurrentlySelectedEffect(ItemStack stack) {
+        MateriaCollectionHandler collectionHandler = getMateriaCollectionHandler(stack);
+        return collectionHandler.getSelectedEffectConfigurations();
     }
 
     /**

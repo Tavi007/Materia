@@ -82,6 +82,7 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        MateriaToolHelper.mineBlocksAndApplyRecipe(worldIn, pos, entityLiving.getViewVector(0), stack);
         return true;
     }
 }
