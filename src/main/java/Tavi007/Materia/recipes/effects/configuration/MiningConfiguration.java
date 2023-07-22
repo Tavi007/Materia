@@ -1,7 +1,8 @@
 package Tavi007.Materia.recipes.effects.configuration;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -65,33 +66,42 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
         return false;
     }
 
-    public List<ItemStack> mineBlocks(Level worldIn, BlockPos startPos, Vec3 viewVector) {
-        List<BlockPos> posList = new ArrayList<BlockPos>();
-        List<ItemStack> itemstackList = new ArrayList<ItemStack>();
-        Block sourceBlock = worldIn.getBlockState(startPos).getBlock();
+    public Map<BlockPos, List<ItemStack>> mineBlocks(Level worldIn, BlockPos startPos, Vec3 viewVector, List<ItemStack> stacks) {
+        Map<BlockPos, List<ItemStack>> blockPosToStacksMap = new HashMap<>();
+        if (worldIn instanceof ServerLevel serverLevel) {
 
-        // TODO compute max values depending on line of sight
-        int maxDx = 0;
-        int maxDy = 0;
-        int maxDz = 0;
+            // define local coordinate system depending on the view vector
+            Vec3 vRange = viewVector.normalize();
+            Vec3 vHeight;
+            if (vRange.x() != 0 || vRange.y() != 0) {
+                vHeight = new Vec3(-vRange.x() * vRange.y(), vRange.x() * vRange.x() + vRange.z() * vRange.z(), -vRange.z() * vRange.y());
+            } else {
+                vHeight = new Vec3(0, 0, 1).normalize();
+            }
+            Vec3 vWidth = vRange.cross(vHeight);
 
-        for (int dx = -maxDx; dx < maxDx + 1; dx++) {
-            for (int dy = -maxDy; dy < maxDy + 1; dy++) {
-                for (int dz = -maxDz; dz < maxDz + 1; dz++) {
-                    BlockPos pos = new BlockPos(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
-                    Block block = worldIn.getBlockState(pos).getBlock();
-                    posList.add(pos);
+            // center of new coordinate system + areaConfiguration defines a cuboid to be mined
+            int rangeLevel = areaConfiguration.getRangeLevel(stacks);
+            int heightLevel = areaConfiguration.getHeightLevel(stacks);
+            int widthLevel = areaConfiguration.getWidthLevel(stacks);
+            for (int dvRange = 0; dvRange <= rangeLevel; dvRange++) {
+                for (int dvHeight = -heightLevel; dvHeight <= heightLevel; dvHeight++) {
+                    for (int dvWidth = -widthLevel; dvWidth <= widthLevel; dvWidth++) {
 
-                    if (worldIn instanceof ServerLevel) {
-                        if (!worldIn.isEmptyBlock(pos) && block == sourceBlock) {
-                            itemstackList.addAll(Block.getDrops(worldIn.getBlockState(pos), (ServerLevel) worldIn, pos, null));
-                            worldIn.destroyBlock(pos, false);
+                        long dx = Math.round(vRange.x() * dvRange + vHeight.x() * dvHeight + vWidth.x() * dvWidth);
+                        long dy = Math.round(vRange.y() * dvRange + vHeight.y() * dvHeight + vWidth.y() * dvWidth);
+                        long dz = Math.round(vRange.z() * dvRange + vHeight.z() * dvHeight + vWidth.z() * dvWidth);
+
+                        BlockPos pos = new BlockPos(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
+                        Block block = worldIn.getBlockState(pos).getBlock();
+                        if (!serverLevel.isEmptyBlock(pos) && !blockPosToStacksMap.containsKey(pos)) {
+                            blockPosToStacksMap.put(pos, Block.getDrops(worldIn.getBlockState(pos), serverLevel, pos, null));
+                            serverLevel.destroyBlock(pos, false);
                         }
                     }
                 }
             }
         }
-
-        return itemstackList;
+        return blockPosToStacksMap;
     }
 }

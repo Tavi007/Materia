@@ -8,10 +8,6 @@ import net.minecraft.world.item.ItemStack;
 
 public class RecipeEffectType<T extends RecipeConfiguration> extends AbstractMateriaEffectType<T> {
 
-    public int getLevel(List<ItemStack> stacks, T configuration) {
-        return configuration.getLevel(stacks);
-    }
-
     public List<ItemStack> applyRecipe(List<ItemStack> stacks) {
         List<ItemStack> appliedRecipe = new ArrayList<>();
         for (ItemStack stack : stacks) {

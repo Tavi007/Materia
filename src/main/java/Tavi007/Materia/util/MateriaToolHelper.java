@@ -76,10 +76,11 @@ public class MateriaToolHelper {
             return;
         }
 
+        List<ItemStack> selectedMateriaStacks = CapabilityHelper.getCurrentlySelectedMateriaStacks(stack);
         List<AbstractMateriaEffectConfiguration> effects = CapabilityHelper.getCurrentlySelectedEffect(stack);
         for (AbstractMateriaEffectConfiguration effect : effects) {
             if (effect instanceof MiningConfiguration miningEffect) {
-                miningEffect.mineBlocks(worldIn, startPos, viewVector);
+                miningEffect.mineBlocks(worldIn, startPos, viewVector, selectedMateriaStacks);
             }
         }
     }

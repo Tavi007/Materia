@@ -41,6 +41,11 @@ public class CapabilityHelper {
         return collectionHandler.getSelectedEffectConfigurations();
     }
 
+    public static List<ItemStack> getCurrentlySelectedMateriaStacks(ItemStack stack) {
+        MateriaCollectionHandler collectionHandler = getMateriaCollectionHandler(stack);
+        return collectionHandler.getSelectedMateriaStacks();
+    }
+
     /**
      * Returns the magic data {@link MagicData} of the {@link PlayerEntity}.
      * 

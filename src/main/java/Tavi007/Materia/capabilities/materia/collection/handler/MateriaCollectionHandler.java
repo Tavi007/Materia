@@ -117,10 +117,6 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     }
 
     public List<AbstractMateriaEffectConfiguration> getSelectedEffectConfigurations() {
-        if (selectedMapperIndex >= mappers.size()) {
-            selectedMapperIndex = 0;
-        }
-
         return getEffectConfigurations(selectedMapperIndex);
     }
 
@@ -129,6 +125,19 @@ public class MateriaCollectionHandler extends ItemStackHandler {
             return Collections.emptyList();
         }
         return mappers.get(index).getEffectConfigurations();
+    }
+
+    public List<ItemStack> getSelectedMateriaStacks() {
+        return getMateriaStacks(selectedMapperIndex);
+    }
+
+    public List<ItemStack> getMateriaStacks(int index) {
+        if (mappers.isEmpty() || index < 0 || index >= mappers.size()) {
+            return Collections.emptyList();
+        }
+        List<ItemStack> stacksOfCollection = new ArrayList<>();
+        mappers.get(index).getSlotIndexList().forEach(slotIndex -> stacksOfCollection.add(getStackInSlot(slotIndex)));
+        return stacksOfCollection;
     }
 
     public List<CollectionToEffectRecipeMapper> getCollectionToEffectRecipeMapper() {
