@@ -32,10 +32,10 @@ public class LevelConfiguration {
         int result = base;
         for (ItemStack stack : stacks) {
             if (containsItemstack(add, stack)) {
-                base += CapabilityHelper.getLevelData(stack).level;
+                base += CapabilityHelper.getLevelData(stack).getLevel();
             }
             if (containsItemstack(subtract, stack)) {
-                base -= CapabilityHelper.getLevelData(stack).level;
+                base -= CapabilityHelper.getLevelData(stack).getLevel();
             }
         }
         return Math.min(1, result);

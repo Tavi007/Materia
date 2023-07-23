@@ -10,10 +10,15 @@ import Tavi007.Materia.recipes.effects.configuration.MiningConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class MateriaShovel extends ShovelItem implements IMateriaTool {
 
@@ -73,5 +78,13 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
         return configuration instanceof RecipeConfiguration
             || configuration instanceof StatConfiguration
             || configuration instanceof MiningConfiguration;
+    }
+
+    @Override
+    public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+        if (worldIn instanceof ServerLevel serverWorld) {
+            MateriaToolHelper.mineBlocksAndApplyRecipe(serverWorld, pos, entityLiving.getViewVector(0), stack);
+        }
+        return true;
     }
 }

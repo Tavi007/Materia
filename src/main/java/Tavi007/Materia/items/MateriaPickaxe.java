@@ -12,6 +12,7 @@ import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.PickaxeItem;
@@ -82,7 +83,9 @@ public class MateriaPickaxe extends PickaxeItem implements IMateriaTool {
 
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-        MateriaToolHelper.mineBlocksAndApplyRecipe(worldIn, pos, entityLiving.getViewVector(0), stack);
+        if (worldIn instanceof ServerLevel serverWorld) {
+            MateriaToolHelper.mineBlocksAndApplyRecipe(serverWorld, pos, entityLiving.getViewVector(0), stack);
+        }
         return true;
     }
 }

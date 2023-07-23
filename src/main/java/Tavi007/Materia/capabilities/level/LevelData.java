@@ -5,17 +5,12 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class LevelData implements INBTSerializable<CompoundTag> {
 
-    public int level;
-    public int ap;
+    private int level;
+    private int ap;
 
     public LevelData() {
         level = 0;
         ap = 0;
-    }
-
-    public LevelData(int level, int ap) {
-        this.level = 0;
-        this.ap = 0;
     }
 
     public int getLevel() {

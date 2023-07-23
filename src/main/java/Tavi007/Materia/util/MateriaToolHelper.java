@@ -1,7 +1,9 @@
 package Tavi007.Materia.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import javax.annotation.Nullable;
@@ -10,10 +12,12 @@ import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollection
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.recipes.effects.configuration.MiningConfiguration;
+import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 
 public class MateriaToolHelper {
@@ -71,17 +75,40 @@ public class MateriaToolHelper {
         collectionHandler.deserializeNBT((CompoundTag) nbt.get("materia_collection_handler"));
     }
 
-    public static void mineBlocksAndApplyRecipe(Level worldIn, BlockPos startPos, Vec3 viewVector, ItemStack stack) {
-        if (!(stack.getItem() instanceof IMateriaTool)) {
+    public static void mineBlocksAndApplyRecipe(ServerLevel worldIn, BlockPos startPos, Vec3 viewVector, ItemStack toolStack) {
+        if (!(toolStack.getItem() instanceof IMateriaTool)) {
             return;
         }
 
-        List<ItemStack> selectedMateriaStacks = CapabilityHelper.getCurrentlySelectedMateriaStacks(stack);
-        List<AbstractMateriaEffectConfiguration> effects = CapabilityHelper.getCurrentlySelectedEffect(stack);
+        List<ItemStack> selectedMateriaStacks = CapabilityHelper.getCurrentlySelectedMateriaStacks(toolStack);
+        List<AbstractMateriaEffectConfiguration> effects = CapabilityHelper.getCurrentlySelectedEffect(toolStack);
+
+        MiningConfiguration miningEffect = null;
+        RecipeConfiguration recipeEffect = null;
         for (AbstractMateriaEffectConfiguration effect : effects) {
-            if (effect instanceof MiningConfiguration miningEffect) {
-                miningEffect.mineBlocks(worldIn, startPos, viewVector, selectedMateriaStacks);
+            if (effect instanceof MiningConfiguration) {
+                miningEffect = (MiningConfiguration) effect;
+            } else if (effect instanceof RecipeConfiguration) {
+                recipeEffect = (RecipeConfiguration) effect;
             }
+        }
+
+        Map<BlockPos, List<ItemStack>> blockPosToStacksMap = new HashMap<>();
+        if (miningEffect != null) {
+            blockPosToStacksMap = miningEffect.mineBlocks(worldIn, startPos, viewVector, selectedMateriaStacks);
+        } else {
+            blockPosToStacksMap.put(startPos, Block.getDrops(worldIn.getBlockState(startPos), worldIn, startPos, null));
+        }
+
+        if (recipeEffect != null) {
+            for (BlockPos blockPos : blockPosToStacksMap.keySet()) {
+                recipeEffect.applyRecipe(blockPosToStacksMap.get(blockPos))
+                    .forEach(stack -> Block.popResource(worldIn, blockPos, stack));
+            }
+        } else {
+            blockPosToStacksMap.forEach((blockPos, stacks) -> {
+                stacks.forEach(stack -> Block.popResource(worldIn, blockPos, stack));
+            });
         }
     }
 }

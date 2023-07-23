@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 
+import Tavi007.Materia.Materia;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -74,17 +75,22 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
             Vec3 vRange = viewVector.normalize();
             Vec3 vHeight;
             if (vRange.x() != 0 || vRange.y() != 0) {
-                vHeight = new Vec3(-vRange.x() * vRange.y(), vRange.x() * vRange.x() + vRange.z() * vRange.z(), -vRange.z() * vRange.y());
+                vHeight = new Vec3(-vRange.x() * vRange.y(), vRange.x() * vRange.x() + vRange.z() * vRange.z(), -vRange.z() * vRange.y()).normalize();
             } else {
                 vHeight = new Vec3(0, 0, 1).normalize();
             }
-            Vec3 vWidth = vRange.cross(vHeight);
+            Vec3 vWidth = vRange.cross(vHeight).normalize();
+
+            Materia.LOGGER.debug("CoordinateSystem when mining: ");
+            Materia.LOGGER.debug("vRange: {}", vRange);
+            Materia.LOGGER.debug("vHeight: {}", vHeight);
+            Materia.LOGGER.debug("vWidth: {}", vWidth);
 
             // center of new coordinate system + areaConfiguration defines a cuboid to be mined
             int rangeLevel = areaConfiguration.getRangeLevel(stacks);
             int heightLevel = areaConfiguration.getHeightLevel(stacks);
             int widthLevel = areaConfiguration.getWidthLevel(stacks);
-            for (int dvRange = 0; dvRange <= rangeLevel; dvRange++) {
+            for (int dvRange = 0; dvRange <= rangeLevel * 2; dvRange++) {
                 for (int dvHeight = -heightLevel; dvHeight <= heightLevel; dvHeight++) {
                     for (int dvWidth = -widthLevel; dvWidth <= widthLevel; dvWidth++) {
 
@@ -93,7 +99,6 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
                         long dz = Math.round(vRange.z() * dvRange + vHeight.z() * dvHeight + vWidth.z() * dvWidth);
 
                         BlockPos pos = new BlockPos(startPos.getX() + dx, startPos.getY() + dy, startPos.getZ() + dz);
-                        Block block = worldIn.getBlockState(pos).getBlock();
                         if (!serverLevel.isEmptyBlock(pos) && !blockPosToStacksMap.containsKey(pos)) {
                             blockPosToStacksMap.put(pos, Block.getDrops(worldIn.getBlockState(pos), serverLevel, pos, null));
                             serverLevel.destroyBlock(pos, false);
