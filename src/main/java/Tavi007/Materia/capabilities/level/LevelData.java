@@ -18,6 +18,14 @@ public class LevelData implements INBTSerializable<CompoundTag> {
         this.ap = 0;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public int getAp() {
+        return ap;
+    }
+
     public boolean isMaxLevel(int[] apToNextLevel) {
         return level >= apToNextLevel.length;
     }

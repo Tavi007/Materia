@@ -5,13 +5,16 @@ import java.util.List;
 import com.mojang.datafixers.util.Either;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.client.gui.MateriaToolComponent;
 import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
 import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,8 +28,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
 public class RenderEvents {
 
-    private static Minecraft MINECRAFT = Materia.MINECRAFT;
-
     @SubscribeEvent
     public static void onGatherTooltip(RenderTooltipEvent.GatherComponents event) {
         List<Either<FormattedText, TooltipComponent>> tooltip = event.getTooltipElements();
@@ -36,11 +37,20 @@ public class RenderEvents {
             MateriaCollectionHandler materiaCollection = CapabilityHelper.getMateriaCollectionHandler(stack);
             tooltip.add(Either.right(new MateriaToolComponent(tool, materiaCollection)));
         }
+        if (item instanceof MateriaItem materiaItem) {
+            LevelData levelData = CapabilityHelper.getLevelData(stack);
+
+            FormattedCharSequence text = Component.translatable("materia_item.level").getVisualOrderText();
+            FormattedText test;
+
+            tooltip.add(Either.left(test));
+        }
+
     }
 
     @SubscribeEvent
     public static void overlayEvent(RenderGuiOverlayEvent.Pre event) {
-        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
+        if (Materia.MINECRAFT.screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
             event.setCanceled(true);
         }
     }
