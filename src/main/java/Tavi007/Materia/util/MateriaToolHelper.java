@@ -14,6 +14,7 @@ import Tavi007.Materia.effects.configurations.MiningConfiguration;
 import Tavi007.Materia.effects.configurations.RecipeConfiguration;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -75,7 +76,7 @@ public class MateriaToolHelper {
         collectionHandler.deserializeNBT((CompoundTag) nbt.get("materia_collection_handler"));
     }
 
-    public static void mineBlocksAndApplyRecipe(ServerLevel worldIn, BlockPos startPos, Vec3 viewVector, ItemStack toolStack) {
+    public static void mineBlocksAndApplyRecipe(ServerLevel worldIn, BlockPos startPos, Vec3 viewVector, Direction direction, ItemStack toolStack) {
         if (!(toolStack.getItem() instanceof IMateriaTool)) {
             return;
         }
@@ -95,7 +96,7 @@ public class MateriaToolHelper {
 
         Map<BlockPos, List<ItemStack>> blockPosToStacksMap = new HashMap<>();
         if (miningEffect != null) {
-            blockPosToStacksMap = miningEffect.mineBlocks(worldIn, startPos, viewVector, selectedMateriaStacks);
+            blockPosToStacksMap = miningEffect.mineBlocks(worldIn, startPos, viewVector, direction, selectedMateriaStacks);
         } else {
             blockPosToStacksMap.put(startPos, Block.getDrops(worldIn.getBlockState(startPos), worldIn, startPos, null));
         }

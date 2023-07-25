@@ -83,7 +83,7 @@ public class MateriaShovel extends ShovelItem implements IMateriaTool {
     @Override
     public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving) {
         if (worldIn instanceof ServerLevel serverWorld) {
-            MateriaToolHelper.mineBlocksAndApplyRecipe(serverWorld, pos, entityLiving.getViewVector(0), stack);
+            MateriaToolHelper.mineBlocksAndApplyRecipe(serverWorld, pos, entityLiving.getViewVector(0), entityLiving.getDirection(), stack);
         }
         return true;
     }

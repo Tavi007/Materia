@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import Tavi007.Materia.Materia;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -67,19 +68,23 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
         return false;
     }
 
-    public Map<BlockPos, List<ItemStack>> mineBlocks(Level worldIn, BlockPos startPos, Vec3 viewVector, List<ItemStack> stacks) {
+    public Map<BlockPos, List<ItemStack>> mineBlocks(Level worldIn, BlockPos startPos, Vec3 viewVector, Direction direction, List<ItemStack> stacks) {
         Map<BlockPos, List<ItemStack>> blockPosToStacksMap = new HashMap<>();
         if (worldIn instanceof ServerLevel serverLevel) {
 
             // define local coordinate system depending on the view vector
             Vec3 vRange = viewVector.normalize();
-            Vec3 vHeight;
-            if (vRange.x() != 0 || vRange.y() != 0) {
-                vHeight = new Vec3(-vRange.x() * vRange.y(), vRange.x() * vRange.x() + vRange.z() * vRange.z(), -vRange.z() * vRange.y()).normalize();
+            Vec3 vWidth;
+            if (vRange.x() == 0 && vRange.z() == 0) {
+                if (Direction.NORTH.equals(direction) || Direction.SOUTH.equals(direction)) {
+                    vWidth = new Vec3(0, 0, 1);
+                } else {
+                    vWidth = new Vec3(1, 0, 0);
+                }
             } else {
-                vHeight = new Vec3(0, 0, 1).normalize();
+                vWidth = new Vec3(0, 1, 0).cross(vRange).normalize();
             }
-            Vec3 vWidth = vRange.cross(vHeight).normalize();
+            Vec3 vHeight = vRange.cross(vWidth).normalize();
 
             Materia.LOGGER.debug("CoordinateSystem when mining: ");
             Materia.LOGGER.debug("vRange: {}", vRange);
