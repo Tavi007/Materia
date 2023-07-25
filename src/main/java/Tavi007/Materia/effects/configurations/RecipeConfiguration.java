@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects.configuration;
+package Tavi007.Materia.effects.configurations;
 
 import java.util.ArrayList;
 import java.util.List;

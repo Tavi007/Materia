@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects.configuration;
+package Tavi007.Materia.effects.configurations;
 
 import java.util.HashMap;
 import java.util.List;

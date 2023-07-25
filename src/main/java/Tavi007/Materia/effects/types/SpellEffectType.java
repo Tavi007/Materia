@@ -2,7 +2,7 @@ package Tavi007.Materia.effects.types;
 
 import java.util.List;
 
-import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
+import Tavi007.Materia.effects.configurations.AttackConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellEffectType<T extends AttackConfiguration> extends AbstractMateriaEffectType<T> {

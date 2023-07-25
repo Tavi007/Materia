@@ -11,8 +11,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;

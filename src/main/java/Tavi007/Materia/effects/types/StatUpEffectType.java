@@ -3,8 +3,8 @@ package Tavi007.Materia.effects.types;
 import java.util.List;
 
 import Tavi007.Materia.effects.Stat;
-import Tavi007.Materia.recipes.effects.configuration.LevelConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
+import Tavi007.Materia.effects.configurations.LevelConfiguration;
+import Tavi007.Materia.effects.configurations.StatConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class StatUpEffectType<T extends StatConfiguration> extends AbstractMateriaEffectType<T> {

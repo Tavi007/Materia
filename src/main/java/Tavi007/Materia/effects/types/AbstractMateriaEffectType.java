@@ -1,6 +1,6 @@
 package Tavi007.Materia.effects.types;
 
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 

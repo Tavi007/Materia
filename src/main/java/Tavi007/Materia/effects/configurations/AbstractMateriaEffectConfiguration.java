@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects.configuration;
+package Tavi007.Materia.effects.configurations;
 
 import com.google.common.base.Optional;
 import com.google.gson.annotations.SerializedName;

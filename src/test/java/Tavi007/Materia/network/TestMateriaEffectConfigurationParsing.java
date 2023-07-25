@@ -14,11 +14,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effects.configurations.AttackConfiguration;
+import Tavi007.Materia.effects.configurations.RecipeConfiguration;
 import Tavi007.Materia.init.MateriaEffectConfigurationTypeList;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

@@ -1,12 +1,12 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effects.configurations.AttackConfiguration;
+import Tavi007.Materia.effects.configurations.MiningConfiguration;
+import Tavi007.Materia.effects.configurations.RecipeConfiguration;
+import Tavi007.Materia.effects.configurations.StatConfiguration;
 import Tavi007.Materia.recipes.effects.MateriaEffectTypeRegistry;
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.AttackConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.MiningConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
-import Tavi007.Materia.recipes.effects.configuration.StatConfiguration;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectConfigurationTypeList {

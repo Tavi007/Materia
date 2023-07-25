@@ -3,7 +3,7 @@ package Tavi007.Materia.recipes.effects;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectTypeRegistry {

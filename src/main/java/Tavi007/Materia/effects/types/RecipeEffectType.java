@@ -3,7 +3,7 @@ package Tavi007.Materia.effects.types;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.recipes.effects.configuration.RecipeConfiguration;
+import Tavi007.Materia.effects.configurations.RecipeConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeEffectType<T extends RecipeConfiguration> extends AbstractMateriaEffectType<T> {

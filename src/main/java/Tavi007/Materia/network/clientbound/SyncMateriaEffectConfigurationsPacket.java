@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
 import Tavi007.Materia.recipes.effects.MateriaEffectTypeRegistry;
-import Tavi007.Materia.recipes.effects.configuration.AbstractMateriaEffectConfiguration;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent.Context;
