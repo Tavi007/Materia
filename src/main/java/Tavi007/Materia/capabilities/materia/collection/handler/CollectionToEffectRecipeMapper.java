@@ -3,7 +3,7 @@ package Tavi007.Materia.capabilities.materia.collection.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;

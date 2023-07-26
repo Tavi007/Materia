@@ -11,7 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -55,14 +55,14 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
             try {
                 Resource res = resourceManagerIn.getResourceOrThrow(getPreparedPath(rl));
 
-                ResourceLocation effectType = getEffectType(json.getAsJsonObject());
-                if (effectType == null) {
-                    throw new Exception("Could not find 'effect_type' property.");
+                ResourceLocation type = getType(json.getAsJsonObject());
+                if (type == null) {
+                    throw new Exception("Could not find 'type' property.");
                 }
 
-                Class<? extends AbstractMateriaEffectConfiguration> clazz = MateriaEffectTypeRegistry.get(effectType);
+                Class<? extends AbstractMateriaEffectConfiguration> clazz = MateriaEffectConfigurationRegistry.get(type);
                 if (clazz == null) {
-                    throw new Exception("Unknown effect type '" + effectType + "'.");
+                    throw new Exception("Unknown type '" + type + "'.");
                 }
 
                 AbstractMateriaEffectConfiguration configuration = GSON.fromJson(json, clazz);
@@ -82,9 +82,9 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
         counterMap.forEach((type, count) -> logLoading("Server", count, type.toString()));
     }
 
-    private ResourceLocation getEffectType(JsonObject json) {
-        if (json.has("effect_type")) {
-            return new ResourceLocation(json.get("effect_type").getAsString());
+    private ResourceLocation getType(JsonObject json) {
+        if (json.has("type")) {
+            return new ResourceLocation(json.get("type").getAsString());
         }
         return null;
     }

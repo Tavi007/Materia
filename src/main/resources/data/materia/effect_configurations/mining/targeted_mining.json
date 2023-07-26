@@ -1,19 +1,10 @@
 {
-    "effect_type":"materia:mining",
+    "type":"materia:mining",
 	"tooltip_color": 16777215,
 	"area": {
-		"width":{
-			"base": 1,
-			"add": ["materia:size_up_materia","materia:width_up_materia"]
-		},
-		"height":{
-			"base": 1,
-			"add": ["materia:size_up_materia","materia:height_up_materia"]
-		},
-		"range":{
-			"base": 1,
-			"add": ["materia:size_up_materia","materia:range_up_materia"]
-		}
+		"width":{ "expression": "#materia:size_up_materia + #materia:width_up_materia"},
+		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
+		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
     },
 	"vein_miner": true
 }

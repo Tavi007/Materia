@@ -1,17 +1,15 @@
-package Tavi007.Materia.effects.configurations;
+package Tavi007.Materia.effect.configurations;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
-
+import Tavi007.Materia.effect.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
-    @SerializedName("level")
-    LevelConfiguration levelConfiguration;
+    ArithmeticExpression level;
     String recipe;
 
     private RecipeConfiguration() {
@@ -23,26 +21,26 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
         RecipeConfiguration copy = new RecipeConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());
-        copy.levelConfiguration = levelConfiguration.copy();
+        copy.level = level.copy();
         copy.recipe = new String(recipe);
         return copy;
     }
 
     @Override
     public boolean isValid() {
-        return recipe != null && levelConfiguration.isValid();
+        return recipe != null && level.isValid();
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
         super.encode(buf);
-        levelConfiguration.encode(buf);
+        level.encode(buf);
         buf.writeUtf(recipe);
     }
 
     public RecipeConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        levelConfiguration = new LevelConfiguration(buf);
+        level = new ArithmeticExpression(buf);
         recipe = buf.readUtf();
     }
 
@@ -50,8 +48,8 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
     public boolean equals(Object other) {
         if (other instanceof RecipeConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && ((levelConfiguration == null && otherConfiguration.levelConfiguration == null)
-                    || levelConfiguration.equals(otherConfiguration.levelConfiguration))
+                && ((level == null && otherConfiguration.level == null)
+                    || level.equals(otherConfiguration.level))
                 && ((recipe == null && otherConfiguration.recipe == null)
                     || recipe.equals(otherConfiguration.recipe));
         }

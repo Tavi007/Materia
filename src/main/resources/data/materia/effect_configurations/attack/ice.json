@@ -1,13 +1,11 @@
 {
-    "effect_type":"materia:attack",
+    "type":"materia:attack",
 	"tooltip_color": 9555437,
     "element": "ice",
-    "spell_level": {
-        "base": 1,
-        "add": ["materia:ice_materia"]
-    },
-    "size_level": {
-        "base": 1,
-        "add": ["materia:size_up_materia"]
+    "damage":{ "expression": "#materia:ice_materia"},
+	"area": {
+		"width":{ "expression": "#materia:size_up_materia + #materia:width_up_materia"},
+		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
+		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
     }
 }

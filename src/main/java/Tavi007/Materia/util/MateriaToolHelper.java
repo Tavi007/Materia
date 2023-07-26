@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.effects.configurations.MiningConfiguration;
-import Tavi007.Materia.effects.configurations.RecipeConfiguration;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.MiningConfiguration;
+import Tavi007.Materia.effect.configurations.RecipeConfiguration;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

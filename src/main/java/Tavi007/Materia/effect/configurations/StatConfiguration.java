@@ -1,18 +1,15 @@
-package Tavi007.Materia.effects.configurations;
-
-import java.util.List;
+package Tavi007.Materia.effect.configurations;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.effects.Stat;
+import Tavi007.Materia.effect.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.item.ItemStack;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     private Stat stat;
-    @SerializedName("level")
-    private LevelConfiguration levelConfiguration;
+    @SerializedName("value")
+    private ArithmeticExpression value;
 
     private StatConfiguration() {
         super();
@@ -22,35 +19,31 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
         return stat;
     }
 
-    public int getLevel(List<ItemStack> stacks) {
-        return levelConfiguration.getLevel(stacks);
-    }
-
     @Override
     public AbstractMateriaEffectConfiguration copy() {
         StatConfiguration copy = new StatConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());
         copy.stat = this.stat;
-        copy.levelConfiguration = levelConfiguration.copy();
+        copy.value = value.copy();
         return copy;
     }
 
     @Override
     public boolean isValid() {
-        return stat != null && levelConfiguration.isValid();
+        return stat != null && value.isValid();
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
         super.encode(buf);
-        levelConfiguration.encode(buf);
+        value.encode(buf);
         buf.writeEnum(stat);
     }
 
     public StatConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        levelConfiguration = new LevelConfiguration(buf);
+        value = new ArithmeticExpression(buf);
         stat = buf.readEnum(Stat.class);
     }
 
@@ -58,8 +51,8 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
     public boolean equals(Object other) {
         if (other instanceof StatConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && ((levelConfiguration == null && otherConfiguration.levelConfiguration == null)
-                    || levelConfiguration.equals(otherConfiguration.levelConfiguration))
+                && ((value == null && otherConfiguration.value == null)
+                    || value.equals(otherConfiguration.value))
                 && ((stat == null && otherConfiguration.stat == null)
                     || stat.equals(otherConfiguration.stat));
         }

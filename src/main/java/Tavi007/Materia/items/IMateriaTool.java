@@ -2,7 +2,7 @@ package Tavi007.Materia.items;
 
 import java.util.List;
 
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 
 public interface IMateriaTool {

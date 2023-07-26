@@ -8,7 +8,7 @@ import Tavi007.Materia.capabilities.magic.MagicData;
 import Tavi007.Materia.capabilities.magic.MagicDataCapability;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 

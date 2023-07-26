@@ -1,4 +1,4 @@
-package Tavi007.Materia.effects.configurations;
+package Tavi007.Materia.effect.configurations;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,9 +92,9 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
             Materia.LOGGER.debug("vWidth: {}", vWidth);
 
             // center of new coordinate system + areaConfiguration defines a cuboid to be mined
-            int rangeLevel = areaConfiguration.getRangeLevel(stacks);
-            int heightLevel = areaConfiguration.getHeightLevel(stacks);
-            int widthLevel = areaConfiguration.getWidthLevel(stacks);
+            int rangeLevel = areaConfiguration.getRange(stacks);
+            int heightLevel = areaConfiguration.getHeight(stacks);
+            int widthLevel = areaConfiguration.getWidth(stacks);
             for (int dvRange = 0; dvRange <= rangeLevel * 2; dvRange++) {
                 for (int dvHeight = -heightLevel; dvHeight <= heightLevel; dvHeight++) {
                     for (int dvWidth = -widthLevel; dvWidth <= widthLevel; dvWidth++) {

@@ -1,12 +1,12 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effects.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.effects.configurations.AttackConfiguration;
-import Tavi007.Materia.effects.configurations.MiningConfiguration;
-import Tavi007.Materia.effects.configurations.RecipeConfiguration;
-import Tavi007.Materia.effects.configurations.StatConfiguration;
-import Tavi007.Materia.recipes.effects.MateriaEffectTypeRegistry;
+import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.effect.configurations.AttackConfiguration;
+import Tavi007.Materia.effect.configurations.MiningConfiguration;
+import Tavi007.Materia.effect.configurations.RecipeConfiguration;
+import Tavi007.Materia.effect.configurations.StatConfiguration;
+import Tavi007.Materia.recipes.effects.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectConfigurationTypeList {
@@ -19,6 +19,6 @@ public class MateriaEffectConfigurationTypeList {
     }
 
     private static void register(String name, Class<? extends AbstractMateriaEffectConfiguration> clazz) {
-        MateriaEffectTypeRegistry.register(new ResourceLocation(Materia.MOD_ID, name), clazz);
+        MateriaEffectConfigurationRegistry.register(new ResourceLocation(Materia.MOD_ID, name), clazz);
     }
 }
