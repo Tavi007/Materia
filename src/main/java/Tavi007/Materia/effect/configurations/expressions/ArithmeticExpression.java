@@ -21,7 +21,7 @@ public class ArithmeticExpression {
 
     private static final Pattern REGEX_PATTERN = Pattern.compile("(?<=(#):)(\\w+)");
 
-    private ArithmeticExpression(String expression, List<String> inputNames) {
+    public ArithmeticExpression(String expression, List<String> inputNames) {
         this.expression = expression;
         this.inputNames = inputNames;
     }
