@@ -1,9 +1,10 @@
 package Tavi007.Materia.effect.configurations.expressions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,21 +18,29 @@ import net.minecraft.world.item.ItemStack;
 public class ArithmeticExpression {
 
     private String expression;
-    private List<String> inputNames;
+    private transient Set<String> inputNames;
 
-    private static final Pattern REGEX_PATTERN = Pattern.compile("(?<=(#):)(\\w+)");
+    private static final Pattern REGEX_PATTERN = Pattern.compile("(?=#)([#a-zA-Z0-9_\\:]*)");
 
-    public ArithmeticExpression(String expression, List<String> inputNames) {
+    public ArithmeticExpression(String expression) {
+        this.expression = expression;
+    }
+
+    private ArithmeticExpression(String expression, Set<String> inputNames) {
         this.expression = expression;
         this.inputNames = inputNames;
     }
 
-    private List<String> getInputNames() {
+    // public for testing
+    public Set<String> getInputNames() {
         if (inputNames == null) {
-            inputNames = new ArrayList<>();
+            inputNames = new HashSet<>();
             Matcher matcher = REGEX_PATTERN.matcher(expression);
             while (matcher.find()) {
-                inputNames.add(matcher.group());
+                String foundInputName = matcher.group().replace("#", "");
+                if (!inputNames.contains(foundInputName)) {
+                    inputNames.add(foundInputName);
+                }
             }
         }
         return inputNames;
@@ -41,13 +50,14 @@ public class ArithmeticExpression {
         Map<String, Integer> inputValues = new HashMap<>();
         getInputNames().forEach(input -> {
             Item inputItem = RegistryHelper.getItem(new ResourceLocation(input));
-            stacks.forEach(stack -> {
+            int value = 0;
+            for (ItemStack stack : stacks) {
                 if (stack.getItem().equals(inputItem)) {
-                    inputValues.put(input, CapabilityHelper.getLevelData(stack).getLevel());
-                } else {
-                    inputValues.put(input, 0);
+                    value = CapabilityHelper.getLevelData(stack).getLevel();
+                    break;
                 }
-            });
+            }
+            inputValues.put(input, value);
         });
         return inputValues;
     }
@@ -57,16 +67,16 @@ public class ArithmeticExpression {
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
             Integer level = inputValues.get(input);
-            expressionCopy = expressionCopy.replaceAll(input, String.valueOf(level));
+            expressionCopy = expressionCopy.replaceAll("#" + input, String.valueOf(level));
         }
         ExpressionEvaluator evaluator = new ExpressionEvaluator(expressionCopy);
         return evaluator.parseArithmetic();
     }
 
     public ArithmeticExpression copy() {
-        List<String> inputNamesCopy = null;
+        Set<String> inputNamesCopy = null;
         if (getInputNames() != null) {
-            inputNamesCopy = new ArrayList<>();
+            inputNamesCopy = new HashSet<>();
             for (String inputName : getInputNames()) {
                 inputNamesCopy.add(inputName);
             }

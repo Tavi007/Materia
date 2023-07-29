@@ -107,4 +107,57 @@ public class TestExpressionEvaluator {
         Assert.assertEquals(3.6, expression.parseArithmetic(), 0);
     }
 
+    @Test
+    public void testDoubleAddition() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("9 + 1 + 3");
+        Assert.assertEquals(13, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testFrontBracketAddition() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("(9 + 1) + 3");
+        Assert.assertEquals(13, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testBackBracketAddition() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("9 + (1 + 3)");
+        Assert.assertEquals(13, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testFrontBracketSubtraction() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("(9 - 1) + 3");
+        Assert.assertEquals(11, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testBackBracketSubtraction() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("9 - (1 + 3)");
+        Assert.assertEquals(5, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testFrontBracketMultiplication() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("(9 * 2) + 3");
+        Assert.assertEquals(21, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testBackBracketMultiplication() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("9 * (2 + 3)");
+        Assert.assertEquals(45, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testFrontBracketDivision() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("(9 / 2) + 3");
+        Assert.assertEquals(7.5, expression.parseArithmetic(), 0);
+    }
+
+    @Test
+    public void testBackBracketDivision() {
+        ExpressionEvaluator expression = new ExpressionEvaluator("9 / (2 + 3)");
+        Assert.assertEquals(1.8, expression.parseArithmetic(), 0);
+    }
 }
