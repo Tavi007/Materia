@@ -2,6 +2,7 @@ package Tavi007.Materia.capabilities.level;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.SerializableCapabilityProvider;
+import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.MateriaItem;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +16,7 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class LevelDataCapability {
 
@@ -46,8 +48,9 @@ public class LevelDataCapability {
         public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
             Item item = event.getObject().getItem();
             if (item instanceof MateriaItem) {
-                final LevelData atck = new LevelData();
-                event.addCapability(ID, createProvider(atck));
+                ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
+                final LevelData data = new LevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(id));
+                event.addCapability(ID, createProvider(data));
             }
         }
     }

@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.util.CapabilityHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -19,15 +18,8 @@ import net.minecraft.world.level.Level;
 
 public class MateriaItem extends Item {
 
-    protected final int[] apToNextLevel;
-
-    public MateriaItem(Properties properties, int[] apToNextLevel) {
+    public MateriaItem(Properties properties) {
         super(properties);
-        this.apToNextLevel = apToNextLevel;
-    }
-
-    public int[] getApToNextLevel() {
-        return apToNextLevel;
     }
 
     @Override
@@ -44,27 +36,22 @@ public class MateriaItem extends Item {
 
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        return !CapabilityHelper.getLevelData(stack).isMaxLevel(apToNextLevel);
+        return !CapabilityHelper.getLevelData(stack).isMaxLevel();
     }
 
     @Override
     public int getBarWidth(ItemStack stack) {
-        LevelData data = CapabilityHelper.getLevelData(stack);
-        if (data.isMaxLevel(apToNextLevel)) {
-            return 0;
-        }
-        return 13 * ((apToNextLevel[data.getLevel()] - data.getAp()) / apToNextLevel[data.getLevel()]);
+        return CapabilityHelper.getLevelData(stack).getBarWidth();
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        return CapabilityHelper.getLevelData(stack).getBarColor();
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        LevelData data = CapabilityHelper.getLevelData(stack);
-        if (data.isMaxLevel(apToNextLevel)) {
-            tooltip.add(Component.literal("Max Level").withStyle(ChatFormatting.GRAY));
-        } else {
-            tooltip.add(Component.literal("Level: " + (data.getLevel())).withStyle(ChatFormatting.GRAY));
-            tooltip.add(Component.literal("AP: " + data.getAp() + "/" + apToNextLevel[data.getLevel()]).withStyle(ChatFormatting.GRAY));
-        }
+        CapabilityHelper.getLevelData(stack).appendHoverText(tooltip);
     }
 
     // testing
@@ -72,7 +59,7 @@ public class MateriaItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
         LevelData data = CapabilityHelper.getLevelData(stack);
-        data.addAP(7, apToNextLevel);
+        data.addAP(3);
         return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
     }
 

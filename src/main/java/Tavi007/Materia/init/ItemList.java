@@ -29,19 +29,19 @@ public class ItemList {
 
     // only used as Icon for Item group
     private static Properties singleStack = new Item.Properties().stacksTo(1);
-    public static final RegistryObject<Item> BASE_MATERIA = ITEMS.register("base_materia", () -> new MateriaItem(singleStack, new int[] {}));
+    public static final RegistryObject<Item> BASE_MATERIA = ITEMS.register("base_materia", () -> new MateriaItem(singleStack));
 
     // materia
-    public static final RegistryObject<Item> FIRE_MATERIA = ITEMS.register("fire_materia", () -> new MateriaItem(singleStack, new int[] { 10, 25 }));
-    public static final RegistryObject<Item> ICE_MATERIA = ITEMS.register("ice_materia", () -> new MateriaItem(singleStack, new int[] { 10, 25 }));
-    public static final RegistryObject<Item> SIZE_UP_MATERIA = ITEMS.register("size_up_materia", () -> new MateriaItem(singleStack, new int[] { 50 }));
+    public static final RegistryObject<Item> FIRE_MATERIA = ITEMS.register("fire_materia", () -> new MateriaItem(singleStack));
+    public static final RegistryObject<Item> ICE_MATERIA = ITEMS.register("ice_materia", () -> new MateriaItem(singleStack));
+    public static final RegistryObject<Item> SIZE_UP_MATERIA = ITEMS.register("size_up_materia", () -> new MateriaItem(singleStack));
 
-    public static final RegistryObject<Item> WIDTH_UP_MATERIA = ITEMS.register("width_up_materia", () -> new MateriaItem(singleStack, new int[] { 25, 50 }));
-    public static final RegistryObject<Item> RANGE_UP_MATERIA = ITEMS.register("range_up_materia", () -> new MateriaItem(singleStack, new int[] { 25, 50 }));
-    public static final RegistryObject<Item> HEIGHT_UP_MATERIA = ITEMS.register("height_up_materia", () -> new MateriaItem(singleStack, new int[] { 25, 50 }));
+    public static final RegistryObject<Item> WIDTH_UP_MATERIA = ITEMS.register("width_up_materia", () -> new MateriaItem(singleStack));
+    public static final RegistryObject<Item> RANGE_UP_MATERIA = ITEMS.register("range_up_materia", () -> new MateriaItem(singleStack));
+    public static final RegistryObject<Item> HEIGHT_UP_MATERIA = ITEMS.register("height_up_materia", () -> new MateriaItem(singleStack));
 
-    public static final RegistryObject<Item> SPEED_UP_MATERIA = ITEMS.register("speed_up_materia", () -> new MateriaItem(singleStack, new int[] { 100 }));
-    public static final RegistryObject<Item> TARGET_MATERIA = ITEMS.register("target_materia", () -> new MateriaItem(singleStack, new int[] { 100 }));
+    public static final RegistryObject<Item> SPEED_UP_MATERIA = ITEMS.register("speed_up_materia", () -> new MateriaItem(singleStack));
+    public static final RegistryObject<Item> TARGET_MATERIA = ITEMS.register("target_materia", () -> new MateriaItem(singleStack));
 
     // pickaxes
     public static final RegistryObject<Item> MATERIA_DIAMOND_PICKAXE = ITEMS.register("materia_diamond_pickaxe",

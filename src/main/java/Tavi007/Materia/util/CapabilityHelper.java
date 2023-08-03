@@ -1,5 +1,6 @@
 package Tavi007.Materia.util;
 
+import java.util.Collections;
 import java.util.List;
 
 import Tavi007.Materia.capabilities.level.LevelData;
@@ -22,7 +23,7 @@ public class CapabilityHelper {
      * @return the LevelData, containing the current level, current ap and the array for leveling up.
      */
     public static LevelData getLevelData(ItemStack stack) {
-        return stack.getCapability(LevelDataCapability.CAPABILITY, null).orElse(new LevelData());
+        return stack.getCapability(LevelDataCapability.CAPABILITY, null).orElse(new LevelData(Collections.emptyList()));
     }
 
     /**

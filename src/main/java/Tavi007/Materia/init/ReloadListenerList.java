@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.capabilities.level.LevelUpDataManager;
 import Tavi007.Materia.network.Packet;
 import Tavi007.Materia.recipes.effects.MateriaEffectConfigurationManager;
 import Tavi007.Materia.recipes.effects.MateriaEffectRecipeManager;
@@ -17,11 +18,13 @@ public class ReloadListenerList {
 
     public static MateriaEffectConfigurationManager MATERIA_EFFECT_CONFIGURATION_MANGER = new MateriaEffectConfigurationManager();
     public static MateriaEffectRecipeManager MATERIA_EFFECT_RECIPE_MANGER = new MateriaEffectRecipeManager();
+    public static LevelUpDataManager LEVEL_UP_DATA_MANAGER = new LevelUpDataManager();
 
     @SubscribeEvent
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
         event.addListener(ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER);
         event.addListener(ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER);
+        event.addListener(ReloadListenerList.LEVEL_UP_DATA_MANAGER);
         Materia.LOGGER.info("ReloadListener registered.");
     }
 
