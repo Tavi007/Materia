@@ -5,6 +5,7 @@ import Tavi007.Materia.entities.AbilityPointOrb;
 import Tavi007.Materia.network.Packet;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent.Context;
 
 public class SpawnAbilityPointOrbPacket extends Packet {
@@ -44,9 +45,12 @@ public class SpawnAbilityPointOrbPacket extends Packet {
     public void handle(Context context) {
         context.enqueueWork(() -> {
             ClientLevel level = Materia.MINECRAFT.level;
-            AbilityPointOrb orbEntity = new AbilityPointOrb(level, x, y, z, value);
-            orbEntity.setId(id);
-            level.addFreshEntity(orbEntity);
+            Entity entity = new AbilityPointOrb(level, x, y, z, value);
+            entity.syncPacketPositionCodec(x, y, z);
+            entity.setYRot(0.0F);
+            entity.setXRot(0.0F);
+            entity.setId(id);
+            level.putNonPlayerEntity(id, entity);
             context.setPacketHandled(true);
         });
     }

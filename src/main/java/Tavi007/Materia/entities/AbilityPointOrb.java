@@ -37,18 +37,18 @@ public class AbilityPointOrb extends Entity {
     private int count = 1;
     private Player followingPlayer;
 
-    public AbilityPointOrb(Level p_20776_, double p_20777_, double p_20778_, double p_20779_, int p_20780_) {
-        this(EntityTypeList.ABILITY_POINT_ORB, p_20776_);
-        this.setPos(p_20777_, p_20778_, p_20779_);
+    public AbilityPointOrb(Level level, double posX, double posY, double posZ, int value) {
+        this(EntityTypeList.ABILITY_POINT_ORB.get(), level);
+        this.setPos(posX, posY, posZ);
         this.setYRot((float) (this.random.nextDouble() * 360.0D));
         this.setDeltaMovement((this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D,
             this.random.nextDouble() * 0.2D * 2.0D,
             (this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D);
-        this.value = p_20780_;
+        this.value = value;
     }
 
-    public AbilityPointOrb(EntityType<? extends AbilityPointOrb> p_20773_, Level p_20774_) {
-        super(p_20773_, p_20774_);
+    public AbilityPointOrb(EntityType<? extends AbilityPointOrb> entityType, Level level) {
+        super(entityType, level);
     }
 
     protected Entity.MovementEmission getMovementEmission() {
@@ -131,22 +131,22 @@ public class AbilityPointOrb extends Entity {
 
     }
 
-    public static void award(ServerLevel p_147083_, Vec3 p_147084_, int p_147085_) {
-        while (p_147085_ > 0) {
-            int i = getExperienceValue(p_147085_);
-            p_147085_ -= i;
-            if (!tryMergeToExisting(p_147083_, p_147084_, i)) {
-                p_147083_.addFreshEntity(new AbilityPointOrb(p_147083_, p_147084_.x(), p_147084_.y(), p_147084_.z(), i));
+    public static void award(ServerLevel serverLevel, Vec3 position, int value) {
+        while (value > 0) {
+            int i = getExperienceValue(value);
+            value -= i;
+            if (!tryMergeToExisting(serverLevel, position, i)) {
+                serverLevel.addFreshEntity(new AbilityPointOrb(serverLevel, position.x(), position.y(), position.z(), i));
             }
         }
 
     }
 
-    private static boolean tryMergeToExisting(ServerLevel p_147097_, Vec3 p_147098_, int p_147099_) {
-        AABB aabb = AABB.ofSize(p_147098_, 1.0D, 1.0D, 1.0D);
-        int i = p_147097_.getRandom().nextInt(40);
-        List<AbilityPointOrb> list = p_147097_.getEntities(EntityTypeTest.forClass(AbilityPointOrb.class), aabb, (p_147081_) -> {
-            return canMerge(p_147081_, i, p_147099_);
+    private static boolean tryMergeToExisting(ServerLevel serverLevel, Vec3 position, int value) {
+        AABB aabb = AABB.ofSize(position, 1.0D, 1.0D, 1.0D);
+        int i = serverLevel.getRandom().nextInt(40);
+        List<AbilityPointOrb> list = serverLevel.getEntities(EntityTypeTest.forClass(AbilityPointOrb.class), aabb, (p_147081_) -> {
+            return canMerge(p_147081_, i, value);
         });
         if (!list.isEmpty()) {
             AbilityPointOrb AbilityPointOrb = list.get(0);
@@ -158,18 +158,18 @@ public class AbilityPointOrb extends Entity {
         }
     }
 
-    private boolean canMerge(AbilityPointOrb p_147087_) {
-        return p_147087_ != this && canMerge(p_147087_, this.getId(), this.value);
+    private boolean canMerge(AbilityPointOrb orb) {
+        return orb != this && canMerge(orb, this.getId(), this.value);
     }
 
-    private static boolean canMerge(AbilityPointOrb p_147089_, int p_147090_, int p_147091_) {
-        return !p_147089_.isRemoved() && (p_147089_.getId() - p_147090_) % 40 == 0 && p_147089_.value == p_147091_;
+    private static boolean canMerge(AbilityPointOrb orb, int id, int value) {
+        return !orb.isRemoved() && (orb.getId() - id) % 40 == 0 && orb.value == value;
     }
 
-    private void merge(AbilityPointOrb p_147101_) {
-        this.count += p_147101_.count;
-        this.age = Math.min(this.age, p_147101_.age);
-        p_147101_.discard();
+    private void merge(AbilityPointOrb orb) {
+        this.count += orb.count;
+        this.age = Math.min(this.age, orb.age);
+        orb.discard();
     }
 
     private void setUnderwaterMovement() {
@@ -180,16 +180,16 @@ public class AbilityPointOrb extends Entity {
     protected void doWaterSplashEffect() {
     }
 
-    public boolean hurt(DamageSource p_20785_, float p_20786_) {
+    public boolean hurt(DamageSource damageSource, float health) {
         if (this.level.isClientSide || this.isRemoved())
             return false; // Forge: Fixes MC-53850
-        if (this.isInvulnerableTo(p_20785_)) {
+        if (this.isInvulnerableTo(damageSource)) {
             return false;
         } else if (this.level.isClientSide) {
             return true;
         } else {
             this.markHurt();
-            this.health = (int) ((float) this.health - p_20786_);
+            this.health = (int) ((float) this.health - health);
             if (this.health <= 0) {
                 this.discard();
             }
@@ -198,18 +198,18 @@ public class AbilityPointOrb extends Entity {
         }
     }
 
-    public void addAdditionalSaveData(CompoundTag p_20796_) {
-        p_20796_.putShort("Health", (short) this.health);
-        p_20796_.putShort("Age", (short) this.age);
-        p_20796_.putShort("Value", (short) this.value);
-        p_20796_.putInt("Count", this.count);
+    public void addAdditionalSaveData(CompoundTag compoundTag) {
+        compoundTag.putShort("Health", (short) this.health);
+        compoundTag.putShort("Age", (short) this.age);
+        compoundTag.putShort("Value", (short) this.value);
+        compoundTag.putInt("Count", this.count);
     }
 
-    public void readAdditionalSaveData(CompoundTag p_20788_) {
-        this.health = p_20788_.getShort("Health");
-        this.age = p_20788_.getShort("Age");
-        this.value = p_20788_.getShort("Value");
-        this.count = Math.max(p_20788_.getInt("Count"), 1);
+    public void readAdditionalSaveData(CompoundTag compoundTag) {
+        this.health = compoundTag.getShort("Health");
+        this.age = compoundTag.getShort("Age");
+        this.value = compoundTag.getShort("Value");
+        this.count = Math.max(compoundTag.getInt("Count"), 1);
     }
 
     public void playerTouch(Player player) {
@@ -274,27 +274,27 @@ public class AbilityPointOrb extends Entity {
         }
     }
 
-    public static int getExperienceValue(int p_20783_) {
-        if (p_20783_ >= 2477) {
+    public static int getExperienceValue(int value) {
+        if (value >= 2477) {
             return 2477;
-        } else if (p_20783_ >= 1237) {
+        } else if (value >= 1237) {
             return 1237;
-        } else if (p_20783_ >= 617) {
+        } else if (value >= 617) {
             return 617;
-        } else if (p_20783_ >= 307) {
+        } else if (value >= 307) {
             return 307;
-        } else if (p_20783_ >= 149) {
+        } else if (value >= 149) {
             return 149;
-        } else if (p_20783_ >= 73) {
+        } else if (value >= 73) {
             return 73;
-        } else if (p_20783_ >= 37) {
+        } else if (value >= 37) {
             return 37;
-        } else if (p_20783_ >= 17) {
+        } else if (value >= 17) {
             return 17;
-        } else if (p_20783_ >= 7) {
+        } else if (value >= 7) {
             return 7;
         } else {
-            return p_20783_ >= 3 ? 3 : 1;
+            return value >= 3 ? 3 : 1;
         }
     }
 

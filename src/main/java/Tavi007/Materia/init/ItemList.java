@@ -3,6 +3,7 @@ package Tavi007.Materia.init;
 import java.util.Arrays;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.items.AbilityPointBottleItem;
 import Tavi007.Materia.items.MateriaAccessory;
 import Tavi007.Materia.items.MateriaAxe;
 import Tavi007.Materia.items.MateriaHoe;
@@ -29,6 +30,7 @@ public class ItemList {
 
     // only used as Icon for Item group
     private static Properties singleStack = new Item.Properties().stacksTo(1);
+    private static Properties fullStack = new Item.Properties().stacksTo(64);
     public static final RegistryObject<Item> BASE_MATERIA = ITEMS.register("base_materia", () -> new MateriaItem(singleStack));
 
     // materia
@@ -71,6 +73,10 @@ public class ItemList {
     public static final RegistryObject<Item> MATERIA_DIAMOND_ACCESSORY = ITEMS.register("materia_diamond_accessory",
         () -> new MateriaAccessory(Tiers.DIAMOND, singleStack, Arrays.asList(1, 2, 1), Arrays.asList(2, 1, 1)));
 
+    // misc
+    public static final RegistryObject<Item> ABILITY_POINT_BOTTLE = ITEMS.register("ability_point_bottle",
+        () -> new AbilityPointBottleItem(fullStack));
+
     @SubscribeEvent
     public static void onRegisterCreativeTabEvent(CreativeModeTabEvent.Register event) {
         event.registerCreativeModeTab(new ResourceLocation(Materia.MOD_ID, "items"),
@@ -99,8 +105,11 @@ public class ItemList {
                     output.accept(ItemList.MATERIA_DIAMOND_WAND.get());
                     output.accept(ItemList.MATERIA_DIAMOND_ACCESSORY.get());
 
+                    output.accept(ItemList.ABILITY_POINT_BOTTLE.get());
+
                     output.accept(BlockList.EQUIPPING_STATION_ITEM.get());
                     output.accept(BlockList.MATERIA_INCUBATOR_ITEM.get());
+
                 }));
     }
 }
