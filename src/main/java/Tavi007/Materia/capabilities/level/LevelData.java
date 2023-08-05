@@ -60,9 +60,12 @@ public class LevelData implements INBTSerializable<CompoundTag> {
         return Math.round(13 * fraction);
     }
 
+    int counter = 0;
+
     public int getBarColor() {
-        float f = Math.max(0.0F, ((float) ap) / getCurrentLevelUpData());
-        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
+        float value = ((float) Math.PI / 180F) * 0.1F * counter;
+        float r = (1 + Mth.sin(value)) / 2;
+        return Mth.color(r, 0, 1.0F);
     }
 
     public void appendHoverText(List<Component> tooltip) {
