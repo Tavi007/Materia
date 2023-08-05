@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.registries;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

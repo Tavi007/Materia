@@ -2,9 +2,9 @@ package Tavi007.Materia.network.clientbound;
 
 import java.util.Map;
 
+import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
-import Tavi007.Materia.recipes.effects.MateriaEffectRecipePojo;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent.Context;

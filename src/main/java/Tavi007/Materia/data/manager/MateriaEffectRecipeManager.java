@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.data.manager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;

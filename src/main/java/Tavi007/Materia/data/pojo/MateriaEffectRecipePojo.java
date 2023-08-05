@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.data.pojo;
 
 import java.util.ArrayList;
 import java.util.List;

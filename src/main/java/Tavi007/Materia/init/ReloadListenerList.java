@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.capabilities.level.LevelUpDataManager;
+import Tavi007.Materia.data.manager.LevelUpDataManager;
+import Tavi007.Materia.data.manager.MateriaEffectConfigurationManager;
+import Tavi007.Materia.data.manager.MateriaEffectRecipeManager;
 import Tavi007.Materia.network.Packet;
-import Tavi007.Materia.recipes.effects.MateriaEffectConfigurationManager;
-import Tavi007.Materia.recipes.effects.MateriaEffectRecipeManager;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

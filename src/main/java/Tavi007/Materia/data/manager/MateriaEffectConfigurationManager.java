@@ -1,4 +1,4 @@
-package Tavi007.Materia.recipes.effects;
+package Tavi007.Materia.data.manager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,7 @@ import com.google.gson.JsonObject;
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
+import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;

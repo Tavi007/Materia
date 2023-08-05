@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
 import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
-import Tavi007.Materia.recipes.effects.MateriaEffectRecipePojo;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

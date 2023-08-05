@@ -6,7 +6,7 @@ import Tavi007.Materia.effect.configurations.AttackConfiguration;
 import Tavi007.Materia.effect.configurations.MiningConfiguration;
 import Tavi007.Materia.effect.configurations.RecipeConfiguration;
 import Tavi007.Materia.effect.configurations.StatConfiguration;
-import Tavi007.Materia.recipes.effects.MateriaEffectConfigurationRegistry;
+import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
 
 public class MateriaEffectConfigurationTypeList {

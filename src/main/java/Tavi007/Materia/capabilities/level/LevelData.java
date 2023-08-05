@@ -63,8 +63,8 @@ public class LevelData implements INBTSerializable<CompoundTag> {
     int counter = 0;
 
     public int getBarColor() {
-        float value = ((float) Math.PI / 180F) * 0.1F * counter;
-        float r = (1 + Mth.sin(value)) / 2;
+        double value = Math.PI * 0.1F * counter;
+        float r = (1 + Mth.sin((float) value)) / 2;
         return Mth.color(r, 0, 1.0F);
     }
 

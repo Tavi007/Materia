@@ -1,4 +1,4 @@
-package Tavi007.Materia.capabilities.level;
+package Tavi007.Materia.data.manager;
 
 import java.util.ArrayList;
 import java.util.Collections;
