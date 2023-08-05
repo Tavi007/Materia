@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.data.manager.LevelUpDataManager;
-import Tavi007.Materia.data.manager.MateriaEffectConfigurationManager;
-import Tavi007.Materia.data.manager.MateriaEffectRecipeManager;
+import Tavi007.Materia.data.managers.LevelUpDataManager;
+import Tavi007.Materia.data.managers.MateriaEffectConfigurationManager;
+import Tavi007.Materia.data.managers.MateriaEffectRecipeManager;
 import Tavi007.Materia.network.Packet;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
