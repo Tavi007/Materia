@@ -1,6 +1,8 @@
 package Tavi007.Materia.entities;
 
+import Tavi007.Materia.ServerConfig;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
@@ -36,9 +38,9 @@ public class ThrownAbilityPointBottle extends ThrowableItemProjectile {
     protected void onHit(HitResult hitResult) {
         super.onHit(hitResult);
         if (this.level instanceof ServerLevel) {
-            this.level.levelEvent(2002, this.blockPosition(), PotionUtils.getColor(Potions.WATER));
-            int i = 3 + this.level.random.nextInt(5) + this.level.random.nextInt(5);
-            AbilityPointOrb.award((ServerLevel) this.level, this.position(), i);
+            this.level.levelEvent(2002, this.blockPosition(), PotionUtils.getColor(Potions.LUCK));
+            int amount = Mth.randomBetweenInclusive(random, ServerConfig.getApBottleMinAmount(), ServerConfig.getApBottleMaxAmount());
+            AbilityPointOrb.award((ServerLevel) this.level, this.position(), amount);
             this.discard();
         }
     }
