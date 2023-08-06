@@ -13,7 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
+import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    private Map<ResourceLocation, MateriaEffectRecipePojo> registeredEffectRecipes = ImmutableMap.of();
+    private Map<ResourceLocation, MateriaEffectRecipe> registeredEffectRecipes = ImmutableMap.of();
 
     public MateriaEffectRecipeManager() {
         super(GSON, "materia_effect_recipes");
@@ -59,7 +59,7 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
     }
 
     public ResourceLocation getMatch(List<ItemStack> stacks) {
-        for (Entry<ResourceLocation, MateriaEffectRecipePojo> entry : registeredEffectRecipes.entrySet()) {
+        for (Entry<ResourceLocation, MateriaEffectRecipe> entry : registeredEffectRecipes.entrySet()) {
             if (entry.getValue().doesInputMatch(stacks)) {
                 return entry.getKey();
             }
@@ -67,8 +67,8 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
         return null;
     }
 
-    public MateriaEffectRecipePojo getRecipePojo(ResourceLocation id) {
-        MateriaEffectRecipePojo pojo = registeredEffectRecipes.get(id);
+    public MateriaEffectRecipe getRecipePojo(ResourceLocation id) {
+        MateriaEffectRecipe pojo = registeredEffectRecipes.get(id);
         if (pojo != null) {
             return registeredEffectRecipes.get(id).copy();
         }
@@ -77,12 +77,12 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
-        Builder<ResourceLocation, MateriaEffectRecipePojo> recipesBuilder = ImmutableMap.builder();
+        Builder<ResourceLocation, MateriaEffectRecipe> recipesBuilder = ImmutableMap.builder();
 
         objectIn.forEach((rl, json) -> {
             try {
                 Resource res = resourceManagerIn.getResourceOrThrow(getPreparedPath(rl));
-                MateriaEffectRecipePojo recipe = GSON.fromJson(json, MateriaEffectRecipePojo.class);
+                MateriaEffectRecipe recipe = GSON.fromJson(json, MateriaEffectRecipe.class);
                 recipesBuilder.put(rl, recipe);
             } catch (Exception exception) {
                 Materia.LOGGER.error("Couldn't parse materia effect recipe {}", rl, exception);

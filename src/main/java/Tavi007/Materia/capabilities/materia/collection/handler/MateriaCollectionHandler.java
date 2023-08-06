@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
+import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
@@ -95,7 +95,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         List<AbstractMateriaEffectConfiguration> configurations = new ArrayList<>();
         List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacks);
         for (ResourceLocation effectRecipe : effectRecipes) {
-            MateriaEffectRecipePojo recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
+            MateriaEffectRecipe recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
             if (recipePojo != null) {
                 for (ResourceLocation effect : recipePojo.getOutput()) {
                     AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);

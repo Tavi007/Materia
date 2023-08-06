@@ -16,7 +16,6 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class LevelDataCapability {
 
@@ -48,8 +47,7 @@ public class LevelDataCapability {
         public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
             Item item = event.getObject().getItem();
             if (item instanceof MateriaItem) {
-                ResourceLocation id = ForgeRegistries.ITEMS.getKey(item);
-                final LevelData data = new LevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(id));
+                final LevelData data = new LevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(item));
                 event.addCapability(ID, createProvider(data));
             }
         }

@@ -2,7 +2,7 @@ package Tavi007.Materia.network.clientbound;
 
 import java.util.Map;
 
-import Tavi007.Materia.data.pojo.MateriaEffectRecipePojo;
+import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,14 +11,14 @@ import net.minecraftforge.network.NetworkEvent.Context;
 
 public class SyncMateriaEffectRecipesPacket extends Packet {
 
-    private Map<ResourceLocation, MateriaEffectRecipePojo> registeredEffectRecipes;
+    private Map<ResourceLocation, MateriaEffectRecipe> registeredEffectRecipes;
 
-    public SyncMateriaEffectRecipesPacket(Map<ResourceLocation, MateriaEffectRecipePojo> registeredEffectRecipes) {
+    public SyncMateriaEffectRecipesPacket(Map<ResourceLocation, MateriaEffectRecipe> registeredEffectRecipes) {
         this.registeredEffectRecipes = registeredEffectRecipes;
     }
 
     public SyncMateriaEffectRecipesPacket(FriendlyByteBuf buf) {
-        buf.readMap(FriendlyByteBuf::readResourceLocation, MateriaEffectRecipePojo::new);
+        buf.readMap(FriendlyByteBuf::readResourceLocation, MateriaEffectRecipe::new);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SyncMateriaEffectRecipesPacket extends Packet {
         return registeredEffectRecipes != null;
     }
 
-    public Map<ResourceLocation, MateriaEffectRecipePojo> getEffectRecipes() {
+    public Map<ResourceLocation, MateriaEffectRecipe> getEffectRecipes() {
         return registeredEffectRecipes;
     }
 

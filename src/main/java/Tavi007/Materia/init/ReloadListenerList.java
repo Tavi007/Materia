@@ -7,6 +7,7 @@ import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.managers.LevelUpDataManager;
 import Tavi007.Materia.data.managers.MateriaEffectConfigurationManager;
 import Tavi007.Materia.data.managers.MateriaEffectRecipeManager;
+import Tavi007.Materia.data.managers.MobDataManager;
 import Tavi007.Materia.network.Packet;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,12 +20,14 @@ public class ReloadListenerList {
     public static MateriaEffectConfigurationManager MATERIA_EFFECT_CONFIGURATION_MANGER = new MateriaEffectConfigurationManager();
     public static MateriaEffectRecipeManager MATERIA_EFFECT_RECIPE_MANGER = new MateriaEffectRecipeManager();
     public static LevelUpDataManager LEVEL_UP_DATA_MANAGER = new LevelUpDataManager();
+    public static MobDataManager MOB_DATA_MANAGER = new MobDataManager();
 
     @SubscribeEvent
     public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-        event.addListener(ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER);
-        event.addListener(ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER);
-        event.addListener(ReloadListenerList.LEVEL_UP_DATA_MANAGER);
+        event.addListener(MATERIA_EFFECT_CONFIGURATION_MANGER);
+        event.addListener(MATERIA_EFFECT_RECIPE_MANGER);
+        event.addListener(LEVEL_UP_DATA_MANAGER);
+        event.addListener(MOB_DATA_MANAGER);
         Materia.LOGGER.info("ReloadListener registered.");
     }
 

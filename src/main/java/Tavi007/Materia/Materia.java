@@ -3,6 +3,7 @@ package Tavi007.Materia;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import Tavi007.Materia.client.ClientConfig;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.EntityTypeList;
 import Tavi007.Materia.init.ItemList;
@@ -13,7 +14,9 @@ import Tavi007.Materia.init.StartupCommon;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod("materia")
@@ -28,6 +31,9 @@ public class Materia {
     public Materia() {
         MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
         INSTANCE = this;
+
+        ModLoadingContext.get().registerConfig(Type.CLIENT, ClientConfig.CONFIG_SPEC, Materia.MOD_ID + "-client.toml");
+        ModLoadingContext.get().registerConfig(Type.SERVER, ServerConfig.CONFIG_SPEC, Materia.MOD_ID + "-server.toml");
 
         // register common
         MOD_EVENT_BUS.register(StartupCommon.class);

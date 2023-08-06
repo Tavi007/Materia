@@ -1,7 +1,9 @@
 package Tavi007.Materia.events;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.data.pojo.MobData;
 import Tavi007.Materia.entities.AbilityPointOrb;
+import Tavi007.Materia.init.ReloadListenerList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -17,9 +19,9 @@ public class ServerEvents {
         Materia.LOGGER.info("entity died");
 
         LivingEntity entity = event.getEntity();
-        if (entity.getLevel()instanceof ServerLevel serverLevel) {
-            int amount = 10; // TODO: use data from reload listener
-            AbilityPointOrb.award(serverLevel, entity.getPosition(0), amount);
+        if (entity.getLevel() instanceof ServerLevel serverLevel) {
+            MobData mobData = ReloadListenerList.MOB_DATA_MANAGER.getMobData(entity);
+            AbilityPointOrb.award(serverLevel, entity.getPosition(0), mobData.getApAmount());
         }
     }
 

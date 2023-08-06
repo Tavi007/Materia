@@ -14,17 +14,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class MateriaEffectRecipePojo {
+public class MateriaEffectRecipe {
 
     private MateriaEffectRecipeInput input;
     private List<String> output;
 
-    private MateriaEffectRecipePojo() {
+    private MateriaEffectRecipe() {
         input = new MateriaEffectRecipeInput();
         output = new ArrayList<>();
     };
 
-    public MateriaEffectRecipePojo(FriendlyByteBuf buf) {
+    public MateriaEffectRecipe(FriendlyByteBuf buf) {
         input = new MateriaEffectRecipeInput(buf);
         output = NetworkHelper.readStringList(buf);
     };
@@ -48,8 +48,8 @@ public class MateriaEffectRecipePojo {
         return input != null && input.isValid() && output != null && !output.isEmpty();
     }
 
-    public MateriaEffectRecipePojo copy() {
-        MateriaEffectRecipePojo copy = new MateriaEffectRecipePojo();
+    public MateriaEffectRecipe copy() {
+        MateriaEffectRecipe copy = new MateriaEffectRecipe();
         copy.input = input.copy();
         output.forEach(entry -> copy.output.add(new String(entry)));
         return copy;
