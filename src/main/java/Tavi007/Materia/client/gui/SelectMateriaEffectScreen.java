@@ -116,7 +116,7 @@ public class SelectMateriaEffectScreen extends Screen {
         float radiusOut = radius.getRight();
 
         List<SelectSlice> slices = new ArrayList<>();
-        slices.add(new SelectSlice(0.0f, (float) (2 * Math.PI), radiusIn, radiusOut, false, Collections.emptyList()));
+        slices.add(new SelectSlice(0.0f, (float) (2 * Math.PI), radiusIn, radiusOut, false, Collections.emptyList(), false));
 
         drawSlices(poseStack, slices, centerOfScreenX, centerOfScreenY, animationProgress > 0.99f);
 
@@ -182,7 +182,7 @@ public class SelectMateriaEffectScreen extends Screen {
 
                 List<ItemStack> stacks = new ArrayList<>();
                 mapping.getSlotIndexList().forEach(slotIndex -> stacks.add(materiaToolComponent.getMateriaCollection().getStackInSlot(slotIndex)));
-                slices.add(new SelectSlice(sliceBorderLeft, sliceBorderRight, radiusIn, radiusOut, isSelected, stacks));
+                slices.add(new SelectSlice(sliceBorderLeft, sliceBorderRight, radiusIn, radiusOut, isSelected, stacks, collectionToEffectMapper.size() > 1));
                 i++;
             }
         }
@@ -254,8 +254,9 @@ public class SelectMateriaEffectScreen extends Screen {
 
         private List<ItemStack> stacks;
         private float radiusStacks;
+        private boolean renderEnds;
 
-        private SelectSlice(float startAngle, float endAngle, float radiusIn, float radiusOut, boolean isSelected, List<ItemStack> stacks) {
+        private SelectSlice(float startAngle, float endAngle, float radiusIn, float radiusOut, boolean isSelected, List<ItemStack> stacks, boolean renderEnds) {
             this.startAngle = startAngle;
             this.endAngle = endAngle;
             this.radiusIn = radiusIn;
@@ -263,6 +264,7 @@ public class SelectMateriaEffectScreen extends Screen {
             this.isSelected = isSelected;
             this.stacks = stacks;
             this.radiusStacks = (radiusIn + radiusOut) * 0.5f;
+            this.renderEnds = renderEnds;
         }
 
         protected void renderBackground(BufferBuilder buffer, int x, int y) {
@@ -281,9 +283,10 @@ public class SelectMateriaEffectScreen extends Screen {
                 renderVertecies(buffer, x, y, radiusIn, radiusOut, angle1, angle2, r, g, b, a);
                 renderVertecies(buffer, x, y, radiusIn, radiusIn + 1f, angle1, angle2, 0, 0, 0, 90);
             }
-
-            renderVertecies(buffer, x, y, radiusIn, radiusOut, startAngle, startAngle + 0.01f, 0, 0, 0, 90);
-            renderVertecies(buffer, x, y, radiusIn, radiusOut, endAngle - 0.01f, endAngle, 0, 0, 0, 90);
+            if (renderEnds) {
+                renderVertecies(buffer, x, y, radiusIn, radiusOut, startAngle, startAngle + 0.01f, 0, 0, 0, 90);
+                renderVertecies(buffer, x, y, radiusIn, radiusOut, endAngle - 0.01f, endAngle, 0, 0, 0, 90);
+            }
         }
 
         private void renderVertecies(BufferBuilder buffer, int x, int y, float radiusIn, float radiusOut, float angle1, float angle2,
