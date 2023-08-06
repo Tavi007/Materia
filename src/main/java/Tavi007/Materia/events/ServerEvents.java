@@ -16,8 +16,6 @@ public class ServerEvents {
 
     @SubscribeEvent
     public static void onLivingEntityDeath(LivingDeathEvent event) {
-        Materia.LOGGER.info("entity died");
-
         LivingEntity entity = event.getEntity();
         if (entity.getLevel() instanceof ServerLevel serverLevel) {
             MobData mobData = ReloadListenerList.MOB_DATA_MANAGER.getMobData(entity);
