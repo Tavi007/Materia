@@ -32,10 +32,12 @@ public class AbilityPointOrbRenderer extends EntityRenderer<AbilityPointOrb> {
         this.shadowStrength = 0.75F;
     }
 
+    @Override
     protected int getBlockLightLevel(AbilityPointOrb orbEntity, BlockPos blockPos) {
         return Mth.clamp(super.getBlockLightLevel(orbEntity, blockPos) + 7, 0, 15);
     }
 
+    @Override
     public void render(AbilityPointOrb orbEntity, float p_114600_, float p_114601_, PoseStack poseStack, MultiBufferSource bufferSource, int p_114604_) {
         poseStack.pushPose();
         int i = orbEntity.getIcon();
@@ -73,6 +75,7 @@ public class AbilityPointOrbRenderer extends EntityRenderer<AbilityPointOrb> {
             .endVertex();
     }
 
+    @Override
     public ResourceLocation getTextureLocation(AbilityPointOrb orbEntity) {
         return ABILITY_POINT_ORB;
     }
