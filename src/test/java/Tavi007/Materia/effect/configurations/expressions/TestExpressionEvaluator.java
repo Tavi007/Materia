@@ -3,6 +3,8 @@ package Tavi007.Materia.effect.configurations.expressions;
 import org.junit.Assert;
 import org.junit.Test;
 
+import Tavi007.Materia.data.pojo.configurations.expressions.ExpressionEvaluator;
+
 public class TestExpressionEvaluator {
 
     @Test

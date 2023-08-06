@@ -1,4 +1,4 @@
-package Tavi007.Materia.effect.configurations;
+package Tavi007.Materia.data.pojo.configurations;
 
 import com.google.common.base.Optional;
 import com.google.gson.annotations.SerializedName;

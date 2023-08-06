@@ -7,7 +7,7 @@ import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
-import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import net.minecraft.world.item.ItemStack;
 
 public class CapabilityHelper {

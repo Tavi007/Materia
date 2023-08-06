@@ -7,6 +7,8 @@ import org.apache.commons.compress.utils.Sets;
 import org.junit.Assert;
 import org.junit.Test;
 
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+
 public class TestArithmeticExpression {
 
     @Test

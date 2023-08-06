@@ -1,8 +1,8 @@
-package Tavi007.Materia.effect.configurations;
+package Tavi007.Materia.data.pojo.configurations;
 
 import java.util.List;
 
-import Tavi007.Materia.effect.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 

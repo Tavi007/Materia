@@ -1,8 +1,8 @@
-package Tavi007.Materia.effect.configurations;
+package Tavi007.Materia.data.pojo.configurations;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.effect.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {

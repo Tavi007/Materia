@@ -1,4 +1,4 @@
-package Tavi007.Materia.effect.configurations.expressions;
+package Tavi007.Materia.data.pojo.configurations.expressions;
 
 // Note: found this solution on stackoverflow
 public class ExpressionEvaluator {

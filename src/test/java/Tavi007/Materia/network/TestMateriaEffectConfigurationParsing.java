@@ -14,9 +14,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.effect.configurations.AttackConfiguration;
-import Tavi007.Materia.effect.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AttackConfiguration;
+import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
 import Tavi007.Materia.init.MateriaEffectConfigurationTypeList;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import io.netty.buffer.Unpooled;

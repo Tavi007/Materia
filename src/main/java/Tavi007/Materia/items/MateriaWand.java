@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.effect.configurations.AttackConfiguration;
-import Tavi007.Materia.effect.configurations.RecipeConfiguration;
-import Tavi007.Materia.effect.configurations.StatConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AttackConfiguration;
+import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;

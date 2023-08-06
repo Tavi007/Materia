@@ -1,4 +1,4 @@
-package Tavi007.Materia.effect.configurations.expressions;
+package Tavi007.Materia.data.pojo.configurations.expressions;
 
 import java.util.HashMap;
 import java.util.HashSet;

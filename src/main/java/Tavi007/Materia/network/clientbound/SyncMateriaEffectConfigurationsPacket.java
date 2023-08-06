@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.effect.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
 import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
