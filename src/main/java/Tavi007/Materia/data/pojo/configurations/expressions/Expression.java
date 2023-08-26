@@ -26,7 +26,7 @@ public class Expression {
         this.expression = expression;
     }
 
-    protected Expression(String expression, Set<String> inputNames) {
+    public Expression(String expression, Set<String> inputNames) {
         this.expression = expression;
         this.inputNames = inputNames;
     }
@@ -71,26 +71,25 @@ public class Expression {
         return new Expression(new String(expression), inputNamesCopy);
     }
 
-    public double evaluate(List<ItemStack> stacks, ExpressionEvaluator evulator) {
+    public String getFinalExpression(List<ItemStack> stacks) {
         String expressionCopy = new String(expression);
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
             Integer level = inputValues.get(input);
             expressionCopy = expressionCopy.replaceAll("#" + input, String.valueOf(level));
         }
-        ExpressionEvaluator evaluator = new ExpressionEvaluator(expressionCopy);
-        return evaluator.parseArithmetic();
+        return expressionCopy;
     }
 
     public boolean isValid() {
         return expression != null;
     }
 
-    protected void encode(FriendlyByteBuf buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(expression);
     }
 
-    protected Expression(FriendlyByteBuf buf) {
+    public Expression(FriendlyByteBuf buf) {
         expression = buf.readUtf();
     }
 

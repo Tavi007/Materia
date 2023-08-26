@@ -2,14 +2,15 @@ package Tavi007.Materia.data.pojo.configurations;
 
 import java.util.List;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticEvaluator;
+import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
 
     private String element;
-    private ArithmeticExpression damage;
+    private Expression damage;
     private AreaConfiguration area;
 
     private AttackConfiguration() {
@@ -21,7 +22,7 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     public double getDamage(List<ItemStack> stacks) {
-        return damage.evaluate(stacks);
+        return (int) Math.round(new ArithmeticEvaluator(damage.getFinalExpression(stacks)).parseArithmetic());
     }
 
     @Override
@@ -45,7 +46,7 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
 
     public AttackConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        damage = new ArithmeticExpression(buf);
+        damage = new Expression(buf);
         area = new AreaConfiguration(buf);
         element = buf.readUtf();
     }

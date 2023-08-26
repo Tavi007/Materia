@@ -2,30 +2,31 @@ package Tavi007.Materia.data.pojo.configurations;
 
 import java.util.List;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticEvaluator;
+import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class AreaConfiguration {
 
-    ArithmeticExpression width;
-    ArithmeticExpression range;
-    ArithmeticExpression height;
+    Expression width;
+    Expression range;
+    Expression height;
 
     private AreaConfiguration() {
         super();
     }
 
     public int getWidth(List<ItemStack> stacks) {
-        return (int) Math.round(width.evaluate(stacks));
+        return (int) Math.round(new ArithmeticEvaluator(width.getFinalExpression(stacks)).parseArithmetic());
     }
 
     public int getRange(List<ItemStack> stacks) {
-        return (int) Math.round(range.evaluate(stacks));
+        return (int) Math.round(new ArithmeticEvaluator(range.getFinalExpression(stacks)).parseArithmetic());
     }
 
     public int getHeight(List<ItemStack> stacks) {
-        return (int) Math.round(height.evaluate(stacks));
+        return (int) Math.round(new ArithmeticEvaluator(height.getFinalExpression(stacks)).parseArithmetic());
     }
 
     public AreaConfiguration copy() {
@@ -49,9 +50,9 @@ public class AreaConfiguration {
     }
 
     public AreaConfiguration(FriendlyByteBuf buf) {
-        width = new ArithmeticExpression(buf);
-        range = new ArithmeticExpression(buf);
-        height = new ArithmeticExpression(buf);
+        width = new Expression(buf);
+        range = new Expression(buf);
+        height = new Expression(buf);
     }
 
     @Override

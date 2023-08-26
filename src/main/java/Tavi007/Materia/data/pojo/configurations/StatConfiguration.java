@@ -2,14 +2,14 @@ package Tavi007.Materia.data.pojo.configurations;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     private Stat stat;
     @SerializedName("value")
-    private ArithmeticExpression value;
+    private Expression value;
 
     private StatConfiguration() {
         super();
@@ -43,7 +43,7 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     public StatConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        value = new ArithmeticExpression(buf);
+        value = new Expression(buf);
         stat = buf.readEnum(Stat.class);
     }
 

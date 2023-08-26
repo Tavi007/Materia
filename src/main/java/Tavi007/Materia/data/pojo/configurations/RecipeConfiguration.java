@@ -3,13 +3,13 @@ package Tavi007.Materia.data.pojo.configurations;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
-    ArithmeticExpression level;
+    Expression level;
     String recipe;
 
     private RecipeConfiguration() {
@@ -40,7 +40,7 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
     public RecipeConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        level = new ArithmeticExpression(buf);
+        level = new Expression(buf);
         recipe = buf.readUtf();
     }
 

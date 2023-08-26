@@ -2,10 +2,10 @@ package Tavi007.Materia.data.pojo.configurations.expressions;
 
 public class ExpressionEvaluator {
 
-    private String expression;
+    protected String expression;
 
-    private int charAtPos;
-    private int pos = -1;
+    protected int charAtPos;
+    protected int pos = -1;
 
     protected ExpressionEvaluator(String expression) {
         this.expression = expression;
