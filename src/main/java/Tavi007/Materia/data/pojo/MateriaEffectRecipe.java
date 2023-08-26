@@ -1,7 +1,8 @@
 package Tavi007.Materia.data.pojo;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,31 +18,31 @@ import net.minecraft.world.item.Items;
 public class MateriaEffectRecipe {
 
     private MateriaEffectRecipeInput input;
-    private List<String> output;
+    private Set<String> output;
 
     private MateriaEffectRecipe() {
         input = new MateriaEffectRecipeInput();
-        output = new ArrayList<>();
+        output = new HashSet<>();
     };
 
     public MateriaEffectRecipe(FriendlyByteBuf buf) {
         input = new MateriaEffectRecipeInput(buf);
-        output = NetworkHelper.readStringList(buf);
+        output = NetworkHelper.readStringSet(buf);
     };
 
     public void encode(FriendlyByteBuf buf) {
         input.encode(buf);
-        NetworkHelper.writeStringList(buf, output);
+        NetworkHelper.writeStringSet(buf, output);
     }
 
-    public List<ResourceLocation> getOutput() {
-        return toResourceLocationList(output);
+    public Set<ResourceLocation> getOutput() {
+        return toResourceLocationSet(output);
     }
 
-    private List<ResourceLocation> toResourceLocationList(List<String> stringList) {
-        List<ResourceLocation> list = new ArrayList<>();
-        stringList.forEach(string -> list.add(new ResourceLocation(string)));
-        return list;
+    private Set<ResourceLocation> toResourceLocationSet(Set<String> stringSet) {
+        Set<ResourceLocation> Set = new HashSet<>();
+        stringSet.forEach(string -> Set.add(new ResourceLocation(string)));
+        return Set;
     }
 
     public boolean isValid() {
@@ -62,18 +63,18 @@ public class MateriaEffectRecipe {
     private class MateriaEffectRecipeInput {
 
         @SerializedName("items")
-        private List<String> itemStrings;
+        private Set<String> itemStrings;
         @SerializedName("tags")
-        private List<String> tagStrings;
+        private Set<String> tagStrings;
 
         @SerializedName("_tags")
-        List<TagKey<Item>> tags;
+        Set<TagKey<Item>> tags;
         @SerializedName("_items")
-        List<Item> items;
+        Set<Item> items;
 
         private MateriaEffectRecipeInput() {
-            this.itemStrings = new ArrayList<>();
-            this.tagStrings = new ArrayList<>();
+            this.itemStrings = new HashSet<>();
+            this.tagStrings = new HashSet<>();
         }
 
         public boolean doesMatch(List<ItemStack> stacks) {
@@ -103,9 +104,9 @@ public class MateriaEffectRecipe {
             return true;
         }
 
-        private List<TagKey<Item>> getTags() {
+        private Set<TagKey<Item>> getTags() {
             if (tags == null) {
-                tags = new ArrayList<>();
+                tags = new HashSet<>();
                 for (String tagString : tagStrings) {
                     TagKey<Item> tagKey = RegistryHelper.getTagKey(new ResourceLocation(tagString));
                     if (tagKey != null) {
@@ -116,9 +117,9 @@ public class MateriaEffectRecipe {
             return tags;
         }
 
-        private List<Item> getItems() {
+        private Set<Item> getItems() {
             if (items == null) {
-                items = new ArrayList<>();
+                items = new HashSet<>();
                 for (String itemString : itemStrings) {
                     Item item = RegistryHelper.getItem(new ResourceLocation(itemString));
                     if (item != null && !Items.AIR.equals(item)) {
@@ -141,13 +142,13 @@ public class MateriaEffectRecipe {
         }
 
         public MateriaEffectRecipeInput(FriendlyByteBuf buf) {
-            itemStrings = NetworkHelper.readStringList(buf);
-            tagStrings = NetworkHelper.readStringList(buf);
+            itemStrings = NetworkHelper.readStringSet(buf);
+            tagStrings = NetworkHelper.readStringSet(buf);
         }
 
         public void encode(FriendlyByteBuf buf) {
-            NetworkHelper.writeStringList(buf, itemStrings);
-            NetworkHelper.writeStringList(buf, tagStrings);
+            NetworkHelper.writeStringSet(buf, itemStrings);
+            NetworkHelper.writeStringSet(buf, tagStrings);
         }
 
     }

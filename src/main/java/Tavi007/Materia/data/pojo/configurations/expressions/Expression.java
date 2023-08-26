@@ -15,18 +15,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class ArithmeticExpression {
+public class Expression {
 
     private String expression;
     private transient Set<String> inputNames;
 
-    private static final Pattern REGEX_PATTERN = Pattern.compile("(?=#)([#a-zA-Z0-9_\\:]*)");
+    private static final Pattern ITEM_INPUT = Pattern.compile("(?=#)([#a-zA-Z0-9_\\:]*)");
 
-    public ArithmeticExpression(String expression) {
+    public Expression(String expression) {
         this.expression = expression;
     }
 
-    private ArithmeticExpression(String expression, Set<String> inputNames) {
+    protected Expression(String expression, Set<String> inputNames) {
         this.expression = expression;
         this.inputNames = inputNames;
     }
@@ -35,18 +35,16 @@ public class ArithmeticExpression {
     public Set<String> getInputNames() {
         if (inputNames == null) {
             inputNames = new HashSet<>();
-            Matcher matcher = REGEX_PATTERN.matcher(expression);
+            Matcher matcher = ITEM_INPUT.matcher(expression);
             while (matcher.find()) {
                 String foundInputName = matcher.group().replace("#", "");
-                if (!inputNames.contains(foundInputName)) {
-                    inputNames.add(foundInputName);
-                }
+                inputNames.add(foundInputName);
             }
         }
         return inputNames;
     }
 
-    private Map<String, Integer> getInputValues(List<ItemStack> stacks) {
+    protected Map<String, Integer> getInputValues(List<ItemStack> stacks) {
         Map<String, Integer> inputValues = new HashMap<>();
         getInputNames().forEach(input -> {
             Item inputItem = RegistryHelper.getItem(new ResourceLocation(input));
@@ -62,7 +60,18 @@ public class ArithmeticExpression {
         return inputValues;
     }
 
-    public double evaluate(List<ItemStack> stacks) {
+    public Expression copy() {
+        Set<String> inputNamesCopy = null;
+        if (getInputNames() != null) {
+            inputNamesCopy = new HashSet<>();
+            for (String inputName : getInputNames()) {
+                inputNamesCopy.add(inputName);
+            }
+        }
+        return new Expression(new String(expression), inputNamesCopy);
+    }
+
+    public double evaluate(List<ItemStack> stacks, ExpressionEvaluator evulator) {
         String expressionCopy = new String(expression);
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
@@ -73,34 +82,23 @@ public class ArithmeticExpression {
         return evaluator.parseArithmetic();
     }
 
-    public ArithmeticExpression copy() {
-        Set<String> inputNamesCopy = null;
-        if (getInputNames() != null) {
-            inputNamesCopy = new HashSet<>();
-            for (String inputName : getInputNames()) {
-                inputNamesCopy.add(inputName);
-            }
-        }
-        return new ArithmeticExpression(new String(expression), inputNamesCopy);
-    }
-
     public boolean isValid() {
         return expression != null;
     }
 
-    public void encode(FriendlyByteBuf buf) {
+    protected void encode(FriendlyByteBuf buf) {
         buf.writeUtf(expression);
     }
 
-    public ArithmeticExpression(FriendlyByteBuf buf) {
+    protected Expression(FriendlyByteBuf buf) {
         expression = buf.readUtf();
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof ArithmeticExpression otherArithmeticExpression) {
-            return (expression == null && otherArithmeticExpression.expression == null)
-                || expression.equals(otherArithmeticExpression.expression);
+        if (other instanceof Expression otherExpression) {
+            return (expression == null && otherExpression.expression == null)
+                || expression.equals(otherExpression.expression);
         }
         return false;
     }

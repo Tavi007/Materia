@@ -1,7 +1,9 @@
 package Tavi007.Materia.util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.network.FriendlyByteBuf;
 
@@ -15,6 +17,20 @@ public class NetworkHelper {
     public static List<String> readStringList(FriendlyByteBuf buf) {
         int size = buf.readInt();
         List<String> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(buf.readUtf());
+        }
+        return list;
+    }
+
+    public static void writeStringSet(FriendlyByteBuf buf, Set<String> list) {
+        buf.writeInt(list.size());
+        list.forEach(entry -> buf.writeUtf(entry));
+    }
+
+    public static Set<String> readStringSet(FriendlyByteBuf buf) {
+        int size = buf.readInt();
+        Set<String> list = new HashSet<>();
         for (int i = 0; i < size; i++) {
             list.add(buf.readUtf());
         }
