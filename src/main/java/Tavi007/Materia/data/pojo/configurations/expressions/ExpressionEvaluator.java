@@ -16,8 +16,10 @@ public class ExpressionEvaluator {
     }
 
     protected boolean eat(int charToEat) {
-        while (charAtPos == ' ')
+        while (charAtPos == ' ') {
             nextChar();
+        }
+
         if (charAtPos == charToEat) {
             nextChar();
             return true;

@@ -56,7 +56,27 @@ public class BooleanEvaluator extends ExpressionEvaluator {
     }
 
     private String getNextArithmeticExpression() {
-        return "0"; // TODO: fix this part
+        int startPos = pos;
+        int bracketLevel = 0;
+        for (;;) {
+            nextChar();
+            if (charAtPos == '(') {
+                bracketLevel++;
+            }
+            if (charAtPos == ')') {
+                bracketLevel--;
+            }
+
+            if (bracketLevel == 0
+                && (charAtPos == '<' || charAtPos == '=' || charAtPos == '>' || charAtPos == '|' || charAtPos == '&')) {
+                break;
+            }
+
+            if (pos == expression.length()) {
+                break;
+            }
+        }
+        return expression.substring(startPos, pos);
     }
 
 }
