@@ -81,6 +81,7 @@ public class Expression {
         return expressionCopy;
     }
 
+    // public boolean isValid(ExpressionEvaluator evaluator) {
     public boolean isValid() {
         return expression != null;
     }

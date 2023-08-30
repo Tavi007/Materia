@@ -1,6 +1,5 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
-// Note: found this solution on stackoverflow
 public class BooleanEvaluator extends ExpressionEvaluator {
 
     public BooleanEvaluator(String expression) {
@@ -23,9 +22,9 @@ public class BooleanEvaluator extends ExpressionEvaluator {
         boolean x = parseComparison();
         for (;;) {
             if (eat('&')) {
-                return x && parseComparison(); // and
+                x = parseComparison() && x; // and
             } else if (eat('|')) {
-                return x || parseComparison(); // or
+                x = parseComparison() || x; // or
             } else {
                 return x;
             }
@@ -33,22 +32,30 @@ public class BooleanEvaluator extends ExpressionEvaluator {
     }
 
     private boolean parseComparison() {
-        double x = new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+        if (eat('[')) {
+            boolean x = parseBooleanExpression();
+            if (!eat(']')) {
+                throw new RuntimeException("Missing ']'");
+            }
+            return x;
+        }
+
+        double leftValue = new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
         for (;;) {
             if (eat('<')) {
                 if (eat('=')) {
-                    return x <= new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+                    return leftValue <= new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
                 } else {
-                    return x < new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+                    return leftValue < new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
                 }
             } else if (eat('>')) {
                 if (eat('=')) {
-                    return x >= new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+                    return leftValue >= new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
                 } else {
-                    return x > new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+                    return leftValue > new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
                 }
             } else if (eat('=')) {
-                return x == new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
+                return leftValue == new ArithmeticEvaluator(getNextArithmeticExpression()).parseArithmetic();
             } else {
                 throw new RuntimeException("Unexpected: " + (char) charAtPos);
             }
@@ -57,22 +64,16 @@ public class BooleanEvaluator extends ExpressionEvaluator {
 
     private String getNextArithmeticExpression() {
         int startPos = pos;
-        int bracketLevel = 0;
         for (;;) {
             nextChar();
-            if (charAtPos == '(') {
-                bracketLevel++;
-            }
-            if (charAtPos == ')') {
-                bracketLevel--;
-            }
-
-            if (bracketLevel == 0
-                && (charAtPos == '<' || charAtPos == '=' || charAtPos == '>' || charAtPos == '|' || charAtPos == '&')) {
-                break;
-            }
-
-            if (pos == expression.length()) {
+            if (pos == expression.length()
+                || charAtPos == '<'
+                || charAtPos == '='
+                || charAtPos == '>'
+                || charAtPos == '|'
+                || charAtPos == '&'
+                || charAtPos == '['
+                || charAtPos == ']') {
                 break;
             }
         }

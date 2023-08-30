@@ -8,56 +8,214 @@ import Tavi007.Materia.data.pojo.configurations.expressions.BooleanEvaluator;
 public class TestBooleanEvaluator {
 
     @Test
-    public void testTrueGreater() {
-        BooleanEvaluator expression = new BooleanEvaluator("1 > 0");
-        Assert.assertTrue(expression.parseBoolean());
+    public void testComparisonGreaterTrue() {
+        Assert.assertTrue(new BooleanEvaluator("1 > 0").parseBoolean());
     }
 
     @Test
-    public void testFalseGreater() {
-        BooleanEvaluator expression = new BooleanEvaluator("0 > 1");
-        Assert.assertFalse(expression.parseBoolean());
+    public void testComparisonGreaterFalse() {
+        Assert.assertFalse(new BooleanEvaluator("0 > 1").parseBoolean());
     }
 
     @Test
-    public void testTrueGreaterEqual() {
-        BooleanEvaluator expression = new BooleanEvaluator("1 >= 0");
-        Assert.assertTrue(expression.parseBoolean());
-
-        expression = new BooleanEvaluator("0 >= 0");
-        Assert.assertTrue(expression.parseBoolean());
+    public void testComparisonGreaterEqualTrue() {
+        Assert.assertTrue(new BooleanEvaluator("1 >= 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 >= 0").parseBoolean());
     }
 
     @Test
-    public void testFalseGreaterEqual() {
-        BooleanEvaluator expression = new BooleanEvaluator("0 >= 1");
-        Assert.assertFalse(expression.parseBoolean());
+    public void testComparisonGreaterEqualFalse() {
+        Assert.assertFalse(new BooleanEvaluator("0 >= 1").parseBoolean());
     }
 
     @Test
-    public void testTrueLess() {
-        BooleanEvaluator expression = new BooleanEvaluator("0 < 1");
-        Assert.assertTrue(expression.parseBoolean());
+    public void testComparisonLessTrue() {
+        Assert.assertTrue(new BooleanEvaluator("0 < 1").parseBoolean());
     }
 
     @Test
-    public void testFalseLess() {
-        BooleanEvaluator expression = new BooleanEvaluator("1 < 0");
-        Assert.assertFalse(expression.parseBoolean());
+    public void testComparisonLessFalse() {
+        Assert.assertFalse(new BooleanEvaluator("1 < 0").parseBoolean());
     }
 
     @Test
-    public void testTrueLessEqual() {
-        BooleanEvaluator expression = new BooleanEvaluator("0 <= 1");
-        Assert.assertTrue(expression.parseBoolean());
-
-        expression = new BooleanEvaluator("1 <= 1");
-        Assert.assertTrue(expression.parseBoolean());
+    public void testComparisonLessEqualTrue() {
+        Assert.assertTrue(new BooleanEvaluator("0 <= 1").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("1 <= 1").parseBoolean());
     }
 
     @Test
-    public void testFalseLessEqual() {
-        BooleanEvaluator expression = new BooleanEvaluator("1 <= 0");
-        Assert.assertFalse(expression.parseBoolean());
+    public void testComparisonLessEqualFalse() {
+        Assert.assertFalse(new BooleanEvaluator("1 <= 0").parseBoolean());
+    }
+
+    @Test
+    public void testComparisonEqualTrue() {
+        Assert.assertTrue(new BooleanEvaluator("1 = 1").parseBoolean());
+    }
+
+    @Test
+    public void testComparisonEqualFalse() {
+        Assert.assertFalse(new BooleanEvaluator("1 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testExpressionANDTrue() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & 1 = 1").parseBoolean());
+    }
+
+    @Test
+    public void testExpressionANDFalse() {
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & 1 = 0").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 1").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testExpressionORTrue() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 1").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | 1 = 1").parseBoolean());
+    }
+
+    @Test
+    public void testExpressionORFalse() {
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | 1 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testMultiExpressionsOR() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 1 | 2 = 2").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 1 | 2 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 0 | 2 = 2").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | 1 = 1 | 2 = 2").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 0 | 2 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | 1 = 0 | 2 = 2").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | 1 = 1 | 2 = 0").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | 1 = 0 | 2 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testMultiExpressionsAND() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & 1 = 1 & 2 = 2").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & 1 = 1 & 2 = 0").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & 1 = 0 & 2 = 2").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 1 & 2 = 2").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & 1 = 0 & 2 = 0").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 0 & 2 = 2").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 1 & 2 = 0").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 0 & 2 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testMultiExpressionsMIXED() { // order of operation is always read from left to right (without brackets)
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & 1 = 1 | 2 = 2").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & 1 = 1 | 2 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & 1 = 0 | 2 = 2").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 & 1 = 1 | 2 = 2").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & 1 = 0 | 2 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 & 1 = 0 | 2 = 2").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 1 | 2 = 0").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & 1 = 0 | 2 = 0").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 1 & 2 = 2").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 | 1 = 1 & 2 = 0").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | 1 = 0 & 2 = 2").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | 1 = 1 & 2 = 2").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 | 1 = 0 & 2 = 0").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | 1 = 0 & 2 = 2").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | 1 = 1 & 2 = 0").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | 1 = 0 & 2 = 0").parseBoolean());
+    }
+
+    @Test
+    public void testSimpleBracket() {
+        Assert.assertTrue(new BooleanEvaluator("[0 = 0]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("[0 = 1]").parseBoolean());
+    }
+
+    @Test
+    public void testSimpleBracketLeft() {
+        Assert.assertTrue(new BooleanEvaluator("[0 = 0] & 1 = 1").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("[0 = 1] & 1 = 1").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("[0 = 1] & 0 = 1").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("[0 = 1] & 0 = 1").parseBoolean());
+    }
+
+    @Test
+    public void testSimpleBracketRight() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 1]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [0 = 1]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [0 = 1]").parseBoolean());
+    }
+
+    @Test
+    public void testBrackedMultiExpressionsOR() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 1 | 2 = 2]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 1 | 2 = 0]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 0 | 2 = 2]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | [1 = 1 | 2 = 2]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 0 | 2 = 0]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | [1 = 0 | 2 = 2]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | [1 = 1 | 2 = 0]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | [1 = 0 | 2 = 0]").parseBoolean());
+    }
+
+    @Test
+    public void testBrackedMultiExpressionsAND() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1 & 2 = 2]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & [1 = 1 & 2 = 0]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & [1 = 0 & 2 = 2]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 1 & 2 = 2]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & [1 = 0 & 2 = 0]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 0 & 2 = 2]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 1 & 2 = 0]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 0 & 2 = 0]").parseBoolean());
+    }
+
+    @Test
+    public void testBrackedMultiExpressionsMIXED() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1 | 2 = 2]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1 | 2 = 0]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 0 | 2 = 2]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 1 | 2 = 2]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 0 & [1 = 0 | 2 = 0]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 0 | 2 = 2]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 1 | 2 = 0]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 & [1 = 0 | 2 = 0]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 1 & 2 = 2]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 1 & 2 = 0]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 0 & 2 = 2]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 1 | [1 = 1 & 2 = 2]").parseBoolean());
+
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 | [1 = 0 & 2 = 0]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | [1 = 0 & 2 = 2]").parseBoolean());
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | [1 = 1 & 2 = 0]").parseBoolean());
+
+        Assert.assertFalse(new BooleanEvaluator("0 = 1 | [1 = 0 & 2 = 0]").parseBoolean());
     }
 }
