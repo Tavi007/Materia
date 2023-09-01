@@ -22,7 +22,7 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
-    public AbstractMateriaEffectConfiguration copy() {
+    public StatConfiguration copy() {
         StatConfiguration copy = new StatConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());

@@ -43,4 +43,8 @@ public class ArithmeticExpression extends Expression {
     public int evaluateToInt(List<ItemStack> stacks) {
         return (int) Math.round(evaluateToDouble(stacks));
     }
+
+    public float evaluateToFloat(List<ItemStack> stacks) {
+        return (float) Math.round(evaluateToDouble(stacks));
+    }
 }

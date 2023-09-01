@@ -26,7 +26,7 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
-    public AbstractMateriaEffectConfiguration copy() {
+    public AttackConfiguration copy() {
         AttackConfiguration copy = new AttackConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());

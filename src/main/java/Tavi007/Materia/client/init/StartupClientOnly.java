@@ -4,6 +4,7 @@ import Tavi007.Materia.Materia;
 import Tavi007.Materia.client.gui.MateriaToolClientComponent;
 import Tavi007.Materia.client.gui.MateriaToolComponent;
 import Tavi007.Materia.client.renderer.entity.AbilityPointOrbRenderer;
+import Tavi007.Materia.client.renderer.entity.SpellProjectileRenderer;
 import Tavi007.Materia.init.EntityTypeList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -17,12 +18,13 @@ public class StartupClientOnly {
     @SubscribeEvent
     public static void onRegisterClientTooltipComponentFactoriesEvent(RegisterClientTooltipComponentFactoriesEvent event) {
         event.register(MateriaToolComponent.class, MateriaToolClientComponent::new);
-        Materia.LOGGER.info("Materia tooltip component factories registered.");
+        Materia.LOGGER.info("Tooltip component factories registered.");
     }
 
     @SubscribeEvent
     public static void onRegisterRenderersEvent(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityTypeList.ABILITY_POINT_ORB.get(), AbilityPointOrbRenderer::new);
-        Materia.LOGGER.info("Materia renderers registered.");
+        event.registerEntityRenderer(EntityTypeList.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
+        Materia.LOGGER.info("Entity renderers registered.");
     }
 }

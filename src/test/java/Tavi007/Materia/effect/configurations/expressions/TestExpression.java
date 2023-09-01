@@ -29,6 +29,11 @@ public class TestExpression {
         public ExpressionTester copy() {
             return new ExpressionTester(new String(expression), copyInputNames());
         }
+
+        @Override
+        protected boolean isValid() {
+            return true;
+        }
     }
 
     @Test

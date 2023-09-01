@@ -29,7 +29,7 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
-    public AbstractMateriaEffectConfiguration copy() {
+    public MiningConfiguration copy() {
         MiningConfiguration copy = new MiningConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());

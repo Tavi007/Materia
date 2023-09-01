@@ -2,6 +2,7 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.entities.AbilityPointOrb;
+import Tavi007.Materia.entities.SpellProjectileEntity;
 import Tavi007.Materia.entities.ThrownAbilityPointBottle;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -27,4 +28,11 @@ public class EntityTypeList {
             .clientTrackingRange(6)
             .updateInterval(20)
             .build(new ResourceLocation(Materia.MOD_ID, "thrown_ability_point_bottle").toString()));
+
+    public static final RegistryObject<EntityType<SpellProjectileEntity>> SPELL_PROJECTILE = ENTITY_TYPES.register("spell_projectile",
+        () -> EntityType.Builder.<SpellProjectileEntity> of(SpellProjectileEntity::new, MobCategory.MISC)
+            .sized(0.5F, 0.5F)
+            .clientTrackingRange(6)
+            .updateInterval(20)
+            .build(new ResourceLocation(Materia.MOD_ID, "spell_projectile").toString()));
 }
