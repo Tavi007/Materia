@@ -53,7 +53,9 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
 
     @Override
     public boolean isValid() {
-        return element != null && damage.isValid() && area.isValid();
+        return element != null
+            && damage != null && damage.isValid()
+            && area != null && area.isValid();
     }
 
     @Override

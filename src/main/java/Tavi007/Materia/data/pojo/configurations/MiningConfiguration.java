@@ -41,7 +41,7 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
     @Override
     public boolean isValid() {
         return veinMiner != null
-            && areaConfiguration.isValid();
+            && areaConfiguration != null && areaConfiguration.isValid();
     }
 
     @Override

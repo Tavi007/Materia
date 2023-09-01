@@ -1,5 +1,6 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,16 @@ public class ArithmeticExpression extends Expression {
     @Override
     public ArithmeticExpression copy() {
         return new ArithmeticExpression(new String(expression), copyInputNames());
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            evaluateToDouble(Collections.emptyList());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public double evaluateToDouble(List<ItemStack> stacks) {

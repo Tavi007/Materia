@@ -33,7 +33,8 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     @Override
     public boolean isValid() {
-        return stat != null && value.isValid();
+        return stat != null
+            && value != null && value.isValid();
     }
 
     @Override

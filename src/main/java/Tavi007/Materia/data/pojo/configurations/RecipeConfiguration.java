@@ -29,7 +29,8 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
     @Override
     public boolean isValid() {
-        return recipe != null && level.isValid();
+        return recipe != null
+            && level != null && level.isValid();
     }
 
     @Override

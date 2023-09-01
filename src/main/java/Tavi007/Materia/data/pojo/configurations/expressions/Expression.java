@@ -60,8 +60,6 @@ public abstract class Expression {
         return inputValues;
     }
 
-    public abstract Expression copy();
-
     protected Set<String> copyInputNames() {
         Set<String> inputNamesCopy = null;
         if (getInputNames() != null) {
@@ -83,10 +81,6 @@ public abstract class Expression {
         return expressionCopy;
     }
 
-    public boolean isValid() {
-        return expression != null;
-    }
-
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(expression);
     }
@@ -94,6 +88,10 @@ public abstract class Expression {
     protected Expression(FriendlyByteBuf buf) {
         expression = buf.readUtf();
     }
+
+    public abstract Expression copy();
+
+    protected abstract boolean isValid();
 
     @Override
     public boolean equals(Object other) {

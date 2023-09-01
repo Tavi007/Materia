@@ -38,9 +38,9 @@ public class AreaConfiguration {
     }
 
     public boolean isValid() {
-        return width.isValid()
-            && range.isValid()
-            && height.isValid();
+        return width != null && width.isValid()
+            && range != null && range.isValid()
+            && height != null && height.isValid();
     }
 
     public void encode(FriendlyByteBuf buf) {

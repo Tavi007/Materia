@@ -1,5 +1,6 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +19,16 @@ public class BooleanExpression extends Expression {
 
     public BooleanExpression(FriendlyByteBuf buf) {
         super(buf);
+    }
+
+    @Override
+    public boolean isValid() {
+        try {
+            evaluate(Collections.emptyList());
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
