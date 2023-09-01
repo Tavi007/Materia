@@ -1,5 +1,7 @@
 package Tavi007.Materia.data.pojo.configurations;
 
+import java.util.Objects;
+
 import com.google.common.base.Optional;
 import com.google.gson.annotations.SerializedName;
 
@@ -57,9 +59,16 @@ public abstract class AbstractMateriaEffectConfiguration {
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof AbstractMateriaEffectConfiguration otherConfiguration) {
-            return ((id == null && otherConfiguration.id == null) || id.equals(otherConfiguration.id))
-                && ((tooltipColor == null && otherConfiguration.tooltipColor == null) || tooltipColor.equals(otherConfiguration.tooltipColor));
+            return Objects.equals(id, otherConfiguration.id)
+                && Objects.equals(tooltipColor, otherConfiguration.tooltipColor);
         }
         return false;
     }

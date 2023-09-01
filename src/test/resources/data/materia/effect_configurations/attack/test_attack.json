@@ -1,13 +1,11 @@
 {
     "effect_type":"materia:attack",
 	"tooltip_color": 8852243,
-    "element": "fire",
-    "spell_level": {
-        "base": 1,
-        "add": ["materia:fire_materia"]
-    },
-    "size_level": {
-        "base": 1,
-        "add": ["materia:size_up_materia"]
+	"element": "fire",
+    "damage":{ "expression": "#materia:fire_materia"},
+	"area": {
+		"width":{ "expression": "#materia:size_up_materia + #materia:width_up_materia"},
+		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
+		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
     }
 }

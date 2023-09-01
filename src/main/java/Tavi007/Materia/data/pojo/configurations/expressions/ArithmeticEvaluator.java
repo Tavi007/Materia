@@ -1,7 +1,7 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
 // Note: found this solution on stackoverflow
-public class ArithmeticEvaluator extends ExpressionEvaluator {
+public class ArithmeticEvaluator extends AbstractExpressionEvaluator {
 
     public ArithmeticEvaluator(String expression) {
         super(expression);

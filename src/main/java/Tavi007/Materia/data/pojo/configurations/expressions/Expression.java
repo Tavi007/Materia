@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,24 +16,23 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public class Expression {
+public abstract class Expression {
 
-    private String expression;
+    protected String expression;
     private transient Set<String> inputNames;
 
     private static final Pattern ITEM_INPUT = Pattern.compile("(?=#)([#a-zA-Z0-9_\\:]*)");
 
-    public Expression(String expression) {
+    protected Expression(String expression) {
         this.expression = expression;
     }
 
-    public Expression(String expression, Set<String> inputNames) {
+    protected Expression(String expression, Set<String> inputNames) {
         this.expression = expression;
         this.inputNames = inputNames;
     }
 
-    // public for testing
-    public Set<String> getInputNames() {
+    protected Set<String> getInputNames() {
         if (inputNames == null) {
             inputNames = new HashSet<>();
             Matcher matcher = ITEM_INPUT.matcher(expression);
@@ -60,7 +60,9 @@ public class Expression {
         return inputValues;
     }
 
-    public Expression copy() {
+    public abstract Expression copy();
+
+    protected Set<String> copyInputNames() {
         Set<String> inputNamesCopy = null;
         if (getInputNames() != null) {
             inputNamesCopy = new HashSet<>();
@@ -68,10 +70,10 @@ public class Expression {
                 inputNamesCopy.add(inputName);
             }
         }
-        return new Expression(new String(expression), inputNamesCopy);
+        return inputNamesCopy;
     }
 
-    public String getFinalExpression(List<ItemStack> stacks) {
+    protected String getFinalExpression(List<ItemStack> stacks) {
         String expressionCopy = new String(expression);
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
@@ -81,7 +83,6 @@ public class Expression {
         return expressionCopy;
     }
 
-    // public boolean isValid(ExpressionEvaluator evaluator) {
     public boolean isValid() {
         return expression != null;
     }
@@ -90,15 +91,22 @@ public class Expression {
         buf.writeUtf(expression);
     }
 
-    public Expression(FriendlyByteBuf buf) {
+    protected Expression(FriendlyByteBuf buf) {
         expression = buf.readUtf();
     }
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof Expression otherExpression) {
-            return (expression == null && otherExpression.expression == null)
-                || expression.equals(otherExpression.expression);
+            return Objects.equals(expression, otherExpression.expression)
+                && Objects.equals(getInputNames(), otherExpression.getInputNames());
         }
         return false;
     }

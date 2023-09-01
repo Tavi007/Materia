@@ -3,6 +3,7 @@ package Tavi007.Materia.data.pojo.configurations;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -58,12 +59,17 @@ public class MiningConfiguration extends AbstractMateriaEffectConfiguration {
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof MiningConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && ((areaConfiguration == null && otherConfiguration.areaConfiguration == null)
-                    || areaConfiguration.equals(otherConfiguration.areaConfiguration))
-                && ((veinMiner == null && otherConfiguration.veinMiner == null)
-                    || veinMiner.equals(otherConfiguration.veinMiner));
+                && Objects.equals(areaConfiguration, otherConfiguration.areaConfiguration)
+                && Objects.equals(veinMiner, otherConfiguration.veinMiner);
         }
         return false;
     }

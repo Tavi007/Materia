@@ -218,4 +218,13 @@ public class TestBooleanEvaluator {
 
         Assert.assertFalse(new BooleanEvaluator("0 = 1 | [1 = 0 & 2 = 0]").parseBoolean());
     }
+
+    @Test
+    public void testNestedBrackets() {
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1 | [2 = 2 & 3 = 3]]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 0 | [2 = 2 & 3 = 3]]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [1 = 1 & [2 = 0 | 3 = 3]]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [[1 = 1 & 2 = 0] | 3 = 3]").parseBoolean());
+        Assert.assertTrue(new BooleanEvaluator("0 = 0 & [[1 = 1 & 2 = 2] | 3 = 0]").parseBoolean());
+    }
 }

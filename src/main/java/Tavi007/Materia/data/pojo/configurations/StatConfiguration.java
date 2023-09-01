@@ -1,15 +1,17 @@
 package Tavi007.Materia.data.pojo.configurations;
 
+import java.util.Objects;
+
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     private Stat stat;
     @SerializedName("value")
-    private Expression value;
+    private ArithmeticExpression value;
 
     private StatConfiguration() {
         super();
@@ -43,18 +45,23 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
     public StatConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        value = new Expression(buf);
+        value = new ArithmeticExpression(buf);
         stat = buf.readEnum(Stat.class);
     }
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof StatConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && ((value == null && otherConfiguration.value == null)
-                    || value.equals(otherConfiguration.value))
-                && ((stat == null && otherConfiguration.stat == null)
-                    || stat.equals(otherConfiguration.stat));
+                && Objects.equals(value, otherConfiguration.value)
+                && Objects.equals(stat, otherConfiguration.stat);
         }
         return false;
     }

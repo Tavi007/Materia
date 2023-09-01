@@ -1,13 +1,13 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
-public class ExpressionEvaluator {
+public abstract class AbstractExpressionEvaluator {
 
     protected String expression;
 
     protected int charAtPos;
     protected int pos = -1;
 
-    protected ExpressionEvaluator(String expression) {
+    protected AbstractExpressionEvaluator(String expression) {
         this.expression = expression;
     }
 

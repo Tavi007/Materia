@@ -1,6 +1,6 @@
 package Tavi007.Materia.data.pojo.configurations.expressions;
 
-public class BooleanEvaluator extends ExpressionEvaluator {
+public class BooleanEvaluator extends AbstractExpressionEvaluator {
 
     public BooleanEvaluator(String expression) {
         super(expression);

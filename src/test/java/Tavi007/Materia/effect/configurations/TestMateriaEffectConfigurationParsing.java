@@ -1,4 +1,4 @@
-package Tavi007.Materia.network;
+package Tavi007.Materia.effect.configurations;
 
 import java.io.IOException;
 import java.nio.file.Files;

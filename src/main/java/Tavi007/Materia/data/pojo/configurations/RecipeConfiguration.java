@@ -2,14 +2,15 @@ package Tavi007.Materia.data.pojo.configurations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
-    Expression level;
+    ArithmeticExpression level;
     String recipe;
 
     private RecipeConfiguration() {
@@ -40,18 +41,23 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
 
     public RecipeConfiguration(FriendlyByteBuf buf) {
         super(buf);
-        level = new Expression(buf);
+        level = new ArithmeticExpression(buf);
         recipe = buf.readUtf();
     }
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof RecipeConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && ((level == null && otherConfiguration.level == null)
-                    || level.equals(otherConfiguration.level))
-                && ((recipe == null && otherConfiguration.recipe == null)
-                    || recipe.equals(otherConfiguration.recipe));
+                && Objects.equals(level, otherConfiguration.level)
+                && Objects.equals(recipe, otherConfiguration.recipe);
         }
         return false;
     }

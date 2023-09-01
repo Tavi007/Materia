@@ -1,32 +1,32 @@
 package Tavi007.Materia.data.pojo.configurations;
 
 import java.util.List;
+import java.util.Objects;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticEvaluator;
-import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
+import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class AreaConfiguration {
 
-    Expression width;
-    Expression range;
-    Expression height;
+    ArithmeticExpression width;
+    ArithmeticExpression range;
+    ArithmeticExpression height;
 
     private AreaConfiguration() {
         super();
     }
 
     public int getWidth(List<ItemStack> stacks) {
-        return (int) Math.round(new ArithmeticEvaluator(width.getFinalExpression(stacks)).parseArithmetic());
+        return width.evaluateToInt(stacks);
     }
 
     public int getRange(List<ItemStack> stacks) {
-        return (int) Math.round(new ArithmeticEvaluator(range.getFinalExpression(stacks)).parseArithmetic());
+        return range.evaluateToInt(stacks);
     }
 
     public int getHeight(List<ItemStack> stacks) {
-        return (int) Math.round(new ArithmeticEvaluator(height.getFinalExpression(stacks)).parseArithmetic());
+        return height.evaluateToInt(stacks);
     }
 
     public AreaConfiguration copy() {
@@ -50,20 +50,24 @@ public class AreaConfiguration {
     }
 
     public AreaConfiguration(FriendlyByteBuf buf) {
-        width = new Expression(buf);
-        range = new Expression(buf);
-        height = new Expression(buf);
+        width = new ArithmeticExpression(buf);
+        range = new ArithmeticExpression(buf);
+        height = new ArithmeticExpression(buf);
     }
 
     @Override
     public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+
         if (other instanceof AreaConfiguration otherConfiguration) {
-            return ((width == null && otherConfiguration.width == null)
-                || width.equals(otherConfiguration.width))
-                && ((range == null && otherConfiguration.range == null)
-                    || range.equals(otherConfiguration.range))
-                && ((height == null && otherConfiguration.height == null)
-                    || height.equals(otherConfiguration.height));
+            return Objects.equals(width, otherConfiguration.width)
+                && Objects.equals(range, otherConfiguration.range)
+                && Objects.equals(height, otherConfiguration.height);
         }
         return false;
     }
