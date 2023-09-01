@@ -8,18 +8,18 @@ import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
-public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
+public class MorphItemConfiguration extends AbstractMateriaEffectConfiguration {
 
     ArithmeticExpression level;
     String recipe;
 
-    private RecipeConfiguration() {
+    private MorphItemConfiguration() {
         super();
     }
 
     @Override
     public AbstractMateriaEffectConfiguration copy() {
-        RecipeConfiguration copy = new RecipeConfiguration();
+        MorphItemConfiguration copy = new MorphItemConfiguration();
         copy.setId(getId());
         copy.setTooltipColor(getTooltipColor());
         copy.level = level.copy();
@@ -40,7 +40,7 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
         buf.writeUtf(recipe);
     }
 
-    public RecipeConfiguration(FriendlyByteBuf buf) {
+    public MorphItemConfiguration(FriendlyByteBuf buf) {
         super(buf);
         level = new ArithmeticExpression(buf);
         recipe = buf.readUtf();
@@ -55,7 +55,7 @@ public class RecipeConfiguration extends AbstractMateriaEffectConfiguration {
             return false;
         }
 
-        if (other instanceof RecipeConfiguration otherConfiguration) {
+        if (other instanceof MorphItemConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
                 && Objects.equals(level, otherConfiguration.level)
                 && Objects.equals(recipe, otherConfiguration.recipe);

@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.configurations.AttackConfiguration;
-import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
 import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -71,7 +71,7 @@ public class MateriaSword extends SwordItem implements IMateriaTool {
     @Override
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
         return configuration instanceof AttackConfiguration
-            || configuration instanceof RecipeConfiguration
+            || configuration instanceof MorphItemConfiguration
             || configuration instanceof StatConfiguration;
     }
 }

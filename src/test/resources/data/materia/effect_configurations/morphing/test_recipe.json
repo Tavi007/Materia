@@ -1,5 +1,5 @@
 {
-    "type":"materia:recipe",
+    "type":"materia:morphing",
 	"tooltip_color": 13400769,
     "level": {"expression": "#materia:fire_materia + #materia:ice_materia"},
     "recipe": "materia:fire_ice"

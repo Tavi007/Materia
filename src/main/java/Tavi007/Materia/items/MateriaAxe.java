@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.configurations.MiningConfiguration;
-import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
 import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.core.BlockPos;
@@ -75,7 +75,7 @@ public class MateriaAxe extends AxeItem implements IMateriaTool {
 
     @Override
     public boolean canConfigurationBeApplied(AbstractMateriaEffectConfiguration configuration) {
-        return configuration instanceof RecipeConfiguration
+        return configuration instanceof MorphItemConfiguration
             || configuration instanceof StatConfiguration
             || configuration instanceof MiningConfiguration;
     }

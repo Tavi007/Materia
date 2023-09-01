@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.configurations.MiningConfiguration;
-import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
 import Tavi007.Materia.items.IMateriaTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,12 +85,12 @@ public class MateriaToolHelper {
         List<AbstractMateriaEffectConfiguration> effects = CapabilityHelper.getCurrentlySelectedEffect(toolStack);
 
         MiningConfiguration miningEffect = null;
-        RecipeConfiguration recipeEffect = null;
+        MorphItemConfiguration recipeEffect = null;
         for (AbstractMateriaEffectConfiguration effect : effects) {
             if (effect instanceof MiningConfiguration) {
                 miningEffect = (MiningConfiguration) effect;
-            } else if (effect instanceof RecipeConfiguration) {
-                recipeEffect = (RecipeConfiguration) effect;
+            } else if (effect instanceof MorphItemConfiguration) {
+                recipeEffect = (MorphItemConfiguration) effect;
             }
         }
 

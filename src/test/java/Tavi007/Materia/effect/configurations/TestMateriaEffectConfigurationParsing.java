@@ -16,7 +16,7 @@ import com.google.gson.GsonBuilder;
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.configurations.AttackConfiguration;
-import Tavi007.Materia.data.pojo.configurations.RecipeConfiguration;
+import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
 import Tavi007.Materia.init.MateriaEffectConfigurationTypeList;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import io.netty.buffer.Unpooled;
@@ -56,7 +56,7 @@ public class TestMateriaEffectConfigurationParsing {
 
     @Test
     public void testRecipeConfiguration() throws IOException {
-        configurations.put(getResource("test"), parseFile("recipe/test_recipe.json", "recipe", RecipeConfiguration.class));
+        configurations.put(getResource("test"), parseFile("recipe/test_recipe.json", "recipe", MorphItemConfiguration.class));
         checkSyncMateriaEffectConfigurationsPacketEncodingAndDecoding();
     }
 
