@@ -148,6 +148,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         for (ItemStack stack : stacks) {
             if (!stack.isEmpty() && isItemValid(0, stack)) {
                 CapabilityHelper.getLevelData(stack).addAP(ap);
+
             }
         }
     }
