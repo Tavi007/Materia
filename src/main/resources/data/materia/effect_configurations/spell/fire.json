@@ -1,0 +1,15 @@
+{
+    "type":"materia:spell",
+	"tooltip_color": 8852243,
+	"spells": [
+		{
+			"message_id": "test.message.id",
+			"texture": "materia:item/fire_materia",
+			"element": "fire",
+			"damage": {"expression": "3 * #materia:fire_materia"},
+			"spawnable": {"expression": "1=1"}
+		}
+	],
+    "spell_delay": { "expression": "1"},
+    "cooldown": { "expression": "1"}
+}

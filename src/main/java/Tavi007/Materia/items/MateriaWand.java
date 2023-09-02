@@ -105,7 +105,7 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
                         player.getY(),
                         player.getZ(),
                         entityConfiguration.getDamage(selectedMateriaStacks),
-                        entityConfiguration.getMsgId(),
+                        entityConfiguration.getMessageId(),
                         entityConfiguration.getTexture());
                     player.level.addFreshEntity(entity);
                     AttackDataAPI.putLayer(entity, new AttackLayer("magic", entityConfiguration.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));

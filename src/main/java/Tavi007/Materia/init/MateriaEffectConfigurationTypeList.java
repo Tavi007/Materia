@@ -5,6 +5,7 @@ import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfigurati
 import Tavi007.Materia.data.pojo.configurations.AttackConfiguration;
 import Tavi007.Materia.data.pojo.configurations.MiningConfiguration;
 import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
+import Tavi007.Materia.data.pojo.configurations.SpellConfiguration;
 import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
 import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,7 @@ public class MateriaEffectConfigurationTypeList {
         register("stat", StatConfiguration.class);
         register("morphing", MorphItemConfiguration.class);
         register("mining", MiningConfiguration.class);
+        register("spell", SpellConfiguration.class);
     }
 
     private static void register(String name, Class<? extends AbstractMateriaEffectConfiguration> clazz) {

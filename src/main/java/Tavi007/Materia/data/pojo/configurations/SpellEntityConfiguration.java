@@ -3,6 +3,8 @@ package Tavi007.Materia.data.pojo.configurations;
 import java.util.List;
 import java.util.Objects;
 
+import com.google.gson.annotations.SerializedName;
+
 import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
 import Tavi007.Materia.data.pojo.configurations.expressions.BooleanExpression;
 import net.minecraft.network.FriendlyByteBuf;
@@ -10,7 +12,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpellEntityConfiguration {
 
-    private String msgId;
+    @SerializedName("message_id")
+    private String messageId;
     private String texture;
     private String element;
     private ArithmeticExpression damage;
@@ -20,8 +23,8 @@ public class SpellEntityConfiguration {
         super();
     }
 
-    public String getMsgId() {
-        return msgId;
+    public String getMessageId() {
+        return messageId;
     }
 
     public String getTexture() {
@@ -42,7 +45,7 @@ public class SpellEntityConfiguration {
 
     public SpellEntityConfiguration copy() {
         SpellEntityConfiguration copy = new SpellEntityConfiguration();
-        copy.msgId = msgId;
+        copy.messageId = messageId;
         copy.texture = texture;
         copy.element = element;
         copy.damage = damage.copy();
@@ -51,7 +54,7 @@ public class SpellEntityConfiguration {
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(msgId);
+        buf.writeUtf(messageId);
         buf.writeUtf(texture);
         buf.writeUtf(element);
         damage.encode(buf);
@@ -59,7 +62,7 @@ public class SpellEntityConfiguration {
     }
 
     public SpellEntityConfiguration(FriendlyByteBuf buf) {
-        msgId = buf.readUtf();
+        messageId = buf.readUtf();
         texture = buf.readUtf();
         element = buf.readUtf();
         damage = new ArithmeticExpression(buf);
@@ -67,7 +70,7 @@ public class SpellEntityConfiguration {
     }
 
     public boolean isValid() {
-        return msgId != null
+        return messageId != null
             && texture != null
             && element != null
             && damage != null && damage.isValid()
@@ -85,7 +88,7 @@ public class SpellEntityConfiguration {
 
         if (other instanceof SpellEntityConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && Objects.equals(msgId, otherConfiguration.msgId)
+                && Objects.equals(messageId, otherConfiguration.messageId)
                 && Objects.equals(texture, otherConfiguration.texture)
                 && Objects.equals(element, otherConfiguration.element)
                 && Objects.equals(damage, otherConfiguration.damage)
