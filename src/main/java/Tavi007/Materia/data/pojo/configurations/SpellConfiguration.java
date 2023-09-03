@@ -7,6 +7,7 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 
 import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.util.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
@@ -27,7 +28,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
         copy.setTooltipColor(getTooltipColor());
 
         copy.spells = new ArrayList<>();
-        spells.forEach(spell -> copy.spells.add((SpellEntityConfiguration) spell.copy()));
+        spells.forEach(spell -> copy.spells.add(spell.copy()));
 
         copy.spellDelay = spellDelay.copy();
         copy.cooldown = cooldown.copy();
@@ -37,12 +38,14 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
     @Override
     public void encode(FriendlyByteBuf buf) {
         super.encode(buf);
+        NetworkHelper.writeSpellEntityConfigurationList(buf, spells);
         spellDelay.encode(buf);
         cooldown.encode(buf);
     }
 
     public SpellConfiguration(FriendlyByteBuf buf) {
         super(buf);
+        spells = NetworkHelper.readSpellEntityConfigurationList(buf);
         spellDelay = new ArithmeticExpression(buf);
         cooldown = new ArithmeticExpression(buf);
     }

@@ -3,5 +3,5 @@
 		"items":["materia:fire_materia"],
 		"tags":[]
 	},
-    "output":["materia:recipe/fire", "materia:attack/fire"]
+    "output":["materia:recipe/fire", "materia:attack/fire", "materia:spell/fire"]
 }

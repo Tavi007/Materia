@@ -102,7 +102,7 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
                     SpellProjectileEntity entity = new SpellProjectileEntity(
                         player.level,
                         player.getX(),
-                        player.getY(),
+                        player.getEyeY(),
                         player.getZ(),
                         entityConfiguration.getDamage(selectedMateriaStacks),
                         entityConfiguration.getMessageId(),
