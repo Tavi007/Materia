@@ -222,7 +222,7 @@ public class AbilityPointOrb extends Entity {
                 stacks.forEach(stack -> {
                     if (stack.getItem() instanceof IMateriaTool) {
                         MateriaCollectionHandler collection = CapabilityHelper.getMateriaCollectionHandler(stack);
-                        collection.addAp(this.value);
+                        collection.addAp(stack, this.value);
                     }
                 });
 

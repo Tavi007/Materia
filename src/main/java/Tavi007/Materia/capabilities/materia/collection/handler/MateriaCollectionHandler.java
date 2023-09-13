@@ -150,7 +150,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         return Collections.unmodifiableList(mappers);
     }
 
-    public void addAp(int ap) {
+    public void addAp(ItemStack tool, int ap) {
         boolean levelUpHappened = false;
         for (ItemStack stack : stacks) {
             if (!stack.isEmpty()
@@ -161,7 +161,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         }
 
         if (levelUpHappened) {
-            // recompute effects
+            computeEffects(tool);
         }
     }
 }
