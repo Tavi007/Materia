@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
-import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
@@ -22,6 +22,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class MateriaCollectionHandler extends ItemStackHandler {
 
     public final static int MAX_ITEM_SLOTS = 8;
+
     private List<CollectionToEffectRecipeMapper> mappers;
     private int selectedMapperIndex;
 
@@ -75,7 +76,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     private List<CollectionToEffectRecipeMapper> computeCollectionToEffectRecipeMapper(List<List<Integer>> slotIdMappings, IMateriaTool materiaTool) {
         List<CollectionToEffectRecipeMapper> mappers = new ArrayList<>();
         for (List<Integer> slotIndexList : slotIdMappings) {
-            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffectConfigurations(slotIndexList, materiaTool));
+            CollectionToEffectRecipeMapper mapper = new CollectionToEffectRecipeMapper(slotIndexList, computeEffects(slotIndexList, materiaTool));
             if (mapper.hasEffectConfigurations()) {
                 mappers.add(mapper);
             }
@@ -83,7 +84,26 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         return mappers;
     }
 
-    private List<AbstractMateriaEffectConfiguration> computeEffectConfigurations(List<Integer> slotIndexList, IMateriaTool materiaTool) {
+    private List<AbstractMateriaEffect> computeEffects(List<Integer> slotIndexList, IMateriaTool materiaTool) {
+        List<ItemStack> stacksOfSlots = getStacks(slotIndexList);
+
+        List<AbstractMateriaEffect> effects = new ArrayList<>();
+        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacksOfSlots);
+        for (ResourceLocation effectRecipe : effectRecipes) {
+            MateriaEffectRecipe recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
+            if (recipePojo != null) {
+                for (ResourceLocation effectName : recipePojo.getOutput()) {
+                    AbstractMateriaEffect effect = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getEffect(effectName, materiaTool, stacksOfSlots);
+                    if (effect != null) {
+                        effects.add(effect);
+                    }
+                }
+            }
+        }
+        return effects;
+    }
+
+    private List<ItemStack> getStacks(List<Integer> slotIndexList) {
         List<ItemStack> stacks = new ArrayList<>();
         for (Integer index : slotIndexList) {
             ItemStack stack = getStackInSlot(index);
@@ -91,21 +111,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
                 stacks.add(stack);
             }
         }
-
-        List<AbstractMateriaEffectConfiguration> configurations = new ArrayList<>();
-        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacks);
-        for (ResourceLocation effectRecipe : effectRecipes) {
-            MateriaEffectRecipe recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
-            if (recipePojo != null) {
-                for (ResourceLocation effect : recipePojo.getOutput()) {
-                    AbstractMateriaEffectConfiguration configuration = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getConfiguration(effect);
-                    if (configuration != null && materiaTool.canConfigurationBeApplied(configuration)) {
-                        configurations.add(configuration);
-                    }
-                }
-            }
-        }
-        return configurations;
+        return stacks;
     }
 
     public int getSelectedConfigurationsIndex() {
@@ -116,15 +122,15 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         this.selectedMapperIndex = index;
     }
 
-    public List<AbstractMateriaEffectConfiguration> getSelectedEffectConfigurations() {
-        return getEffectConfigurations(selectedMapperIndex);
+    public List<AbstractMateriaEffect> getSelectedEffects() {
+        return getEffects(selectedMapperIndex);
     }
 
-    public List<AbstractMateriaEffectConfiguration> getEffectConfigurations(int index) {
+    public List<AbstractMateriaEffect> getEffects(int index) {
         if (mappers.isEmpty() || index < 0 || index >= mappers.size()) {
             return Collections.emptyList();
         }
-        return mappers.get(index).getEffectConfigurations();
+        return mappers.get(index).getEffects();
     }
 
     public List<ItemStack> getSelectedMateriaStacks() {
@@ -145,11 +151,17 @@ public class MateriaCollectionHandler extends ItemStackHandler {
     }
 
     public void addAp(int ap) {
+        boolean levelUpHappened = false;
         for (ItemStack stack : stacks) {
-            if (!stack.isEmpty() && isItemValid(0, stack)) {
-                CapabilityHelper.getLevelData(stack).addAP(ap);
-
+            if (!stack.isEmpty()
+                && isItemValid(0, stack)
+                && CapabilityHelper.getLevelData(stack).addAP(ap)) {
+                levelUpHappened = true;
             }
+        }
+
+        if (levelUpHappened) {
+            // recompute effects
         }
     }
 }

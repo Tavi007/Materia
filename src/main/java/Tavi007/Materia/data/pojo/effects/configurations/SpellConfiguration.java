@@ -1,4 +1,4 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects.configurations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,48 +6,42 @@ import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.effects.SpellEffect;
+import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
 import Tavi007.Materia.util.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 
 public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
 
+    @SerializedName("message_id")
+    private String messageId;
     private List<SpellEntityConfiguration> spells;
-    @SerializedName("spell_delay")
-    private ArithmeticExpression spellDelay;
-    private ArithmeticExpression cooldown;
 
     private SpellConfiguration() {
         super();
     }
 
     @Override
-    public SpellConfiguration copy() {
-        SpellConfiguration copy = new SpellConfiguration();
-        copy.setId(getId());
-        copy.setTooltipColor(getTooltipColor());
-
-        copy.spells = new ArrayList<>();
-        spells.forEach(spell -> copy.spells.add(spell.copy()));
-
-        copy.spellDelay = spellDelay.copy();
-        copy.cooldown = cooldown.copy();
-        return copy;
+    public SpellEffect computeEffect(List<ItemStack> stacks) {
+        List<SpellEntityEffect> entityEffects = new ArrayList<>();
+        spells.stream()
+            .filter(spell -> spell.isSpawnable(stacks))
+            .forEach(spell -> entityEffects.add(spell.computeEffect(stacks)));
+        return new SpellEffect(getId(), getTooltipColor(), messageId, entityEffects);
     }
 
     @Override
     public void encode(FriendlyByteBuf buf) {
         super.encode(buf);
+        buf.writeUtf(messageId);
         NetworkHelper.writeSpellEntityConfigurationList(buf, spells);
-        spellDelay.encode(buf);
-        cooldown.encode(buf);
     }
 
     public SpellConfiguration(FriendlyByteBuf buf) {
         super(buf);
+        messageId = buf.readUtf();
         spells = NetworkHelper.readSpellEntityConfigurationList(buf);
-        spellDelay = new ArithmeticExpression(buf);
-        cooldown = new ArithmeticExpression(buf);
     }
 
     @Override
@@ -59,13 +53,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
                 break;
             }
         }
-        return areSpellsValid
-            && spellDelay != null && spellDelay.isValid()
-            && cooldown != null && cooldown.isValid();
-    }
-
-    public List<SpellEntityConfiguration> getEntityConfigurations() {
-        return spells;
+        return areSpellsValid;
     }
 
     @Override
@@ -79,9 +67,7 @@ public class SpellConfiguration extends AbstractMateriaEffectConfiguration {
 
         if (other instanceof SpellConfiguration otherConfiguration) {
             return super.equals(otherConfiguration)
-                && Objects.equals(spells, otherConfiguration.spells)
-                && Objects.equals(spellDelay, otherConfiguration.spellDelay)
-                && Objects.equals(cooldown, otherConfiguration.cooldown);
+                && Objects.equals(spells, otherConfiguration.spells);
         }
         return false;
     }

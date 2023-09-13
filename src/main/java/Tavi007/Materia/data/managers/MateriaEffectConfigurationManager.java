@@ -1,6 +1,7 @@
 package Tavi007.Materia.data.managers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
@@ -11,7 +12,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import Tavi007.Materia.Materia;
-import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
+import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +22,7 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -39,10 +43,10 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
         return new SyncMateriaEffectConfigurationsPacket(registeredEffectConfigurations);
     }
 
-    public AbstractMateriaEffectConfiguration getConfiguration(ResourceLocation id) {
+    public AbstractMateriaEffect getEffect(ResourceLocation id, IMateriaTool tool, List<ItemStack> stacks) {
         AbstractMateriaEffectConfiguration configuration = registeredEffectConfigurations.get(id);
-        if (configuration != null) {
-            return configuration.copy();
+        if (configuration != null && tool.canConfigurationBeApplied(configuration)) {
+            return configuration.computeEffect(stacks);
         }
         return null;
     }
@@ -59,6 +63,10 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
                 ResourceLocation type = getType(json.getAsJsonObject());
                 if (type == null) {
                     throw new Exception("Could not find 'type' property.");
+                }
+
+                if (type.getPath().contains("spell")) {
+                    System.out.println("");
                 }
 
                 Class<? extends AbstractMateriaEffectConfiguration> clazz = MateriaEffectConfigurationRegistry.get(type);

@@ -1,4 +1,4 @@
-package Tavi007.Materia.data.pojo.configurations.expressions;
+package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -88,8 +88,6 @@ public abstract class Expression {
     protected Expression(FriendlyByteBuf buf) {
         expression = buf.readUtf();
     }
-
-    public abstract Expression copy();
 
     protected abstract boolean isValid();
 

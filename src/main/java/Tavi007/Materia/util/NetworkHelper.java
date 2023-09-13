@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import Tavi007.Materia.data.pojo.configurations.SpellEntityConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.SpellEntityConfiguration;
 import net.minecraft.network.FriendlyByteBuf;
 
 public class NetworkHelper {

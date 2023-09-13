@@ -1,4 +1,4 @@
-package Tavi007.Materia.data.pojo.configurations.expressions;
+package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 // Note: found this solution on stackoverflow
 public class ArithmeticEvaluator extends AbstractExpressionEvaluator {

@@ -1,11 +1,15 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects.configurations;
 
+import java.util.List;
 import java.util.Objects;
 
 import com.google.gson.annotations.SerializedName;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.effects.Stat;
+import Tavi007.Materia.data.pojo.effects.StatEffect;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.item.ItemStack;
 
 public class StatConfiguration extends AbstractMateriaEffectConfiguration {
 
@@ -22,13 +26,8 @@ public class StatConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
-    public StatConfiguration copy() {
-        StatConfiguration copy = new StatConfiguration();
-        copy.setId(getId());
-        copy.setTooltipColor(getTooltipColor());
-        copy.stat = this.stat;
-        copy.value = value.copy();
-        return copy;
+    public StatEffect computeEffect(List<ItemStack> stacks) {
+        return new StatEffect(getId(), getTooltipColor(), stat, value.evaluateToInt(stacks));
     }
 
     @Override

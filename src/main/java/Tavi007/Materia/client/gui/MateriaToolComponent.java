@@ -63,7 +63,7 @@ public class MateriaToolComponent implements TooltipComponent {
 
     // height and width and the description of effects of a specific mapping
     public List<Pair<FormattedCharSequence, Integer>> getEffectDescriptions(int index) {
-        return materiaCollection.getEffectConfigurations(index)
+        return materiaCollection.getEffects(index)
             .stream()
             .map(configuration -> Pair.of(Component.translatable(configuration.getDescriptionId(suffix)).getVisualOrderText(), configuration.getTooltipColor()))
             .collect(Collectors.toList());

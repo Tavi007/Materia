@@ -9,10 +9,11 @@ import Tavi007.ElementalCombat.api.AttackDataAPI;
 import Tavi007.ElementalCombat.capabilities.attack.AttackLayer;
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
-import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
-import Tavi007.Materia.data.pojo.configurations.SpellConfiguration;
-import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
+import Tavi007.Materia.data.pojo.effects.SpellEffect;
+import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.MorphItemConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.SpellConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.StatConfiguration;
 import Tavi007.Materia.entities.SpellProjectileEntity;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
@@ -91,21 +92,20 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
         MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
         List<ItemStack> selectedMateriaStacks = collectionHandler.getSelectedMateriaStacks();
 
-        collectionHandler.getSelectedEffectConfigurations()
+        collectionHandler.getSelectedEffects()
             .stream()
-            .filter(configuration -> configuration instanceof SpellConfiguration)
-            .map(configuration -> (SpellConfiguration) configuration)
-            .forEach(configuration -> configuration.getEntityConfigurations()
+            .filter(configuration -> configuration instanceof SpellEffect)
+            .map(configuration -> (SpellEffect) configuration)
+            .forEach(configuration -> configuration.getSpellEntityEffects()
                 .stream()
-                .filter(entityConfiguration -> entityConfiguration.isSpawnable(selectedMateriaStacks))
                 .forEach(entityConfiguration -> {
                     SpellProjectileEntity entity = new SpellProjectileEntity(
                         player.level,
                         player.getX(),
                         player.getEyeY(),
                         player.getZ(),
-                        entityConfiguration.getDamage(selectedMateriaStacks),
-                        entityConfiguration.getMessageId(),
+                        entityConfiguration.getDamage(),
+                        configuration.getMessageId(),
                         entityConfiguration.getTexture());
                     player.level.addFreshEntity(entity);
                     AttackDataAPI.putLayer(entity, new AttackLayer("magic", entityConfiguration.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));

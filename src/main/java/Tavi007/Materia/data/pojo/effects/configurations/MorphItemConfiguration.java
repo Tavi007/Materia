@@ -1,10 +1,11 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects.configurations;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.effects.MorphItemEffect;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,13 +19,8 @@ public class MorphItemConfiguration extends AbstractMateriaEffectConfiguration {
     }
 
     @Override
-    public AbstractMateriaEffectConfiguration copy() {
-        MorphItemConfiguration copy = new MorphItemConfiguration();
-        copy.setId(getId());
-        copy.setTooltipColor(getTooltipColor());
-        copy.level = level.copy();
-        copy.recipe = new String(recipe);
-        return copy;
+    public MorphItemEffect computeEffect(List<ItemStack> stacks) {
+        return new MorphItemEffect(getId(), getTooltipColor(), level.evaluateToInt(stacks), recipe);
     }
 
     @Override

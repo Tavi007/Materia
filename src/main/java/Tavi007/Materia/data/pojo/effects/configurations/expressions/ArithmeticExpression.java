@@ -1,13 +1,16 @@
-package Tavi007.Materia.data.pojo.configurations.expressions;
+package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class ArithmeticExpression extends Expression {
+
+    private Double value;
 
     public ArithmeticExpression(String expression) {
         super(expression);
@@ -22,11 +25,6 @@ public class ArithmeticExpression extends Expression {
     }
 
     @Override
-    public ArithmeticExpression copy() {
-        return new ArithmeticExpression(new String(expression), copyInputNames());
-    }
-
-    @Override
     public boolean isValid() {
         try {
             evaluateToDouble(Collections.emptyList());
@@ -37,7 +35,7 @@ public class ArithmeticExpression extends Expression {
     }
 
     public double evaluateToDouble(List<ItemStack> stacks) {
-        return new ArithmeticEvaluator(getFinalExpression(stacks)).parseArithmetic();
+        return Optional.ofNullable(value).orElse(new ArithmeticEvaluator(getFinalExpression(stacks)).parseArithmetic());
     }
 
     public int evaluateToInt(List<ItemStack> stacks) {

@@ -1,4 +1,4 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects;
 
 public enum Stat {
 

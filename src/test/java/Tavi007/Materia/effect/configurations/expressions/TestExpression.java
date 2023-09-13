@@ -6,7 +6,7 @@ import org.apache.commons.compress.utils.Sets;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.Expression;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.Expression;
 
 public class TestExpression {
 
@@ -23,11 +23,6 @@ public class TestExpression {
         @Override
         public Set<String> getInputNames() {
             return super.getInputNames();
-        }
-
-        @Override
-        public ExpressionTester copy() {
-            return new ExpressionTester(new String(expression), copyInputNames());
         }
 
         @Override

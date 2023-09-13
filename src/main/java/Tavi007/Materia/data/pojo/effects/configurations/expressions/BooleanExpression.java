@@ -1,13 +1,16 @@
-package Tavi007.Materia.data.pojo.configurations.expressions;
+package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
 public class BooleanExpression extends Expression {
+
+    private Boolean value;
 
     public BooleanExpression(String expression) {
         super(expression);
@@ -31,12 +34,7 @@ public class BooleanExpression extends Expression {
         }
     }
 
-    @Override
-    public BooleanExpression copy() {
-        return new BooleanExpression(new String(expression), copyInputNames());
-    }
-
     public boolean evaluate(List<ItemStack> stacks) {
-        return new BooleanEvaluator(getFinalExpression(stacks)).parseBoolean();
+        return Optional.ofNullable(value).orElse(new BooleanEvaluator(getFinalExpression(stacks)).parseBoolean());
     }
 }

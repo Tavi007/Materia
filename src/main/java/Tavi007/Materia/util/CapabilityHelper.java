@@ -7,7 +7,7 @@ import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.capabilities.level.LevelDataCapability;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
-import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import net.minecraft.world.item.ItemStack;
 
 public class CapabilityHelper {
@@ -34,9 +34,9 @@ public class CapabilityHelper {
         return stack.getCapability(MateriaCollectionHandlerCapability.CAPABILITY, null).orElse(new MateriaCollectionHandler());
     }
 
-    public static List<AbstractMateriaEffectConfiguration> getCurrentlySelectedEffect(ItemStack stack) {
+    public static List<AbstractMateriaEffect> getCurrentlySelectedEffect(ItemStack stack) {
         MateriaCollectionHandler collectionHandler = getMateriaCollectionHandler(stack);
-        return collectionHandler.getSelectedEffectConfigurations();
+        return collectionHandler.getSelectedEffects();
     }
 
     public static List<ItemStack> getCurrentlySelectedMateriaStacks(ItemStack stack) {

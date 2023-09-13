@@ -37,9 +37,10 @@ public class LevelData implements INBTSerializable<CompoundTag> {
         return levelUpData.get(level);
     }
 
-    public void addAP(int amount) {
+    // true if level up happens
+    public boolean addAP(int amount) {
         if (isMaxLevel()) {
-            return;
+            return false;
         }
 
         int extraAmount = (ap + amount) - getCurrentLevelUpData();
@@ -47,8 +48,10 @@ public class LevelData implements INBTSerializable<CompoundTag> {
             level++;
             ap = 0;
             addAP(extraAmount);
+            return true;
         } else {
             ap += amount;
+            return false;
         }
     }
 

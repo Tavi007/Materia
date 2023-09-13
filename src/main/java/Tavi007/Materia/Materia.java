@@ -8,6 +8,7 @@ import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.EntityTypeList;
 import Tavi007.Materia.init.ItemList;
 import Tavi007.Materia.init.MateriaEffectConfigurationTypeList;
+import Tavi007.Materia.init.MateriaEffectList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.init.RecipeTypeList;
 import Tavi007.Materia.init.StartupCommon;
@@ -44,6 +45,7 @@ public class Materia {
         MenuList.MENU_TYPES.register(MOD_EVENT_BUS);
         EntityTypeList.ENTITY_TYPES.register(MOD_EVENT_BUS);
         MateriaEffectConfigurationTypeList.init();
+        MateriaEffectList.init();
 
         RecipeTypeList.RECIPE_TYPES.register(MOD_EVENT_BUS);
         RecipeTypeList.RECIPE_SERIALIZERS.register(MOD_EVENT_BUS);

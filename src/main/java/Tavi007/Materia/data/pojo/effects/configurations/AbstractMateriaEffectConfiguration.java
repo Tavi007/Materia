@@ -1,13 +1,14 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects.configurations;
 
+import java.util.List;
 import java.util.Objects;
 
-import com.google.common.base.Optional;
 import com.google.gson.annotations.SerializedName;
 
-import net.minecraft.Util;
+import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public abstract class AbstractMateriaEffectConfiguration {
 
@@ -18,7 +19,7 @@ public abstract class AbstractMateriaEffectConfiguration {
     protected AbstractMateriaEffectConfiguration() {
     }
 
-    public abstract AbstractMateriaEffectConfiguration copy();
+    public abstract AbstractMateriaEffect computeEffect(List<ItemStack> stacks);
 
     public abstract boolean isValid();
 
@@ -30,12 +31,12 @@ public abstract class AbstractMateriaEffectConfiguration {
         this.tooltipColor = tooltipColor;
     }
 
-    public ResourceLocation getId() {
-        return id;
+    protected int getTooltipColor() {
+        return tooltipColor;
     }
 
-    public int getTooltipColor() {
-        return Optional.fromNullable(tooltipColor).or(16777215);
+    public ResourceLocation getId() {
+        return id;
     }
 
     public void encode(FriendlyByteBuf buf) {
@@ -47,10 +48,6 @@ public abstract class AbstractMateriaEffectConfiguration {
         id = buf.readResourceLocation();
         tooltipColor = buf.readInt();
     };
-
-    public String getDescriptionId(String toolSuffix) {
-        return Util.makeDescriptionId("materia_effect", id) + "." + toolSuffix;
-    }
 
     @Override
     public String toString() {

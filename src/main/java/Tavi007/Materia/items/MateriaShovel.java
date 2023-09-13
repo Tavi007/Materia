@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import Tavi007.Materia.data.pojo.configurations.AbstractMateriaEffectConfiguration;
-import Tavi007.Materia.data.pojo.configurations.MiningConfiguration;
-import Tavi007.Materia.data.pojo.configurations.MorphItemConfiguration;
-import Tavi007.Materia.data.pojo.configurations.StatConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.MiningConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.MorphItemConfiguration;
+import Tavi007.Materia.data.pojo.effects.configurations.StatConfiguration;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

@@ -6,5 +6,5 @@
 		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
 		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
     },
-	"vein_miner": false
+	"vein_miner": { "expression": "#materia:target_materia > 0"}
 }

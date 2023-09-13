@@ -1,4 +1,4 @@
-package Tavi007.Materia.data.pojo.configurations.expressions;
+package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 public abstract class AbstractExpressionEvaluator {
 

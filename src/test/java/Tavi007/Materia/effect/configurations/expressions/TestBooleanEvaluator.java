@@ -3,7 +3,7 @@ package Tavi007.Materia.effect.configurations.expressions;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.BooleanEvaluator;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.BooleanEvaluator;
 
 public class TestBooleanEvaluator {
 

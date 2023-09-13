@@ -1,9 +1,10 @@
-package Tavi007.Materia.data.pojo.configurations;
+package Tavi007.Materia.data.pojo.effects.configurations;
 
 import java.util.List;
 import java.util.Objects;
 
-import Tavi007.Materia.data.pojo.configurations.expressions.ArithmeticExpression;
+import Tavi007.Materia.data.pojo.effects.AttackEffect;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.ArithmeticExpression;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
@@ -17,23 +18,9 @@ public class AttackConfiguration extends AbstractMateriaEffectConfiguration {
         super();
     }
 
-    public String getElement() {
-        return element;
-    }
-
-    public double getDamage(List<ItemStack> stacks) {
-        return damage.evaluateToDouble(stacks);
-    }
-
     @Override
-    public AttackConfiguration copy() {
-        AttackConfiguration copy = new AttackConfiguration();
-        copy.setId(getId());
-        copy.setTooltipColor(getTooltipColor());
-        copy.element = new String(element);
-        copy.damage = damage.copy();
-        copy.area = area.copy();
-        return copy;
+    public AttackEffect computeEffect(List<ItemStack> stacks) {
+        return new AttackEffect(getId(), getTooltipColor(), element, damage.evaluateToFloat(stacks), area.computeEffect(stacks));
     }
 
     @Override
