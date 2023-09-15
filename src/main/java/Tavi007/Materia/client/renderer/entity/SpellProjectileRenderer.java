@@ -22,8 +22,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity> {
 
-    private static final RenderType RENDER_TYPE = RenderType.solid();
-
     public SpellProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);
         this.shadowRadius = 0.15F;
@@ -31,8 +29,8 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
     }
 
     @Override
-    protected int getBlockLightLevel(SpellProjectileEntity orbEntity, BlockPos blockPos) {
-        return Mth.clamp(super.getBlockLightLevel(orbEntity, blockPos) + 7, 0, 15);
+    protected int getBlockLightLevel(SpellProjectileEntity spellEntity, BlockPos blockPos) {
+        return Mth.clamp(super.getBlockLightLevel(spellEntity, blockPos) + 7, 0, 15);
     }
 
     @Override
@@ -44,7 +42,7 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         poseStack.scale(0.3F, 0.3F, 0.3F);
-        VertexConsumer vertexconsumer = bufferSource.getBuffer(RENDER_TYPE);
+        VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.itemEntityTranslucentCull(getTextureLocation(spellEntity)));
         PoseStack.Pose posestack$pose = poseStack.last();
         Matrix4f matrix4f = posestack$pose.pose();
         Matrix3f matrix3f = posestack$pose.normal();
@@ -69,7 +67,7 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
     }
 
     @Override
-    public ResourceLocation getTextureLocation(SpellProjectileEntity orbEntity) {
-        return orbEntity.getTexture();
+    public ResourceLocation getTextureLocation(SpellProjectileEntity spellEntity) {
+        return spellEntity.getTexture();
     }
 }

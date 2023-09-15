@@ -32,6 +32,20 @@ public abstract class Expression {
         this.inputNames = inputNames;
     }
 
+    protected Expression(FriendlyByteBuf buf) {
+        if (buf.readBoolean()) {
+            expression = buf.readUtf();
+        }
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        boolean expressionNonNull = expression != null;
+        buf.writeBoolean(expressionNonNull);
+        if (expressionNonNull) {
+            buf.writeUtf(expression);
+        }
+    }
+
     protected Set<String> getInputNames() {
         if (inputNames == null) {
             inputNames = new HashSet<>();
@@ -79,14 +93,6 @@ public abstract class Expression {
             expressionCopy = expressionCopy.replaceAll("#" + input, String.valueOf(level));
         }
         return expressionCopy;
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(expression);
-    }
-
-    protected Expression(FriendlyByteBuf buf) {
-        expression = buf.readUtf();
     }
 
     protected abstract boolean isValid();

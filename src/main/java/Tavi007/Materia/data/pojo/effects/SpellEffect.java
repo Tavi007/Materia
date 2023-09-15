@@ -48,7 +48,7 @@ public class SpellEffect extends AbstractMateriaEffect {
         spells = list.stream()
             .map(entry -> (CompoundTag) entry)
             .map(entry -> {
-                SpellEntityEffect effect = new SpellEntityEffect(null, null, 0);
+                SpellEntityEffect effect = new SpellEntityEffect(null, null, 0, 0);
                 effect.deserializeNBT(entry);
                 return effect;
             })

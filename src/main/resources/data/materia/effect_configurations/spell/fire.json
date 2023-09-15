@@ -4,10 +4,11 @@
 	"message_id": "test.message.id",
 	"spells": [
 		{
-			"texture": "materia:item/fire_materia",
+			"texture": "materia:textures/item/fire_materia.png",
 			"element": "fire",
 			"damage": {"expression": "3 * #materia:fire_materia"},
-			"spawnable": {"expression": "1=1"}
+			"speed": {"value": 1.25},
+			"spawnable": {"value": true}
 		}
 	]
 }

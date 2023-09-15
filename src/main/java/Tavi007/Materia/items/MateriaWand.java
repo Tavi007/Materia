@@ -15,6 +15,7 @@ import Tavi007.Materia.data.pojo.effects.configurations.MorphItemConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.SpellConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.StatConfiguration;
 import Tavi007.Materia.entities.SpellProjectileEntity;
+import Tavi007.Materia.init.EntityTypeList;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -26,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class MateriaWand extends TieredItem implements IMateriaTool {
 
@@ -89,26 +91,24 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionhand) {
         ItemStack stack = player.getItemInHand(interactionhand);
+        Vec3 shootDirection = player.getViewVector(0);
         MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
-        List<ItemStack> selectedMateriaStacks = collectionHandler.getSelectedMateriaStacks();
-
         collectionHandler.getSelectedEffects()
             .stream()
-            .filter(configuration -> configuration instanceof SpellEffect)
-            .map(configuration -> (SpellEffect) configuration)
-            .forEach(configuration -> configuration.getSpellEntityEffects()
+            .filter(effect -> effect instanceof SpellEffect)
+            .map(effect -> (SpellEffect) effect)
+            .forEach(effect -> effect.getSpellEntityEffects()
                 .stream()
-                .forEach(entityConfiguration -> {
+                .forEach(entityEffect -> {
                     SpellProjectileEntity entity = new SpellProjectileEntity(
+                        EntityTypeList.SPELL_PROJECTILE.get(),
                         player.level,
-                        player.getX(),
-                        player.getEyeY(),
-                        player.getZ(),
-                        entityConfiguration.getDamage(),
-                        configuration.getMessageId(),
-                        entityConfiguration.getTexture());
+                        player,
+                        shootDirection,
+                        entityEffect,
+                        effect.getMessageId());
                     player.level.addFreshEntity(entity);
-                    AttackDataAPI.putLayer(entity, new AttackLayer("magic", entityConfiguration.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));
+                    AttackDataAPI.putLayer(entity, new AttackLayer("magic", entityEffect.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));
 
                     // TODO use spell delay here or create some sort of caching logic somewhere
                 }));

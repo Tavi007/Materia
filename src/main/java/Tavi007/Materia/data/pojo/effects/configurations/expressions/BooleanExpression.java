@@ -2,7 +2,6 @@ package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,10 +21,26 @@ public class BooleanExpression extends Expression {
 
     public BooleanExpression(FriendlyByteBuf buf) {
         super(buf);
+        if (buf.readBoolean()) {
+            value = buf.readBoolean();
+        }
+    }
+
+    @Override
+    public void encode(FriendlyByteBuf buf) {
+        super.encode(buf);
+        boolean valueNonNull = value != null;
+        buf.writeBoolean(valueNonNull);
+        if (valueNonNull) {
+            buf.writeBoolean(value);
+        }
     }
 
     @Override
     public boolean isValid() {
+        if (value != null) {
+            return true;
+        }
         try {
             evaluate(Collections.emptyList());
             return true;
@@ -35,6 +50,12 @@ public class BooleanExpression extends Expression {
     }
 
     public boolean evaluate(List<ItemStack> stacks) {
-        return Optional.ofNullable(value).orElse(new BooleanEvaluator(getFinalExpression(stacks)).parseBoolean());
+        if (value != null) {
+            return value;
+        }
+        if (expression != null) {
+            return new BooleanEvaluator(getFinalExpression(stacks)).parseBoolean();
+        }
+        return false;
     }
 }

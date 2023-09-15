@@ -1,33 +1,41 @@
 package Tavi007.Materia.entities;
 
-import Tavi007.Materia.init.EntityTypeList;
+import java.util.Optional;
+
+import Tavi007.Materia.Materia;
+import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.network.NetworkHooks;
 
-public class SpellProjectileEntity extends Projectile {
+public class SpellProjectileEntity extends AbstractHurtingProjectile implements IEntityAdditionalSpawnData {
 
-    private float damage;
-    private String msgId;
-    private String texture;
+    private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/entity/default_spell_projectile.png");
+    private static final String DEFAULT_MESSAGE_ID = "blab.bla";
 
-    public SpellProjectileEntity(Level level, double posX, double posY, double posZ, float damage, String msgId, String texture) {
-        this(EntityTypeList.SPELL_PROJECTILE.get(), level);
-        this.setPos(posX, posY, posZ);
-        this.setYRot((float) (this.random.nextDouble() * 360.0D));
-        this.setDeltaMovement((this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D,
-            this.random.nextDouble() * 0.2D * 2.0D,
-            (this.random.nextDouble() * (double) 0.2F - (double) 0.1F) * 2.0D);
-        this.damage = damage;
-        this.msgId = msgId;
-        this.texture = texture;
+    private SpellEntityEffect effectData;
+    private String messageId;
 
+    public SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level, Entity sourceEntity, Vec3 shootDirection,
+            SpellEntityEffect effectData, String messageId) {
+        super(entityType, sourceEntity.getX(), sourceEntity.getEyeY(), sourceEntity.getZ(), shootDirection.x, shootDirection.y, shootDirection.z, level);
+        this.effectData = effectData;
+        this.messageId = messageId;
+        this.setDeltaMovement(shootDirection.scale(getSpeed()));
     }
 
     public SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level) {
@@ -38,40 +46,73 @@ public class SpellProjectileEntity extends Projectile {
         return Entity.MovementEmission.NONE;
     }
 
-    protected void defineSynchedData() {
+    public void addAdditionalSaveData(CompoundTag tag) {
+        CompoundTag compoundTag = effectData.serializeNBT();
+        tag.put("effect_data", compoundTag);
+        tag.putString("message_id", messageId);
     }
 
-    public void tick() {
-        super.tick();
-        this.xo = this.getX();
-        this.yo = this.getY();
-        this.zo = this.getZ();
-
+    public void readAdditionalSaveData(CompoundTag tag) {
+        effectData = new SpellEntityEffect("", "", 0, 0);
+        effectData.deserializeNBT(tag.getCompound("effect_data"));
+        messageId = tag.getString("message_id");
     }
 
-    public void addAdditionalSaveData(CompoundTag compoundTag) {
-        compoundTag.putShort("damage", (short) damage);
-        compoundTag.putString("msg_id", msgId);
-        compoundTag.putString("texture", texture);
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public void readAdditionalSaveData(CompoundTag compoundTag) {
-        this.damage = compoundTag.getShort("damage");
-        this.msgId = compoundTag.getString("msg_id");
-        this.texture = compoundTag.getString("texture");
+    @Override
+    public void writeSpawnData(FriendlyByteBuf buf) {
+        effectData.encode(buf);
+        buf.writeUtf(messageId);
+    }
+
+    @Override
+    public void readSpawnData(FriendlyByteBuf buf) {
+        effectData = new SpellEntityEffect(buf);
+        messageId = buf.readUtf();
     }
 
     public void hitLivingEntity(LivingEntity entity) {
         if (!this.level.isClientSide) {
-            entity.hurt(new EntityDamageSource(msgId, this), damage);
+            entity.hurt(new EntityDamageSource(getMessage(), this), getDamage());
         }
     }
 
+    @Override
     public SoundSource getSoundSource() {
         return SoundSource.AMBIENT;
     }
 
+    // TODO define through effect data
+    protected ParticleOptions getTrailParticle() {
+        return ParticleTypes.SMOKE;
+    }
+
+    @Override
+    protected boolean shouldBurn() {
+        return false;
+    }
+
+    protected String getMessage() {
+        return Optional.ofNullable(messageId).orElse(DEFAULT_MESSAGE_ID);
+    }
+
+    protected float getDamage() {
+        return Optional.ofNullable(effectData).map(SpellEntityEffect::getDamage).orElse(1.0f);
+    }
+
+    protected float getSpeed() {
+        return Optional.ofNullable(effectData).map(SpellEntityEffect::getSpeed).orElse(1.0f);
+    }
+
     public ResourceLocation getTexture() {
-        return new ResourceLocation(texture);
+        return DEFAULT_TEXTURE;
+        // return Optional.ofNullable(effectData)
+        // .map(SpellEntityEffect::getTexture)
+        // .map(ResourceLocation::new)
+        // .orElse(DEFAULT_TEXTURE);
     }
 }

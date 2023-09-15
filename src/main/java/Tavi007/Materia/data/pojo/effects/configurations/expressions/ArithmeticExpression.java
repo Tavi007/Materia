@@ -2,7 +2,6 @@ package Tavi007.Materia.data.pojo.effects.configurations.expressions;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,10 +21,26 @@ public class ArithmeticExpression extends Expression {
 
     public ArithmeticExpression(FriendlyByteBuf buf) {
         super(buf);
+        if (buf.readBoolean()) {
+            value = buf.readDouble();
+        }
+    }
+
+    @Override
+    public void encode(FriendlyByteBuf buf) {
+        super.encode(buf);
+        boolean valueNonNull = value != null;
+        buf.writeBoolean(valueNonNull);
+        if (valueNonNull) {
+            buf.writeDouble(value);
+        }
     }
 
     @Override
     public boolean isValid() {
+        if (value != null) {
+            return true;
+        }
         try {
             evaluateToDouble(Collections.emptyList());
             return true;
@@ -35,7 +50,13 @@ public class ArithmeticExpression extends Expression {
     }
 
     public double evaluateToDouble(List<ItemStack> stacks) {
-        return Optional.ofNullable(value).orElse(new ArithmeticEvaluator(getFinalExpression(stacks)).parseArithmetic());
+        if (value != null) {
+            return value;
+        }
+        if (expression != null) {
+            return new ArithmeticEvaluator(getFinalExpression(stacks)).parseArithmetic();
+        }
+        return 0;
     }
 
     public int evaluateToInt(List<ItemStack> stacks) {

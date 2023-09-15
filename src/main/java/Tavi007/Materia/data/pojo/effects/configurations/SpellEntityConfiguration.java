@@ -14,14 +14,11 @@ public class SpellEntityConfiguration {
     private String texture;
     private String element;
     private ArithmeticExpression damage;
+    private ArithmeticExpression speed;
     private BooleanExpression spawnable;
 
     private SpellEntityConfiguration() {
         super();
-    }
-
-    public float getDamage(List<ItemStack> stacks) {
-        return damage.evaluateToFloat(stacks);
     }
 
     public boolean isSpawnable(List<ItemStack> stacks) {
@@ -29,13 +26,14 @@ public class SpellEntityConfiguration {
     }
 
     public SpellEntityEffect computeEffect(List<ItemStack> stacks) {
-        return new SpellEntityEffect(texture, element, damage.evaluateToFloat(stacks));
+        return new SpellEntityEffect(texture, element, damage.evaluateToFloat(stacks), speed.evaluateToFloat(stacks));
     }
 
     public void encode(FriendlyByteBuf buf) {
         buf.writeUtf(texture);
         buf.writeUtf(element);
         damage.encode(buf);
+        speed.encode(buf);
         spawnable.encode(buf);
     }
 
@@ -43,6 +41,7 @@ public class SpellEntityConfiguration {
         texture = buf.readUtf();
         element = buf.readUtf();
         damage = new ArithmeticExpression(buf);
+        speed = new ArithmeticExpression(buf);
         spawnable = new BooleanExpression(buf);
     }
 
@@ -50,6 +49,7 @@ public class SpellEntityConfiguration {
         return texture != null
             && element != null
             && damage != null && damage.isValid()
+            && speed != null && speed.isValid()
             && spawnable != null && spawnable.isValid();
     }
 
@@ -67,6 +67,7 @@ public class SpellEntityConfiguration {
                 && Objects.equals(texture, otherConfiguration.texture)
                 && Objects.equals(element, otherConfiguration.element)
                 && Objects.equals(damage, otherConfiguration.damage)
+                && Objects.equals(speed, otherConfiguration.speed)
                 && Objects.equals(spawnable, otherConfiguration.spawnable);
         }
         return false;
