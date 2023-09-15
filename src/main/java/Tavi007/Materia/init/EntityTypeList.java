@@ -31,8 +31,8 @@ public class EntityTypeList {
 
     public static final RegistryObject<EntityType<SpellProjectileEntity>> SPELL_PROJECTILE = ENTITY_TYPES.register("spell_projectile",
         () -> EntityType.Builder.<SpellProjectileEntity> of(SpellProjectileEntity::new, MobCategory.MISC)
-            .sized(0.5F, 0.5F)
-            .clientTrackingRange(6)
+            .sized(1.0F, 1.0F)
+            .clientTrackingRange(10)
             .updateInterval(20)
             .build(new ResourceLocation(Materia.MOD_ID, "spell_projectile").toString()));
 }

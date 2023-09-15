@@ -42,7 +42,7 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         poseStack.scale(0.3F, 0.3F, 0.3F);
-        VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.itemEntityTranslucentCull(getTextureLocation(spellEntity)));
+        VertexConsumer vertexconsumer = bufferSource.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(spellEntity)));
         PoseStack.Pose posestack$pose = poseStack.last();
         Matrix4f matrix4f = posestack$pose.pose();
         Matrix3f matrix3f = posestack$pose.normal();
