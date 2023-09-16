@@ -121,10 +121,9 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
     }
 
     public ResourceLocation getTexture() {
-        return DEFAULT_TEXTURE;
-        // return Optional.ofNullable(effectData)
-        // .map(SpellEntityEffect::getTexture)
-        // .map(ResourceLocation::new)
-        // .orElse(DEFAULT_TEXTURE);
+        return Optional.ofNullable(effectData)
+            .map(SpellEntityEffect::getTexture)
+            .map(ResourceLocation::new)
+            .orElse(DEFAULT_TEXTURE);
     }
 }

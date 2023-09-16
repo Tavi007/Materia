@@ -48,9 +48,9 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         Matrix3f matrix3f = posestack$pose.normal();
 
         vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, -0.25F, 255, 255, 255, 0.0f, 0.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, -0.25F, 255, 255, 255, 0.0f, 0.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, 0.75F, 255, 255, 255, 0.0f, 0.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, 0.75F, 255, 255, 255, 0.0f, 0.0f, p_114604_);
+        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, -0.25F, 255, 255, 255, 1.0f, 0.0f, p_114604_);
+        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, 0.75F, 255, 255, 255, 1.0f, 1.0f, p_114604_);
+        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, 0.75F, 255, 255, 255, 0.0f, 1.0f, p_114604_);
         poseStack.popPose();
         super.render(spellEntity, p_114600_, p_114601_, poseStack, bufferSource, p_114604_);
     }
