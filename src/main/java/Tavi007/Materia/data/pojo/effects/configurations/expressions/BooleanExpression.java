@@ -9,10 +9,18 @@ import net.minecraft.world.item.ItemStack;
 
 public class BooleanExpression extends Expression {
 
+    public static final BooleanExpression DEFAULT_TRUE = new BooleanExpression(true);
+    public static final BooleanExpression DEFAULT_FALSE = new BooleanExpression(false);
+
     private Boolean value;
 
     public BooleanExpression(String expression) {
         super(expression);
+    }
+
+    public BooleanExpression(Boolean value) {
+        super("");
+        this.value = value;
     }
 
     public BooleanExpression(String expression, Set<String> inputNames) {

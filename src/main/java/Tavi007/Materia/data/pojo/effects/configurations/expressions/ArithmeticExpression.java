@@ -11,8 +11,16 @@ public class ArithmeticExpression extends Expression {
 
     private Double value;
 
+    public static final ArithmeticExpression DEFAULT_ONE = new ArithmeticExpression(1.0);
+    public static final ArithmeticExpression DEFAULT_ZERO = new ArithmeticExpression(0.0);
+
     public ArithmeticExpression(String expression) {
         super(expression);
+    }
+
+    public ArithmeticExpression(Double value) {
+        super("");
+        this.value = value;
     }
 
     public ArithmeticExpression(String expression, Set<String> inputNames) {

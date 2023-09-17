@@ -26,6 +26,7 @@ import net.minecraftforge.network.NetworkHooks;
 public class SpellProjectileEntity extends AbstractHurtingProjectile implements IEntityAdditionalSpawnData {
 
     private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/entity/default_spell_projectile.png");
+    private static final ResourceLocation DEFAULT_TRAIL_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/entity/default_spell_trail.png");
     private static final String DEFAULT_MESSAGE_ID = "blab.bla";
 
     private SpellEntityEffect effectData;

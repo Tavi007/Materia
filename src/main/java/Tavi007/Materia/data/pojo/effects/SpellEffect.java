@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 
 public class SpellEffect extends AbstractMateriaEffect {
@@ -44,7 +45,7 @@ public class SpellEffect extends AbstractMateriaEffect {
     public void deserializeNBT(CompoundTag tag) {
         super.deserializeNBT(tag);
         messageId = tag.getString("message_id");
-        ListTag list = tag.getList("spells", CompoundTag.TAG_COMPOUND);
+        ListTag list = tag.getList("spells", Tag.TAG_COMPOUND);
         spells = list.stream()
             .map(entry -> new SpellEntityEffect((CompoundTag) entry))
             .collect(Collectors.toList());

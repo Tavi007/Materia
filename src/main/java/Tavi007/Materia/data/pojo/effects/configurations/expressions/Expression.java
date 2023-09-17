@@ -39,7 +39,7 @@ public abstract class Expression {
     }
 
     public void encode(FriendlyByteBuf buf) {
-        boolean expressionNonNull = expression != null;
+        boolean expressionNonNull = expression != null && !expression.isBlank();
         buf.writeBoolean(expressionNonNull);
         if (expressionNonNull) {
             buf.writeUtf(expression);
