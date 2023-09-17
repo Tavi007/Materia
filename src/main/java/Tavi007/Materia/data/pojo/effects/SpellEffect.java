@@ -46,12 +46,7 @@ public class SpellEffect extends AbstractMateriaEffect {
         messageId = tag.getString("message_id");
         ListTag list = tag.getList("spells", CompoundTag.TAG_COMPOUND);
         spells = list.stream()
-            .map(entry -> (CompoundTag) entry)
-            .map(entry -> {
-                SpellEntityEffect effect = new SpellEntityEffect(null, null, 0, 0);
-                effect.deserializeNBT(entry);
-                return effect;
-            })
+            .map(entry -> new SpellEntityEffect((CompoundTag) entry))
             .collect(Collectors.toList());
     }
 

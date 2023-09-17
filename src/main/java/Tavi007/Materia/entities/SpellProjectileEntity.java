@@ -54,8 +54,7 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
-        effectData = new SpellEntityEffect("", "", 0, 0);
-        effectData.deserializeNBT(tag.getCompound("effect_data"));
+        effectData = new SpellEntityEffect(tag.getCompound("effect_data"));
         messageId = tag.getString("message_id");
     }
 

@@ -35,7 +35,14 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
 
     @Override
     public void render(SpellProjectileEntity spellEntity, float p_114600_, float p_114601_, PoseStack poseStack, MultiBufferSource bufferSource,
-            int p_114604_) {
+            int lightLevel) {
+
+        // Maybe add options of 3d models here
+        renderSprite(spellEntity, poseStack, bufferSource, lightLevel);
+        super.render(spellEntity, p_114600_, p_114601_, poseStack, bufferSource, lightLevel);
+    }
+
+    private void renderSprite(SpellProjectileEntity spellEntity, PoseStack poseStack, MultiBufferSource bufferSource, int lightLevel) {
         poseStack.pushPose();
 
         poseStack.translate(0.0F, 0.1F, 0.0F);
@@ -47,12 +54,12 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         Matrix4f matrix4f = posestack$pose.pose();
         Matrix3f matrix3f = posestack$pose.normal();
 
-        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, -0.25F, 255, 255, 255, 0.0f, 0.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, -0.25F, 255, 255, 255, 1.0f, 0.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, 0.75F, 255, 255, 255, 1.0f, 1.0f, p_114604_);
-        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, 0.75F, 255, 255, 255, 0.0f, 1.0f, p_114604_);
+        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, -0.25F, 255, 255, 255, 0.0f, 0.0f, lightLevel);
+        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, -0.25F, 255, 255, 255, 1.0f, 0.0f, lightLevel);
+        vertex(vertexconsumer, matrix4f, matrix3f, 0.5F, 0.75F, 255, 255, 255, 1.0f, 1.0f, lightLevel);
+        vertex(vertexconsumer, matrix4f, matrix3f, -0.5F, 0.75F, 255, 255, 255, 0.0f, 1.0f, lightLevel);
         poseStack.popPose();
-        super.render(spellEntity, p_114600_, p_114601_, poseStack, bufferSource, p_114604_);
+
     }
 
     private static void vertex(VertexConsumer vertexConsumer, Matrix4f matrix4f, Matrix3f matrix3f, float p_253952_, float p_254066_, int r,
