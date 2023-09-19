@@ -4,8 +4,9 @@ import java.util.Optional;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
+import Tavi007.Materia.init.ParticleTypeList;
+import Tavi007.Materia.particles.SpellEntityTrailParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -98,9 +99,8 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
         return SoundSource.AMBIENT;
     }
 
-    // TODO define through effect data
     protected ParticleOptions getTrailParticle() {
-        return ParticleTypes.SMOKE;
+        return new SpellEntityTrailParticleOption(ParticleTypeList.SPELL_TRAIL.get(), getTrailTexture());
     }
 
     @Override
@@ -125,5 +125,12 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
             .map(SpellEntityEffect::getTexture)
             .map(ResourceLocation::new)
             .orElse(DEFAULT_TEXTURE);
+    }
+
+    public ResourceLocation getTrailTexture() {
+        return Optional.ofNullable(effectData)
+            .map(SpellEntityEffect::getTrailTexture)
+            .map(ResourceLocation::new)
+            .orElse(DEFAULT_TRAIL_TEXTURE);
     }
 }
