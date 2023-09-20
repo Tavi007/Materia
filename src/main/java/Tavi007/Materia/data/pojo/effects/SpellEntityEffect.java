@@ -1,7 +1,11 @@
 package Tavi007.Materia.data.pojo.effects;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
+import Tavi007.ElementalCombat.api.BasePropertiesAPI;
+import Tavi007.Materia.util.DefaultResourceLocation;
 import Tavi007.Materia.util.NbtHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -48,26 +52,26 @@ public class SpellEntityEffect implements INBTSerializable<CompoundTag> {
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(texture);
-        buf.writeUtf(trailTexture);
-        buf.writeUtf(element);
-        buf.writeFloat(damage);
-        buf.writeFloat(speed);
-        buf.writeBoolean(homing);
+        buf.writeUtf(getTexture());
+        buf.writeUtf(getTrailTexture());
+        buf.writeUtf(getElement());
+        buf.writeFloat(getDamage());
+        buf.writeFloat(getSpeed());
+        buf.writeBoolean(isHoming());
     }
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
-        tag.putString("texture", texture);
-        tag.putString("trail_texture", trailTexture);
-        tag.putString("element", element);
-        tag.putFloat("damage", damage);
-        tag.putFloat("speed", speed);
-        tag.putBoolean("homing", homing);
-        tag.put("on_hit_commands", NbtHelper.toTagList(onHitCommands));
-        tag.put("on_living_entity_hit_commands", NbtHelper.toTagList(onLivingEntityHitCommands));
-        tag.put("on_block_hit_commands", NbtHelper.toTagList(onBlockHitCommands));
+        tag.putString("texture", getTexture());
+        tag.putString("trail_texture", getTrailTexture());
+        tag.putString("element", getElement());
+        tag.putFloat("damage", getDamage());
+        tag.putFloat("speed", getSpeed());
+        tag.putBoolean("homing", isHoming());
+        tag.put("on_hit_commands", NbtHelper.toTagList(getOnHitCommands()));
+        tag.put("on_living_entity_hit_commands", NbtHelper.toTagList(getOnLivingEntityHitCommands()));
+        tag.put("on_block_hit_commands", NbtHelper.toTagList(getOnBlockHitCommands()));
         return tag;
     }
 
@@ -85,15 +89,15 @@ public class SpellEntityEffect implements INBTSerializable<CompoundTag> {
     }
 
     public String getTexture() {
-        return texture;
+        return Optional.ofNullable(texture).orElse(DefaultResourceLocation.SPELL_TEXTURE.toString());
     }
 
     public String getTrailTexture() {
-        return trailTexture;
+        return Optional.ofNullable(trailTexture).orElse(DefaultResourceLocation.SPELL_TRAIL_TEXTURE.toString());
     }
 
     public String getElement() {
-        return element;
+        return Optional.ofNullable(element).orElse(BasePropertiesAPI.getDefaultAttackElement());
     }
 
     public float getDamage() {
@@ -109,14 +113,14 @@ public class SpellEntityEffect implements INBTSerializable<CompoundTag> {
     }
 
     public List<String> getOnHitCommands() {
-        return onHitCommands;
+        return Optional.ofNullable(onHitCommands).orElse(Collections.emptyList());
     }
 
     public List<String> getOnLivingEntityHitCommands() {
-        return onLivingEntityHitCommands;
+        return Optional.ofNullable(onLivingEntityHitCommands).orElse(Collections.emptyList());
     }
 
     public List<String> getOnBlockHitCommands() {
-        return onBlockHitCommands;
+        return Optional.ofNullable(onBlockHitCommands).orElse(Collections.emptyList());
     }
 }

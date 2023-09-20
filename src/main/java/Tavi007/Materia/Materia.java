@@ -10,6 +10,7 @@ import Tavi007.Materia.init.ItemList;
 import Tavi007.Materia.init.MateriaEffectConfigurationTypeList;
 import Tavi007.Materia.init.MateriaEffectList;
 import Tavi007.Materia.init.MenuList;
+import Tavi007.Materia.init.ParticleTypeList;
 import Tavi007.Materia.init.RecipeTypeList;
 import Tavi007.Materia.init.StartupCommon;
 import net.minecraft.client.Minecraft;
@@ -46,6 +47,7 @@ public class Materia {
         EntityTypeList.ENTITY_TYPES.register(MOD_EVENT_BUS);
         MateriaEffectConfigurationTypeList.init();
         MateriaEffectList.init();
+        ParticleTypeList.PARTICLES.register(MOD_EVENT_BUS);
 
         RecipeTypeList.RECIPE_TYPES.register(MOD_EVENT_BUS);
         RecipeTypeList.RECIPE_SERIALIZERS.register(MOD_EVENT_BUS);

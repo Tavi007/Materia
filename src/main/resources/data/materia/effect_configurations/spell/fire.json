@@ -4,7 +4,8 @@
 	"message_id": "test.message.id",
 	"spells": [
 		{
-			"texture": "materia:textures/item/fire_materia.png",
+			"texture": "materia:textures/spell/fire.png",
+			"trail_texture": "materia:textures/item/fire_spell_trail.png",
 			"element": "fire",
 			"damage": {"expression": "3 * #materia:fire_materia"},
 			"speed": {"value": 1.25},

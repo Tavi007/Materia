@@ -2,10 +2,9 @@ package Tavi007.Materia.entities;
 
 import java.util.Optional;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
-import Tavi007.Materia.init.ParticleTypeList;
 import Tavi007.Materia.particles.SpellEntityTrailParticleOption;
+import Tavi007.Materia.util.DefaultResourceLocation;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -26,8 +25,6 @@ import net.minecraftforge.network.NetworkHooks;
 
 public class SpellProjectileEntity extends AbstractHurtingProjectile implements IEntityAdditionalSpawnData {
 
-    private static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/entity/default_spell_projectile.png");
-    private static final ResourceLocation DEFAULT_TRAIL_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/entity/default_spell_trail.png");
     private static final String DEFAULT_MESSAGE_ID = "blab.bla";
 
     private SpellEntityEffect effectData;
@@ -100,7 +97,7 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
     }
 
     protected ParticleOptions getTrailParticle() {
-        return new SpellEntityTrailParticleOption(ParticleTypeList.SPELL_TRAIL.get(), getTrailTexture());
+        return new SpellEntityTrailParticleOption(getTrailTexture());
     }
 
     @Override
@@ -112,6 +109,7 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
         return Optional.ofNullable(messageId).orElse(DEFAULT_MESSAGE_ID);
     }
 
+    // TODO get defaul values from server config
     protected float getDamage() {
         return Optional.ofNullable(effectData).map(SpellEntityEffect::getDamage).orElse(1.0f);
     }
@@ -120,17 +118,22 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
         return Optional.ofNullable(effectData).map(SpellEntityEffect::getSpeed).orElse(1.0f);
     }
 
+    @Override
+    protected float getInertia() {
+        return getSpeed();
+    }
+
     public ResourceLocation getTexture() {
         return Optional.ofNullable(effectData)
             .map(SpellEntityEffect::getTexture)
             .map(ResourceLocation::new)
-            .orElse(DEFAULT_TEXTURE);
+            .orElse(DefaultResourceLocation.SPELL_TEXTURE);
     }
 
     public ResourceLocation getTrailTexture() {
         return Optional.ofNullable(effectData)
             .map(SpellEntityEffect::getTrailTexture)
             .map(ResourceLocation::new)
-            .orElse(DEFAULT_TRAIL_TEXTURE);
+            .orElse(DefaultResourceLocation.SPELL_TRAIL_TEXTURE);
     }
 }
