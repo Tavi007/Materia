@@ -112,7 +112,7 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
             this.position(),
             this.getRotationVector(),
             (ServerLevel) this.getLevel(),
-            0,
+            4,
             "",
             CommonComponents.EMPTY,
             this.getServer(),
