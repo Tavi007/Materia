@@ -65,6 +65,7 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
                     throw new Exception("Could not find 'type' property.");
                 }
 
+                // TODO remove this
                 if (type.getPath().contains("spell")) {
                     System.out.println("");
                 }

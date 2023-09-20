@@ -7,6 +7,7 @@ import java.util.Optional;
 import Tavi007.ElementalCombat.api.BasePropertiesAPI;
 import Tavi007.Materia.util.DefaultResourceLocation;
 import Tavi007.Materia.util.NbtHelper;
+import Tavi007.Materia.util.NetworkHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -49,6 +50,9 @@ public class SpellEntityEffect implements INBTSerializable<CompoundTag> {
         this.damage = buf.readFloat();
         this.speed = buf.readFloat();
         this.homing = buf.readBoolean();
+        this.onHitCommands = NetworkHelper.readStringList(buf);
+        this.onLivingEntityHitCommands = NetworkHelper.readStringList(buf);
+        this.onBlockHitCommands = NetworkHelper.readStringList(buf);
     }
 
     public void encode(FriendlyByteBuf buf) {
@@ -58,6 +62,9 @@ public class SpellEntityEffect implements INBTSerializable<CompoundTag> {
         buf.writeFloat(getDamage());
         buf.writeFloat(getSpeed());
         buf.writeBoolean(isHoming());
+        NetworkHelper.writeStringList(buf, getOnHitCommands());
+        NetworkHelper.writeStringList(buf, getOnLivingEntityHitCommands());
+        NetworkHelper.writeStringList(buf, getOnBlockHitCommands());
     }
 
     @Override

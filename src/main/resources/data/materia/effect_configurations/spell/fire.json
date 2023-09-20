@@ -9,7 +9,8 @@
 			"element": "fire",
 			"damage": {"expression": "3 * #materia:fire_materia"},
 			"speed": {"value": 1.25},
-			"spawnable": {"value": true}
+			"spawnable": {"value": true},
+			"on_hit_commands": ["/summon minecraft:lightning_bolt ~ ~ ~ "]
 		}
 	]
 }

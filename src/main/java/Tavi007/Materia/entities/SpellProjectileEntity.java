@@ -1,16 +1,24 @@
 package Tavi007.Materia.entities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
 import Tavi007.Materia.particles.SpellEntityTrailParticleOption;
 import Tavi007.Materia.util.DefaultResourceLocation;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
@@ -77,18 +85,45 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
     @Override
     protected void onHitEntity(EntityHitResult hitResult) {
         super.onHitEntity(hitResult);
-        hitResult.getEntity().hurt(new EntityDamageSource(getMessage(), this), getDamage());
-
-        // TODO: add command handling here
+        if (!this.getLevel().isClientSide()) {
+            float damage = getDamage();
+            if (Math.abs((double) damage) < 0.0001) {
+                hitResult.getEntity().hurt(new EntityDamageSource(getMessage(), this), getDamage());
+            }
+            CommandSourceStack commandStack = getCommandSourceStack();
+            performCommands(commandStack, getOnLivingEntityHitCommands());
+        }
         this.discard();
     }
 
     @Override
     protected void onHitBlock(BlockHitResult hitResult) {
         super.onHitBlock(hitResult);
-
-        // TODO: add command handling here
+        if (!this.getLevel().isClientSide()) {
+            CommandSourceStack commandStack = getCommandSourceStack();
+            performCommands(commandStack, getOnBlockHitCommands());
+        }
         this.discard();
+    }
+
+    private CommandSourceStack getCommandSourceStack() {
+        return new CommandSourceStack(
+            CommandSource.NULL,
+            this.position(),
+            this.getRotationVector(),
+            (ServerLevel) this.getLevel(),
+            0,
+            "",
+            CommonComponents.EMPTY,
+            this.getServer(),
+            this);
+    }
+
+    private void performCommands(CommandSourceStack commandStack, List<String> commands) {
+        MinecraftServer minecraftserver = this.getLevel().getServer();
+        commands.forEach(command -> {
+            minecraftserver.getCommands().performPrefixedCommand(commandStack, command);
+        });
     }
 
     @Override
@@ -135,5 +170,29 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
             .map(SpellEntityEffect::getTrailTexture)
             .map(ResourceLocation::new)
             .orElse(DefaultResourceLocation.SPELL_TRAIL_TEXTURE);
+    }
+
+    private List<String> getOnHitCommands() {
+        return Optional.ofNullable(effectData)
+            .map(SpellEntityEffect::getOnHitCommands)
+            .orElse(Collections.emptyList());
+    }
+
+    private List<String> getOnLivingEntityHitCommands() {
+        List<String> commands = new ArrayList<>();
+        commands.addAll(getOnHitCommands());
+        commands.addAll(Optional.ofNullable(effectData)
+            .map(SpellEntityEffect::getOnLivingEntityHitCommands)
+            .orElse(Collections.emptyList()));
+        return commands;
+    }
+
+    private List<String> getOnBlockHitCommands() {
+        List<String> commands = new ArrayList<>();
+        commands.addAll(getOnHitCommands());
+        commands.addAll(Optional.ofNullable(effectData)
+            .map(SpellEntityEffect::getOnBlockHitCommands)
+            .orElse(Collections.emptyList()));
+        return commands;
     }
 }
