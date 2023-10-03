@@ -1,18 +1,18 @@
 {
     "type":"materia:spell",
 	"tooltip_color": 8852243,
-	"message_id": "test.message.id",
+	"message_id": "spell.fire",
 	"spells": [
 		{
 			"texture": "materia:textures/spell/fire.png",
-			"trail_texture": "materia:textures/item/fire_spell_trail.png",
+			"trail_texture": "minecraft:particle/big_smoke_0.png",
 			"element": "fire",
 			"damage": {"expression": "3 * #materia:fire_materia"},
 			"speed": {"value": 1.25},
 			"spawnable": {"value": true},
 			"on_hit_commands": [
 				"/summon minecraft:lightning_bolt ~ ~ ~",
-				"/summon minecraft:tnt ~ ~ ~ {Fuse:5}"
+				"/summon minecraft:tnt ~ ~ ~ {Fuse:0}"
 			]
 		}
 	]

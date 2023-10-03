@@ -1,7 +1,5 @@
 package Tavi007.Materia.client.particles;
 
-import java.util.function.Function;
-
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.particles.SpellEntityTrailParticleOption;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -26,14 +24,16 @@ public class SpellEntityTrailParticleProvider implements ParticleProvider<SpellE
             return null;
         }
 
-        AbstractTexture test1 = Materia.MINECRAFT.getTextureManager().getTexture(textureLocation);
-        Function<ResourceLocation, TextureAtlasSprite> test = Materia.MINECRAFT.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS);
-        TextureAtlasSprite sprite = test.apply(textureLocation);
-        if (sprite == null) {
-            return null;
+        AbstractTexture texture = Materia.MINECRAFT.getTextureManager().getTexture(TextureAtlas.LOCATION_PARTICLES);
+        if (texture instanceof TextureAtlas textureAtlas) {
+            TextureAtlasSprite sprite = textureAtlas.getSprite(textureLocation);
+            if (sprite == null) {
+                return null;
+            }
+            return new SpellEntityTrailParticle(level, xPos, yPos, zPos, sprite, particleOption);
         }
+        return null;
 
-        return new SpellEntityTrailParticle(level, xPos, yPos, zPos, sprite, particleOption);
     }
 
 }
