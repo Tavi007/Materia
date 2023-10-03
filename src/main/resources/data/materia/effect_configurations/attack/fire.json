@@ -2,10 +2,10 @@
     "type":"materia:attack",
 	"tooltip_color": 8852243,
     "element": "fire",
-    "damage":{ "expression": "#materia:fire_materia"},
+    "damage":{ "expression": "{materia:fire_materia}"},
 	"area": {
-		"width":{ "expression": "#materia:size_up_materia + #materia:width_up_materia"},
-		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
-		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
+		"width":{ "expression": "{materia:size_up_materia} + {materia:width_up_materia}"},
+		"height":{ "expression": "{materia:size_up_materia} + {materia:height_up_materia}"},
+		"range":{ "expression": "{materia:size_up_materia} + {materia:range_up_materia}"}
     }
 }

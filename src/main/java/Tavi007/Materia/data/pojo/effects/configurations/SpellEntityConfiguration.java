@@ -11,6 +11,7 @@ import Tavi007.ElementalCombat.api.BasePropertiesAPI;
 import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
 import Tavi007.Materia.data.pojo.effects.configurations.expressions.ArithmeticExpression;
 import Tavi007.Materia.data.pojo.effects.configurations.expressions.BooleanExpression;
+import Tavi007.Materia.data.pojo.effects.configurations.expressions.StringExpression;
 import Tavi007.Materia.util.DefaultResourceLocation;
 import Tavi007.Materia.util.NetworkHelper;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,9 +19,9 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpellEntityConfiguration {
 
-    private String texture;
+    private StringExpression texture;
     @SerializedName("trail_texture")
-    private String trailTexture;
+    private StringExpression trailTexture;
 
     private String element;
     private ArithmeticExpression damage;
@@ -43,8 +44,8 @@ public class SpellEntityConfiguration {
 
     public SpellEntityEffect computeEffect(List<ItemStack> stacks) {
         return new SpellEntityEffect(
-            getTexture(),
-            getTrailTexture(),
+            getTexture().evaluate(stacks),
+            getTrailTexture().evaluate(stacks),
             getElement(),
             getDamage().evaluateToFloat(stacks),
             getSpeed().evaluateToFloat(stacks),
@@ -55,8 +56,8 @@ public class SpellEntityConfiguration {
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeUtf(getTexture());
-        buf.writeUtf(getTrailTexture());
+        getTexture().encode(buf);
+        getTrailTexture().encode(buf);
         buf.writeUtf(getElement());
         getDamage().encode(buf);
         getSpeed().encode(buf);
@@ -68,8 +69,8 @@ public class SpellEntityConfiguration {
     }
 
     public SpellEntityConfiguration(FriendlyByteBuf buf) {
-        texture = buf.readUtf();
-        trailTexture = buf.readUtf();
+        texture = new StringExpression(buf);
+        trailTexture = new StringExpression(buf);
         element = buf.readUtf();
         damage = new ArithmeticExpression(buf);
         speed = new ArithmeticExpression(buf);
@@ -117,12 +118,14 @@ public class SpellEntityConfiguration {
         return getSpawnable().evaluate(stacks);
     }
 
-    private String getTexture() {
-        return Optional.ofNullable(texture).orElse(DefaultResourceLocation.SPELL_TEXTURE.toString());
+    private StringExpression getTexture() {
+        return Optional.ofNullable(texture)
+            .orElse(new StringExpression(null, DefaultResourceLocation.SPELL_TEXTURE.toString()));
     }
 
-    private String getTrailTexture() {
-        return Optional.ofNullable(trailTexture).orElse(DefaultResourceLocation.SPELL_TRAIL_TEXTURE.toString());
+    private StringExpression getTrailTexture() {
+        return Optional.ofNullable(trailTexture)
+            .orElse(new StringExpression(null, DefaultResourceLocation.SPELL_TRAIL_TEXTURE.toString()));
     }
 
     private String getElement() {

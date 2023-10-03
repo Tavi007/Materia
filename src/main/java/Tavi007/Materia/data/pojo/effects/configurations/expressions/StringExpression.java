@@ -11,7 +11,7 @@ public class StringExpression extends Expression {
 
     private String value;
 
-    private StringExpression(String expression, String value) {
+    public StringExpression(String expression, String value) {
         super(expression);
         this.value = value;
     }

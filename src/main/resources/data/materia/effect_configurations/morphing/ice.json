@@ -1,6 +1,6 @@
 {
     "type":"materia:morphing",
 	"tooltip_color": 9555437,
-    "level": {"expression": "#materia:fire_materia + #materia:ice_materia"},
+    "level": {"expression": "{materia:fire_materia} + {materia:ice_materia}"},
     "recipe": "materia:ice"
 }

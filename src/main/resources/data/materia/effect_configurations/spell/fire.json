@@ -4,10 +4,10 @@
 	"message_id": "spell.fire",
 	"spells": [
 		{
-			"texture": "materia:textures/spell/fire.png",
-			"trail_texture": "minecraft:particle/big_smoke_0.png",
+			"texture": {"value":"materia:textures/spell/fire.png"},
+			"trail_texture": {"expression":"minecraft:particle/big_smoke_{materia:fire_materia}.png"},
 			"element": "fire",
-			"damage": {"expression": "3 * #materia:fire_materia"},
+			"damage": {"expression": "3 * {materia:fire_materia}"},
 			"speed": {"value": 1.25},
 			"spawnable": {"value": true},
 			"on_hit_commands": [

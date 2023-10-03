@@ -2,10 +2,10 @@
     "type":"materia:attack",
 	"tooltip_color": 9555437,
     "element": "ice",
-    "damage":{ "expression": "#materia:ice_materia"},
+    "damage":{ "expression": "{materia:ice_materia}"},
 	"area": {
-		"width":{ "expression": "#materia:size_up_materia + #materia:width_up_materia"},
-		"height":{ "expression": "#materia:size_up_materia + #materia:height_up_materia"},
-		"range":{ "expression": "#materia:size_up_materia + #materia:range_up_materia"}
+		"width":{ "expression": "{materia:size_up_materia} + {materia:width_up_materia}"},
+		"height":{ "expression": "{materia:size_up_materia} + {materia:height_up_materia}"},
+		"range":{ "expression": "{materia:size_up_materia} + {materia:range_up_materia}"}
     }
 }

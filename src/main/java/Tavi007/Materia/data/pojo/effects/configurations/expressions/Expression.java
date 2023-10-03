@@ -21,7 +21,7 @@ public abstract class Expression {
     protected String expression;
     private transient Set<String> inputNames;
 
-    private static final Pattern ITEM_INPUT = Pattern.compile("(?=#)([#a-zA-Z0-9_\\:]*)");
+    private static final Pattern ITEM_INPUT = Pattern.compile("(?<=\\{)([#a-zA-Z0-9_\\:]*)(?=\\})");
 
     protected Expression(String expression) {
         this.expression = expression;
@@ -51,7 +51,7 @@ public abstract class Expression {
             inputNames = new HashSet<>();
             Matcher matcher = ITEM_INPUT.matcher(expression);
             while (matcher.find()) {
-                String foundInputName = matcher.group().replace("#", "");
+                String foundInputName = matcher.group();
                 inputNames.add(foundInputName);
             }
         }
@@ -90,7 +90,7 @@ public abstract class Expression {
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
             Integer level = inputValues.get(input);
-            expressionCopy = expressionCopy.replaceAll("#" + input, String.valueOf(level));
+            expressionCopy = expressionCopy.replaceAll("{" + input + "}", String.valueOf(level));
         }
         return expressionCopy;
     }

@@ -33,35 +33,35 @@ public class TestExpression {
 
     @Test
     public void testSingleInputName() {
-        ExpressionTester expression = new ExpressionTester("#materia:test");
+        ExpressionTester expression = new ExpressionTester("{materia:test}");
         Set<String> inputNames = expression.getInputNames();
         Assert.assertEquals(Sets.newHashSet("materia:test"), inputNames);
     }
 
     @Test
     public void testSingleInputNameWithNumber() {
-        ExpressionTester expression = new ExpressionTester("#materia:test1");
+        ExpressionTester expression = new ExpressionTester("{materia:test1}");
         Set<String> inputNames = expression.getInputNames();
         Assert.assertEquals(Sets.newHashSet("materia:test1"), inputNames);
     }
 
     @Test
     public void testSingleInputNameWithLowerScore() {
-        ExpressionTester expression = new ExpressionTester("#materia:test_");
+        ExpressionTester expression = new ExpressionTester("{materia:test_}");
         Set<String> inputNames = expression.getInputNames();
         Assert.assertEquals(Sets.newHashSet("materia:test_"), inputNames);
     }
 
     @Test
     public void testSingleInputNameMultipleTimes() {
-        ExpressionTester expression = new ExpressionTester("#materia:test + #materia:test");
+        ExpressionTester expression = new ExpressionTester("{materia:test} + {materia:test}");
         Set<String> inputNames = expression.getInputNames();
         Assert.assertEquals(Sets.newHashSet("materia:test"), inputNames);
     }
 
     @Test
     public void testMultipleInputNames() {
-        ExpressionTester expression = new ExpressionTester("#materia:test + #materia:testing");
+        ExpressionTester expression = new ExpressionTester("{materia:test} + {materia:testing}");
         Set<String> inputNames = expression.getInputNames();
         Assert.assertEquals(Sets.newHashSet("materia:test", "materia:testing"), inputNames);
     }
