@@ -90,7 +90,7 @@ public abstract class Expression {
         Map<String, Integer> inputValues = getInputValues(stacks);
         for (String input : inputValues.keySet()) {
             Integer level = inputValues.get(input);
-            expressionCopy = expressionCopy.replaceAll("{" + input + "}", String.valueOf(level));
+            expressionCopy = expressionCopy.replaceAll("\\{" + input + "\\}", String.valueOf(level));
         }
         return expressionCopy;
     }
