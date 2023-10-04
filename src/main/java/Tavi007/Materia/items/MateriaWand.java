@@ -5,21 +5,20 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import Tavi007.ElementalCombat.api.AttackDataAPI;
-import Tavi007.ElementalCombat.capabilities.attack.AttackLayer;
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.data.pojo.effects.SpellEffect;
+import Tavi007.Materia.data.pojo.effects.SpellEntityEffect;
 import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.MorphItemConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.SpellConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.StatConfiguration;
 import Tavi007.Materia.entities.SpellProjectileEntity;
+import Tavi007.Materia.events.SpellEntityPipeline;
 import Tavi007.Materia.init.EntityTypeList;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -93,28 +92,27 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
         ItemStack stack = player.getItemInHand(interactionhand);
         Vec3 shootDirection = player.getViewVector(0);
         MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
-        collectionHandler.getSelectedEffects()
-            .stream()
-            .filter(effect -> effect instanceof SpellEffect)
-            .map(effect -> (SpellEffect) effect)
-            .forEach(effect -> effect.getSpellEntityEffects()
-                .stream()
-                .forEach(entityEffect -> {
-                    SpellProjectileEntity entity = new SpellProjectileEntity(
-                        EntityTypeList.SPELL_PROJECTILE.get(),
-                        player.level,
-                        player,
-                        shootDirection,
-                        entityEffect,
-                        effect.getMessageId());
-                    player.level.addFreshEntity(entity);
-                    AttackDataAPI.putLayer(entity, new AttackLayer("magic", entityEffect.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));
 
-                    // TODO use spell delay here or create some sort of caching logic somewhere
-                }));
-
-        // TODO use cooldown to prevent spell spamming
-
+        int cooldownSum = 0;
+        for (AbstractMateriaEffect abstractEffect : collectionHandler.getSelectedEffects()) {
+            if (abstractEffect instanceof SpellEffect spellEffect) {
+                List<SpellEntityEffect> spellEntityEffects = spellEffect.getSpellEntityEffects();
+                for (SpellEntityEffect entityEffect : spellEntityEffects) {
+                    for (int i = 0; i < entityEffect.getRepeat(); i++) {
+                        SpellProjectileEntity entity = new SpellProjectileEntity(
+                            EntityTypeList.SPELL_PROJECTILE.get(),
+                            player.level,
+                            player,
+                            shootDirection,
+                            entityEffect,
+                            spellEffect.getMessageId());
+                        SpellEntityPipeline.addSpellEntityToPipeline(entity, cooldownSum, entityEffect.getElement(), player);
+                        cooldownSum = cooldownSum + entityEffect.getCooldown();
+                    }
+                }
+            }
+        }
+        player.getCooldowns().addCooldown(stack.getItem(), cooldownSum);
         return InteractionResultHolder.pass(stack);
     }
 }

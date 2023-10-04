@@ -1,0 +1,17 @@
+{
+    "type":"materia:spell",
+	"tooltip_color": 9555437,
+	"message_id": "spell.ice",
+	"spells": [
+		{
+			"texture": {"value":"materia:textures/spell/ice.png"},
+			"trail_texture": {"expression":"minecraft:particle/big_smoke_{materia:fire_materia}.png"},
+			"element": "ice",
+			"damage": {"expression": "3 * {materia:ice_materia}"},
+			"speed": {"value": 1.25},
+			"cooldown": {"value": 10},
+			"spawnable": {"value": true},
+			"repeat": {"expression": "{materia:ice_materia}"}
+		}
+	]
+}

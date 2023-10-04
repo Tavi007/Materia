@@ -30,6 +30,8 @@ public class SpellEntityConfiguration {
     private BooleanExpression spawnable;
     private BooleanExpression homing;
 
+    private ArithmeticExpression cooldown;
+
     // TODO change to CommandConfiguration
     @SerializedName("on_hit_commands")
     private List<String> onHitCommands;
@@ -37,6 +39,8 @@ public class SpellEntityConfiguration {
     private List<String> onLivingEntityHitCommands;
     @SerializedName("on_block_hit_commands")
     private List<String> onBlockHitCommands;
+
+    private ArithmeticExpression repeat;
 
     private SpellEntityConfiguration() {
         super();
@@ -49,10 +53,12 @@ public class SpellEntityConfiguration {
             getElement(),
             getDamage().evaluateToFloat(stacks),
             getSpeed().evaluateToFloat(stacks),
+            getCooldown().evaluateToInt(stacks),
             getHoming().evaluate(stacks),
             getOnHitCommands(),
             getOnLivingEntityHitCommands(),
-            getOnBlockHitCommands());
+            getOnBlockHitCommands(),
+            getRepeat().evaluateToInt(stacks));
     }
 
     public void encode(FriendlyByteBuf buf) {
@@ -61,11 +67,13 @@ public class SpellEntityConfiguration {
         buf.writeUtf(getElement());
         getDamage().encode(buf);
         getSpeed().encode(buf);
+        getCooldown().encode(buf);
         getSpawnable().encode(buf);
         getHoming().encode(buf);
         NetworkHelper.writeStringList(buf, getOnHitCommands());
         NetworkHelper.writeStringList(buf, getOnLivingEntityHitCommands());
         NetworkHelper.writeStringList(buf, getOnBlockHitCommands());
+        getRepeat().encode(buf);
     }
 
     public SpellEntityConfiguration(FriendlyByteBuf buf) {
@@ -74,15 +82,23 @@ public class SpellEntityConfiguration {
         element = buf.readUtf();
         damage = new ArithmeticExpression(buf);
         speed = new ArithmeticExpression(buf);
+        cooldown = new ArithmeticExpression(buf);
         spawnable = new BooleanExpression(buf);
         homing = new BooleanExpression(buf);
         onHitCommands = NetworkHelper.readStringList(buf);
         onLivingEntityHitCommands = NetworkHelper.readStringList(buf);
         onBlockHitCommands = NetworkHelper.readStringList(buf);
+        repeat = new ArithmeticExpression(buf);
     }
 
     public boolean isValid() {
-        return getDamage().isValid() && getSpeed().isValid() && getSpawnable().isValid() && getHoming().isValid();
+        return getTexture().isValid()
+            && getTrailTexture().isValid()
+            && getDamage().isValid()
+            && getSpeed().isValid()
+            && getSpawnable().isValid()
+            && getHoming().isValid()
+            && getRepeat().isValid();
     }
 
     @Override
@@ -101,11 +117,13 @@ public class SpellEntityConfiguration {
                 && Objects.equals(getElement(), otherConfiguration.getElement())
                 && Objects.equals(getDamage(), otherConfiguration.getDamage())
                 && Objects.equals(getSpeed(), otherConfiguration.getSpeed())
+                && Objects.equals(getCooldown(), otherConfiguration.getCooldown())
                 && Objects.equals(getSpawnable(), otherConfiguration.getSpawnable())
                 && Objects.equals(getHoming(), otherConfiguration.getHoming())
                 && Objects.equals(getOnHitCommands(), otherConfiguration.getOnHitCommands())
                 && Objects.equals(getOnLivingEntityHitCommands(), otherConfiguration.getOnLivingEntityHitCommands())
-                && Objects.equals(getOnBlockHitCommands(), otherConfiguration.getOnBlockHitCommands());
+                && Objects.equals(getOnBlockHitCommands(), otherConfiguration.getOnBlockHitCommands())
+                && Objects.equals(getRepeat(), otherConfiguration.getRepeat());
         }
         return false;
     }
@@ -132,13 +150,18 @@ public class SpellEntityConfiguration {
         return Optional.ofNullable(element).orElse(BasePropertiesAPI.getDefaultAttackElement());
     }
 
-    // TODO get default values from server config
+    // TODO: do not use configs, because they are not loaded yet
     private ArithmeticExpression getDamage() {
         return Optional.ofNullable(damage).orElse(new ArithmeticExpression(1.0));
+        // return Optional.ofNullable(damage).orElse(new ArithmeticExpression(ServerConfig.getDefaultSpellDamage()));
     }
 
     private ArithmeticExpression getSpeed() {
         return Optional.ofNullable(speed).orElse(new ArithmeticExpression(1.0));
+    }
+
+    private ArithmeticExpression getCooldown() {
+        return Optional.ofNullable(cooldown).orElse(new ArithmeticExpression(10.0));
     }
 
     private BooleanExpression getHoming() {
@@ -155,5 +178,9 @@ public class SpellEntityConfiguration {
 
     private List<String> getOnBlockHitCommands() {
         return Optional.ofNullable(onBlockHitCommands).orElse(Collections.emptyList());
+    }
+
+    private ArithmeticExpression getRepeat() {
+        return Optional.ofNullable(repeat).orElse(new ArithmeticExpression(1.0));
     }
 }
