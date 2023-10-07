@@ -72,6 +72,6 @@ public class ArithmeticExpression extends Expression {
     }
 
     public float evaluateToFloat(List<ItemStack> stacks) {
-        return (float) Math.round(evaluateToDouble(stacks));
+        return (float) evaluateToDouble(stacks);
     }
 }

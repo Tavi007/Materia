@@ -46,7 +46,7 @@ public class SpellProjectileEntity extends Projectile implements IEntityAddition
         this.moveTo(sourceEntity.getX(), sourceEntity.getEyeY(), sourceEntity.getZ(), this.getYRot(), this.getXRot());
         this.effectData = effectData;
         this.messageId = messageId;
-        this.setDeltaMovement(shootDirection); // .scale(getSpeed())
+        this.setDeltaMovement(shootDirection.scale(getSpeed()));
     }
 
     public SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level) {
@@ -191,32 +191,30 @@ public class SpellProjectileEntity extends Projectile implements IEntityAddition
 
     @Override
     protected void defineSynchedData() {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void tick() {
-        Entity entity = this.getOwner();
-        if (this.level.isClientSide || (entity == null || !entity.isRemoved()) && this.level.hasChunkAt(this.blockPosition())) {
+        Entity entity = getOwner();
+        if (this.level.isClientSide || (entity == null || !entity.isRemoved()) && this.level.hasChunkAt(blockPosition())) {
             super.tick();
 
             HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
             if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
-                this.onHit(hitresult);
+                onHit(hitresult);
             }
 
-            this.checkInsideBlocks();
-            Vec3 vec3 = this.getDeltaMovement();
-            double newX = this.getX() + vec3.x;
-            double newY = this.getY() + vec3.y;
-            double newZ = this.getZ() + vec3.z;
+            checkInsideBlocks();
+            Vec3 vec3 = getDeltaMovement();
+            double newX = getX() + vec3.x;
+            double newY = getY() + vec3.y;
+            double newZ = getZ() + vec3.z;
             ProjectileUtil.rotateTowardsMovement(this, 0.2F);
 
-            this.level.addParticle(this.getTrailParticle(), newX, newY + 0.1, newZ, 0.0D, 0.0D, 0.0D);
-            this.setPos(newX, newY, newZ);
+            this.level.addParticle(getTrailParticle(), newX, newY + 0.1, newZ, 0.0D, 0.0D, 0.0D);
+            setPos(newX, newY, newZ);
         } else {
-            this.discard();
+            discard();
         }
     }
 }
