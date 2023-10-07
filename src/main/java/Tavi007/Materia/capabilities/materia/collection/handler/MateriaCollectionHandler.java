@@ -6,15 +6,20 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import Tavi007.Materia.capabilities.level.LevelData;
 import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
@@ -150,13 +155,20 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         return Collections.unmodifiableList(mappers);
     }
 
-    public void addAp(ItemStack tool, int ap) {
+    public void addAp(ItemStack tool, int ap, ServerLevel level, BlockPos pos) {
         boolean levelUpHappened = false;
         for (ItemStack stack : stacks) {
-            if (!stack.isEmpty()
-                && isItemValid(0, stack)
-                && CapabilityHelper.getLevelData(stack).addAP(ap)) {
-                levelUpHappened = true;
+            if (!stack.isEmpty() && isItemValid(0, stack)) {
+                LevelData levelData = CapabilityHelper.getLevelData(stack);
+                levelUpHappened = levelData.addAP(ap);
+                if (levelUpHappened && levelData.isMaxLevel()) {
+                    double x = (double) ((float) pos.getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
+                    double y = (double) ((float) pos.getY() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
+                    double z = (double) ((float) pos.getZ() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
+                    ItemEntity itemEntity = new ItemEntity(level, x, y, z, new ItemStack(stack.getItem()));
+                    itemEntity.setDefaultPickUpDelay();
+                    level.addFreshEntity(itemEntity);
+                }
             }
         }
 
