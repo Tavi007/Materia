@@ -90,29 +90,31 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionhand) {
         ItemStack stack = player.getItemInHand(interactionhand);
-        Vec3 shootDirection = player.getViewVector(0);
-        MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
 
-        int cooldownSum = 0;
-        for (AbstractMateriaEffect abstractEffect : collectionHandler.getSelectedEffects()) {
-            if (abstractEffect instanceof SpellEffect spellEffect) {
-                List<SpellEntityEffect> spellEntityEffects = spellEffect.getSpellEntityEffects();
-                for (SpellEntityEffect entityEffect : spellEntityEffects) {
-                    for (int i = 0; i < entityEffect.getRepeat(); i++) {
-                        SpellProjectileEntity entity = new SpellProjectileEntity(
-                            EntityTypeList.SPELL_PROJECTILE.get(),
-                            player.level,
-                            player,
-                            shootDirection,
-                            entityEffect,
-                            spellEffect.getMessageId());
-                        SpellEntityPipeline.addSpellEntityToPipeline(entity, cooldownSum, entityEffect.getElement(), player);
-                        cooldownSum = cooldownSum + entityEffect.getCooldown();
+        if (!level.isClientSide) {
+            Vec3 shootDirection = player.getViewVector(0);
+            MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
+            int cooldownSum = 0;
+            for (AbstractMateriaEffect abstractEffect : collectionHandler.getSelectedEffects()) {
+                if (abstractEffect instanceof SpellEffect spellEffect) {
+                    List<SpellEntityEffect> spellEntityEffects = spellEffect.getSpellEntityEffects();
+                    for (SpellEntityEffect entityEffect : spellEntityEffects) {
+                        for (int i = 0; i < entityEffect.getRepeat(); i++) {
+                            SpellProjectileEntity entity = new SpellProjectileEntity(
+                                EntityTypeList.SPELL_PROJECTILE.get(),
+                                player.level,
+                                player,
+                                shootDirection,
+                                entityEffect,
+                                spellEffect.getMessageId());
+                            SpellEntityPipeline.addSpellEntityToPipeline(entity, cooldownSum, entityEffect.getElement(), player);
+                            cooldownSum = cooldownSum + entityEffect.getCooldown();
+                        }
                     }
                 }
             }
+            player.getCooldowns().addCooldown(stack.getItem(), cooldownSum);
         }
-        player.getCooldowns().addCooldown(stack.getItem(), cooldownSum);
         return InteractionResultHolder.pass(stack);
     }
 }

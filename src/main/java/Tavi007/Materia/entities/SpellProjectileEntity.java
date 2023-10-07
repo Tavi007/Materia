@@ -23,15 +23,17 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.network.NetworkHooks;
 
-public class SpellProjectileEntity extends AbstractHurtingProjectile implements IEntityAdditionalSpawnData {
+public class SpellProjectileEntity extends Projectile implements IEntityAdditionalSpawnData {
 
     private static final String DEFAULT_MESSAGE_ID = "blab.bla";
 
@@ -40,10 +42,11 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
 
     public SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level, Entity sourceEntity, Vec3 shootDirection,
             SpellEntityEffect effectData, String messageId) {
-        super(entityType, sourceEntity.getX(), sourceEntity.getEyeY(), sourceEntity.getZ(), shootDirection.x, shootDirection.y, shootDirection.z, level);
+        super(entityType, level);
+        this.moveTo(sourceEntity.getX(), sourceEntity.getEyeY(), sourceEntity.getZ(), this.getYRot(), this.getXRot());
         this.effectData = effectData;
         this.messageId = messageId;
-        this.setDeltaMovement(shootDirection.scale(getSpeed()));
+        this.setDeltaMovement(shootDirection); // .scale(getSpeed())
     }
 
     public SpellProjectileEntity(EntityType<? extends SpellProjectileEntity> entityType, Level level) {
@@ -135,11 +138,6 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
         return new SpellEntityTrailParticleOption(getTrailTexture());
     }
 
-    @Override
-    protected boolean shouldBurn() {
-        return false;
-    }
-
     protected String getMessage() {
         return Optional.ofNullable(messageId).orElse(DEFAULT_MESSAGE_ID);
     }
@@ -151,11 +149,6 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
 
     protected float getSpeed() {
         return Optional.ofNullable(effectData).map(SpellEntityEffect::getSpeed).orElse(1.0f);
-    }
-
-    @Override
-    protected float getInertia() {
-        return getSpeed();
     }
 
     public ResourceLocation getTexture() {
@@ -194,5 +187,36 @@ public class SpellProjectileEntity extends AbstractHurtingProjectile implements 
             .map(SpellEntityEffect::getOnBlockHitCommands)
             .orElse(Collections.emptyList()));
         return commands;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void tick() {
+        Entity entity = this.getOwner();
+        if (this.level.isClientSide || (entity == null || !entity.isRemoved()) && this.level.hasChunkAt(this.blockPosition())) {
+            super.tick();
+
+            HitResult hitresult = ProjectileUtil.getHitResult(this, this::canHitEntity);
+            if (hitresult.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, hitresult)) {
+                this.onHit(hitresult);
+            }
+
+            this.checkInsideBlocks();
+            Vec3 vec3 = this.getDeltaMovement();
+            double newX = this.getX() + vec3.x;
+            double newY = this.getY() + vec3.y;
+            double newZ = this.getZ() + vec3.z;
+            ProjectileUtil.rotateTowardsMovement(this, 0.2F);
+
+            this.level.addParticle(this.getTrailParticle(), newX, newY + 0.1, newZ, 0.0D, 0.0D, 0.0D);
+            this.setPos(newX, newY, newZ);
+        } else {
+            this.discard();
+        }
     }
 }

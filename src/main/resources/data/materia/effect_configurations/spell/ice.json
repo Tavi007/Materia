@@ -5,7 +5,7 @@
 	"spells": [
 		{
 			"texture": {"value":"materia:textures/spell/ice.png"},
-			"trail_texture": {"expression":"minecraft:particle/big_smoke_{materia:fire_materia}.png"},
+			"trail_texture": {"expression":"materia:ice_spell_trail"},
 			"element": "ice",
 			"damage": {"expression": "3 * {materia:ice_materia}"},
 			"speed": {"value": 0.25},
