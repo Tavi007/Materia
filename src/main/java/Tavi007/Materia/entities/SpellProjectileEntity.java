@@ -90,8 +90,8 @@ public class SpellProjectileEntity extends Projectile implements IEntityAddition
         super.onHitEntity(hitResult);
         if (!this.getLevel().isClientSide()) {
             float damage = getDamage();
-            if (Math.abs((double) damage) < 0.0001) {
-                hitResult.getEntity().hurt(new EntityDamageSource(getMessage(), this), getDamage());
+            if (Math.max(0, damage) > 0.0001) {
+                hitResult.getEntity().hurt(new EntityDamageSource(getMessage(), this), damage);
             }
             CommandSourceStack commandStack = getCommandSourceStack();
             performCommands(commandStack, getOnLivingEntityHitCommands());

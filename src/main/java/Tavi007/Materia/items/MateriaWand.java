@@ -19,6 +19,7 @@ import Tavi007.Materia.init.EntityTypeList;
 import Tavi007.Materia.util.CapabilityHelper;
 import Tavi007.Materia.util.MateriaToolHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -107,7 +108,7 @@ public class MateriaWand extends TieredItem implements IMateriaTool {
                                 shootDirection,
                                 entityEffect,
                                 spellEffect.getMessageId());
-                            SpellEntityPipeline.addSpellEntityToPipeline(entity, cooldownSum, entityEffect.getElement(), player);
+                            SpellEntityPipeline.addSpellEntityToPipeline((ServerLevel) level, entity, cooldownSum, entityEffect.getElement(), player);
                             cooldownSum = cooldownSum + entityEffect.getCooldown();
                         }
                     }
