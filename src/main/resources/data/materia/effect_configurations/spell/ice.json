@@ -8,8 +8,8 @@
 			"trail_texture": {"expression":"minecraft:particle/big_smoke_{materia:fire_materia}.png"},
 			"element": "ice",
 			"damage": {"expression": "3 * {materia:ice_materia}"},
-			"speed": {"value": 1.25},
-			"cooldown": {"value": 10},
+			"speed": {"value": 0.25},
+			"cooldown": {"value": 15},
 			"spawnable": {"value": true},
 			"repeat": {"expression": "{materia:ice_materia}"}
 		}
