@@ -5,15 +5,13 @@ bin
 .metadata
 .classpath
 .project
-*.gz
-*.log
 
 # idea
 out
 *.ipr
 *.iws
 *.iml
-.idea
+.idea/*
 
 # gradle
 build
@@ -22,6 +20,3 @@ build
 # other
 eclipse
 run
-
-# Files from Forge MDK
-forge*changelog.txt
