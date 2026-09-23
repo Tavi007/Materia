@@ -65,7 +65,7 @@ public abstract class Expression {
             int value = 0;
             for (ItemStack stack : stacks) {
                 if (stack.getItem().equals(inputItem)) {
-                    value = CapabilityHelper.getLevelData(stack).getLevel();
+                    value = CapabilityHelper.getLevelData(stack).getCurrentLevel();
                     break;
                 }
             }

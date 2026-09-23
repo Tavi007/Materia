@@ -2,14 +2,15 @@ package Tavi007.Materia.inventory.menus;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.ModBlocks;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
 import Tavi007.Materia.inventory.menus.slots.MateriaContainerSlot;
 import Tavi007.Materia.inventory.menus.slots.MateriaToolContainerSlot;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -78,7 +79,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.access, playerIn, BlockList.EQUIPPING_STATION_BLOCK.get());
+        return stillValid(this.access, playerIn, ModBlocks.EQUIPPING_STATION.get());
     }
 
     // shift-left click handling
@@ -140,7 +141,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
                 return copy;
             }
         } else {
-            Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
+            Constants.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
         }
         return ItemStack.EMPTY;
     }

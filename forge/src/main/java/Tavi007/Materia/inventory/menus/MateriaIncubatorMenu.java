@@ -2,12 +2,13 @@ package Tavi007.Materia.inventory.menus;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.ModBlocks;
 import Tavi007.Materia.init.BlockList;
 import Tavi007.Materia.init.MenuList;
 import Tavi007.Materia.inventory.MateriaIncubatorItemHandler;
 import Tavi007.Materia.inventory.menus.slots.MateriaContainerSlot;
-import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.common.items.MateriaItem;
 import Tavi007.Materia.tileentity.MateriaIncubatorTileentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -71,7 +72,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.access, playerIn, BlockList.MATERIA_INCUBATOR_BLOCK.get());
+        return stillValid(this.access, playerIn, ModBlocks.MATERIA_INCUBATOR.get());
     }
 
     // shift-left click handling
@@ -121,7 +122,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
                 onSuccessfulTransfer();
             }
         } else {
-            Materia.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
+            Constants.LOGGER.warn("Invalid slotIndex:" + sourceSlotIndex);
             return ItemStack.EMPTY;
         }
 

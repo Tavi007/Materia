@@ -3,7 +3,7 @@ package Tavi007.Materia.inventory.menus.slots;
 import javax.annotation.Nonnull;
 
 import Tavi007.Materia.inventory.EquippingStationItemHandler;
-import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;

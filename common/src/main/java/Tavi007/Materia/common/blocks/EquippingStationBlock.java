@@ -1,6 +1,6 @@
-package Tavi007.Materia.blocks;
+package Tavi007.Materia.common.blocks;
 
-import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
+//import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -13,11 +13,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class MateriaIncubatorBlock extends Block {
+public class EquippingStationBlock extends Block {
 
-    private static final Component MENU_TITLE = Component.translatable("menu.materia_incubator");
+    private static final Component MENU_TITLE = Component.translatable("menu.equipping_station");
 
-    public MateriaIncubatorBlock(Properties properties) {
+    public EquippingStationBlock(Properties properties) {
         super(properties);
     }
 
@@ -31,11 +31,11 @@ public class MateriaIncubatorBlock extends Block {
         }
     }
 
-    @Override
-    public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
-        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> {
-            return new MateriaIncubatorMenu(windowId, playerInventory, level, blockPos);
-        }, MENU_TITLE);
-    }
+//    @Override
+//    public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+//        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> {
+//            return new EquippingStationMenu(windowId, playerInventory, worldIn, pos);
+//        }, MENU_TITLE);
+//    }
 
 }

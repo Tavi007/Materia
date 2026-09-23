@@ -1,7 +1,7 @@
 package Tavi007.Materia.init;
 
-import Tavi007.Materia.Materia;
-import Tavi007.Materia.init.ItemList;
+import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class CreativeTabList {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Materia.MOD_ID);
+    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
 
     public static final List<Supplier<? extends ItemLike>> TAB_ITEMS = new ArrayList<>();
 
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register("tab",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.materia"))
-                    .icon(ItemList.BASE_MATERIA.get()::getDefaultInstance)
+                    .icon(ModItems.BASE_MATERIA.get()::getDefaultInstance)
                     .displayItems((displayParams, output) -> TAB_ITEMS.forEach(itemLike -> output.accept(itemLike.get())))
                     .build());
 
