@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import Tavi007.Materia.common.Constants;
 import net.minecraft.client.gui.GuiGraphics;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -44,7 +45,7 @@ public class SelectMateriaEffectScreen extends Screen {
 
     public SelectMateriaEffectScreen(MateriaToolComponent materiaToolComponent) {
         super(Component.literal(""));
-        this.minecraft = Materia.MINECRAFT;
+        this.minecraft = Constants.MINECRAFT;
         this.materiaToolComponent = materiaToolComponent;
         this.opening = true;
 

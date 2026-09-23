@@ -1,5 +1,6 @@
 package Tavi007.Materia.client;
 
+import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import Tavi007.Materia.Materia;
@@ -19,10 +20,10 @@ import net.minecraftforge.client.event.MovementInputUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Materia.MOD_ID)
+@Mod.EventBusSubscriber(value = Dist.CLIENT, modid = Constants.MOD_ID)
 public class PlayerEvents {
 
-    private static final Minecraft MINECRAFT = Materia.MINECRAFT;
+    private static final Minecraft MINECRAFT = Constants.MINECRAFT;
 
     @SubscribeEvent
     public static void mouseEvent(final InputEvent.MouseButton.Post event) {

@@ -1,5 +1,6 @@
 package Tavi007.Materia.client.renderer.entity;
 
+import Tavi007.Materia.common.Constants;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -7,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.entities.AbilityPointOrb;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -23,7 +23,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class AbilityPointOrbRenderer extends EntityRenderer<AbilityPointOrb> {
 
-    private static final ResourceLocation ABILITY_POINT_ORB = new ResourceLocation(Materia.MOD_ID, "textures/entity/ability_point_orb.png");
+    private static final ResourceLocation ABILITY_POINT_ORB = new ResourceLocation(Constants.MOD_ID, "textures/entity/ability_point_orb.png");
     private static final RenderType RENDER_TYPE = RenderType.itemEntityTranslucentCull(ABILITY_POINT_ORB);
 
     public AbilityPointOrbRenderer(EntityRendererProvider.Context context) {

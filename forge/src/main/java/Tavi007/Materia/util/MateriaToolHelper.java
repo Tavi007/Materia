@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.data.pojo.effects.MiningEffect;
 import Tavi007.Materia.data.pojo.effects.MorphItemEffect;
@@ -132,10 +133,10 @@ public class MateriaToolHelper {
             }
             Vec3 vHeight = vRange.cross(vWidth).normalize();
 
-            Materia.LOGGER.debug("CoordinateSystem when mining: ");
-            Materia.LOGGER.debug("vRange: {}", vRange);
-            Materia.LOGGER.debug("vHeight: {}", vHeight);
-            Materia.LOGGER.debug("vWidth: {}", vWidth);
+            Constants.LOGGER.debug("CoordinateSystem when mining: ");
+            Constants.LOGGER.debug("vRange: {}", vRange);
+            Constants.LOGGER.debug("vHeight: {}", vHeight);
+            Constants.LOGGER.debug("vWidth: {}", vWidth);
 
             // center of new coordinate system + areaConfiguration defines a cuboid to be mined
             int rangeLevel = miningEffect.getRange();

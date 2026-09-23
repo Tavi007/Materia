@@ -3,7 +3,7 @@ package Tavi007.Materia.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.data.managers.LevelUpDataManager;
 import Tavi007.Materia.data.managers.MateriaEffectConfigurationManager;
 import Tavi007.Materia.data.managers.MateriaEffectRecipeManager;
@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Bus.FORGE)
 public class ReloadListenerList {
 
     public static MateriaEffectConfigurationManager MATERIA_EFFECT_CONFIGURATION_MANGER = new MateriaEffectConfigurationManager();
@@ -28,7 +28,7 @@ public class ReloadListenerList {
         event.addListener(MATERIA_EFFECT_RECIPE_MANGER);
         event.addListener(LEVEL_UP_DATA_MANAGER);
         event.addListener(MOB_DATA_MANAGER);
-        Materia.LOGGER.info("ReloadListener registered.");
+        Constants.LOGGER.info("ReloadListener registered.");
     }
 
     public static List<Packet> getSyncPackets() {

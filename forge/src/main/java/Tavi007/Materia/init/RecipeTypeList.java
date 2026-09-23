@@ -1,6 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.recipes.MateriaIncubatorRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,10 +16,10 @@ public class RecipeTypeList {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(
         ForgeRegistries.Keys.RECIPE_SERIALIZERS,
-        Materia.MOD_ID);
+        Constants.MOD_ID);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(
         ForgeRegistries.Keys.RECIPE_TYPES,
-        Materia.MOD_ID);
+        Constants.MOD_ID);
 
     public static final String MATERIA_INCUBATOR = "recipes/materia_incubator";
 

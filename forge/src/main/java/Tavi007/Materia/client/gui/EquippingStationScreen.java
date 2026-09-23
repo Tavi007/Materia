@@ -1,8 +1,8 @@
 package Tavi007.Materia.client.gui;
 
+import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.client.util.RenderUtil;
 import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.items.IMateriaTool;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class EquippingStationScreen extends AbstractContainerScreen<EquippingStationMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/equipping_station_menu.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/equipping_station_menu.png");
 
     public EquippingStationScreen(EquippingStationMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);

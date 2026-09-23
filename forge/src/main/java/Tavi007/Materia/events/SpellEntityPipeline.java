@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Tavi007.ElementalCombat.api.AttackDataAPI;
-import Tavi007.ElementalCombat.capabilities.attack.AttackLayer;
-import Tavi007.Materia.Materia;
+//import Tavi007.ElementalCombat.api.AttackDataAPI;
+//import Tavi007.ElementalCombat.capabilities.attack.AttackLayer;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.data.pojo.SpellEntityPipelineEntry;
 import Tavi007.Materia.entities.SpellProjectileEntity;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Bus.FORGE)
 public class SpellEntityPipeline {
 
     private static Map<ServerLevel, List<SpellEntityPipelineEntry>> pipeline = new HashMap<>();
@@ -31,20 +31,20 @@ public class SpellEntityPipeline {
     }
 
     public static void tick(ServerLevel level) {
-        List<SpellEntityPipelineEntry> spawnedEntries = new ArrayList<>();
-        List<SpellEntityPipelineEntry> levelPipeline = pipeline.getOrDefault(level, new ArrayList<>());
-        levelPipeline.forEach(entry -> {
-            entry.countDown();
-            if (entry.canSpawn()) {
-                SpellProjectileEntity entity = entry.getSpellEntity();
-                entity.moveTo(entry.getSpawnLocation());
-                entity.setDeltaMovement(entry.getShootDirection());
-                level.addFreshEntity(entity);
-                AttackDataAPI.putLayer(entity, new AttackLayer("magic", entry.getElement()), new ResourceLocation(Materia.MOD_ID, "spell"));
-                spawnedEntries.add(entry);
-            }
-        });
-        levelPipeline.removeAll(spawnedEntries);
+//        List<SpellEntityPipelineEntry> spawnedEntries = new ArrayList<>();
+//        List<SpellEntityPipelineEntry> levelPipeline = pipeline.getOrDefault(level, new ArrayList<>());
+//        levelPipeline.forEach(entry -> {
+//            entry.countDown();
+//            if (entry.canSpawn()) {
+//                SpellProjectileEntity entity = entry.getSpellEntity();
+//                entity.moveTo(entry.getSpawnLocation());
+//                entity.setDeltaMovement(entry.getShootDirection());
+//                level.addFreshEntity(entity);
+//                AttackDataAPI.putLayer(entity, new AttackLayer("magic", entry.getElement()), new ResourceLocation(Constants.MOD_ID, "spell"));
+//                spawnedEntries.add(entry);
+//            }
+//        });
+//        levelPipeline.removeAll(spawnedEntries);
     }
 
     @SubscribeEvent

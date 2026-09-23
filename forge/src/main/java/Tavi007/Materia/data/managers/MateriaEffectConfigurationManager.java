@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Tavi007.Materia.common.Constants;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.Gson;
@@ -11,7 +12,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.items.IMateriaTool;
@@ -25,7 +25,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -84,7 +84,7 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
                 effectMapBuilder.put(rl, configuration);
                 counterMap.put(clazz, counterMap.getOrDefault(clazz, 0) + 1);
             } catch (Exception exception) {
-                Materia.LOGGER.error("Couldn't parse materia effect configuration {}", rl, exception);
+                Constants.LOGGER.error("Couldn't parse materia effect configuration {}", rl, exception);
             }
         });
 
@@ -100,6 +100,6 @@ public class MateriaEffectConfigurationManager extends SimpleJsonResourceReloadL
     }
 
     private void logLoading(String side, int size, String type) {
-        Materia.LOGGER.info(side + " loaded " + size + " materia effect configuration for " + type);
+        Constants.LOGGER.info(side + " loaded " + size + " materia effect configuration for " + type);
     }
 }

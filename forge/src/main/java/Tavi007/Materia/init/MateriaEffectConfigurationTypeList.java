@@ -1,6 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.AttackConfiguration;
 import Tavi007.Materia.data.pojo.effects.configurations.MiningConfiguration;
@@ -21,6 +22,6 @@ public class MateriaEffectConfigurationTypeList {
     }
 
     private static void register(String name, Class<? extends AbstractMateriaEffectConfiguration> clazz) {
-        MateriaEffectConfigurationRegistry.register(new ResourceLocation(Materia.MOD_ID, name), clazz);
+        MateriaEffectConfigurationRegistry.register(new ResourceLocation(Constants.MOD_ID, name), clazz);
     }
 }

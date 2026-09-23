@@ -1,9 +1,7 @@
 package Tavi007.Materia.client.gui;
 
+import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncubatorMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_incubator_menu.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/materia_incubator_menu.png");
 
     public MateriaIncubatorScreen(MateriaIncubatorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);

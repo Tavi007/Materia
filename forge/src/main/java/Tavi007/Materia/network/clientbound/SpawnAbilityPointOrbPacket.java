@@ -1,6 +1,7 @@
 package Tavi007.Materia.network.clientbound;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.entities.AbilityPointOrb;
 import Tavi007.Materia.network.Packet;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -44,7 +45,7 @@ public class SpawnAbilityPointOrbPacket extends Packet {
     @Override
     public void handle(Context context) {
         context.enqueueWork(() -> {
-            ClientLevel level = Materia.MINECRAFT.level;
+            ClientLevel level = Constants.MINECRAFT.level;
             Entity entity = new AbilityPointOrb(level, x, y, z, value);
             entity.syncPacketPositionCodec(x, y, z);
             entity.setYRot(0.0F);

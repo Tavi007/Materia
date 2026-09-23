@@ -2,6 +2,7 @@ package Tavi007.Materia.client;
 
 import java.util.List;
 
+import Tavi007.Materia.common.Constants;
 import com.mojang.datafixers.util.Either;
 
 import Tavi007.Materia.Materia;
@@ -21,7 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Bus.FORGE)
 public class RenderEvents {
 
     @SubscribeEvent
@@ -37,7 +38,7 @@ public class RenderEvents {
 
     @SubscribeEvent
     public static void overlayEvent(RenderGuiOverlayEvent.Pre event) {
-        if (Materia.MINECRAFT.screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
+        if (Constants.MINECRAFT.screen instanceof SelectMateriaEffectScreen && event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type()) {
             event.setCanceled(true);
         }
     }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
@@ -32,7 +33,7 @@ public class SyncMateriaEffectConfigurationsPacket extends Packet {
                     .newInstance(buf);
                 registeredEffectConfigurations.put(rl, configuration);
             } catch (Exception exception) {
-                Materia.LOGGER.error("could not handle bytes after {}", rl, exception);
+                Constants.LOGGER.error("could not handle bytes after {}", rl, exception);
             }
         }
     }

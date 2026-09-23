@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import Tavi007.Materia.common.Constants;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
-import Tavi007.Materia.Materia;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -21,7 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LevelUpDataManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -53,7 +53,7 @@ public class LevelUpDataManager extends SimpleJsonResourceReloadListener {
                 json.getAsJsonArray().forEach(jsonElement -> data.add(jsonElement.getAsInt()));
                 levelUpDataBuilder.put(rl, data);
             } catch (Exception exception) {
-                Materia.LOGGER.error("Couldn't parse level up data of {}", rl, exception);
+                Constants.LOGGER.error("Couldn't parse level up data of {}", rl, exception);
             }
         });
 

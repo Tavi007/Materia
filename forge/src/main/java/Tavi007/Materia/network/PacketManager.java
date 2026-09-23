@@ -2,7 +2,7 @@ package Tavi007.Materia.network;
 
 import java.util.function.Function;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.network.clientbound.SpawnAbilityPointOrbPacket;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
@@ -19,7 +19,7 @@ public class PacketManager {
     private static final String PROTOCOL_VERSION = "1";
 
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-        new ResourceLocation(Materia.MOD_ID, "main"),
+        new ResourceLocation(Constants.MOD_ID, "main"),
         () -> PROTOCOL_VERSION,
         PROTOCOL_VERSION::equals,
         PROTOCOL_VERSION::equals);
@@ -34,7 +34,7 @@ public class PacketManager {
         register(SyncMateriaEffectConfigurationsPacket.class, SyncMateriaEffectConfigurationsPacket::new);
         register(SyncMateriaEffectRecipesPacket.class, SyncMateriaEffectRecipesPacket::new);
 
-        Materia.LOGGER.info("Registered {} packets", NUM_PACKETS);
+        Constants.LOGGER.info("Registered {} packets", NUM_PACKETS);
     }
 
     public static void sendToAllClients(Packet packet) {

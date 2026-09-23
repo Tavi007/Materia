@@ -2,7 +2,7 @@ package Tavi007.Materia.events;
 
 import java.util.List;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
 import Tavi007.Materia.network.Packet;
@@ -17,7 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Bus.FORGE)
 public class PlayerEvents {
 
     @SubscribeEvent

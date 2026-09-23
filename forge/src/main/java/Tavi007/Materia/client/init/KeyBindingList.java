@@ -1,5 +1,6 @@
 package Tavi007.Materia.client.init;
 
+import Tavi007.Materia.common.Constants;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.platform.InputConstants;
@@ -23,7 +24,7 @@ public class KeyBindingList {
     @SubscribeEvent
     public static void onRegisterKeyMappingsEvent(RegisterKeyMappingsEvent event) {
         event.register(SELECT_MATERIA_EFFECT);
-        Materia.LOGGER.info("Materia key mappings registered.");
+        Constants.LOGGER.info("Materia key mappings registered.");
     }
 
 }

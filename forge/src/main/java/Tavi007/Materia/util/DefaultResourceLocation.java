@@ -1,10 +1,10 @@
 package Tavi007.Materia.util;
 
-import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import net.minecraft.resources.ResourceLocation;
 
 public class DefaultResourceLocation {
 
-    public static final ResourceLocation SPELL_TEXTURE = new ResourceLocation(Materia.MOD_ID, "textures/spell/default.png");;
-    public static final ResourceLocation SPELL_TRAIL_TEXTURE = new ResourceLocation(Materia.MOD_ID, "default_spell_trail");;
+    public static final ResourceLocation SPELL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/spell/default.png");;
+    public static final ResourceLocation SPELL_TRAIL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "default_spell_trail");;
 }

@@ -1,6 +1,7 @@
 package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -11,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class MenuList {
 
-    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Materia.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
 
     public static final RegistryObject<MenuType<EquippingStationMenu>> EQUIPPING_STATION = MENU_TYPES
         .register("equipping_station_menu", () -> IForgeMenuType.create(EquippingStationMenu::new));

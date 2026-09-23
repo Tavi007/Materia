@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import Tavi007.Materia.common.Constants;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.network.clientbound.SyncMateriaEffectRecipesPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +23,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Materia.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -85,11 +85,11 @@ public class MateriaEffectRecipeManager extends SimpleJsonResourceReloadListener
                 MateriaEffectRecipe recipe = GSON.fromJson(json, MateriaEffectRecipe.class);
                 recipesBuilder.put(rl, recipe);
             } catch (Exception exception) {
-                Materia.LOGGER.error("Couldn't parse materia effect recipe {}", rl, exception);
+                Constants.LOGGER.error("Couldn't parse materia effect recipe {}", rl, exception);
             }
         });
         registeredEffectRecipes = recipesBuilder.build();
-        Materia.LOGGER.info("Finished loading {} materia effect recipes.", registeredEffectRecipes.size());
+        Constants.LOGGER.info("Finished loading {} materia effect recipes.", registeredEffectRecipes.size());
     }
 
 }

@@ -2,6 +2,7 @@ package Tavi007.Materia.client.util;
 
 import java.util.List;
 
+import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -16,7 +17,7 @@ public class RenderUtil {
         int xOffSet = 0;
         for (Integer collectionSize : collectionSizes) {
             if (1 <= collectionSize && collectionSize <= 4) {
-                ResourceLocation texture = new ResourceLocation(Materia.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
+                ResourceLocation texture = new ResourceLocation(Constants.MOD_ID, "textures/gui/materia_collection_" + collectionSize + ".png");
                 RenderSystem.setShaderTexture(0, texture);
                 int width = 16 + (collectionSize - 1) * 20;
                 //GuiComponent.blit(guiGraphics, startX + xOffSet, startY, 0, 0, width, 16, width, 16);
