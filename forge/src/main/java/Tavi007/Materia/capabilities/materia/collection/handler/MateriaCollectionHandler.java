@@ -6,12 +6,12 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.capabilities.level.LevelData;
+import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
 import Tavi007.Materia.data.pojo.MateriaEffectRecipe;
 import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.items.IMateriaTool;
-import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.common.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -159,7 +159,7 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         boolean levelUpHappened = false;
         for (ItemStack stack : stacks) {
             if (!stack.isEmpty() && isItemValid(0, stack)) {
-                LevelData levelData = CapabilityHelper.getLevelData(stack);
+                MateriaLevelData levelData = CapabilityHelper.getLevelData(stack);
                 levelUpHappened = levelData.addAP(ap);
                 if (levelUpHappened && levelData.isMaxLevel()) {
                     double x = (double) ((float) pos.getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);

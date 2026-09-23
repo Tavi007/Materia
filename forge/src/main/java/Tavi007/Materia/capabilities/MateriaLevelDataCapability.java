@@ -1,13 +1,14 @@
-package Tavi007.Materia.capabilities.level;
+package Tavi007.Materia.capabilities;
 
-import Tavi007.Materia.Materia;
-import Tavi007.Materia.capabilities.SerializableCapabilityProvider;
+import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
 import Tavi007.Materia.init.ReloadListenerList;
-import Tavi007.Materia.items.MateriaItem;
+import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.LevelData;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -17,9 +18,11 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-public class LevelDataCapability {
+import java.util.List;
 
-    public static final Capability<LevelData> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+public class MateriaLevelDataCapability {
+
+    public static final Capability<MateriaLevelDataSerializer> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });
 
     /**
@@ -30,24 +33,24 @@ public class LevelDataCapability {
     /**
      * The ID of this capability.
      */
-    public static final ResourceLocation ID = new ResourceLocation(Materia.MOD_ID, "level_data");
+    public static final ResourceLocation ID = new ResourceLocation(Constants.MOD_ID, "level_data");
 
     public static void register(final RegisterCapabilitiesEvent event) {
         event.register(LevelData.class);
     }
 
-    public static ICapabilityProvider createProvider(final LevelData levelData) {
-        return new SerializableCapabilityProvider<>(CAPABILITY, defaultFacing, levelData);
+    public static ICapabilityProvider createProvider(final MateriaLevelData data) {
+        return new SerializableCapabilityProvider<>(CAPABILITY, defaultFacing, new MateriaLevelDataSerializer(data));
     }
 
-    @Mod.EventBusSubscriber(modid = Materia.MOD_ID)
+    @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
     private static class EventHandler {
 
         @SubscribeEvent
         public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
             Item item = event.getObject().getItem();
             if (item instanceof MateriaItem) {
-                final LevelData data = new LevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(item));
+                final MateriaLevelData data = new MateriaLevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(item), 0 ,0);
                 event.addCapability(ID, createProvider(data));
             }
         }
