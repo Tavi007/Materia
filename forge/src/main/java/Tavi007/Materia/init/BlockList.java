@@ -21,8 +21,10 @@ public class BlockList {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
 
     static {
-        BiConsumer<String, Supplier<Block>> registerConsumer = BLOCKS::register;
-        ModBlocks.register(registerConsumer);
+        ModBlocks.EQUIPPING_STATION = BLOCKS.register(Constants.EQUIPPING_STATION, () -> new EquippingStationBlock(ModBlocks.METAL));
+        ModBlocks.MATERIA_INCUBATOR = BLOCKS.register(Constants.MATERIA_INCUBATOR, () -> new MateriaIncubatorBlock(ModBlocks.METAL));
+//        BiConsumer<String, Supplier<Block>> registerConsumer = BLOCKS::register;
+//        ModBlocks.register(registerConsumer);
     }
 
 }

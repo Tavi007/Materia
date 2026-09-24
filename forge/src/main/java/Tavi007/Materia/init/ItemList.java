@@ -31,8 +31,8 @@ public class ItemList {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
 
     // only used as Icon for Item group
-    private static Properties singleStack = new Properties().stacksTo(1);
-    private static Properties fullStack = new Properties().stacksTo(64);
+    private static final Properties singleStack = new Properties().stacksTo(1);
+    private static final Properties fullStack = new Properties().stacksTo(64);
 
     static {
         ModItems.BASE_MATERIA = register(Constants.BASE_MATERIA, () -> new MateriaItem(singleStack));
@@ -82,10 +82,12 @@ public class ItemList {
                 () -> new AbilityPointBottleItem(fullStack));
 
         //blocks
-        ModItems.EQUIPPING_STATION = ITEMS.register("equipping_station",
-                () -> new BlockItem(ModBlocks.EQUIPPING_STATION.get(), fullStack));
+        ModItems.EQUIPPING_STATION = ITEMS.register(Constants.EQUIPPING_STATION,
+                () -> {
+                return new BlockItem(ModBlocks.EQUIPPING_STATION.get(), fullStack);
+                });
 
-        ModItems.MATERIA_INCUBATOR = ITEMS.register("materia_incubator",
+        ModItems.MATERIA_INCUBATOR = ITEMS.register(Constants.MATERIA_INCUBATOR,
                 () -> new BlockItem(ModBlocks.MATERIA_INCUBATOR.get(), fullStack));
     }
 
