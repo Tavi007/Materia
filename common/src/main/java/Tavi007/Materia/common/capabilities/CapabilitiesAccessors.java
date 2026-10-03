@@ -1,6 +1,6 @@
 package Tavi007.Materia.common.capabilities;
 
-import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
+import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Function;

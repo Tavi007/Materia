@@ -1,11 +1,11 @@
 package Tavi007.Materia.init;
 
-import Tavi007.Materia.data.pojo.effects.AttackEffect;
-import Tavi007.Materia.data.pojo.effects.MiningEffect;
-import Tavi007.Materia.data.pojo.effects.MorphItemEffect;
-import Tavi007.Materia.data.pojo.effects.SpellEffect;
-import Tavi007.Materia.data.pojo.effects.StatEffect;
-import Tavi007.Materia.registries.MateriaEffectRegistry;
+import Tavi007.Materia.common.data.pojo.effects.AttackEffect;
+import Tavi007.Materia.common.data.pojo.effects.MiningEffect;
+import Tavi007.Materia.common.data.pojo.effects.MorphItemEffect;
+import Tavi007.Materia.common.data.pojo.effects.SpellEffect;
+import Tavi007.Materia.common.data.pojo.effects.StatEffect;
+import Tavi007.Materia.common.registries.MateriaEffectRegistry;
 
 public class MateriaEffectList {
 

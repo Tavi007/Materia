@@ -5,11 +5,10 @@ import java.util.List;
 import Tavi007.Materia.common.Constants;
 import com.mojang.datafixers.util.Either;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.client.gui.MateriaToolComponent;
 import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
-import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.common.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;

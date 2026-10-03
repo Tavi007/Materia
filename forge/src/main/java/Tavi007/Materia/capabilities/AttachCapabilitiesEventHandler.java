@@ -1,16 +1,12 @@
 package Tavi007.Materia.capabilities;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
+import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID)
 public class AttachCapabilitiesEventHandler {

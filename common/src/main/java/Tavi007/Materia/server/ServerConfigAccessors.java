@@ -37,4 +37,15 @@ public class ServerConfigAccessors {
         return apBottleRandomPercent.get();
     }
 
+
+    public static int getApBottleMinAmount() {
+        float lowerBoundPercent = ((float) 100 - apBottleRandomPercent.get()) / 100;
+        return (int) (lowerBoundPercent * apBottleAmount.get());
+    }
+
+    public static int getApBottleMaxAmount() {
+        float lowerBoundPercent = ((float) 100 + apBottleRandomPercent.get()) / 100;
+        return (int) (lowerBoundPercent * apBottleAmount.get());
+    }
+
 }

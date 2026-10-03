@@ -4,7 +4,7 @@ import java.util.List;
 
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.init.ReloadListenerList;
-import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.common.items.IMateriaTool;
 import Tavi007.Materia.network.Packet;
 import Tavi007.Materia.network.PacketManager;
 import net.minecraft.server.level.ServerPlayer;

@@ -1,8 +1,8 @@
 package Tavi007.Materia.events;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.data.pojo.MobData;
-import Tavi007.Materia.entities.AbilityPointOrb;
+import Tavi007.Materia.common.data.pojo.MobData;
+import Tavi007.Materia.common.entities.AbilityPointOrb;
 import Tavi007.Materia.init.ReloadListenerList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;

@@ -2,8 +2,8 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.inventory.menus.EquippingStationMenu;
-import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
+import Tavi007.Materia.common.inventory.menus.EquippingStationMenu;
+import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;

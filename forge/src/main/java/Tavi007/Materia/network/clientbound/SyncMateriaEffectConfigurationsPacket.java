@@ -3,12 +3,11 @@ package Tavi007.Materia.network.clientbound;
 import java.util.HashMap;
 import java.util.Map;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
+import Tavi007.Materia.common.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.network.Packet;
-import Tavi007.Materia.registries.MateriaEffectConfigurationRegistry;
+import Tavi007.Materia.common.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent.Context;

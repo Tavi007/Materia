@@ -48,4 +48,12 @@ public class Constants {
     public static final String ABILITY_POINT_ORB = "ability_point_orb";
     public static final String THROWN_ABILITY_POINT_BOTTLE = "thrown_ability_point_bottle";
     public static final String SPELL_PROJECTILE = "spell_projectile";
+
+    // Recipes
+    public static final String MATERIA_INCUBATOR_RECIPE = "recipes/materia_incubator";
+
+
+    // some ResourceLocations
+    public static final ResourceLocation SPELL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/spell/default.png");;
+    public static final ResourceLocation SPELL_TRAIL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "default_spell_trail");;
 }

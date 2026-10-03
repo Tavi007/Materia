@@ -1,8 +1,7 @@
 package Tavi007.Materia.init;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.recipes.MateriaIncubatorRecipe;
+import Tavi007.Materia.common.recipes.MateriaIncubatorRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;

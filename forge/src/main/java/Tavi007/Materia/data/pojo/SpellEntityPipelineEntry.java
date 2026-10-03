@@ -3,7 +3,7 @@ package Tavi007.Materia.data.pojo;
 import java.util.Optional;
 
 import Tavi007.ElementalCombat.api.BasePropertiesAPI;
-import Tavi007.Materia.entities.SpellProjectileEntity;
+import Tavi007.Materia.common.entities.SpellProjectileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;

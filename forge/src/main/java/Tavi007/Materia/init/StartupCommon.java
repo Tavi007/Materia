@@ -5,7 +5,7 @@ import Tavi007.Materia.capabilities.MateriaLevelDataSerializer;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.capabilities.CapabilitiesAccessors;
-import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
+import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
 import Tavi007.Materia.network.PacketManager;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

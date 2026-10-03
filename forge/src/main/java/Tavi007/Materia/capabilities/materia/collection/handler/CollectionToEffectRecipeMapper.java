@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
-import Tavi007.Materia.registries.MateriaEffectRegistry;
+import Tavi007.Materia.common.data.pojo.effects.AbstractMateriaEffect;
+import Tavi007.Materia.common.registries.MateriaEffectRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;

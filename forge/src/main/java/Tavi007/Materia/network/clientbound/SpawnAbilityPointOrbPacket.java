@@ -1,8 +1,7 @@
 package Tavi007.Materia.network.clientbound;
 
-import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.entities.AbilityPointOrb;
+import Tavi007.Materia.common.entities.AbilityPointOrb;
 import Tavi007.Materia.network.Packet;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;

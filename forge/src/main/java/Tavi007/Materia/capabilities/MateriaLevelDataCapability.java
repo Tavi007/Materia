@@ -1,7 +1,7 @@
 package Tavi007.Materia.capabilities;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
+import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.core.Direction;
@@ -17,8 +17,6 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.List;
 
 public class MateriaLevelDataCapability {
 

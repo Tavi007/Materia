@@ -2,7 +2,7 @@ package Tavi007.Materia.capabilities.materia.collection.handler;
 
 import Tavi007.Materia.capabilities.SerializableCapabilityProvider;
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.items.IMateriaTool;
+import Tavi007.Materia.common.items.IMateriaTool;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

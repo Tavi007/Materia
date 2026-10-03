@@ -1,14 +1,13 @@
 package Tavi007.Materia.util;
 
-import java.util.Collections;
 import java.util.List;
 
 import Tavi007.Materia.capabilities.MateriaLevelDataCapability;
 import Tavi007.Materia.capabilities.MateriaLevelDataSerializer;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandlerCapability;
-import Tavi007.Materia.common.data.capabilities.MateriaLevelData;
-import Tavi007.Materia.data.pojo.effects.AbstractMateriaEffect;
+import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
+import Tavi007.Materia.common.data.pojo.effects.AbstractMateriaEffect;
 import net.minecraft.world.item.ItemStack;
 
 public class CapabilityHelper {
