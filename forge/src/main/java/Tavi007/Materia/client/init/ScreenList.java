@@ -15,8 +15,8 @@ public class ScreenList {
 
     @SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
-        MenuScreens.register(MenuList.EQUIPPING_STATION.get(), EquippingStationScreen::new);
-        MenuScreens.register(MenuList.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
+//        MenuScreens.register(MenuList.EQUIPPING_STATION.get(), EquippingStationScreen::new);
+//        MenuScreens.register(MenuList.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
     }
 
 }

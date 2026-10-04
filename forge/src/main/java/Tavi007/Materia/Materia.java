@@ -30,6 +30,8 @@ public class Materia {
         // register common
         BlockList.BLOCKS.register(MOD_EVENT_BUS);
         ItemList.ITEMS.register(MOD_EVENT_BUS);
+        CreativeTabList.TABS.register(MOD_EVENT_BUS);
+
         MenuList.MENU_TYPES.register(MOD_EVENT_BUS);
         EntityTypeList.ENTITY_TYPES.register(MOD_EVENT_BUS);
         MateriaEffectConfigurationTypeList.init();
@@ -39,7 +41,6 @@ public class Materia {
         RecipeTypeList.RECIPE_TYPES.register(MOD_EVENT_BUS);
         RecipeTypeList.RECIPE_SERIALIZERS.register(MOD_EVENT_BUS);
 
-        CreativeTabList.TABS.register(MOD_EVENT_BUS);
         MOD_EVENT_BUS.register(StartupCommon.class);
         MinecraftForge.EVENT_BUS.register(this);
     }

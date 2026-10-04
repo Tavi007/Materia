@@ -4,8 +4,8 @@ import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.platform.InputConstants;
 
 import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
-import Tavi007.Materia.client.gui.MateriaToolComponent;
-import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
+//import Tavi007.Materia.client.gui.MateriaToolComponent;
+//import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
 import Tavi007.Materia.client.init.KeyBindingList;
 import Tavi007.Materia.common.items.IMateriaTool;
 import Tavi007.Materia.util.CapabilityHelper;
@@ -45,53 +45,53 @@ public class PlayerEvents {
     }
 
     private static boolean checkSelectScreen(int key) {
-        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
-            MINECRAFT.screen.onClose();
-            MINECRAFT.player.closeContainer();
-            return true;
-        }
-        if (key == KeyBindingList.SELECT_MATERIA_EFFECT.getKey().getValue()) {
-            if (MINECRAFT.screen == null) {
-                if (checkAndOpenSelectScreen(MINECRAFT.player.getMainHandItem())) {
-                    return true;
-                }
-                if (checkAndOpenSelectScreen(MINECRAFT.player.getOffhandItem())) {
-                    return true;
-                }
-            }
-        }
+//        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
+//            MINECRAFT.screen.onClose();
+//            MINECRAFT.player.closeContainer();
+//            return true;
+//        }
+//        if (key == KeyBindingList.SELECT_MATERIA_EFFECT.getKey().getValue()) {
+//            if (MINECRAFT.screen == null) {
+//                if (checkAndOpenSelectScreen(MINECRAFT.player.getMainHandItem())) {
+//                    return true;
+//                }
+//                if (checkAndOpenSelectScreen(MINECRAFT.player.getOffhandItem())) {
+//                    return true;
+//                }
+//            }
+//        }
 
         return false;
     }
 
     private static boolean checkAndOpenSelectScreen(ItemStack stack) {
-        if (stack != null && stack.getItem() instanceof IMateriaTool materiaTool) {
-            MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
-            MateriaToolComponent component = new MateriaToolComponent(materiaTool, collectionHandler);
-            MINECRAFT.setScreen(new SelectMateriaEffectScreen(component));
-            return true;
-        }
+//        if (stack != null && stack.getItem() instanceof IMateriaTool materiaTool) {
+//            MateriaCollectionHandler collectionHandler = CapabilityHelper.getMateriaCollectionHandler(stack);
+//            MateriaToolComponent component = new MateriaToolComponent(materiaTool, collectionHandler);
+//            MINECRAFT.setScreen(new SelectMateriaEffectScreen(component));
+//            return true;
+//        }
         return false;
     }
 
     @SubscribeEvent
     public static void updateInputEvent(MovementInputUpdateEvent event) {
-        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
-            Options settings = MINECRAFT.options;
-            Input eInput = event.getInput();
-            eInput.up = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyUp.getKey().getValue());
-            eInput.down = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyDown.getKey().getValue());
-            eInput.left = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyLeft.getKey().getValue());
-            eInput.right = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyRight.getKey().getValue());
-
-            eInput.forwardImpulse = eInput.up == eInput.down ? 0.0F : (eInput.up ? 1.0F : -1.0F);
-            eInput.leftImpulse = eInput.left == eInput.right ? 0.0F : (eInput.left ? 1.0F : -1.0F);
-            eInput.jumping = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyJump.getKey().getValue());
-            eInput.shiftKeyDown = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyShift.getKey().getValue());
-            if (MINECRAFT.player.isMovingSlowly()) {
-                eInput.leftImpulse = (float) ((double) eInput.leftImpulse * 0.3D);
-                eInput.forwardImpulse = (float) ((double) eInput.forwardImpulse * 0.3D);
-            }
-        }
+//        if (MINECRAFT.screen instanceof SelectMateriaEffectScreen) {
+//            Options settings = MINECRAFT.options;
+//            Input eInput = event.getInput();
+//            eInput.up = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyUp.getKey().getValue());
+//            eInput.down = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyDown.getKey().getValue());
+//            eInput.left = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyLeft.getKey().getValue());
+//            eInput.right = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyRight.getKey().getValue());
+//
+//            eInput.forwardImpulse = eInput.up == eInput.down ? 0.0F : (eInput.up ? 1.0F : -1.0F);
+//            eInput.leftImpulse = eInput.left == eInput.right ? 0.0F : (eInput.left ? 1.0F : -1.0F);
+//            eInput.jumping = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyJump.getKey().getValue());
+//            eInput.shiftKeyDown = InputConstants.isKeyDown(MINECRAFT.getWindow().getWindow(), settings.keyShift.getKey().getValue());
+//            if (MINECRAFT.player.isMovingSlowly()) {
+//                eInput.leftImpulse = (float) ((double) eInput.leftImpulse * 0.3D);
+//                eInput.forwardImpulse = (float) ((double) eInput.forwardImpulse * 0.3D);
+//            }
+//        }
     }
 }

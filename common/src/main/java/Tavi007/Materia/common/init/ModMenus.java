@@ -4,13 +4,8 @@ import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.init.registrar.MenuRegistrar;
 import Tavi007.Materia.common.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 
-import java.awt.*;
 
 public class ModMenus {
     public static MenuType<EquippingStationMenu> EQUIPPING_STATION;
