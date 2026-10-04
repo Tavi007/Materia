@@ -9,12 +9,16 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class ModItems {
 
     public static final HashMap<String, Supplier<Item>> ITEM_MAP = new HashMap<>();
+    public static final ArrayList<Supplier<Item>> MATERIAS = new ArrayList<>();
+    public static final ArrayList<Supplier<Item>> MATERIA_TOOLS = new ArrayList<>();
+    public static final ArrayList<Supplier<Item>> MISC = new ArrayList<>();
 
     // only used as Icon for Item group
     private static final Item.Properties singleStack = new Item.Properties().stacksTo(1);
@@ -33,35 +37,35 @@ public class ModItems {
     public static final Supplier<Item> TARGET_MATERIA = register(Constants.TARGET_MATERIA, () -> new MateriaItem(singleStack));
 
     // pickaxes
-    Supplier<Item> MATERIA_DIAMOND_PICKAXE = register(Constants.MATERIA_DIAMOND_PICKAXE,
+    public static final Supplier<Item> MATERIA_DIAMOND_PICKAXE = register(Constants.MATERIA_DIAMOND_PICKAXE,
             () -> new MateriaPickaxe(Tiers.DIAMOND, 1,-2.8F,singleStack, Arrays.asList(3),Arrays. asList(1)));
 
     // axes
-    Supplier<Item> MATERIA_DIAMOND_AXE = register(Constants.MATERIA_DIAMOND_AXE,
+    public static final Supplier<Item> MATERIA_DIAMOND_AXE = register(Constants.MATERIA_DIAMOND_AXE,
             () -> new MateriaAxe(Tiers.DIAMOND, 1,-2.8F,singleStack, Arrays.asList(1, 1),Arrays. asList(2)));
 
     // shovel
-    Supplier<Item> MATERIA_DIAMOND_SHOVEL = register(Constants.MATERIA_DIAMOND_SHOVEL,
+    public static final Supplier<Item> MATERIA_DIAMOND_SHOVEL = register(Constants.MATERIA_DIAMOND_SHOVEL,
             () -> new MateriaShovel(Tiers.DIAMOND, 1,-2.8F,singleStack, Arrays.asList(1, 2),Arrays. asList(2,1)));
 
     // hoe
-    Supplier<Item> MATERIA_DIAMOND_HOE = register(Constants.MATERIA_DIAMOND_HOE,
+    public static final Supplier<Item> MATERIA_DIAMOND_HOE = register(Constants.MATERIA_DIAMOND_HOE,
             () -> new MateriaHoe(Tiers.DIAMOND, 1,-2.8F,singleStack, Arrays.asList(1, 3),Arrays. asList(3,1)));
 
     // sword
-    Supplier<Item> MATERIA_DIAMOND_SWORD = register(Constants.MATERIA_DIAMOND_SWORD,
+    public static final Supplier<Item> MATERIA_DIAMOND_SWORD = register(Constants.MATERIA_DIAMOND_SWORD,
             () -> new MateriaSword(Tiers.DIAMOND, 1,-2.8F,singleStack, Arrays.asList(2, 2),Arrays. asList(4)));
 
     // wand
-    Supplier<Item> MATERIA_DIAMOND_WAND = register(Constants.MATERIA_DIAMOND_WAND,
+    public static final Supplier<Item> MATERIA_DIAMOND_WAND = register(Constants.MATERIA_DIAMOND_WAND,
             () -> new MateriaWand(Tiers.DIAMOND, singleStack, Arrays.asList(1, 1,1),Arrays.asList(1,1,2)));
 
     // accessory
-    Supplier<Item> MATERIA_DIAMOND_ACCESSORY = register(Constants.MATERIA_DIAMOND_ACCESSORY,
+    public static final Supplier<Item> MATERIA_DIAMOND_ACCESSORY = register(Constants.MATERIA_DIAMOND_ACCESSORY,
             () -> new MateriaAccessory(Tiers.DIAMOND, singleStack, Arrays.asList(1, 2,1),Arrays.asList(2,1,1)));
 
     // misc
-    Supplier<Item> ABILITY_POINT_BOTTLE = register(Constants.ABILITY_POINT_BOTTLE,
+    public static final Supplier<Item> ABILITY_POINT_BOTTLE = register(Constants.ABILITY_POINT_BOTTLE,
             () -> new  AbilityPointBottleItem(fullStack));
 
     //blocks
@@ -75,6 +79,14 @@ public class ModItems {
     private static Supplier<Item> register(String name, Supplier<Item> supplier) {
         Supplier<Item> memoized = Suppliers.memoize(supplier);
         ITEM_MAP.put(name, memoized);
+        Item item = supplier.get();
+        if(item instanceof MateriaItem) {
+            MATERIAS.add(memoized);
+        } else if (item instanceof IMateriaTool) {
+            MATERIA_TOOLS.add(memoized);
+        } else {
+            MISC.add(memoized);
+        }
         return memoized;
     }
 }

@@ -42,6 +42,11 @@ public class Constants {
 
     public static final String ABILITY_POINT_BOTTLE = "ability_point_bottle";
 
+    // Creative Tabs
+    public static final String MATERIA_TAB = "materias";
+    public static final String MATERIA_TOOL_TAB = "materia_tools";
+    public static final String MISC_TAB = "misc";
+
     // Particles
 
     //Entities
