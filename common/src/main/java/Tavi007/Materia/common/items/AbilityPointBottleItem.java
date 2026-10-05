@@ -1,6 +1,7 @@
 package Tavi007.Materia.common.items;
 
 //import Tavi007.Materia.entities.ThrownAbilityPointBottle;
+import Tavi007.Materia.common.entities.ThrownAbilityPointBottle;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -31,10 +32,10 @@ public class AbilityPointBottleItem extends Item {
             0.5F,
             0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         if (!level.isClientSide) {
-//            ThrownAbilityPointBottle thrownBottle = new ThrownAbilityPointBottle(level, player);
-//            thrownBottle.setItem(itemstack);
-//            thrownBottle.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.7F, 1.0F);
-//            level.addFreshEntity(thrownBottle);
+            ThrownAbilityPointBottle thrownBottle = new ThrownAbilityPointBottle(level, player);
+            thrownBottle.setItem(itemstack);
+            thrownBottle.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.7F, 1.0F);
+            level.addFreshEntity(thrownBottle);
         }
 
         if (!player.getAbilities().instabuild) {
