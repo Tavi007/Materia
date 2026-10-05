@@ -93,7 +93,8 @@ public class ModItems {
         MISC.add(memoized);
         return memoized;
     }
-    private static Supplier<Item> register(String name, Supplier<Item> memoized) {
+    private static Supplier<Item> register(String name, Supplier<Item> supplier) {
+        Supplier<Item> memoized = Suppliers.memoize(supplier);
         ITEM_MAP.put(name, memoized);
         return memoized;
     }
