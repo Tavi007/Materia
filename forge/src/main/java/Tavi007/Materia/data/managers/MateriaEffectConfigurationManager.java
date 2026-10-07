@@ -15,7 +15,6 @@ import com.google.gson.JsonObject;
 import Tavi007.Materia.common.data.pojo.effects.AbstractMateriaEffect;
 import Tavi007.Materia.common.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;
 import Tavi007.Materia.common.items.IMateriaTool;
-import Tavi007.Materia.network.clientbound.SyncMateriaEffectConfigurationsPacket;
 import Tavi007.Materia.common.registries.MateriaEffectConfigurationRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;

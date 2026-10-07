@@ -1,4 +1,4 @@
-package Tavi007.Materia.init;
+package Tavi007.Materia.common.init;
 
 import Tavi007.Materia.common.data.pojo.effects.AttackEffect;
 import Tavi007.Materia.common.data.pojo.effects.MiningEffect;

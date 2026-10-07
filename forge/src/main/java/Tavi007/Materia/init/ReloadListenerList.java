@@ -8,7 +8,6 @@ import Tavi007.Materia.data.managers.LevelUpDataManager;
 import Tavi007.Materia.data.managers.MateriaEffectConfigurationManager;
 import Tavi007.Materia.data.managers.MateriaEffectRecipeManager;
 import Tavi007.Materia.data.managers.MobDataManager;
-import Tavi007.Materia.network.Packet;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

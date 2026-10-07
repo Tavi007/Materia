@@ -6,7 +6,7 @@ import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollection
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.capabilities.CapabilitiesAccessors;
 import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
-import Tavi007.Materia.network.PacketManager;
+import Tavi007.Materia.network.ForgePacketManager;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -31,11 +31,7 @@ public class StartupCommon {
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {
-        registerNetworking();
+        ForgePacketManager.init();
         Constants.LOGGER.info("setup method registered.");
-    }
-
-    private static void registerNetworking() {
-        PacketManager.init();
     }
 }

@@ -1,4 +1,4 @@
-package Tavi007.Materia.init;
+package Tavi007.Materia.common.init;
 
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.data.pojo.effects.configurations.AbstractMateriaEffectConfiguration;

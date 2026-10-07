@@ -1,12 +1,11 @@
 package Tavi007.Materia;
 
 import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.MateriaEffectConfigurationTypeList;
+import Tavi007.Materia.common.init.MateriaEffectList;
 import Tavi007.Materia.init.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import Tavi007.Materia.client.ClientConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;

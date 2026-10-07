@@ -1,14 +1,8 @@
 package Tavi007.Materia.events;
 
-import java.util.List;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.common.items.IMateriaTool;
-import Tavi007.Materia.network.Packet;
-import Tavi007.Materia.network.PacketManager;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -39,10 +33,10 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void playerLoggedIn(PlayerLoggedInEvent event) {
-        Player player = event.getEntity();
-        if (!player.level().isClientSide && player instanceof ServerPlayer) {
-            List<Packet> packets = ReloadListenerList.getSyncPackets();
-            packets.forEach(packet -> PacketManager.sendToClient(packet, player));
-        }
+//        Player player = event.getEntity();
+//        if (!player.level().isClientSide && player instanceof ServerPlayer) {
+//            List<AbstractPacket> packets = ReloadListenerList.getSyncPackets();
+//            packets.forEach(packet -> ModNetwork.sendToClient(packet, player));
+//        }
     }
 }

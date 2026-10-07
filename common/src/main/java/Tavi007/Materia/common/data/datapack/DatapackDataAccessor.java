@@ -2,7 +2,7 @@ package Tavi007.Materia.common.data.datapack;
 
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.network.packets.SyncronizeDatapackPacket;
+import Tavi007.Materia.common.network.packets.SynchronizeDatapackPacket;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -71,11 +71,11 @@ public class DatapackDataAccessor {
     }
 
     public static void sendSyncMessage(ServerPlayer player) {
-        SyncronizeDatapackPacket packet = new SyncronizeDatapackPacket(levelUpData);
+        SynchronizeDatapackPacket packet = new SynchronizeDatapackPacket(levelUpData);
         //ServerPacketSender.sendPacket(packet, player);
     }
 
-    public static void applySyncMessage(SyncronizeDatapackPacket message) {
+    public static void applySyncMessage(SynchronizeDatapackPacket message) {
         levelUpData = message.levelUpData;
     }
 }
