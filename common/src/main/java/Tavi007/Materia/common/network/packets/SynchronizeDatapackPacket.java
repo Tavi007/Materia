@@ -1,6 +1,5 @@
 package Tavi007.Materia.common.network.packets;
 
-import Tavi007.Materia.common.data.datapack.DatapackDataAccessor;
 import Tavi007.Materia.common.network.IPacketContext;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +54,7 @@ public class SynchronizeDatapackPacket extends AbstractPacket {
 
     @Override
     public void handle(IPacketContext context) {
-        DatapackDataAccessor.applySyncMessage(this);
+        //DatapackDataAccessor.applySyncMessage(this);
     }
 
 

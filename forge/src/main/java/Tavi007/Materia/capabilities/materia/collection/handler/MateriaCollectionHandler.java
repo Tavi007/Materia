@@ -93,18 +93,18 @@ public class MateriaCollectionHandler extends ItemStackHandler {
         List<ItemStack> stacksOfSlots = getStacks(slotIndexList);
 
         List<AbstractMateriaEffect> effects = new ArrayList<>();
-        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacksOfSlots);
-        for (ResourceLocation effectRecipe : effectRecipes) {
-            MateriaEffectRecipe recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
-            if (recipePojo != null) {
-                for (ResourceLocation effectName : recipePojo.getOutput()) {
-                    AbstractMateriaEffect effect = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getEffect(effectName, materiaTool, stacksOfSlots);
-                    if (effect != null) {
-                        effects.add(effect);
-                    }
-                }
-            }
-        }
+//        List<ResourceLocation> effectRecipes = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getEffects(stacksOfSlots);
+//        for (ResourceLocation effectRecipe : effectRecipes) {
+//            MateriaEffectRecipe recipePojo = ReloadListenerList.MATERIA_EFFECT_RECIPE_MANGER.getRecipePojo(effectRecipe);
+//            if (recipePojo != null) {
+//                for (ResourceLocation effectName : recipePojo.getOutput()) {
+//                    AbstractMateriaEffect effect = ReloadListenerList.MATERIA_EFFECT_CONFIGURATION_MANGER.getEffect(effectName, materiaTool, stacksOfSlots);
+//                    if (effect != null) {
+//                        effects.add(effect);
+//                    }
+//                }
+//            }
+//        }
         return effects;
     }
 

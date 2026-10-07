@@ -2,6 +2,7 @@ package Tavi007.Materia.capabilities;
 
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
+import Tavi007.Materia.common.data.datapack.LevelUpDataManager;
 import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.core.Direction;
@@ -48,7 +49,7 @@ public class MateriaLevelDataCapability {
         public static void attachCapabilitiesItem(final AttachCapabilitiesEvent<ItemStack> event) {
             Item item = event.getObject().getItem();
             if (item instanceof MateriaItem) {
-                final MateriaLevelData data = new MateriaLevelData(ReloadListenerList.LEVEL_UP_DATA_MANAGER.getLevelUpData(item), 0 ,0);
+                final MateriaLevelData data = new MateriaLevelData(LevelUpDataManager.get(item), 0 ,0);
                 event.addCapability(ID, createProvider(data));
             }
         }

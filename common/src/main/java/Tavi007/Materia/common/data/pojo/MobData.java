@@ -7,7 +7,7 @@ import Tavi007.Materia.server.ServerConfigAccessors;
 public class MobData {
 
     @SerializedName("ap_amount")
-    private int apAmount;
+    private final int apAmount;
 
     public MobData() {
         this.apAmount = ServerConfigAccessors.getBaseMobApAmount();
