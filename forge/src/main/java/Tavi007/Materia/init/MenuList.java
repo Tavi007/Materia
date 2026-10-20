@@ -2,6 +2,7 @@ package Tavi007.Materia.init;
 
 import Tavi007.Materia.Materia;
 import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.ModMenus;
 import Tavi007.Materia.common.inventory.menus.EquippingStationMenu;
 import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -17,6 +18,12 @@ public class MenuList {
 //    public static final RegistryObject<MenuType<EquippingStationMenu>> EQUIPPING_STATION = MENU_TYPES
 //        .register("equipping_station_menu", () -> IForgeMenuType.create(EquippingStationMenu::new));
 //
-//    public static final RegistryObject<MenuType<MateriaIncubatorMenu>> MATERIA_INCUBATOR = MENU_TYPES
-//        .register("materia_incubator_menu", () -> IForgeMenuType.create(MateriaIncubatorMenu::new));
+
+    public static final RegistryObject<MenuType<MateriaIncubatorMenu>> MATERIA_INCUBATOR = MENU_TYPES
+        .register("materia_incubator_menu", () -> IForgeMenuType.create(MateriaIncubatorMenu::new));
+
+    static {
+        ModMenus.MATERIA_INCUBATOR = MATERIA_INCUBATOR::get;
+    }
+
 }

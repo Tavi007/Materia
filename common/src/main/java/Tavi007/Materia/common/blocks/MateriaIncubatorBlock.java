@@ -1,6 +1,7 @@
 package Tavi007.Materia.common.blocks;
 
 //import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
+import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -31,11 +32,9 @@ public class MateriaIncubatorBlock extends Block {
         }
     }
 
-//    @Override
-//    public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
-//        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> {
-//            return new MateriaIncubatorMenu(windowId, playerInventory, level, blockPos);
-//        }, MENU_TITLE);
-//    }
+    @Override
+    public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
+        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new MateriaIncubatorMenu(windowId, playerInventory, null), MENU_TITLE);
+    }
 
 }

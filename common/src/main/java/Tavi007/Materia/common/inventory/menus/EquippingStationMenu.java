@@ -20,7 +20,7 @@ public class EquippingStationMenu extends AbstractContainerMenu {
             int containerId,
             Inventory playerInventory
     ) {
-        super(ModMenus.EQUIPPING_STATION, containerId);
+        super(ModMenus.EQUIPPING_STATION.get(), containerId);
 
         EquippingStationContainer container = new EquippingStationContainer();
 

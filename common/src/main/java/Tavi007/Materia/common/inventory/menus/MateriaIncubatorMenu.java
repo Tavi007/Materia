@@ -4,6 +4,7 @@ import Tavi007.Materia.common.init.ModMenus;
 import Tavi007.Materia.common.inventory.containers.MateriaIncubatorContainer;
 import Tavi007.Materia.common.inventory.slots.IncubatorFuelSlot;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -17,9 +18,10 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     public MateriaIncubatorMenu(
             int containerId,
-            Inventory playerInventory
+            Inventory playerInventory,
+            FriendlyByteBuf extraData
     ) {
-        super(ModMenus.MATERIA_INCUBATOR, containerId);
+        super(ModMenus.MATERIA_INCUBATOR.get(), containerId);
         MateriaIncubatorContainer container = new MateriaIncubatorContainer();
 
         // Materia
