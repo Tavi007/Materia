@@ -11,4 +11,16 @@ import net.minecraft.world.inventory.MenuType;
 public class ModMenus {
     public static Supplier<MenuType<EquippingStationMenu>> EQUIPPING_STATION;
     public static Supplier<MenuType<MateriaIncubatorMenu>> MATERIA_INCUBATOR;
+
+    public static void register(MenuRegistrar registrar) {
+        EQUIPPING_STATION = registrar.register(
+                Constants.EQUIPPING_STATION,
+                EquippingStationMenu::new
+        );
+
+        MATERIA_INCUBATOR = registrar.register(
+                Constants.MATERIA_INCUBATOR,
+                MateriaIncubatorMenu::new
+        );
+    }
 }

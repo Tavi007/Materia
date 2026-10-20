@@ -4,6 +4,7 @@ import Tavi007.Materia.common.init.ModMenus;
 import Tavi007.Materia.common.inventory.containers.EquippingStationContainer;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
 import Tavi007.Materia.common.inventory.slots.MateriaToolSlot;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -18,7 +19,8 @@ public class EquippingStationMenu extends AbstractContainerMenu {
 
     public EquippingStationMenu(
             int containerId,
-            Inventory playerInventory
+            Inventory playerInventory,
+            FriendlyByteBuf extraData
     ) {
         super(ModMenus.EQUIPPING_STATION.get(), containerId);
 
