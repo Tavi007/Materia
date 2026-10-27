@@ -18,6 +18,8 @@ public class MateriaItemSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return stack.getItem() instanceof MateriaItem;
+        return mayPlaceItem(stack);
     }
+
+    public static boolean mayPlaceItem(ItemStack stack) {return stack.getItem() instanceof MateriaItem;}
 }
