@@ -1,5 +1,7 @@
 {
     "itemGroup.materia" : "Materia",
+    "itemGroup.materia_tool" : "Materia Tools",
+    "itemGroup.misc" : "Materia Miscellaneous",
     "item.materia.base_materia" : "Base Materia",
     
     "item.materia.size_up_materia" : "Size Up Materia",
