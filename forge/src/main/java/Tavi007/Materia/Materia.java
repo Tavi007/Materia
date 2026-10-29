@@ -28,6 +28,7 @@ public class Materia {
 
         // register common
         BlockList.BLOCKS.register(MOD_EVENT_BUS);
+        BlockEntityList.BLOCK_ENTITY_TYPES.register(MOD_EVENT_BUS);
         ItemList.ITEMS.register(MOD_EVENT_BUS);
         CreativeTabList.TABS.register(MOD_EVENT_BUS);
 

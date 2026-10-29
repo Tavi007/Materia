@@ -1,6 +1,8 @@
 package Tavi007.Materia.common.blocks;
 
 //import Tavi007.Materia.inventory.menus.MateriaIncubatorMenu;
+import Tavi007.Materia.common.blocks.entities.MateriaIncubatorBlockEntity;
+import Tavi007.Materia.common.init.ModBlockEntities;
 import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -10,11 +12,14 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-public class MateriaIncubatorBlock extends Block {
+public class MateriaIncubatorBlock extends BaseEntityBlock {
 
     private static final Component MENU_TITLE = Component.translatable("menu.materia_incubator");
 
@@ -37,4 +42,9 @@ public class MateriaIncubatorBlock extends Block {
         return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new MateriaIncubatorMenu(windowId, playerInventory, null), MENU_TITLE);
     }
 
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new MateriaIncubatorBlockEntity(pos, state);
+    }
 }
