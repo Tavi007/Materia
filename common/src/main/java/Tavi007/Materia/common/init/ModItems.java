@@ -9,6 +9,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -68,8 +69,11 @@ public class ModItems {
     public static final Supplier<Item> ABILITY_POINT_BOTTLE = registerMisc(Constants.ABILITY_POINT_BOTTLE,
             () -> new  AbilityPointBottleItem(fullStack));
 
-    public static final Supplier<Item> MAGICITE = registerMisc(Constants.MAGICITE,
-            () -> new  Item(fullStack));
+    public static final Supplier<Item> FIRE_MAGICITE = registerMisc(Constants.FIRE_MAGICITE,
+            () -> new Magicite(fullStack, 0xFF0000));
+
+    public static final Supplier<Item> ICE_MAGICITE = registerMisc(Constants.ICE_MAGICITE,
+            () -> new Magicite(fullStack, 0x0000FF));
 
     public static final Supplier<Item> PARA_MAGIC_PHIAL = registerMisc(Constants.PARA_MAGIC_PHIAL,
             () -> new  Item(fullStack));

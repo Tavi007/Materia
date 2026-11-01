@@ -26,7 +26,9 @@ public class Constants {
     // Items
     public static final String BASE_MATERIA = "base_materia";
     public static final String FIRE_MATERIA = "fire_materia";
+    public static final String FIRE_MAGICITE = "fire_magicite";
     public static final String ICE_MATERIA = "ice_materia";
+    public static final String ICE_MAGICITE = "ice_magicite";
     public static final String SIZE_UP_MATERIA = "size_up_materia";
     public static final String WIDTH_UP_MATERIA = "width_up_materia";
     public static final String RANGE_UP_MATERIA = "range_up_materia";

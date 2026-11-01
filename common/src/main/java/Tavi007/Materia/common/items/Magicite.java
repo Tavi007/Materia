@@ -7,7 +7,14 @@ import net.minecraft.world.item.Item;
 // color should change depending on the content similar to potions
 public class Magicite extends Item {
 
-    public Magicite(Properties properties) {
+    private final int color;
+
+    public Magicite(Properties properties, int color) {
         super(properties);
+        this.color = color;
+    }
+
+    public int getColor() {
+        return color;
     }
 }
