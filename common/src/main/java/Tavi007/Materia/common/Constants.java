@@ -17,6 +17,8 @@ public class Constants {
     // Blocks
     public static final String EQUIPPING_STATION = "equipping_station";
     public static final String MATERIA_INCUBATOR = "materia_incubator";
+    public static final String PARA_MAGIC_EXTRACTOR = "para_magic_extractor";
+    public static final String MAKO_PUMP = "mako_pump";
 
     // Capabilities
     public static final ResourceLocation MATERIA_LEVEL_DATA_CAPABILITY = new ResourceLocation(MOD_ID, "level");
@@ -41,6 +43,8 @@ public class Constants {
     public static final String MATERIA_DIAMOND_ACCESSORY = "materia_diamond_accessory";
 
     public static final String ABILITY_POINT_BOTTLE = "ability_point_bottle";
+    public static final String PARA_MAGIC_PHIAL = "para_magic_phial";
+    public static final String MAGICITE = "magicite";
 
     // Creative Tabs
     public static final String MATERIA_TAB = "materias";

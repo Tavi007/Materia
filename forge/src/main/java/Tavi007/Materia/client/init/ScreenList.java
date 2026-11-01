@@ -1,10 +1,9 @@
 package Tavi007.Materia.client.init;
 
-import Tavi007.Materia.client.gui.EquippingStationScreen;
-import Tavi007.Materia.client.gui.MateriaIncubatorScreen;
+import Tavi007.Materia.client.gui.screens.MateriaIncubatorScreen;
+import Tavi007.Materia.client.gui.screens.ParaMagicExtractorScreen;
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.init.ModMenus;
-import Tavi007.Materia.init.MenuList;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,6 +17,7 @@ public class ScreenList {
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
 //        MenuScreens.register(MenuList.EQUIPPING_STATION.get(), EquippingStationScreen::new);
         MenuScreens.register(ModMenus.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
+        MenuScreens.register(ModMenus.PARA_MAGIC_EXTRACTOR.get(), ParaMagicExtractorScreen::new);
     }
 
 }

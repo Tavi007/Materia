@@ -3,6 +3,7 @@ package Tavi007.Materia.common.init;
 import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.blocks.EquippingStationBlock;
 import Tavi007.Materia.common.blocks.MateriaIncubatorBlock;
+import Tavi007.Materia.common.blocks.ParaMagicExtractorBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,6 +28,10 @@ public class ModBlocks {
 
     public static Supplier<Block> EQUIPPING_STATION = register(Constants.EQUIPPING_STATION, () -> new EquippingStationBlock(METAL));
     public static Supplier<Block> MATERIA_INCUBATOR = register(Constants.MATERIA_INCUBATOR, () -> new MateriaIncubatorBlock(METAL));
+    public static Supplier<Block> PARA_MAGIC_EXTRACTOR = register(Constants.PARA_MAGIC_EXTRACTOR, () -> new ParaMagicExtractorBlock(METAL));
+    public static Supplier<Block> MAKO_PUMP = register(Constants.MAKO_PUMP, () -> new Block(METAL));
+
+
 
     private static Supplier<Block> register(String name, Supplier<Block> supplier) {
         Supplier<Block> memoized = Suppliers.memoize(supplier);

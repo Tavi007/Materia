@@ -21,12 +21,22 @@
     "item.materia.materia_diamond_sword" : "Materia Sword",
     "item.materia.materia_diamond_wand" : "Materia Wand",
     "item.materia.materia_diamond_accessory" : "Materia Accessory",
+
+    "item.materia.ability_point_bottle" : "Bottle o' Ability",
+    "item.materia.magicite" : "Magicite",
+    "item.materia.para_magic_phial" : "Para-Magic Phial",
     
     "block.materia.equipping_station" : "Equipping Station",
     "menu.equipping_station": "Equipping Station",
     
     "block.materia.materia_incubator" : "Materia Incubator",
     "menu.materia_incubator": "Materia Incubator",
+
+    "block.materia.para_magic_extractor" : "Para-Magic Extractor",
+    "menu.para_magic_extractor": "Para-Magic Extractor",
+
+    "block.materia.mako_pump" : "Mako Pump",
+    "menu.mako_pump": "Mako Pump",
     
     
     "materia.effect.select.empty": "No effects available",

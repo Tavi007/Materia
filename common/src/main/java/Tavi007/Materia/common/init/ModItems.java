@@ -68,12 +68,24 @@ public class ModItems {
     public static final Supplier<Item> ABILITY_POINT_BOTTLE = registerMisc(Constants.ABILITY_POINT_BOTTLE,
             () -> new  AbilityPointBottleItem(fullStack));
 
+    public static final Supplier<Item> MAGICITE = registerMisc(Constants.MAGICITE,
+            () -> new  Item(fullStack));
+
+    public static final Supplier<Item> PARA_MAGIC_PHIAL = registerMisc(Constants.PARA_MAGIC_PHIAL,
+            () -> new  Item(fullStack));
+
     //blocks
     public static final Supplier<Item> EQUIPPING_STATION = registerMisc(Constants.EQUIPPING_STATION,
             ()-> new BlockItem(ModBlocks.EQUIPPING_STATION.get(), fullStack));
 
     public static final Supplier<Item> MATERIA_INCUBATOR = registerMisc(Constants.MATERIA_INCUBATOR,
             ()-> new BlockItem(ModBlocks.MATERIA_INCUBATOR.get(),fullStack));
+
+    public static final Supplier<Item> PARA_MAGIC_EXTRACTOR = registerMisc(Constants.PARA_MAGIC_EXTRACTOR,
+            ()-> new BlockItem(ModBlocks.PARA_MAGIC_EXTRACTOR.get(),fullStack));
+
+    public static final Supplier<Item> MAKO_PUMP = registerMisc(Constants.MAKO_PUMP,
+            ()-> new BlockItem(ModBlocks.MAKO_PUMP.get(),fullStack));
 
 
 

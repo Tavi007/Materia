@@ -1,8 +1,9 @@
 package Tavi007.Materia.common.inventory.menus;
 
-import Tavi007.Materia.client.gui.MateriaIncubatorScreen;
+import Tavi007.Materia.client.gui.screens.MateriaIncubatorScreen;
 import Tavi007.Materia.common.init.ModMenus;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
+import Tavi007.Materia.common.inventory.slots.ParaMagicPhialSlot;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -40,7 +41,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
         );
 
         // Fuel
-        this.addSlot(new Slot(materiaIncubator,
+        this.addSlot(new ParaMagicPhialSlot(materiaIncubator,
             FUEL_SLOT,
             MateriaIncubatorScreen.FUEL_SLOT_X,
             MateriaIncubatorScreen.FUEL_SLOT_Y));
