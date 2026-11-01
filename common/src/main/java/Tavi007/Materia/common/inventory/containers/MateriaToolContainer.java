@@ -1,10 +1,12 @@
 package Tavi007.Materia.common.inventory.containers;
 
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
+import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MateriaToolContainer implements Container {
@@ -102,7 +104,7 @@ public class MateriaToolContainer implements Container {
     public void setChanged() {
         // Recompute effects of every connection. Speed up possible here, if I know which connection needs the update.
         for(MateriaSlotConnection connection : connections) {
-            connection.updateEffects(this);
+            connection.updateEffects(materiaSlots);
         }
     }
 

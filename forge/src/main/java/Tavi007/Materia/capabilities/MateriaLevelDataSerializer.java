@@ -1,6 +1,6 @@
 package Tavi007.Materia.capabilities;
 
-import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
+import Tavi007.Materia.common.data.capability.MateriaLevelData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.util.INBTSerializable;

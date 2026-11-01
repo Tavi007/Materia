@@ -1,9 +1,8 @@
 package Tavi007.Materia.capabilities;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
+import Tavi007.Materia.common.data.capability.MateriaLevelData;
 import Tavi007.Materia.common.data.datapack.LevelUpDataManager;
-import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.common.items.MateriaItem;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

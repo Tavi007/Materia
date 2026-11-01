@@ -6,17 +6,14 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
-import Tavi007.Materia.common.data.pojo.MateriaEffectRecipe;
+import Tavi007.Materia.common.data.capability.MateriaLevelData;
 import Tavi007.Materia.common.data.pojo.effects.AbstractMateriaEffect;
-import Tavi007.Materia.init.ReloadListenerList;
 import Tavi007.Materia.common.items.IMateriaTool;
 import Tavi007.Materia.common.items.MateriaItem;
 import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;

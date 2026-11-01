@@ -1,7 +1,7 @@
 package Tavi007.Materia.capabilities;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.capabilities.data.MateriaLevelData;
+import Tavi007.Materia.common.data.capability.MateriaLevelData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.EventPriority;

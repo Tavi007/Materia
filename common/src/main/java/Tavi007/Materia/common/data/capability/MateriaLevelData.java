@@ -1,4 +1,4 @@
-package Tavi007.Materia.common.capabilities.data;
+package Tavi007.Materia.common.data.capability;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
