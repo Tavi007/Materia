@@ -1,6 +1,7 @@
 package Tavi007.Materia.common.inventory.menus;
 
 import Tavi007.Materia.client.gui.screens.MateriaIncubatorScreen;
+import Tavi007.Materia.common.inventory.slots.ResultSlot;
 import Tavi007.Materia.common.registry.ModMenus;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
 import Tavi007.Materia.common.inventory.slots.ParaMagicPhialSlot;
@@ -18,10 +19,11 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     private static final int MATERIA_SLOT = 0;
     private static final int FUEL_SLOT = 1;
-    private static final int INV_SLOT_START = 2;
-    private static final int INV_SLOT_END = 29;
-    private static final int HOTBAR_SLOT_START = 29;
-    private static final int HOTBAR_SLOT_END = 38;
+    private static final int BOTTLE_SLOT = 2;
+    private static final int INV_SLOT_START = 3;
+    private static final int INV_SLOT_END = 30;
+    private static final int HOTBAR_SLOT_START = 30;
+    private static final int HOTBAR_SLOT_END = 39;
 
     private final Container materiaIncubator;
 
@@ -31,7 +33,7 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
             FriendlyByteBuf extraData
     ) {
         super(ModMenus.MATERIA_INCUBATOR.get(), containerId);
-        materiaIncubator = new SimpleContainer(2);
+        materiaIncubator = new SimpleContainer(3);
 
         // Materia
         this.addSlot(new MateriaItemSlot(materiaIncubator,
@@ -40,11 +42,18 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
             MateriaIncubatorScreen.MATERIA_SLOT_Y)
         );
 
-        // Fuel
+        // Phial input
         this.addSlot(new ParaMagicPhialSlot(materiaIncubator,
             FUEL_SLOT,
             MateriaIncubatorScreen.FUEL_SLOT_X,
             MateriaIncubatorScreen.FUEL_SLOT_Y));
+
+        // Bottle output
+        this.addSlot(new ResultSlot(playerInventory.player,
+                materiaIncubator,
+                BOTTLE_SLOT,
+                MateriaIncubatorScreen.BOTTLE_SLOT_X,
+                MateriaIncubatorScreen.BOTTLE_SLOT_Y));
 
         // Player inventory
         addPlayerInventory(playerInventory);

@@ -21,6 +21,8 @@ public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncub
     public static final int MATERIA_SLOT_Y = 21;
     public static final int FUEL_SLOT_X = 80;
     public static final int FUEL_SLOT_Y = 71;
+    public static final int BOTTLE_SLOT_X = 116;
+    public static final int BOTTLE_SLOT_Y = 46;
 
     public MateriaIncubatorScreen(MateriaIncubatorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);

@@ -32,7 +32,7 @@ public class ParaMagicExtractorMenu extends AbstractContainerMenu {
             Inventory playerInventory,
             FriendlyByteBuf extraData
     ) {
-        super(ModMenus.MATERIA_INCUBATOR.get(), containerId);
+        super(ModMenus.PARA_MAGIC_EXTRACTOR.get(), containerId);
         paraMagicExtractor = new SimpleContainer(8);
 
         // Input
@@ -77,7 +77,8 @@ public class ParaMagicExtractorMenu extends AbstractContainerMenu {
                 this.addSlot(new Slot(
                         inventory,
                         k + j * 9 + 9,
-                        8 + k * 18, ParaMagicExtractorScreen.IMAGE_HEIGHT - 82 + j * 18));
+                        8 + k * 18,
+                        ParaMagicExtractorScreen.IMAGE_HEIGHT - 82 + j * 18));
             }
         }
     }

@@ -15,14 +15,5 @@ public class MenuList {
         ForgeMenuRegistrar registrar = new ForgeMenuRegistrar();
         ModMenus.register(registrar);
     }
-//    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
-//
-////    public static final RegistryObject<MenuType<EquippingStationMenu>> EQUIPPING_STATION = MENU_TYPES
-////        .register("equipping_station_menu", () -> IForgeMenuType.create(EquippingStationMenu::new));
-////
-//
-//    public static final RegistryObject<MenuType<MateriaIncubatorMenu>> MATERIA_INCUBATOR = MENU_TYPES
-//        .register("materia_incubator_menu", () -> IForgeMenuType.create(MateriaIncubatorMenu::new));
-//
 
 }

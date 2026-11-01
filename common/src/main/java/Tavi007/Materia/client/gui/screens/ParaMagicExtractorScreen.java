@@ -17,12 +17,12 @@ public class ParaMagicExtractorScreen extends AbstractContainerScreen<ParaMagicE
     // if I change the texture, change these values too to fix GUI
     public static final int IMAGE_WIDTH = 176;
     public static final int IMAGE_HEIGHT = 192;
-    public static final int INPUT_SLOT_X = 80;
+    public static final int INPUT_SLOT_X = 62;
     public static final int INPUT_SLOT_Y = 21;
-    public static final int BOTTLE_SLOT_X = 80;
+    public static final int BOTTLE_SLOT_X = 62;
     public static final int BOTTLE_SLOT_Y = 71;
-    public static final int OUTPUT_SLOT_X = 116;
-    public static final int OUTPUT_SLOT_Y = 39;
+    public static final int OUTPUT_SLOT_X = 98;
+    public static final int OUTPUT_SLOT_Y = 37;
 
     public ParaMagicExtractorScreen(ParaMagicExtractorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
