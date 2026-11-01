@@ -1,8 +1,8 @@
-package Tavi007.Materia.client.gui;
+package Tavi007.Materia.client.gui.screens;
 
 import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.inventory.menus.ParaMagicExtractorMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
-import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -10,19 +10,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncubatorMenu> {
+public class ParaMagicExtractorScreen extends AbstractContainerScreen<ParaMagicExtractorMenu> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/materia_incubator_menu.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/para_magic_extractor.png");
 
     // if I change the texture, change these values too to fix GUI
     public static final int IMAGE_WIDTH = 176;
     public static final int IMAGE_HEIGHT = 192;
-    public static final int MATERIA_SLOT_X = 80;
-    public static final int MATERIA_SLOT_Y = 21;
-    public static final int FUEL_SLOT_X = 80;
-    public static final int FUEL_SLOT_Y = 71;
+    public static final int INPUT_SLOT_X = 80;
+    public static final int INPUT_SLOT_Y = 21;
+    public static final int BOTTLE_SLOT_X = 80;
+    public static final int BOTTLE_SLOT_Y = 71;
+    public static final int OUTPUT_SLOT_X = 116;
+    public static final int OUTPUT_SLOT_Y = 39;
 
-    public MateriaIncubatorScreen(MateriaIncubatorMenu menu, Inventory playerInv, Component title) {
+    public ParaMagicExtractorScreen(ParaMagicExtractorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
         this.leftPos = 0;
         this.topPos = 0;

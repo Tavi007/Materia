@@ -1,4 +1,4 @@
-package Tavi007.Materia.client.gui;
+package Tavi007.Materia.client.gui.screens;
 
 import Tavi007.Materia.common.Constants;
 import com.mojang.blaze3d.systems.RenderSystem;
