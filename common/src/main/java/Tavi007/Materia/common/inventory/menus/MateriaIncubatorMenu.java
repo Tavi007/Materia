@@ -1,7 +1,7 @@
 package Tavi007.Materia.common.inventory.menus;
 
 import Tavi007.Materia.client.gui.screens.MateriaIncubatorScreen;
-import Tavi007.Materia.common.init.ModMenus;
+import Tavi007.Materia.common.registry.ModMenus;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
 import Tavi007.Materia.common.inventory.slots.ParaMagicPhialSlot;
 import net.minecraft.network.FriendlyByteBuf;

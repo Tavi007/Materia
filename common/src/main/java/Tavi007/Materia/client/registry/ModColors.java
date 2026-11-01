@@ -1,7 +1,7 @@
 package Tavi007.Materia.client.registry;
 
 import Tavi007.Materia.client.color.MagiciteColor;
-import Tavi007.Materia.common.init.ModItems;
+import Tavi007.Materia.common.registry.ModItems;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.level.ItemLike;
 

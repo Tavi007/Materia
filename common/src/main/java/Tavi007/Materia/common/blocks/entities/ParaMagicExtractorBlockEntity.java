@@ -1,6 +1,6 @@
 package Tavi007.Materia.common.blocks.entities;
 
-import Tavi007.Materia.common.init.ModBlockEntities;
+import Tavi007.Materia.common.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;

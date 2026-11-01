@@ -1,9 +1,9 @@
 package Tavi007.Materia;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.init.MateriaEffectConfigurationTypeList;
-import Tavi007.Materia.common.init.MateriaEffectList;
-import Tavi007.Materia.init.*;
+import Tavi007.Materia.common.registry.MateriaEffectConfigurationTypeList;
+import Tavi007.Materia.common.registry.MateriaEffectList;
+import Tavi007.Materia.registry.*;
 
 import Tavi007.Materia.client.ClientConfig;
 import net.minecraftforge.common.MinecraftForge;

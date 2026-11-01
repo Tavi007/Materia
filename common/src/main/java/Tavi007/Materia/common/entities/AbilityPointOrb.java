@@ -3,7 +3,7 @@ package Tavi007.Materia.common.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tavi007.Materia.common.init.ModEntities;
+import Tavi007.Materia.common.registry.ModEntities;
 import Tavi007.Materia.common.items.IMateriaTool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

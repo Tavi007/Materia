@@ -1,17 +1,10 @@
 package Tavi007.Materia.client;
 
 import Tavi007.Materia.common.Constants;
-import com.mojang.blaze3d.platform.InputConstants;
 
-import Tavi007.Materia.capabilities.materia.collection.handler.MateriaCollectionHandler;
 //import Tavi007.Materia.client.gui.MateriaToolComponent;
 //import Tavi007.Materia.client.gui.SelectMateriaEffectScreen;
-import Tavi007.Materia.client.init.KeyBindingList;
-import Tavi007.Materia.common.items.IMateriaTool;
-import Tavi007.Materia.util.CapabilityHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
-import net.minecraft.client.player.Input;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;

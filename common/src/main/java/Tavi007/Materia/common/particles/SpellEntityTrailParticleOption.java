@@ -3,7 +3,7 @@ package Tavi007.Materia.common.particles;
 import java.util.Optional;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.init.ModParticles;
+import Tavi007.Materia.common.registry.ModParticles;
 import com.mojang.brigadier.StringReader;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
