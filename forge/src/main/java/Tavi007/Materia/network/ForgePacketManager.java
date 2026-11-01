@@ -1,7 +1,7 @@
 package Tavi007.Materia.network;
 
 import Tavi007.Materia.common.Constants;
-import Tavi007.Materia.common.init.ModPackets;
+import Tavi007.Materia.common.registry.ModPackets;
 import Tavi007.Materia.common.network.ModNetwork;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;

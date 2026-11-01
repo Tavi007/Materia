@@ -1,0 +1,37 @@
+package Tavi007.Materia.client.registry;
+
+//import Tavi007.Materia.client.gui.MateriaToolClientComponent;
+//import Tavi007.Materia.client.gui.MateriaToolComponent;
+import Tavi007.Materia.client.entity.AbilityPointOrbRenderer;
+//import Tavi007.Materia.client.entity.SpellProjectileRenderer;
+import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.registry.ModEntities;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+@Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class StartupClientOnly {
+
+    @SubscribeEvent
+    public static void onRegisterClientTooltipComponentFactoriesEvent(RegisterClientTooltipComponentFactoriesEvent event) {
+//        event.register(MateriaToolComponent.class, MateriaToolClientComponent::new);
+        Constants.LOGGER.info("Tooltip component factories registered.");
+    }
+
+    @SubscribeEvent
+    public static void onRegisterRenderersEvent(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.ABILITY_POINT_ORB.get(), AbilityPointOrbRenderer::new);
+//        event.registerEntityRenderer(EntityTypeList.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
+        Constants.LOGGER.info("Entity renderers registered.");
+    }
+
+    @SubscribeEvent
+    public static void onRegisterRenderersEvent(RegisterParticleProvidersEvent event) {
+        //event.register(ParticleTypeList.SPELL_TRAIL.get(), sprite -> new SpellEntityTrailParticleProvider());
+        Constants.LOGGER.info("Particle provider registered.");
+    }
+}

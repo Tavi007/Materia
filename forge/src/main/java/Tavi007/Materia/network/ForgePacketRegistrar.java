@@ -1,6 +1,6 @@
 package Tavi007.Materia.network;
 
-import Tavi007.Materia.common.init.registrar.PacketRegistrar;
+import Tavi007.Materia.common.registry.registrar.PacketRegistrar;
 import Tavi007.Materia.common.network.packets.AbstractPacket;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;

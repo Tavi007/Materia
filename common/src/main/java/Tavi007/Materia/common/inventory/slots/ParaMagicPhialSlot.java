@@ -1,8 +1,6 @@
 package Tavi007.Materia.common.inventory.slots;
 
-import Tavi007.Materia.common.init.ModItems;
-import Tavi007.Materia.common.items.MateriaItem;
-import Tavi007.Materia.common.items.ParaMagicPhial;
+import Tavi007.Materia.common.registry.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
