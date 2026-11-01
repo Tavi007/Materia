@@ -3,9 +3,10 @@ package Tavi007.Materia.common.items;
 import Tavi007.Materia.client.color.MagicColor;
 import net.minecraft.world.item.Item;
 
-// can be drawn from enemies.
-// contains a lot of para magic, that can be bottled into a phial
-// color should change depending on the content similar to potions
+// drops from crystal ores
+// a lot of para magic can be extracted from these (balanced by recipes)
+// this opens up to level up materia from mining
+// color depends on the magic
 public class Magicite extends Item {
 
     private final String magic;

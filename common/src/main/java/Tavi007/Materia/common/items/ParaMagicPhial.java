@@ -5,7 +5,8 @@ import net.minecraft.world.item.Item;
 
 // can be used in the incubator to level up materia
 // comes in various sizes and contains pure (used for all materia) or materia specific para magic.
-// color should change depending on the content similar to potions
+// can be drawn from mobs. Use a tool on an enemy and then stay close to them (risk/reward)
+// color change depending on the magic
 public class ParaMagicPhial extends Item {
 
     private final String magic;
