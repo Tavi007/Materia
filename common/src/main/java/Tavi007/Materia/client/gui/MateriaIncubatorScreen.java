@@ -14,12 +14,20 @@ public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncub
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/gui/materia_incubator_menu.png");
 
+    // if I change the texture, change these values too to fix GUI
+    public static final int IMAGE_WIDTH = 176;
+    public static final int IMAGE_HEIGHT = 192;
+    public static final int MATERIA_SLOT_X = 80;
+    public static final int MATERIA_SLOT_Y = 21;
+    public static final int FUEL_SLOT_X = 80;
+    public static final int FUEL_SLOT_Y = 71;
+
     public MateriaIncubatorScreen(MateriaIncubatorMenu menu, Inventory playerInv, Component title) {
         super(menu, playerInv, title);
         this.leftPos = 0;
         this.topPos = 0;
-        this.imageWidth = 176;
-        this.imageHeight = 166;
+        this.imageWidth = IMAGE_WIDTH;
+        this.imageHeight = IMAGE_HEIGHT;
     }
 
     @Override
@@ -27,11 +35,12 @@ public class MateriaIncubatorScreen extends AbstractContainerScreen<MateriaIncub
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        //blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         renderTooltip(guiGraphics, mouseX, mouseY);
     }

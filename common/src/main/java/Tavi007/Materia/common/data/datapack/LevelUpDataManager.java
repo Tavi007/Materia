@@ -1,5 +1,6 @@
 package Tavi007.Materia.common.data.datapack;
 
+import Tavi007.Materia.common.Constants;
 import Tavi007.Materia.common.util.ResourceLocationHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

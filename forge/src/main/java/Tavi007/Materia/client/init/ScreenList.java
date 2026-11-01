@@ -3,6 +3,7 @@ package Tavi007.Materia.client.init;
 import Tavi007.Materia.client.gui.EquippingStationScreen;
 import Tavi007.Materia.client.gui.MateriaIncubatorScreen;
 import Tavi007.Materia.common.Constants;
+import Tavi007.Materia.common.init.ModMenus;
 import Tavi007.Materia.init.MenuList;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,7 +17,7 @@ public class ScreenList {
     @SubscribeEvent
     public static void onClientSetupEvent(FMLClientSetupEvent event) {
 //        MenuScreens.register(MenuList.EQUIPPING_STATION.get(), EquippingStationScreen::new);
-//        MenuScreens.register(MenuList.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
+        MenuScreens.register(ModMenus.MATERIA_INCUBATOR.get(), MateriaIncubatorScreen::new);
     }
 
 }
