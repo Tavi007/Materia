@@ -1,0 +1,8 @@
+{
+    "parent": "item/generated",
+    "textures": 
+	{
+        "layer0": "materia:item/magicite",
+        "layer1": "materia:item/magicite_overlay"
+    }
+}

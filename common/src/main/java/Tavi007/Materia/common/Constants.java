@@ -5,12 +5,23 @@ import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Constants {
 
     public static final String MOD_ID = "materia";
     public static final String MOD_NAME = "Materia";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static Minecraft MINECRAFT = Minecraft.getInstance();
+
+    // Elements
+    public static final String FIRE = "fire";
+    public static final String ICE = "ice";
+    public static final String LIGHTNING = "lightning";
+    public static final String AQUA = "aqua";
+    public static final String BIO = "bio";
 
     // GUI
 
@@ -24,11 +35,26 @@ public class Constants {
     public static final ResourceLocation MATERIA_LEVEL_DATA_CAPABILITY = new ResourceLocation(MOD_ID, "level");
 
     // Items
-    public static final String BASE_MATERIA = "base_materia";
-    public static final String FIRE_MATERIA = "fire_materia";
-    public static final String FIRE_MAGICITE = "fire_magicite";
-    public static final String ICE_MATERIA = "ice_materia";
-    public static final String ICE_MAGICITE = "ice_magicite";
+    public static final String MATERIA = "materia";
+    public static final String MAGICITE = "magicite";
+    public static final String PHIAL = "phial";
+
+    public static final String FIRE_MATERIA = FIRE + "_" + MATERIA;
+    public static final String FIRE_MAGICITE = FIRE + "_" + MAGICITE;
+    public static final String FIRE_PHIAL = FIRE + "_" + PHIAL;
+    public static final String ICE_MATERIA = ICE + "_" + MATERIA;
+    public static final String ICE_MAGICITE = ICE + "_" + MAGICITE;
+    public static final String ICE_PHIAL = ICE + "_" + PHIAL;
+    public static final String LIGHTNING_MATERIA = LIGHTNING + "_" + MATERIA;
+    public static final String LIGHTNING_MAGICITE = LIGHTNING + "_" + MAGICITE;
+    public static final String LIGHTNING_PHIAL = LIGHTNING + "_" + PHIAL;
+    public static final String AQUA_MATERIA = AQUA + "_" + MATERIA;
+    public static final String AQUA_MAGICITE = AQUA + "_" + MAGICITE;
+    public static final String AQUA_PHIAL = AQUA + "_" + PHIAL;
+    public static final String BIO_MATERIA = BIO + "_" + MATERIA;
+    public static final String BIO_MAGICITE = BIO + "_" + MAGICITE;
+    public static final String BIO_PHIAL = BIO + "_" + PHIAL;
+
     public static final String SIZE_UP_MATERIA = "size_up_materia";
     public static final String WIDTH_UP_MATERIA = "width_up_materia";
     public static final String RANGE_UP_MATERIA = "range_up_materia";
@@ -46,7 +72,6 @@ public class Constants {
 
     public static final String ABILITY_POINT_BOTTLE = "ability_point_bottle";
     public static final String PARA_MAGIC_PHIAL = "para_magic_phial";
-    public static final String MAGICITE = "magicite";
 
     // Creative Tabs
     public static final String MATERIA_TAB = "materias";
@@ -67,4 +92,5 @@ public class Constants {
     // some ResourceLocations
     public static final ResourceLocation SPELL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "textures/spell/default.png");;
     public static final ResourceLocation SPELL_TRAIL_TEXTURE = new ResourceLocation(Constants.MOD_ID, "default_spell_trail");;
+
 }

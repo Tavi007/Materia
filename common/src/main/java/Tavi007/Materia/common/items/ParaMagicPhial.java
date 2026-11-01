@@ -1,5 +1,6 @@
 package Tavi007.Materia.common.items;
 
+import Tavi007.Materia.client.color.MagicColor;
 import net.minecraft.world.item.Item;
 
 // can be used in the incubator to level up materia
@@ -7,8 +8,19 @@ import net.minecraft.world.item.Item;
 // color should change depending on the content similar to potions
 public class ParaMagicPhial extends Item {
 
-    public ParaMagicPhial(Properties properties) {
+    private final String magic;
+    private Integer color;
+
+    public ParaMagicPhial(Properties properties, String magic) {
         super(properties);
+        this.magic = magic;
+    }
+
+    public int getColor() {
+        if(color == null) {
+            color = MagicColor.getColor(magic);
+        }
+        return color;
     }
 
 }

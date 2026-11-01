@@ -15,7 +15,7 @@ public class ModCreativeTabs {
             Constants.MATERIA_TAB,
         () -> CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
             .title(Component.translatable("itemGroup.materia"))
-            .icon(ModItems.BASE_MATERIA.get()::getDefaultInstance)
+            .icon(ModItems.MATERIA.get()::getDefaultInstance)
             .displayItems((displayParams, output) ->
                     ModItems.MATERIAS.forEach((supplier) ->
                             output.accept(supplier.get())))

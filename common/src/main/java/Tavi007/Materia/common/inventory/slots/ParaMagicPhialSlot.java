@@ -1,5 +1,6 @@
 package Tavi007.Materia.common.inventory.slots;
 
+import Tavi007.Materia.common.items.ParaMagicPhial;
 import Tavi007.Materia.common.registry.ModItems;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
@@ -21,5 +22,5 @@ public class ParaMagicPhialSlot extends Slot {
         return mayPlaceItem(stack);
     }
 
-    public static boolean mayPlaceItem(ItemStack stack) {return stack.is(ModItems.PARA_MAGIC_PHIAL.get());}
+    public static boolean mayPlaceItem(ItemStack stack) {return stack.getItem() instanceof ParaMagicPhial;}
 }

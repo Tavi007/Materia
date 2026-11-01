@@ -2,7 +2,9 @@ package Tavi007.Materia.common.blocks;
 
 
 import Tavi007.Materia.common.blocks.entities.MateriaIncubatorBlockEntity;
+import Tavi007.Materia.common.blocks.entities.ParaMagicExtractorBlockEntity;
 import Tavi007.Materia.common.inventory.menus.MateriaIncubatorMenu;
+import Tavi007.Materia.common.inventory.menus.ParaMagicExtractorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -43,7 +45,7 @@ public class ParaMagicExtractorBlock extends BaseEntityBlock {
 
     @Override
     public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
-        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new MateriaIncubatorMenu(windowId, playerInventory, null), MENU_TITLE);
+        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new ParaMagicExtractorMenu(windowId, playerInventory, null), MENU_TITLE);
     }
 
     @Override
@@ -54,6 +56,6 @@ public class ParaMagicExtractorBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new MateriaIncubatorBlockEntity(pos, state);
+        return new ParaMagicExtractorBlockEntity(pos, state);
     }
 }

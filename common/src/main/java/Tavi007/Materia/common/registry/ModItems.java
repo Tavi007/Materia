@@ -24,7 +24,7 @@ public class ModItems {
     private static final Item.Properties singleStack = new Item.Properties().stacksTo(1);
     private static final Item.Properties fullStack = new Item.Properties().stacksTo(64);
 
-    public static final Supplier<Item> BASE_MATERIA = register(Constants.BASE_MATERIA, () -> new MateriaItem(singleStack));
+    public static final Supplier<Item> MATERIA = register(Constants.MATERIA, () -> new Item(singleStack));
 
     // materia
     public static final Supplier<Item> FIRE_MATERIA = registerMateria(Constants.FIRE_MATERIA, () -> new MateriaItem(singleStack));
@@ -69,13 +69,28 @@ public class ModItems {
             () -> new  AbilityPointBottleItem(fullStack));
 
     public static final Supplier<Item> FIRE_MAGICITE = registerMisc(Constants.FIRE_MAGICITE,
-            () -> new Magicite(fullStack, 0xFF0000));
-
+            () -> new Magicite(fullStack, Constants.FIRE));
     public static final Supplier<Item> ICE_MAGICITE = registerMisc(Constants.ICE_MAGICITE,
-            () -> new Magicite(fullStack, 0x0000FF));
+            () -> new Magicite(fullStack, Constants.ICE));
+    public static final Supplier<Item> LIGHTNING_MAGICITE = registerMisc(Constants.LIGHTNING_MAGICITE,
+            () -> new Magicite(fullStack, Constants.LIGHTNING));
+    public static final Supplier<Item> AQUA_MAGICITE = registerMisc(Constants.AQUA_MAGICITE,
+            () -> new Magicite(fullStack, Constants.AQUA));
+    public static final Supplier<Item> BIO_MAGICITE = registerMisc(Constants.BIO_MAGICITE,
+            () -> new Magicite(fullStack, Constants.BIO));
 
-    public static final Supplier<Item> PARA_MAGIC_PHIAL = registerMisc(Constants.PARA_MAGIC_PHIAL,
-            () -> new  Item(fullStack));
+    public static final Supplier<Item> FIRE_PHIAL = registerMisc(Constants.FIRE_PHIAL,
+            () -> new ParaMagicPhial(fullStack, Constants.FIRE));
+    public static final Supplier<Item> ICE_PHIAL = registerMisc(Constants.ICE_PHIAL,
+            () -> new ParaMagicPhial(fullStack, Constants.ICE));
+    public static final Supplier<Item> LIGHTNING_PHIAL = registerMisc(Constants.LIGHTNING_PHIAL,
+            () -> new ParaMagicPhial(fullStack, Constants.LIGHTNING));
+    public static final Supplier<Item> AQUA_PHIAL = registerMisc(Constants.AQUA_PHIAL,
+            () -> new ParaMagicPhial(fullStack, Constants.AQUA));
+    public static final Supplier<Item> BIO_PHIAL = registerMisc(Constants.BIO_PHIAL,
+            () -> new ParaMagicPhial(fullStack, Constants.BIO));
+
+
 
     //blocks
     public static final Supplier<Item> EQUIPPING_STATION = registerMisc(Constants.EQUIPPING_STATION,

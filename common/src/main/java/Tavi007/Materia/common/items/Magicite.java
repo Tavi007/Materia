@@ -1,5 +1,6 @@
 package Tavi007.Materia.common.items;
 
+import Tavi007.Materia.client.color.MagicColor;
 import net.minecraft.world.item.Item;
 
 // can be drawn from enemies.
@@ -7,14 +8,18 @@ import net.minecraft.world.item.Item;
 // color should change depending on the content similar to potions
 public class Magicite extends Item {
 
-    private final int color;
+    private final String magic;
+    private Integer color;
 
-    public Magicite(Properties properties, int color) {
+    public Magicite(Properties properties, String magic) {
         super(properties);
-        this.color = color;
+        this.magic = magic;
     }
 
     public int getColor() {
+        if(color == null) {
+            color = MagicColor.getColor(magic);
+        }
         return color;
     }
 }
