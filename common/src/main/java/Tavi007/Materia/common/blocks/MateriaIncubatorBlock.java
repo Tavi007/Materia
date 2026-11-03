@@ -37,11 +37,6 @@ public class MateriaIncubatorBlock extends BaseEntityBlock {
     }
 
     @Override
-    public MenuProvider getMenuProvider(BlockState blockState, Level level, BlockPos blockPos) {
-        return new SimpleMenuProvider((windowId, playerInventory, playerEntity) -> new MateriaIncubatorMenu(windowId, playerInventory, null), MENU_TITLE);
-    }
-
-    @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }

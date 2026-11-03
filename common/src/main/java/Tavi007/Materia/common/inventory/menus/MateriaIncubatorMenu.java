@@ -1,6 +1,7 @@
 package Tavi007.Materia.common.inventory.menus;
 
 import Tavi007.Materia.client.gui.screens.MateriaIncubatorScreen;
+import Tavi007.Materia.common.blocks.entities.MateriaIncubatorBlockEntity;
 import Tavi007.Materia.common.inventory.slots.ResultSlot;
 import Tavi007.Materia.common.registry.ModMenus;
 import Tavi007.Materia.common.inventory.slots.MateriaItemSlot;
@@ -27,30 +28,54 @@ public class MateriaIncubatorMenu extends AbstractContainerMenu {
 
     private final Container materiaIncubator;
 
+    // Client side constructor called by MenuFactory
+    // Currently does not provide additional data through ByteBuf
+    // For this to happen, I need to open the Menu with NetworkHooks.openScreen
     public MateriaIncubatorMenu(
             int containerId,
-            Inventory playerInventory,
+            Inventory inventory,
             FriendlyByteBuf extraData
     ) {
+        this(containerId,
+            inventory,
+            new SimpleContainer(3));
+    }
+
+    // Server side constructor called by BlockEntity.
+    public MateriaIncubatorMenu(
+            int containerId,
+            Inventory inventory,
+            MateriaIncubatorBlockEntity materiaIncubator
+    ) {
+        this(containerId,
+            inventory,
+            (Container) materiaIncubator);
+    }
+
+    protected MateriaIncubatorMenu(
+        int containerId,
+        Inventory playerInventory,
+        Container container
+    ) {
         super(ModMenus.MATERIA_INCUBATOR.get(), containerId);
-        materiaIncubator = new SimpleContainer(3);
+        this.materiaIncubator = container;
 
         // Materia
-        this.addSlot(new MateriaItemSlot(materiaIncubator,
+        this.addSlot(new MateriaItemSlot(this.materiaIncubator,
             MATERIA_SLOT,
             MateriaIncubatorScreen.MATERIA_SLOT_X,
             MateriaIncubatorScreen.MATERIA_SLOT_Y)
         );
 
         // Phial input
-        this.addSlot(new ParaMagicPhialSlot(materiaIncubator,
+        this.addSlot(new ParaMagicPhialSlot(this.materiaIncubator,
             FUEL_SLOT,
             MateriaIncubatorScreen.FUEL_SLOT_X,
             MateriaIncubatorScreen.FUEL_SLOT_Y));
 
         // Bottle output
         this.addSlot(new ResultSlot(playerInventory.player,
-                materiaIncubator,
+                this.materiaIncubator,
                 BOTTLE_SLOT,
                 MateriaIncubatorScreen.BOTTLE_SLOT_X,
                 MateriaIncubatorScreen.BOTTLE_SLOT_Y));
